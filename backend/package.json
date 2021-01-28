@@ -1,6 +1,22 @@
 {
-  "name": "Backend MM Store",
+  "name": "backend",
   "version": "1.0.0",
   "main": "index.js",
-  "license": "MIT"
+  "license": "MIT",
+  "scripts": {
+    "node": "node src/server.js",
+    "dev": "pm2 start src/server.js",
+    "watch": "pm2 start src/server.js --watch",
+    "start": "pm2 start src/server.js -i max",
+    "stop": "pm2 stop src/server.js",
+    "kill": "pm2 kill -a"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "helmet": "^4.2.0",
+    "mariadb": "^2.5.2",
+    "yup": "^0.32.8"
+  }
 }
