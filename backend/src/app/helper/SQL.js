@@ -32,7 +32,8 @@ async function error(erro) {
 
       resolve({
         result: 'error',
-        errno
+        errno,
+        description: erro.toString(),
       });
     } catch (err) {
       reject(err);

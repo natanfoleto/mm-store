@@ -1,6 +1,6 @@
-const Profile = require('../models/Profile');
-const User = require('../models/User');
-const { schemaProfile } = require('../utils/yup');
+const Profile = require('../models/profile');
+const User = require('../models/user');
+const message = require('../messages/profile');
 
 const SQL = require('../helper/SQL');
 
@@ -10,12 +10,12 @@ exports.list = async function (req, res) {
 
     return res.json(response);
   } catch (err) {
-    console.log("Exception from ProfileController.js/list:");
-    console.log(err);
-
+    
+    //! Erro Internal Server
     return res.status(400).json({
       result: 'error',
-      message: 'Erro ao listar usuários, consulte o log para mais informações'
+      message: message.error.code1.subcode99.message,
+      error: err.toString(),
     });
   }
 }
@@ -24,47 +24,38 @@ exports.create = async function (req, res) {
   try {
     const body = req.body;
 
-    let profileValidate;
-
-    await schemaProfile.validate(body).catch(function (err) {
-      profileValidate = err;
-    });
-
-    if (profileValidate) {
-      return res.status(206).json({
-        result: 'error',
-        details: profileValidate
-      })
-    }
-
     const response = await Profile.insertProfile(body.nome);
 
     const sqlTreated = await SQL.build(response);
 
+    //! Erro ao executar query no banco
     if (sqlTreated.result === 'error') {
+
+      //! Erro de cadastro duplicado
       if (sqlTreated.errno === 1062) {
         return res.json({
           result: 'error',
-          message: 'Cadastro duplicado. Já existe um perfil com este nome'
+          message: message.error.code1.subcode1.message
         })
       }
     }
 
+    //* Query executada com sucesso
     if (sqlTreated.result === 'success') {
       return res.json({
         result: 'success',
-        message: 'Cadastrado com sucesso'
+        message: message.success.code1.subcode1.message
       })
     }
 
     return res.json(sqlTreated);
   } catch (err) {
-    console.log("Exception from ProfileController.js/create:");
-    console.log(err);
-
+    
+    //! Erro Internal Server
     return res.status(400).json({
       result: 'error',
-      message: 'Erro ao cadastrar perfil, consulte o log para mais informações'
+      message: message.error.code1.subcode99.message,
+      error: err.toString(),
     });
   }
 }
@@ -72,19 +63,6 @@ exports.create = async function (req, res) {
 exports.update = async function (req, res) {
   try {
     const body = req.body;
-
-    let profileValidate;
-
-    await schemaProfile.validate(body).catch(function (err) {
-      profileValidate = err;
-    });
-
-    if (profileValidate) {
-      return res.status(206).json({
-        result: 'error',
-        details: profileValidate
-      })
-    }
 
     const profile = {
       nome: body.nome,
@@ -96,30 +74,43 @@ exports.update = async function (req, res) {
 
     const sqlTreated = await SQL.build(response);
 
+    //! Erro ao executar query no banco
     if (sqlTreated.result === 'error') {
+
+      //! Erro de cadastro duplicado
       if (sqlTreated.errno === 1062) {
         return res.json({
-          result: 'error',
-          message: 'Cadastro duplicado. Já existe um perfil com este nome'
+          result: sqlTreated.result,
+          message: message.error.code1.subcode1.message
         })
       }
     }
 
+    //* Query executada com sucesso
     if (sqlTreated.result === 'success') {
+
+      //* Nenhum usuário encontrado com os parâmetros passados
+      if (sqlTreated.sql.affectedRows === 0) {
+        return res.json({
+          result: 'error',
+          message: message.error.code1.subcode2.message
+        })
+      }
+
       return res.json({
-        result: 'success',
-        message: 'Atualizado com sucesso'
+        result: sqlTreated.result,
+        message: message.success.code1.subcode2.message
       })
     }
 
     return res.json(sqlTreated);
   } catch (err) {
-    console.log("Exception from ProfileController.js/update:");
-    console.log(err);
-
+    
+    //! Erro Internal Server
     return res.status(400).json({
       result: 'error',
-      message: 'Erro ao atualizar usuário, consulte o log para mais informações'
+      message: message.error.code1.subcode99.message,
+      error: err.toString(),
     });
   }
 }
@@ -128,19 +119,21 @@ exports.delete = async function (req, res) {
   try {
     const { id_perfil } = req.body;
 
-    const users = await User.findByPerfil(id_perfil);
+    const users = await User.findByProfile(id_perfil);
 
+    //* Existem usuários atrelados a este perfil
     if (users[0]) {
       return res.json({
         result: 'error',
-        message: 'Existem usuários atrelados a este perfil'
-      });
+        message: message.error.code1.subcode3.message
+      })
     }
 
     const response = await Profile.deleteProfile(id_perfil);
 
     const sqlTreated = await SQL.build(response);
 
+    //! Erro ao executar query no banco
     if (sqlTreated.result === 'error') {
       return res.json({
         result: 'error',
@@ -148,21 +141,31 @@ exports.delete = async function (req, res) {
       })
     }
 
+    //* Query executada com sucesso
     if (sqlTreated.result === 'success') {
+
+      //* Nenhum usuário encontrado com os parâmetros passados
+      if (sqlTreated.sql.affectedRows === 0) {
+        return res.json({
+          result: 'error',
+          message: message.error.code1.subcode2.message
+        })
+      }
+
       return res.json({
         result: 'success',
-        message: 'Deletado com sucesso'
+        message: message.success.code1.subcode3.message
       });
     }
 
     return res.json(sqlTreated);
   } catch (err) {
-    console.log("Exception from ProfileController.js/delete:");
-    console.log(err);
 
+    //! Internal Server Error
     return res.status(400).json({
       result: 'error',
-      message: 'Erro ao deletar usuário, consulte o log para mais informações'
+      message: message.error.code1.subcode99.message,
+      error: err.toString(),
     });
   }
 }

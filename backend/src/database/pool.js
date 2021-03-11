@@ -20,8 +20,6 @@ async function execute(sql, params = []) {
     
     return res;
   } catch (err) {
-    console.log("Exception from pool.js/execute:");
-    console.log(err);
     
     return err;
   } finally {

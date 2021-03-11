@@ -11,7 +11,7 @@ exports.listUser = async function () {
 
       resolve(result);
     } catch (err) {
-      console.log("Exception from User.js/listUser:");
+      console.log("Exception from user.js/listUser:");
       console.log(err);
 
       reject(err);
@@ -34,7 +34,7 @@ exports.insertUser = async function (user) {
 
       resolve(result);
     } catch (err) {
-      console.log("Exception from User.js/insertUser:");
+      console.log("Exception from user.js/insertUser:");
       console.log(err);
 
       reject(err);
@@ -56,7 +56,7 @@ exports.updateUser = async function (user) {
 
       resolve(result);
     } catch (err) {
-      console.log("Exception from User.js/updateUser:");
+      console.log("Exception from user.js/updateUser:");
       console.log(err);
 
       reject(err);
@@ -77,7 +77,7 @@ exports.deleteUser = async function (id) {
 
       resolve(result);
     } catch (err) {
-      console.log("Exception from User.js/deleteUser:");
+      console.log("Exception from user.js/deleteUser:");
       console.log(err);
 
       reject(err);
@@ -85,7 +85,7 @@ exports.deleteUser = async function (id) {
   });
 }
 
-exports.findByPerfil = async function (id_perfil) {
+exports.findByProfile = async function (id_perfil) {
   return new Promise(async (resolve, reject) => {
     try {
       const query = `SELECT * FROM ${table}
@@ -98,7 +98,7 @@ exports.findByPerfil = async function (id_perfil) {
 
       resolve(result);
     } catch (err) {
-      console.log("Exception from User.js/findByPerfil:");
+      console.log("Exception from user.js/findByProfile:");
       console.log(err);
 
       reject(err);

@@ -1,8 +1,8 @@
 const pool = require('../../database/pool');
 
-const table = 'perfis';
+const table = 'categorias';
 
-exports.listProfile = async function () {
+exports.listCategory = async function () {
   return new Promise(async (resolve, reject) => {
     try {
       const query = `SELECT * FROM ${table}`;
@@ -11,7 +11,7 @@ exports.listProfile = async function () {
 
       resolve(result);
     } catch (err) {
-      console.log("Exception from profile.js/listProfile:");
+      console.log("Exception from category.js/listCategory:");
       console.log(err);
 
       reject(err);
@@ -19,7 +19,7 @@ exports.listProfile = async function () {
   });
 }
 
-exports.insertProfile = async function (nome) {
+exports.insertCategory = async function (nome) {
   return new Promise(async (resolve, reject) => {
     try {
       const query = `INSERT INTO ${table} (
@@ -34,7 +34,7 @@ exports.insertProfile = async function (nome) {
 
       resolve(result);
     } catch (err) {
-      console.log("Exception from profile.js/insertProfile:");
+      console.log("Exception from category.js/insertCategory:");
       console.log(err);
 
       reject(err);
@@ -42,12 +42,12 @@ exports.insertProfile = async function (nome) {
   });
 }
 
-exports.updateProfile = async function (nome) {
+exports.updateCategory = async function (nome) {
   return new Promise(async (resolve, reject) => {
     try {
       const query = `UPDATE ${table} 
         SET nome = ?, updated_at = ? 
-        WHERE id_perfil = ?
+        WHERE id_categoria = ?
       `;
 
       const binds = Object.values(nome);
@@ -56,7 +56,7 @@ exports.updateProfile = async function (nome) {
 
       resolve(result);
     } catch (err) {
-      console.log("Exception from profile.js/updateProfile:");
+      console.log("Exception from category.js/updateCategory:");
       console.log(err);
 
       reject(err);
@@ -64,11 +64,11 @@ exports.updateProfile = async function (nome) {
   });
 }
 
-exports.deleteProfile = async function (id) {
+exports.deleteCategory = async function (id) {
   return new Promise(async (resolve, reject) => {
     try {
       const query = `DELETE FROM ${table}  
-        WHERE id_perfil = ?
+        WHERE id_categoria = ?
       `;
 
       const binds = id;
@@ -77,7 +77,7 @@ exports.deleteProfile = async function (id) {
 
       resolve(result);
     } catch (err) {
-      console.log("Exception from profile.js/deleteProfile:");
+      console.log("Exception from category.js/deleteCategory:");
       console.log(err);
 
       reject(err);

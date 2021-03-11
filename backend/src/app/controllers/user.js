@@ -1,6 +1,6 @@
-const User = require('../models/User');
+const User = require('../models/user');
 const bcrypt = require('../utils/bcrypt');
-const { schemaUser } = require('../utils/yup');
+const message = require('../messages/user');
 
 const SQL = require('../helper/SQL');
 
@@ -10,12 +10,12 @@ exports.list = async function (req, res) {
 
     return res.json(response);
   } catch (err) {
-    console.log("Exception from UserController.js/list:");
-    console.log(err);
 
+    //! Erro Internal Server
     return res.status(400).json({
       result: 'error',
-      message: 'Erro ao listar usuários, consulte o log para mais informações'
+      message: message.error.code1.subcode99.message,
+      error: err.toString(),
     });
   }
 }
@@ -23,19 +23,6 @@ exports.list = async function (req, res) {
 exports.create = async function (req, res) {
   try {
     const body = req.body;
-
-    let userValidate;
-
-    await schemaUser.validate(body).catch(function (err) {
-      userValidate = err;
-    });
-
-    if (userValidate) {
-      return res.status(206).json({
-        result: 'error',
-        details: userValidate
-      })
-    }
 
     const user = {
       id_perfil: body.id_perfil,
@@ -48,30 +35,34 @@ exports.create = async function (req, res) {
 
     const sqlTreated = await SQL.build(response);
 
+    //! Erro ao executar query no banco
     if (sqlTreated.result === 'error') {
+
+      //! Erro de cadastro duplicado
       if (sqlTreated.errno === 1062) {
         return res.json({
           result: 'error',
-          message: 'Cadastro duplicado. Já existe um usuário com este login'
+          message: message.error.code1.subcode1.message
         })
       }
     }
 
+    //* Query executada com sucesso
     if (sqlTreated.result === 'success') {
       return res.json({
         result: 'success',
-        message: 'Cadastrado com sucesso'
+        message: message.success.code1.subcode1.message
       })
     }
 
     return res.json(sqlTreated);
   } catch (err) {
-    console.log("Exception from UserController.js/create:");
-    console.log(err);
 
+    //! Erro Internal Server
     return res.status(400).json({
       result: 'error',
-      message: 'Erro ao cadastrar usuário, consulte o log para mais informações'
+      message: message.error.code1.subcode99.message,
+      error: err.toString(),
     });
   }
 }
@@ -79,19 +70,6 @@ exports.create = async function (req, res) {
 exports.update = async function (req, res) {
   try {
     const body = req.body;
-
-    let userValidate;
-
-    await schemaUser.validate(body).catch(function (err) {
-      userValidate = err;
-    });
-
-    if (userValidate) {
-      return res.status(206).json({
-        result: 'error',
-        details: userValidate
-      })
-    }
 
     const user = {
       id_perfil: body.id_perfil,
@@ -105,30 +83,43 @@ exports.update = async function (req, res) {
 
     const sqlTreated = await SQL.build(response);
 
+    //! Erro ao executar query no banco
     if (sqlTreated.result === 'error') {
+
+      //! Erro de cadastro duplicado
       if (sqlTreated.errno === 1062) {
         return res.json({
-          result: 'error',
-          message: 'Cadastro duplicado. Já existe um usuário com este login'
+          result: sqlTreated.result,
+          message: message.error.code1.subcode1.message
         })
       }
     }
 
+    //* Query executada com sucesso
     if (sqlTreated.result === 'success') {
+
+      //* Nenhum usuário encontrado com os parâmetros passados
+      if (sqlTreated.sql.affectedRows === 0) {
+        return res.json({
+          result: 'error',
+          message: message.error.code1.subcode2.message
+        })
+      }
+
       return res.json({
-        result: 'success',
-        message: 'Atualizado com sucesso'
+        result: sqlTreated.result,
+        message: message.success.code1.subcode2.message
       })
     }
 
     return res.json(sqlTreated);
   } catch (err) {
-    console.log("Exception from UserController.js/update:");
-    console.log(err);
 
+    //! Erro Internal Server
     return res.status(400).json({
       result: 'error',
-      message: 'Erro ao atualizar usuário, consulte o log para mais informações'
+      message: message.error.code1.subcode99.message,
+      error: err.toString(),
     });
   }
 }
@@ -141,6 +132,7 @@ exports.delete = async function (req, res) {
 
     const sqlTreated = await SQL.build(response);
 
+    //! Erro ao executar query no banco
     if (sqlTreated.result === 'error') {
       return res.json({
         result: 'error',
@@ -148,21 +140,31 @@ exports.delete = async function (req, res) {
       })
     }
 
+    //* Query executada com sucesso
     if (sqlTreated.result === 'success') {
+
+      //* Nenhum usuário encontrado com os parâmetros passados
+      if (sqlTreated.sql.affectedRows === 0) {
+        return res.json({
+          result: 'error',
+          message: message.error.code1.subcode2.message
+        })
+      }
+
       return res.json({
         result: 'success',
-        message: 'Deletado com sucesso'
+        message: message.success.code1.subcode3.message
       });
     }
 
     return res.json(sqlTreated);
   } catch (err) {
-    console.log("Exception from UserController.js/delete:");
-    console.log(err);
 
+    //! Internal Server Error
     return res.status(400).json({
       result: 'error',
-      message: 'Erro ao deletar usuário, consulte o log para mais informações'
+      message: message.error.code1.subcode99.message,
+      error: err.toString(),
     });
   }
 }
