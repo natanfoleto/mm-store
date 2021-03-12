@@ -3,6 +3,7 @@ const { Router } = require('express');
 const auth = require('./app/middlewares/auth');
 const validation = require('./app/middlewares/validation');
 
+const validationSession = require('./app/schema/validationSession');
 const validationUser = require('./app/schema/validationUser');
 const validationProfile = require('./app/schema/validationProfile');
 const validationProduct = require('./app/schema/validationProduct');
@@ -27,7 +28,7 @@ const WishController = require('./app/controllers/wish');
 
 const routes = new Router();
 
-routes.route('/session').post(SessionController.create);
+routes.route('/session').post(validation(validationSession.sessionCreate, 'body'), SessionController.create);
 
 routes.use(auth.authenticate);
 
