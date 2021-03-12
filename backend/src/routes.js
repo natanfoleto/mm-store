@@ -5,6 +5,7 @@ const validation = require('./app/middlewares/validation');
 const validationUser = require('./app/schema/validationUser');
 const validationProfile = require('./app/schema/validationProfile');
 const validationProduct = require('./app/schema/validationProduct');
+const validationPhoto = require('./app/schema/validationPhoto');
 const validationCategory = require('./app/schema/validationCategory');
 const validationProvider = require('./app/schema/validationProvider');
 const validationClient = require('./app/schema/validationClient');
@@ -14,6 +15,7 @@ const validationWish = require('./app/schema/validationWish');
 const UserController = require('./app/controllers/user');
 const ProfileController = require('./app/controllers/profile');
 const ProductController = require('./app/controllers/product');
+const PhotoController = require('./app/controllers/photo');
 const CategoryController = require('./app/controllers/category');
 const ProviderController = require('./app/controllers/provider');
 const ClientController = require('./app/controllers/client');
@@ -37,6 +39,10 @@ routes.route('/produtos').get(ProductController.list);
 routes.route('/produtos').post(validation(validationProduct.productCreate, 'body'), ProductController.create);
 routes.route('/produtos').put(validation(validationProduct.productUpdate, 'body'), ProductController.update);
 routes.route('/produtos').delete(validation(validationProduct.productDelete, 'body'), ProductController.delete);
+
+routes.route('/fotos').get(PhotoController.list);
+routes.route('/fotos').post(validation(validationPhoto.photoCreate, 'body'), PhotoController.create);
+routes.route('/fotos').delete(validation(validationPhoto.photoDelete, 'body'), PhotoController.delete);
 
 routes.route('/categorias').get(CategoryController.list);
 routes.route('/categorias').post(validation(validationCategory.categoryCreate, 'body'), CategoryController.create);
