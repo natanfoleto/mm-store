@@ -1,8 +1,8 @@
 const pool = require('../../database/pool');
 
-const table = 'fornecedores';
+const table = 'clientes';
 
-exports.listProvider = async function () {
+exports.listClient = async function () {
   return new Promise(async (resolve, reject) => {
     try {
       const query = `SELECT * FROM ${table}`;
@@ -11,7 +11,7 @@ exports.listProvider = async function () {
 
       resolve(result);
     } catch (err) {
-      console.log("Exception from provider.js/listProvider:");
+      console.log("Exception from client.js/listClient:");
       console.log(err);
 
       reject(err);
@@ -19,22 +19,22 @@ exports.listProvider = async function () {
   });
 }
 
-exports.insertProvider = async function (product) {
+exports.insertClient = async function (client) {
   return new Promise(async (resolve, reject) => {
     try {
       const query = `INSERT INTO ${table} (
-        nome, cpf_cnpj, email, celular, obs
+        nome, cpf, email, data_nasc, celular, password_hash
       ) VALUES (
-        ?, ?, ?, ?, ?
+        ?, ?, ?, ?, ?, ?
       );`;
 
-      const binds = Object.values(product);
+      const binds = Object.values(client);
 
       const result = await pool.execute(query, binds);
 
       resolve(result);
     } catch (err) {
-      console.log("Exception from provider.js/insertProvider:");
+      console.log("Exception from client.js/insertClient:");
       console.log(err);
 
       reject(err);
@@ -42,21 +42,21 @@ exports.insertProvider = async function (product) {
   });
 }
 
-exports.updateProvider = async function (product) {
+exports.updateClient = async function (client) {
   return new Promise(async (resolve, reject) => {
     try {
       const query = `UPDATE ${table} 
-        SET nome = ?, cpf_cnpj = ?, email = ?, celular = ?, obs = ?, updated_at = ?
-        WHERE id_fornecedor = ?
+        SET nome = ?, cpf = ?, email = ?, data_nasc = ?, celular = ?, password_hash = ?, updated_at = ?
+        WHERE id_cliente = ?
       `;
 
-      const binds = Object.values(product);
+      const binds = Object.values(client);
 
       const result = await pool.execute(query, binds);
 
       resolve(result);
     } catch (err) {
-      console.log("Exception from provider.js/updateProvider:");
+      console.log("Exception from client.js/updateClient:");
       console.log(err);
 
       reject(err);
@@ -64,11 +64,11 @@ exports.updateProvider = async function (product) {
   });
 }
 
-exports.deleteProvider = async function (id) {
+exports.deleteClient = async function (id) {
   return new Promise(async (resolve, reject) => {
     try {
       const query = `DELETE FROM ${table}  
-        WHERE id_fornecedor = ?
+        WHERE id_cliente = ?
       `;
 
       const binds = id;
@@ -77,7 +77,7 @@ exports.deleteProvider = async function (id) {
 
       resolve(result);
     } catch (err) {
-      console.log("Exception from provider.js/deleteProvider:");
+      console.log("Exception from client.js/deleteClient:");
       console.log(err);
 
       reject(err);

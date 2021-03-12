@@ -42,15 +42,6 @@ const validationSchemas = {
         'string.empty': 'celular não pode estar vazio',
         'string.min': 'celular deve maior que 0'
       }),
-    id_endereco: Joi
-      .number()
-      .allow(null)
-      .min(0)
-      .messages({
-        'number.base': 'id_endereco deve ser do tipo number',
-        'number.empty': 'id_endereco não pode estar vazio',
-        'number.min': 'id_endereco deve maior que 0'
-      }),
     obs: Joi
       .string()
       .allow(null)
@@ -108,15 +99,6 @@ const validationSchemas = {
         'string.base': 'celular deve ser do tipo string',
         'string.empty': 'celular não pode estar vazio',
         'string.min': 'celular deve maior que 0'
-      }),
-    id_endereco: Joi
-      .number()
-      .allow(null)
-      .min(0)
-      .messages({
-        'number.base': 'id_endereco deve ser do tipo number',
-        'number.empty': 'id_endereco não pode estar vazio',
-        'number.min': 'id_endereco deve maior que 0'
       }),
     obs: Joi
       .string()

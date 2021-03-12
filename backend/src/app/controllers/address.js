@@ -1,16 +1,17 @@
-const Profile = require('../models/profile');
-const User = require('../models/user');
-const message = require('../messages/profile');
+const Address = require('../models/address');
+const Client = require('../models/client');
+const Provider = require('../models/provider');
+const message = require('../messages/address');
 
 const SQL = require('../helper/SQL');
 
 exports.list = async function (req, res) {
   try {
-    const response = await Profile.listProfile();
+    const response = await Address.listAddress();
 
     return res.json(response);
   } catch (err) {
-    
+
     //! Erro Internal Server
     return res.status(400).json({
       result: 'error',
@@ -24,20 +25,26 @@ exports.create = async function (req, res) {
   try {
     const body = req.body;
 
-    const response = await Profile.insertProfile(body.nome);
+    const address = {
+      id_pessoa: body.id_pessoa,
+      tipo_pessoa: body.tipo_pessoa,
+      logradouro: body.logradouro,
+      numero: body.numero,
+      cep: body.cep || null,
+      bairro: body.bairro || null,
+      cidade: body.cidade,
+      uf: body.uf,
+      latitude: body.latitude || null,
+      longitude: body.longitude || null
+    }
+
+    const response = await Address.insertAddress(address);
 
     const sqlTreated = await SQL.build(response);
 
     //! Erro ao executar query no banco
     if (sqlTreated.result === 'error') {
-
-      //! Erro de cadastro duplicado
-      if (sqlTreated.errno === 1062) {
-        return res.json({
-          result: 'error',
-          message: message.error.code1.subcode1.message
-        })
-      }
+      return res.json(sqlTreated)
     }
 
     //* Query executada com sucesso
@@ -50,7 +57,7 @@ exports.create = async function (req, res) {
 
     return res.json(sqlTreated);
   } catch (err) {
-    
+
     //! Erro Internal Server
     return res.status(400).json({
       result: 'error',
@@ -64,72 +71,19 @@ exports.update = async function (req, res) {
   try {
     const body = req.body;
 
-    const profile = {
-      nome: body.nome,
-      updated_at: new Date(),
-      id_perfil: body.id_perfil
+    const address = {
+      logradouro: body.logradouro,
+      numero: body.numero,
+      cep: body.cep || null,
+      bairro: body.bairro || null,
+      cidade: body.cidade,
+      uf: body.uf,
+      latitude: body.latitude || null,
+      longitude: body.longitude || null,
+      id_endereco: body.id_endereco
     }
 
-    const response = await Profile.updateProfile(profile);
-
-    const sqlTreated = await SQL.build(response);
-
-    //! Erro ao executar query no banco
-    if (sqlTreated.result === 'error') {
-
-      //! Erro de cadastro duplicado
-      if (sqlTreated.errno === 1062) {
-        return res.json({
-          result: sqlTreated.result,
-          message: message.error.code1.subcode1.message
-        })
-      }
-    }
-
-    //* Query executada com sucesso
-    if (sqlTreated.result === 'success') {
-
-      //* Nenhum usuário encontrado com os parâmetros passados
-      if (sqlTreated.sql.affectedRows === 0) {
-        return res.json({
-          result: 'error',
-          message: message.error.code1.subcode2.message
-        })
-      }
-
-      return res.json({
-        result: sqlTreated.result,
-        message: message.success.code1.subcode2.message
-      })
-    }
-
-    return res.json(sqlTreated);
-  } catch (err) {
-    
-    //! Erro Internal Server
-    return res.status(400).json({
-      result: 'error',
-      message: message.error.code1.subcode99.message,
-      error: err.toString(),
-    });
-  }
-}
-
-exports.delete = async function (req, res) {
-  try {
-    const { id_perfil } = req.body;
-
-    const users = await User.findByProfile(id_perfil);
-
-    //* Existem usuários atrelados a este perfil
-    if (users[0]) {
-      return res.json({
-        result: 'error',
-        message: message.error.code1.subcode3.message
-      })
-    }
-
-    const response = await Profile.deleteProfile(id_perfil);
+    const response = await Address.updateAddress(address);
 
     const sqlTreated = await SQL.build(response);
 
@@ -145,7 +99,60 @@ exports.delete = async function (req, res) {
       if (sqlTreated.sql.affectedRows === 0) {
         return res.json({
           result: 'error',
-          message: message.error.code1.subcode2.message
+          message: message.error.code1.subcode1.message
+        })
+      }
+
+      return res.json({
+        result: sqlTreated.result,
+        message: message.success.code1.subcode2.message
+      })
+    }
+
+    return res.json(sqlTreated);
+  } catch (err) {
+
+    //! Erro Internal Server
+    return res.status(400).json({
+      result: 'error',
+      message: message.error.code1.subcode99.message,
+      error: err.toString(),
+    });
+  }
+}
+
+exports.delete = async function (req, res) {
+  try {
+    const { id_endereco } = req.body;
+
+    const clients = await Client.findByAddress(id_endereco);
+    const providers = await Provider.findByAddress(id_endereco);
+
+    //* Existem clientes ou fornecedores atrelados a este endereço
+    if (clients[0] || providers[0]) {
+      return res.json({
+        result: 'error',
+        message: message.error.code1.subcode2.message
+      })
+    }
+
+    const response = await Address.deleteProvider(id_endereco);
+
+    const sqlTreated = await SQL.build(response);
+
+    //! Erro ao executar query no banco
+    if (sqlTreated.result === 'error') {
+      return res.json(sqlTreated)
+    }
+
+    //* Query executada com sucesso
+    if (sqlTreated.result === 'success') {
+
+      //* Nenhum usuário encontrado com os parâmetros passados
+      if (sqlTreated.sql.affectedRows === 0) {
+        return res.json({
+          result: 'error',
+          message: message.error.code1.subcode1.message
         })
       }
 

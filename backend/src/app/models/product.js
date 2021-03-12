@@ -46,7 +46,7 @@ exports.updateProduct = async function (product) {
   return new Promise(async (resolve, reject) => {
     try {
       const query = `UPDATE ${table} 
-        SET id_categoria = ?, id_fornecedor = ?, nome = ?, preco_custo = ?, preco_venda = ?, preco_promocional = ?, estoque = ?, tamanho = ?
+        SET id_categoria = ?, id_fornecedor = ?, nome = ?, preco_custo = ?, preco_venda = ?, preco_promocional = ?, estoque = ?, tamanho = ?, updated_at = ?
         WHERE id_produto = ?
       `;
 

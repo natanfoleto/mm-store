@@ -7,12 +7,17 @@ const validationProfile = require('./app/schema/validationProfile');
 const validationProduct = require('./app/schema/validationProduct');
 const validationCategory = require('./app/schema/validationCategory');
 const validationProvider = require('./app/schema/validationProvider');
+const validationClient = require('./app/schema/validationClient');
+const validationAddress = require('./app/schema/validationAddress');
 
 const UserController = require('./app/controllers/user');
 const ProfileController = require('./app/controllers/profile');
 const ProductController = require('./app/controllers/product');
 const CategoryController = require('./app/controllers/category');
 const ProviderController = require('./app/controllers/provider');
+const ClientController = require('./app/controllers/client');
+const AccountController = require('./app/controllers/account');
+const AddressController = require('./app/controllers/address');
 
 const routes = new Router();
 
@@ -40,5 +45,17 @@ routes.route('/fornecedores').get(ProviderController.list);
 routes.route('/fornecedores').post(validation(validationProvider.providerCreate, 'body'), ProviderController.create);
 routes.route('/fornecedores').put(validation(validationProvider.providerUpdate, 'body'), ProviderController.update);
 routes.route('/fornecedores').delete(validation(validationProvider.providerDelete, 'body'), ProviderController.delete);
+
+routes.route('/clientes').get(ClientController.list);
+routes.route('/clientes').post(validation(validationClient.clientCreate, 'body'), ClientController.create);
+routes.route('/clientes').put(validation(validationClient.clientUpdate, 'body'), ClientController.update);
+routes.route('/clientes').delete(validation(validationClient.clientDelete, 'body'), ClientController.delete);
+
+routes.route('/contas').get(AccountController.list);
+
+routes.route('/enderecos').get(AddressController.list);
+routes.route('/enderecos').post(validation(validationAddress.addressCreate, 'body'), AddressController.create);
+routes.route('/enderecos').put(validation(validationAddress.addressUpdate, 'body'), AddressController.update);
+routes.route('/enderecos').delete(validation(validationAddress.addressDelete, 'body'), AddressController.delete);
 
 module.exports = routes;

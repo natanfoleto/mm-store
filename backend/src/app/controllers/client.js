@@ -1,16 +1,16 @@
-const Profile = require('../models/profile');
-const User = require('../models/user');
-const message = require('../messages/profile');
+const Client = require('../models/client');
+const AccountController = require('./account')
+const message = require('../messages/client');
 
 const SQL = require('../helper/SQL');
 
 exports.list = async function (req, res) {
   try {
-    const response = await Profile.listProfile();
+    const response = await Client.listClient();
 
     return res.json(response);
   } catch (err) {
-    
+
     //! Erro Internal Server
     return res.status(400).json({
       result: 'error',
@@ -24,7 +24,16 @@ exports.create = async function (req, res) {
   try {
     const body = req.body;
 
-    const response = await Profile.insertProfile(body.nome);
+    const client = {
+      nome: body.nome,
+      cpf: body.cpf,
+      email: body.email || null,
+      data_nasc: body.data_nasc,
+      celular: body.celular || null,
+      password: body.password
+    }
+
+    const response = await Client.insertClient(client);
 
     const sqlTreated = await SQL.build(response);
 
@@ -42,6 +51,10 @@ exports.create = async function (req, res) {
 
     //* Query executada com sucesso
     if (sqlTreated.result === 'success') {
+
+      //TODO Criar conta e vincular com cliente
+      await AccountController.create(sqlTreated.sql.insertId)
+      
       return res.json({
         result: 'success',
         message: message.success.code1.subcode1.message
@@ -50,7 +63,7 @@ exports.create = async function (req, res) {
 
     return res.json(sqlTreated);
   } catch (err) {
-    
+
     //! Erro Internal Server
     return res.status(400).json({
       result: 'error',
@@ -64,13 +77,18 @@ exports.update = async function (req, res) {
   try {
     const body = req.body;
 
-    const profile = {
+    const client = {
       nome: body.nome,
+      cpf: body.cpf,
+      email: body.email || null,
+      data_nasc: body.data_nasc,
+      celular: body.celular || null,
+      password: body.password || null,
       updated_at: new Date(),
-      id_perfil: body.id_perfil
+      id_cliente: body.id_cliente
     }
 
-    const response = await Profile.updateProfile(profile);
+    const response = await Client.updateClient(client);
 
     const sqlTreated = await SQL.build(response);
 
@@ -105,7 +123,7 @@ exports.update = async function (req, res) {
 
     return res.json(sqlTreated);
   } catch (err) {
-    
+
     //! Erro Internal Server
     return res.status(400).json({
       result: 'error',
@@ -117,19 +135,9 @@ exports.update = async function (req, res) {
 
 exports.delete = async function (req, res) {
   try {
-    const { id_perfil } = req.body;
+    const { id_cliente } = req.body;
 
-    const users = await User.findByProfile(id_perfil);
-
-    //* Existem usuários atrelados a este perfil
-    if (users[0]) {
-      return res.json({
-        result: 'error',
-        message: message.error.code1.subcode3.message
-      })
-    }
-
-    const response = await Profile.deleteProfile(id_perfil);
+    const response = await Client.deleteClient(id_cliente);
 
     const sqlTreated = await SQL.build(response);
 
@@ -141,7 +149,7 @@ exports.delete = async function (req, res) {
     //* Query executada com sucesso
     if (sqlTreated.result === 'success') {
 
-      //* Nenhum usuário encontrado com os parâmetros passados
+      //* Nenhum cliente encontrado com os parâmetros passados
       if (sqlTreated.sql.affectedRows === 0) {
         return res.json({
           result: 'error',
@@ -149,6 +157,9 @@ exports.delete = async function (req, res) {
         })
       }
 
+      //TODO Excluir conta vinculada ao cliente
+      await AccountController.delete(id_cliente);
+    
       return res.json({
         result: 'success',
         message: message.success.code1.subcode3.message

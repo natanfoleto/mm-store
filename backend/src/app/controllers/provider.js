@@ -29,7 +29,6 @@ exports.create = async function (req, res) {
       cpf_cnpj: body.cpf_cnpj,
       email: body.email || null,
       celular: body.celular || null,
-      id_endereco: body.id_endereco || null,
       obs: body.obs || null
     }
 
@@ -78,8 +77,8 @@ exports.update = async function (req, res) {
       cpf_cnpj: body.cpf_cnpj,
       email: body.email || null,
       celular: body.celular || null,
-      id_endereco: body.id_endereco || null,
       obs: body.obs || null,
+      updated_at: new Date(),
       id_fornecedor: body.id_fornecedor
     }
 
@@ -148,10 +147,7 @@ exports.delete = async function (req, res) {
 
     //! Erro ao executar query no banco
     if (sqlTreated.result === 'error') {
-      return res.json({
-        result: 'error',
-        message: sqlTreated.errno
-      })
+      return res.json(sqlTreated)
     }
 
     //* Query executada com sucesso

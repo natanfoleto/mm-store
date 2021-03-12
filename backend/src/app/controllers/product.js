@@ -83,6 +83,7 @@ exports.update = async function (req, res) {
       preco_promocional: body.preco_promocional || null,
       estoque: body.estoque,
       tamanho: body.tamanho || null,
+      updated_at: new Date(),
       id_produto: body.id_produto
     }
 
@@ -141,10 +142,7 @@ exports.delete = async function (req, res) {
 
     //! Erro ao executar query no banco
     if (sqlTreated.result === 'error') {
-      return res.json({
-        result: 'error',
-        message: sqlTreated.errno
-      })
+      return res.json(sqlTreated)
     }
 
     //* Query executada com sucesso
