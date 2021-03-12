@@ -106,24 +106,6 @@ const validationSchemas = {
         'number.empty': 'id_endereco não pode estar vazio',
         'number.min': 'id_endereco deve ser maior que 0'
       }),
-    id_pessoa: Joi
-      .number()
-      .required()
-      .min(1)
-      .messages({
-        'any.required': 'id_pessoa é necessário',
-        'number.base': 'id_pessoa deve ser um número',
-        'number.empty': 'id_pessoa não pode estar vazio',
-        'number.min': 'id_pessoa deve ser maior que 0'
-      }),
-    tipo_pessoa: Joi
-      .string()
-      .required()
-      .messages({
-        'any.required': 'tipo_pessoa é necessário',
-        'string.base': 'tipo_pessoa deve ser do tipo string',
-        'string.empty': 'tipo_pessoa não pode estar vazio',
-      }),
     logradouro: Joi
       .string()
       .required()

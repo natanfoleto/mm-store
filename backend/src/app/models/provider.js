@@ -19,7 +19,7 @@ exports.listProvider = async function () {
   });
 }
 
-exports.insertProvider = async function (product) {
+exports.insertProvider = async function (object) {
   return new Promise(async (resolve, reject) => {
     try {
       const query = `INSERT INTO ${table} (
@@ -28,7 +28,7 @@ exports.insertProvider = async function (product) {
         ?, ?, ?, ?, ?
       );`;
 
-      const binds = Object.values(product);
+      const binds = Object.values(object);
 
       const result = await pool.execute(query, binds);
 
@@ -42,7 +42,7 @@ exports.insertProvider = async function (product) {
   });
 }
 
-exports.updateProvider = async function (product) {
+exports.updateProvider = async function (object) {
   return new Promise(async (resolve, reject) => {
     try {
       const query = `UPDATE ${table} 
@@ -50,7 +50,7 @@ exports.updateProvider = async function (product) {
         WHERE id_fornecedor = ?
       `;
 
-      const binds = Object.values(product);
+      const binds = Object.values(object);
 
       const result = await pool.execute(query, binds);
 

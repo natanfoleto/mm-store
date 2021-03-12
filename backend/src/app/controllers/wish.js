@@ -1,13 +1,11 @@
-const Address = require('../models/address');
-const Client = require('../models/client');
-const Provider = require('../models/provider');
-const message = require('../messages/address');
+const Wish = require('../models/wish');
+const message = require('../messages/wish');
 
 const SQL = require('../helper/SQL');
 
 exports.list = async function (req, res) {
   try {
-    const response = await Address.listAddress();
+    const response = await Wish.listWish();
 
     return res.json(response);
   } catch (err) {
@@ -25,20 +23,13 @@ exports.create = async function (req, res) {
   try {
     const body = req.body;
 
-    const address = {
-      id_pessoa: body.id_pessoa,
-      tipo_pessoa: body.tipo_pessoa,
-      logradouro: body.logradouro,
-      numero: body.numero,
-      cep: body.cep || null,
-      bairro: body.bairro || null,
-      cidade: body.cidade,
-      uf: body.uf,
-      latitude: body.latitude || null,
-      longitude: body.longitude || null
+    const wish = {
+      id_cliente: body.id_cliente,
+      descricao: body.descricao,
+      url_foto: body.url_foto || null
     }
 
-    const response = await Address.insertAddress(address);
+    const response = await Wish.insertWish(wish);
 
     const sqlTreated = await SQL.build(response);
 
@@ -71,19 +62,13 @@ exports.update = async function (req, res) {
   try {
     const body = req.body;
 
-    const address = {
-      logradouro: body.logradouro,
-      numero: body.numero,
-      cep: body.cep || null,
-      bairro: body.bairro || null,
-      cidade: body.cidade,
-      uf: body.uf,
-      latitude: body.latitude || null,
-      longitude: body.longitude || null,
-      id_endereco: body.id_endereco
+    const wish = {
+      descricao: body.descricao,
+      url_foto: body.url_foto || null,
+      id_pedido: body.id_pedido
     }
 
-    const response = await Address.updateAddress(address);
+    const response = await Wish.updateWish(wish);
 
     const sqlTreated = await SQL.build(response);
 
@@ -95,7 +80,7 @@ exports.update = async function (req, res) {
     //* Query executada com sucesso
     if (sqlTreated.result === 'success') {
 
-      //* Nenhum usuário encontrado com os parâmetros passados
+      //* Nenhum pedido encontrado com os parâmetros passados
       if (sqlTreated.sql.affectedRows === 0) {
         return res.json({
           result: 'error',
@@ -123,20 +108,9 @@ exports.update = async function (req, res) {
 
 exports.delete = async function (req, res) {
   try {
-    const { id_endereco } = req.body;
+    const { id_pedido } = req.body;
 
-    const clients = await Client.findByAddress(id_endereco);
-    const providers = await Provider.findByAddress(id_endereco);
-
-    //* Existem clientes ou fornecedores atrelados a este endereço
-    if (clients[0] || providers[0]) {
-      return res.json({
-        result: 'error',
-        message: message.error.code1.subcode2.message
-      })
-    }
-
-    const response = await Address.deleteAddress(id_endereco);
+    const response = await Wish.deleteWish(id_pedido);
 
     const sqlTreated = await SQL.build(response);
 
@@ -148,7 +122,7 @@ exports.delete = async function (req, res) {
     //* Query executada com sucesso
     if (sqlTreated.result === 'success') {
 
-      //* Nenhum usuário encontrado com os parâmetros passados
+      //* Nenhum pedido encontrado com os parâmetros passados
       if (sqlTreated.sql.affectedRows === 0) {
         return res.json({
           result: 'error',

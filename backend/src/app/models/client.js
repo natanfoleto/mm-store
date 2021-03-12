@@ -19,7 +19,7 @@ exports.listClient = async function () {
   });
 }
 
-exports.insertClient = async function (client) {
+exports.insertClient = async function (object) {
   return new Promise(async (resolve, reject) => {
     try {
       const query = `INSERT INTO ${table} (
@@ -28,7 +28,7 @@ exports.insertClient = async function (client) {
         ?, ?, ?, ?, ?, ?
       );`;
 
-      const binds = Object.values(client);
+      const binds = Object.values(object);
 
       const result = await pool.execute(query, binds);
 
@@ -42,7 +42,7 @@ exports.insertClient = async function (client) {
   });
 }
 
-exports.updateClient = async function (client) {
+exports.updateClient = async function (object) {
   return new Promise(async (resolve, reject) => {
     try {
       const query = `UPDATE ${table} 
@@ -50,7 +50,7 @@ exports.updateClient = async function (client) {
         WHERE id_cliente = ?
       `;
 
-      const binds = Object.values(client);
+      const binds = Object.values(object);
 
       const result = await pool.execute(query, binds);
 

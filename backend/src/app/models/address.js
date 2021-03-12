@@ -5,10 +5,7 @@ const table = 'enderecos';
 exports.listAddress = async function () {
   return new Promise(async (resolve, reject) => {
     try {
-      const query = `SELECT ${table}.*, clientes.nome, clientes.cpf
-        FROM ${table}
-        INNER JOIN clientes ON (clientes.id_endereco = ${table}.id_endereco)
-      `;
+      const query = `SELECT * from ${table}`;
 
       const result = await pool.execute(query);
 
@@ -22,7 +19,7 @@ exports.listAddress = async function () {
   });
 }
 
-exports.insertAddress = async function (address) {
+exports.insertAddress = async function (object) {
   return new Promise(async (resolve, reject) => {
     try {
       const query = `INSERT INTO ${table} (
@@ -31,7 +28,7 @@ exports.insertAddress = async function (address) {
         ?, ?, ?, ?, ?, ?, ?, ?, ?, ?
       );`;
 
-      const binds = Object.values(address);
+      const binds = Object.values(object);
 
       const result = await pool.execute(query, binds);
 
@@ -45,7 +42,7 @@ exports.insertAddress = async function (address) {
   });
 }
 
-exports.updateAddress = async function (product) {
+exports.updateAddress = async function (object) {
   return new Promise(async (resolve, reject) => {
     try {
       const query = `UPDATE ${table} 
@@ -53,7 +50,7 @@ exports.updateAddress = async function (product) {
         WHERE id_endereco = ?
       `;
 
-      const binds = Object.values(product);
+      const binds = Object.values(object);
 
       const result = await pool.execute(query, binds);
 

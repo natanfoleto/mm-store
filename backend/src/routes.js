@@ -9,6 +9,7 @@ const validationCategory = require('./app/schema/validationCategory');
 const validationProvider = require('./app/schema/validationProvider');
 const validationClient = require('./app/schema/validationClient');
 const validationAddress = require('./app/schema/validationAddress');
+const validationWish = require('./app/schema/validationWish');
 
 const UserController = require('./app/controllers/user');
 const ProfileController = require('./app/controllers/profile');
@@ -18,6 +19,7 @@ const ProviderController = require('./app/controllers/provider');
 const ClientController = require('./app/controllers/client');
 const AccountController = require('./app/controllers/account');
 const AddressController = require('./app/controllers/address');
+const WishController = require('./app/controllers/wish');
 
 const routes = new Router();
 
@@ -57,5 +59,10 @@ routes.route('/enderecos').get(AddressController.list);
 routes.route('/enderecos').post(validation(validationAddress.addressCreate, 'body'), AddressController.create);
 routes.route('/enderecos').put(validation(validationAddress.addressUpdate, 'body'), AddressController.update);
 routes.route('/enderecos').delete(validation(validationAddress.addressDelete, 'body'), AddressController.delete);
+
+routes.route('/pedidos').get(WishController.list);
+routes.route('/pedidos').post(validation(validationWish.wishCreate, 'body'), WishController.create);
+routes.route('/pedidos').put(validation(validationWish.wishUpdate, 'body'), WishController.update);
+routes.route('/pedidos').delete(validation(validationWish.wishDelete, 'body'), WishController.delete);
 
 module.exports = routes;

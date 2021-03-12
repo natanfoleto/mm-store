@@ -45,7 +45,7 @@ exports.insertAccount = async function (id_cliente) {
   });
 }
 
-exports.updateAccount = async function (account) {
+exports.updateAccount = async function (object) {
   return new Promise(async (resolve, reject) => {
     try {
       const query = `UPDATE ${table} 
@@ -53,7 +53,7 @@ exports.updateAccount = async function (account) {
         WHERE id_conta = ?
       `;
 
-      const binds = Object.values(account);
+      const binds = Object.values(object);
 
       const result = await pool.execute(query, binds);
 

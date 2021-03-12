@@ -1,8 +1,8 @@
 const pool = require('../../database/pool');
 
-const table = 'usuarios';
+const table = 'pedidos';
 
-exports.listUser = async function () {
+exports.listWish = async function () {
   return new Promise(async (resolve, reject) => {
     try {
       const query = `SELECT * FROM ${table}`;
@@ -11,7 +11,7 @@ exports.listUser = async function () {
 
       resolve(result);
     } catch (err) {
-      console.log("Exception from user.js/listUser:");
+      console.log("Exception from wish.js/listWish:");
       console.log(err);
 
       reject(err);
@@ -19,13 +19,13 @@ exports.listUser = async function () {
   });
 }
 
-exports.insertUser = async function (object) {
+exports.insertWish = async function (object) {
   return new Promise(async (resolve, reject) => {
     try {
       const query = `INSERT INTO ${table} (
-        id_perfil, nome, login, password_hash
+        id_cliente, descricao, url_foto
       ) VALUES (
-        ?, ?, ?, ?
+        ?, ?, ?
       );`;
 
       const binds = Object.values(object);
@@ -34,7 +34,7 @@ exports.insertUser = async function (object) {
 
       resolve(result);
     } catch (err) {
-      console.log("Exception from user.js/insertUser:");
+      console.log("Exception from wish.js/insertWish:");
       console.log(err);
 
       reject(err);
@@ -42,12 +42,12 @@ exports.insertUser = async function (object) {
   });
 }
 
-exports.updateUser = async function (object) {
+exports.updateWish = async function (object) {
   return new Promise(async (resolve, reject) => {
     try {
       const query = `UPDATE ${table} 
-        SET id_perfil = ?, nome = ?, login = ?, updated_at = ? 
-        WHERE id_usuario = ?
+        SET descricao = ?, url_foto = ?
+        WHERE id_pedido = ?
       `;
 
       const binds = Object.values(object);
@@ -56,7 +56,7 @@ exports.updateUser = async function (object) {
 
       resolve(result);
     } catch (err) {
-      console.log("Exception from user.js/updateUser:");
+      console.log("Exception from wish.js/updateWish:");
       console.log(err);
 
       reject(err);
@@ -64,11 +64,11 @@ exports.updateUser = async function (object) {
   });
 }
 
-exports.deleteUser = async function (id) {
+exports.deleteWish = async function (id) {
   return new Promise(async (resolve, reject) => {
     try {
       const query = `DELETE FROM ${table}  
-        WHERE id_usuario = ?
+        WHERE id_pedido = ?
       `;
 
       const binds = id;
@@ -77,28 +77,7 @@ exports.deleteUser = async function (id) {
 
       resolve(result);
     } catch (err) {
-      console.log("Exception from user.js/deleteUser:");
-      console.log(err);
-
-      reject(err);
-    }
-  });
-}
-
-exports.findByProfile = async function (id_perfil) {
-  return new Promise(async (resolve, reject) => {
-    try {
-      const query = `SELECT * FROM ${table}
-        WHERE id_perfil = ?
-      `;
-
-      const binds = id_perfil;
-
-      const result = await pool.execute(query, binds);
-
-      resolve(result);
-    } catch (err) {
-      console.log("Exception from user.js/findByProfile:");
+      console.log("Exception from wish.js/deleteWish:");
       console.log(err);
 
       reject(err);
