@@ -22,11 +22,11 @@ exports.listProduct = async function () {
 exports.insertProduct = async function (object) {
   return new Promise(async (resolve, reject) => {
     try {
-      const query = `INSERT INTO ${table} (
-        id_categoria, id_fornecedor, nome, preco_custo, preco_venda, preco_promocional, estoque, tamanho
-      ) VALUES (
-        ?, ?, ?, ?, ?, ?, ?, ?
-      );`;
+      const query = `INSERT INTO ${table} 
+        (id_categoria, id_fornecedor, nome, preco_custo, preco_venda, preco_promocional, estoque, tamanho) 
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+        RETURNING *
+      ;`;
 
       const binds = Object.values(object);
 

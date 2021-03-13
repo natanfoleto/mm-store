@@ -25,11 +25,11 @@ exports.listAccount = async function () {
 exports.insertAccount = async function (id_cliente) {
   return new Promise(async (resolve, reject) => {
     try {
-      const query = `INSERT INTO ${table} (
-        id_cliente
-      ) VALUES (
-        ?
-      );`;
+      const query = `INSERT INTO ${table} 
+        (id_cliente) 
+        VALUES (?)
+        RETURNING *
+      ;`;
 
       const binds = id_cliente;
 

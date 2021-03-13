@@ -30,7 +30,7 @@ const routes = new Router();
 
 routes.route('/session').post(validation(validationSession.sessionCreate, 'body'), SessionController.create);
 
-routes.use(auth.authenticate);
+//routes.use(auth.authenticate);
 
 routes.route('/usuarios').get(UserController.list);
 routes.route('/usuarios').post(validation(validationUser.userCreate, 'body'), UserController.create);

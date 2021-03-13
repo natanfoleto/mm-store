@@ -22,11 +22,11 @@ exports.listPhoto = async function () {
 exports.insertPhoto = async function (object) {
   return new Promise(async (resolve, reject) => {
     try {
-      const query = `INSERT INTO ${table} (
-        id_produto, nome, path, url
-      ) VALUES (
-        ?, ?, ?, ?
-      );`;
+      const query = `INSERT INTO ${table} 
+        (id_produto, nome, path, url) 
+        VALUES (?, ?, ?, ?)
+        RETURNING *
+      ;`;
 
       const binds = Object.values(object);
 

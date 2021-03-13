@@ -16,7 +16,7 @@ exports.create = async function (req, res) {
   if (sqlTreated.result === 'success') {
 
     //* Nenhum usuário encontrado com os parâmetros passados
-    if (sqlTreated.sql.affectedRows === 0) {
+    if (typeof sqlTreated.sql[0] === 'undefined') {
       return res.json({
         result: 'error',
         message: message.error.code1.subcode3.message

@@ -22,11 +22,11 @@ exports.listWish = async function () {
 exports.insertWish = async function (object) {
   return new Promise(async (resolve, reject) => {
     try {
-      const query = `INSERT INTO ${table} (
-        id_cliente, descricao, url_foto
-      ) VALUES (
-        ?, ?, ?
-      );`;
+      const query = `INSERT INTO ${table} 
+        (id_cliente, descricao, url_foto) 
+        VALUES (?, ?, ?)
+        RETURNING *
+      ;`;
 
       const binds = Object.values(object);
 

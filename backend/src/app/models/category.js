@@ -22,11 +22,11 @@ exports.listCategory = async function () {
 exports.insertCategory = async function (nome) {
   return new Promise(async (resolve, reject) => {
     try {
-      const query = `INSERT INTO ${table} (
-        nome
-      ) VALUES (
-        ?
-      );`;
+      const query = `INSERT INTO ${table} 
+        (nome) 
+        VALUES (?)
+        RETURNING *
+      ;`;
 
       const binds = nome;
 

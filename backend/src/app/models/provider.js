@@ -22,11 +22,11 @@ exports.listProvider = async function () {
 exports.insertProvider = async function (object) {
   return new Promise(async (resolve, reject) => {
     try {
-      const query = `INSERT INTO ${table} (
-        nome, cpf_cnpj, email, celular, obs
-      ) VALUES (
-        ?, ?, ?, ?, ?
-      );`;
+      const query = `INSERT INTO ${table} 
+        (nome, cpf_cnpj, email, celular, obs) 
+        VALUES (?, ?, ?, ?, ?)
+        RETURNING *
+      ;`;
 
       const binds = Object.values(object);
 

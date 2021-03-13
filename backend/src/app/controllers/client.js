@@ -53,7 +53,7 @@ exports.create = async function (req, res) {
     if (sqlTreated.result === 'success') {
 
       //TODO Criar conta e vincular com cliente
-      await AccountController.create(sqlTreated.sql.insertId)
+      await AccountController.create(sqlTreated.sql[0].id_cliente)
       
       return res.json({
         result: 'success',

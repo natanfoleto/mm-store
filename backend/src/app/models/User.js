@@ -22,11 +22,11 @@ exports.listUser = async function () {
 exports.insertUser = async function (object) {
   return new Promise(async (resolve, reject) => {
     try {
-      const query = `INSERT INTO ${table} (
-        id_perfil, nome, login, password_hash
-      ) VALUES (
-        ?, ?, ?, ?
-      );`;
+      const query = `INSERT INTO ${table} 
+        (id_perfil, nome, login, password_hash) 
+        VALUES (?, ?, ?, ?)
+        RETURNING *
+      ;`;
 
       const binds = Object.values(object);
 

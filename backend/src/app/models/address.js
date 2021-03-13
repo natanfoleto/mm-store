@@ -22,11 +22,11 @@ exports.listAddress = async function () {
 exports.insertAddress = async function (object) {
   return new Promise(async (resolve, reject) => {
     try {
-      const query = `INSERT INTO ${table} (
-        id_pessoa, tipo_pessoa, logradouro, numero, cep, bairro, cidade, uf, latitude, longitude
-      ) VALUES (
-        ?, ?, ?, ?, ?, ?, ?, ?, ?, ?
-      );`;
+      const query = `INSERT INTO ${table} 
+        (id_pessoa, tipo_pessoa, logradouro, numero, cep, bairro, cidade, uf, latitude, longitude) 
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        RETURNING *
+      ;`;
 
       const binds = Object.values(object);
 
