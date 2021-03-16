@@ -1,10 +1,15 @@
+import { useHistory } from 'react-router-dom';
 import { Form, Input } from '@rocketseat/unform';
 
 import Layout from '../_layouts/auth';
 
-import history from '../../services/history';
-
 export default function Login() {
+  const history = useHistory();
+
+  async function handleLogin() {
+    history.push('/dashboard');
+  }
+
   return (
     <Layout>
         <h1>MM STORE</h1>
@@ -25,12 +30,7 @@ export default function Login() {
             required
           />
 
-          <button 
-            onClick={() => {
-              history.push('/dashboard');
-            }} 
-            type="submit"
-          >
+          <button onClick={handleLogin} type="button">
               Acessar
           </button>
         </Form>
