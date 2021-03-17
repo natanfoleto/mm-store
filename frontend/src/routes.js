@@ -2,6 +2,7 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
+import Perfils from "./pages/Perfils";
 import NotFound from "./pages/NotFound";
 
 const Routes = () => {
@@ -10,6 +11,8 @@ const Routes = () => {
       <Switch>
         <Route path="/" exact component={Login} />
         <Route path="/dashboard" exact component={Dashboard} />
+        <Route path="/perfils" exact component={Perfils} />
+
         <Route component={NotFound} />
       </Switch>
     </BrowserRouter>
