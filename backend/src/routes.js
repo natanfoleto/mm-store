@@ -28,7 +28,7 @@ const WishController = require('./app/controllers/wish');
 
 const routes = new Router();
 
-routes.route('/session').post(validation(validationSession.sessionCreate, 'body'), SessionController.create);
+routes.route('/sessions').post(validation(validationSession.sessionCreate, 'body'), SessionController.create);
 
 //routes.use(auth.authenticate);
 

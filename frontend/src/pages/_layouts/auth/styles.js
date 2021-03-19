@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { darken } from 'polished';
+import { lighten } from 'polished';
 
 export const Wrapper = styled.div`
   height: 100vh;
@@ -18,11 +18,12 @@ export const Container = styled.div`
   form {
     display: flex;
     flex-direction: column;
-    margin-top: 30px;
+    margin-top: 20px;
 
     input {
       background: #FFF;
-      border: 1px solid rgba(0, 0, 0, 0.4);
+      border: 0;
+      box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
       border-radius: 4px;
       height: 44px;
       padding: 0 15px;
@@ -37,16 +38,17 @@ export const Container = styled.div`
     button {
       margin: 5px 0 0;
       height: 44px;
-      background: #323EAF;
+      background: #003464;
       font-weight: bold;
       color: #FFF;
       border: 0;
+      box-shadow: 0px 2px 4px rgba(0, 52, 100, 0.25);
       border-radius: 4px;
       font-size: 16px;
       transition: background 0.2s;
 
       &:hover {
-        background: ${darken(0.07, '#323EAF')};
+        background: ${lighten(0.07, '#003464')};
       }
     }
 

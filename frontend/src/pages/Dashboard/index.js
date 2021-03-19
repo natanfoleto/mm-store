@@ -1,13 +1,11 @@
 import Layout from '../_layouts/default';
 
-import Menu from '../../components/Menu';
+import { Card } from './styles';
 
-export default function Dashboard() {
+export default function Dashboard({ history }) {
   return (
     <Layout>
-      <Menu />
-      
-      <h1>Dashboard</h1>
+      <Card></Card>
     </Layout>
   );
 }

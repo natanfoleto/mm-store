@@ -6,7 +6,7 @@ const validation = (schema, property) => {
     if (valid) {
       next()
     } else {
-      res.status(401).json(validate)
+      res.status(206).json(validate)
     }
   }
 }

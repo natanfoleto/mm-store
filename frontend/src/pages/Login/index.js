@@ -1,22 +1,41 @@
-import { useHistory } from 'react-router-dom';
+import { useState } from 'react';
 import { Form, Input } from '@rocketseat/unform';
-
+import { Container } from './styles';
 import Layout from '../_layouts/auth';
 
-export default function Login() {
-  const history = useHistory();
+import { logIn } from '../../actions/Login';
+import { setItem } from '../../utils/LocalStorage';
 
-  async function handleLogin() {
-    history.push('/dashboard');
+export default function Login({ history }) {
+  const [message, setMessage] = useState('');
+
+  async function handleSubmit({ login, password }) {
+    const res = await logIn(login, password);
+
+    if (res.result === 'success') {
+      const { usuario, token } = res;
+
+      setItem('auth', { usuario, token });
+
+      history.push('/dashboard');
+    }
+
+    if (res.result === 'error') {
+      const { message } = res;
+
+      setMessage(message);
+    }
   }
 
   return (
     <Layout>
+      <Container>
         <h1>MM STORE</h1>
+        <p>{message}</p>
 
-        <Form onSubmit={() =>{}}>
+        <Form onSubmit={handleSubmit}>
           <Input 
-            name="email" 
+            name="login" 
             type="text" 
             placeholder="Seu login" 
             autoComplete="off" 
@@ -30,10 +49,11 @@ export default function Login() {
             required
           />
 
-          <button onClick={handleLogin} type="button">
+          <button type="submit">
               Acessar
           </button>
         </Form>
+      </Container>
     </Layout>
   );
 }

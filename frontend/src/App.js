@@ -1,10 +1,12 @@
 import Routes from './routes';
 import GlobalStyle from './styles/global';
 
-function App() {
+import { useHistory } from 'react-router-dom';
+
+function App() {  
   return (
     <>
-      <Routes />
+      <Routes istory={useHistory()}/>
       <GlobalStyle />
     </>
   );
