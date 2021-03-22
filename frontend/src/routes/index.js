@@ -1,18 +1,18 @@
 import { BrowserRouter, Switch } from "react-router-dom";
 import Route from './Route';
 
-import Login from "../pages/Login";
+import SignIn from "../pages/SignIn";
 import Dashboard from "../pages/Dashboard";
-import Perfils from "../pages/Perfils";
+import Profiles from "../pages/Profiles";
 import NotFound from "../pages/NotFound";
 
 export default function Routes() {
   return (
     <BrowserRouter>
       <Switch>
-        <Route path="/" exact component={Login} />
-        <Route path="/dashboard" component={Dashboard} isPrivate />
-        <Route path="/perfils" component={Perfils} isPrivate />
+        <Route exact path="/" component={SignIn} />
+        <Route exact path="/dashboard" component={Dashboard} isPrivate />
+        <Route exact path="/perfils" component={Profiles} isPrivate />
 
         <Route component={NotFound} />
       </Switch>

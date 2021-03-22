@@ -2,26 +2,25 @@ import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 
-import { ProSidebar, SidebarHeader, SidebarContent, SidebarFooter, Menu, MenuItem } from 'react-pro-sidebar';
+import { useAuth } from '../../contexts/auth';
+
 import 'react-pro-sidebar/dist/css/styles.css';
-
-import { Content, Header, Footer } from './styles';
-
+import { ProSidebar, SidebarHeader, SidebarContent, SidebarFooter, Menu, MenuItem } from 'react-pro-sidebar';
 import { RiDashboard2Fill, RiUserSettingsFill, RiTruckFill, RiStarSFill, RiStackFill, RiLogoutCircleLine } from 'react-icons/ri';
 import { AiFillAppstore, AiFillSetting } from 'react-icons/ai';
 import { FaUserCircle, FaUsersCog, FaUsers, FaCashRegister } from 'react-icons/fa';
 import { BsToggleOn, BsToggleOff } from 'react-icons/bs';
 
-import { logOut } from '../../actions/Login';
+import { Content, Header, Footer } from './styles';
 
 export default function ComponentMenu() {
   const history = useHistory();
+  const { signOut } = useAuth();
+  
   const [menuToggle, setMenuToggle] = useState(false);
 
   function handleLogOut() {
-    logOut();
-
-    history.push('/');
+    signOut();
   }
 
   return (

@@ -1,11 +1,18 @@
 import Layout from '../_layouts/default';
 
-import { Card } from './styles';
+import { Container, CardContainer, Card } from './styles';
 
 export default function Dashboard({ history }) {
   return (
     <Layout>
-      <Card></Card>
+      <Container>
+        <CardContainer>
+          <Card></Card>
+          <Card></Card>
+          <Card></Card>
+          <Card></Card>
+        </CardContainer>
+      </Container>
     </Layout>
   );
 }

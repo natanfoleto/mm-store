@@ -2,17 +2,17 @@ import styled from 'styled-components';
 import { lighten } from 'polished';
 
 export const Wrapper = styled.div`
-  height: 100vh;
-  min-height: 100%;
+  height: auto;
+  min-height: 100vh;
   background: #F1F1F1;
   display: flex;
   justify-content: center;
   align-items: center;
 `;
 
-export const Container = styled.div`
+export const Content = styled.div`
   width: 100%;
-  max-width: 315px;
+  max-width: 320px;
   text-align: center;
 
   form {
@@ -39,7 +39,6 @@ export const Container = styled.div`
       margin: 5px 0 0;
       height: 44px;
       background: #003464;
-      font-weight: bold;
       color: #FFF;
       border: 0;
       box-shadow: 0px 2px 4px rgba(0, 52, 100, 0.25);

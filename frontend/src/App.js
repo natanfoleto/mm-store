@@ -1,12 +1,14 @@
 import Routes from './routes';
 import GlobalStyle from './styles/global';
 
-import { useHistory } from 'react-router-dom';
+import { AuthProvider } from './contexts/auth';
 
 function App() {  
   return (
     <>
-      <Routes istory={useHistory()}/>
+      <AuthProvider>
+        <Routes />
+      </AuthProvider>
       <GlobalStyle />
     </>
   );

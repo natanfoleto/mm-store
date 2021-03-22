@@ -2,16 +2,16 @@ import PropTypes from 'prop-types';
 
 import Menu from '../../../components/Menu';
 
-import { Wrapper, Container } from './styles';
+import { Wrapper, Content } from './styles';
 
 export default function DefaultLayout({ children }) {
   return (
     <Wrapper>
       <Menu />
 
-      <Container>
+      <Content>
         {children}
-      </Container>
+      </Content>
     </Wrapper>
   );
 }

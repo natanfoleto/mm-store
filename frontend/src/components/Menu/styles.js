@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 
 export const Content = styled.div`
-  height: 100vh;
+  height: auto;
+  min-height: 100vh;
 
   .pro-sidebar-layout {
     background: #003464;
