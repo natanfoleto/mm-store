@@ -1,39 +1,35 @@
 import styled from 'styled-components';
+import { lighten } from 'polished';
 
-export const Container = styled.div`
-  height: auto;
-  width: 100%;
+export const Body = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 30px;
 `;
 
-export const Header = styled.div`
+Body.Header = styled.div`
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  padding: 15px;
-  border-radius: 5px;
-  margin-bottom: 15px;
-  background: #FFF;
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
 
-  h1 {
-    font-size: 22px;
+  p {
+    font-size: 24px;
+    color: #172B4D;
   }
 `;
 
-export const Table = styled.div`
-  height: 60vh;
-  padding: 15px;
-  border-radius: 5px;
-  margin-bottom: 15px;
-  background: #FFF;
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+Body.Button = styled.button`
+  background: #003464;
+  color: #FFF;
+  padding: 10px 30px;
+  border-radius: 2px;
+
+  &:hover {
+    background: ${lighten(0.07, '#003464')};
+  }
 `;
 
-export const Footer = styled.div`
-  padding: 15px;
-  border-radius: 5px;
-  margin-bottom: 15px;
-  background: #FFF;
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+Body.Table = styled.div`
+  display: flex;
+  flex-direction: column;
 `;
-

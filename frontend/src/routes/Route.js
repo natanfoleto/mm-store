@@ -1,34 +1,29 @@
+
 import PropTypes from 'prop-types';
-import { Route, Redirect } from 'react-router-dom';
+import { Redirect, Route } from 'react-router-dom';
 
 import { useAuth } from '../contexts/auth';
 
-export default function RouteWrapper({
-  component: Component,
-  isPrivate,
-  path,
-  ...rest
-}) {
+const RouteWrapper = ({ component, isPrivate, isNotFound, ...props }) => {
   const { signed } = useAuth();
 
-  if (!signed && isPrivate)
-    return <Redirect to="/"/>;
-
-  if (signed && !isPrivate)
-    return <Redirect to="/dashboard"/>;
+  if (isNotFound) 
+    return <Route { ...props } component={ component } />;
   
-  return <Route {...rest} 
-    render={props => (
-      <Component {...props} />
-    )}
-  />;
-}
+  if (!signed && isPrivate) 
+    return <Redirect to="/" />;
 
-RouteWrapper.protoType = {
-  isPrivate: PropTypes.bool,
-  component: PropTypes.oneOfType([PropTypes.element, PropTypes.func]).isRequired,
+  if (signed && !isPrivate) 
+    return <Redirect to="dashboard" />;
+  
+  return <Route { ...props } component={ component } />;
 };
 
-RouteWrapper.defaultProps = {
-  isPrivate: false,
+RouteWrapper.propTypes = {
+  component: PropTypes.oneOfType([
+    PropTypes.element,
+    PropTypes.func
+  ])
 };
+
+export default RouteWrapper;

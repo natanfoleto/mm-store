@@ -3,30 +3,28 @@ import { useState } from 'react';
 import api from '../services/api';
 
 export const useProfile = () => {
-  const [profiles, setProfiles] = useState();
   const [error, setError] = useState();
   const [loading, setLoading] = useState(false);
 
-  async function searchProfiles() {
+  async function searchProfiles(page, limit) {
     setLoading(true);
 
-    let res;
-
     try {
-      res = await api.get('/perfis');
+      const { data } = await api.get(`/perfis/${page}/${limit}`);
+
+      setError(null);
+      setLoading(false);
+
+      return { data, error, loading }
     } catch (err) {
       setError(err.toString());
       setLoading(false);
 
       return;
     }
-    
-    setProfiles(res.data)
-    setError(null);
-    setLoading(false);
   }
 
-  return { profiles, loading, error, searchProfiles }
+  return { loading, error, searchProfiles }
 }
 
 export default useProfile;

@@ -7,8 +7,26 @@ const SQL = require('../helper/SQL');
 exports.list = async function (req, res) {
   try {
     const response = await Profile.listProfile();
+    const total = response.length;
 
-    return res.json(response);
+    const { page, limit } = req.params;
+
+    const data = [];
+    let pages = [];
+    let indice = 0;
+
+    response.map((item, key) => {
+      pages.push(item);
+      if (Math.trunc((key + 1) / limit) !== indice) {
+        data.push(pages);
+        pages = [];
+        indice++;
+      }
+    });
+    
+    pages[0] && data.push(pages);
+
+    return res.json({ data: data[page - 1], total });
   } catch (err) {
     
     //! Erro Internal Server

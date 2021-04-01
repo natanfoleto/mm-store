@@ -1,13 +1,13 @@
 import PropTypes from 'prop-types';
 
-import Menu from '../../../components/Menu';
+import Header from '../../../components/Header';
 
 import { Wrapper, Content } from './styles';
 
 export default function DefaultLayout({ children }) {
   return (
     <Wrapper>
-      <Menu />
+      <Header />
 
       <Content>
         {children}

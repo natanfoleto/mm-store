@@ -10,11 +10,11 @@ export default function Routes() {
   return (
     <BrowserRouter>
       <Switch>
-        <Route exact path="/" component={SignIn} />
-        <Route exact path="/dashboard" component={Dashboard} isPrivate />
+        <Route exact path="/" component={SignIn} isLogin />
+        <Route exact path="/dashboard" redirect="/perfils" component={Dashboard} isPrivate />
         <Route exact path="/perfils" component={Profiles} isPrivate />
 
-        <Route component={NotFound} />
+        <Route component={NotFound} isNotFound />
       </Switch>
     </BrowserRouter>
   );
