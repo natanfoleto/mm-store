@@ -9,7 +9,7 @@ export default function NotFound() {
     <Container>
       <p>The page you are looking for, not be found</p>
       <img src={Logo} alt="404 not found" />
-      <Link to="/">Voltar para o início</Link>
+      <Link to="/">Voltar ao início</Link>
     </Container>
   );
 }

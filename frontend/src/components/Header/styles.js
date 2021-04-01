@@ -23,7 +23,7 @@ export const Content = styled.div`
       width: 55px;
       margin-right: 15px;
       padding-right: 20px;
-      border-right: 1px solid #eee;
+      border-right: 1px solid #ddd;
 
       &:hover {
         cursor: pointer;
@@ -63,7 +63,7 @@ export const Profile = styled.div`
   display: flex;
   margin-left: 15px;
   padding-left: 20px;
-  border-left: 1px solid #eee;
+  border-left: 1px solid #ddd;
 
   div {
     text-align: right;

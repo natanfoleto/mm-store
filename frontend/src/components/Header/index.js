@@ -23,14 +23,14 @@ function Header() {
       <Content>
         <nav>
           <img src={Logo} alt="GoRecicle" />
-          <Link to="dashboard"> Dashboard </Link>
+          <Link to="/"> Dashboard </Link>
           <Link to=""> Vendas </Link>
           <Link to=""> Clientes </Link>
           <Link to=""> Produtos </Link>
           <Link to=""> Categorias </Link>
           <Link to=""> Fornecedores </Link>
           <Link to=""> Pedidos </Link>
-          <Link to="perfils"> Perfils </Link>
+          <Link to="perfis"> Perfils </Link>
           <Link to=""> Usuários </Link>
           <Link to=""> Configurações </Link>
 

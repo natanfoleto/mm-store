@@ -9,7 +9,7 @@ export default function Routes() {
     <BrowserRouter>
       <Switch>
         <Route exact path="/" component={Dashboard} />
-        <Route exact path="/perfils" component={Profiles} />
+        <Route exact path="/perfis" component={Profiles} />
 
         <Route component={NotFound} isNotFound />
       </Switch>

@@ -5,7 +5,7 @@ export const Wrapper = styled.div`
   height: 100vh;
   min-width: 100vw;
   min-height: 100vh;
-  background: #F9F9F9;
+  background: #FFF;
   
   button {
     border: 0;
