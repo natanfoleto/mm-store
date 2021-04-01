@@ -1,21 +1,12 @@
-import { BrowserRouter, Switch } from "react-router-dom";
-import Route from './Route';
+import { useAuth } from '../contexts/auth';
 
-import SignIn from "../pages/SignIn";
-import Dashboard from "../pages/Dashboard";
-import Profiles from "../pages/Profiles";
-import NotFound from "../pages/NotFound";
+import AuthRoutes from './auth';
+import LogoffRoutes from './logoff';
 
-export default function Routes() {
-  return (
-    <BrowserRouter>
-      <Switch>
-        <Route exact path="/" component={SignIn} isLogin />
-        <Route exact path="/dashboard" redirect="/perfils" component={Dashboard} isPrivate />
-        <Route exact path="/perfils" component={Profiles} isPrivate />
+const Routes = () => {
+  const { signed } = useAuth();
 
-        <Route component={NotFound} isNotFound />
-      </Switch>
-    </BrowserRouter>
-  );
+  return signed ? <AuthRoutes /> : <LogoffRoutes />;
 }
+
+export default Routes;
