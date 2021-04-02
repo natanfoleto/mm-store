@@ -37,7 +37,7 @@ routes.route('/usuarios').post(validation(validationUser.userCreate, 'body'), Us
 routes.route('/usuarios').put(validation(validationUser.userUpdate, 'body'), UserController.update);
 routes.route('/usuarios').delete(validation(validationUser.userDelete, 'body'), UserController.delete);
 
-routes.route('/perfis/:page/:limit').get(ProfileController.list);
+routes.route('/perfis/search/:page/:limit').post(validation(validationProfile.profileSearch, 'body'), ProfileController.search);
 routes.route('/perfis').post(validation(validationProfile.profileCreate, 'body'), ProfileController.create);
 routes.route('/perfis').put(validation(validationProfile.profileUpdate, 'body'), ProfileController.update);
 routes.route('/perfis').delete(validation(validationProfile.profileDelete, 'body'), ProfileController.delete);

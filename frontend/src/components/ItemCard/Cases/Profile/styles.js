@@ -3,6 +3,7 @@ import styled from 'styled-components';
 // * Conteúdo do componente
 export const Data = styled.div`
   display: flex;
+  align-items: center;
 `;
 
 Data.Actions = styled.div`
@@ -37,9 +38,9 @@ Data.Name = styled.div`
   font-weight: bold;
 
   p {
-    font-size: 14px;
+    font-size: 13px;
     font-weight: normal;
-    margin-top: 2px;
+    margin-top: 4px;
   }
 `;
 

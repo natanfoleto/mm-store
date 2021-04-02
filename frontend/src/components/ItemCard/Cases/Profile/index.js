@@ -7,7 +7,9 @@ function ComponentProfile({ item }) {
         <Data.Id> {item.id_perfil} </Data.Id>
         <Data.Name> 
           {item.nome}
-          <p>{item.created_at}</p>
+          <p>
+            {new Intl.DateTimeFormat('pt-BR', {dateStyle: 'full', timeStyle: 'long'}).format(new Date(item.created_at))}
+          </p>
         </Data.Name>
       </Data>
 

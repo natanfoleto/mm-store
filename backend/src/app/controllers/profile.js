@@ -1,32 +1,19 @@
 const Profile = require('../models/profile');
 const User = require('../models/user');
+const pagingData = require('../utils/pagingData');
 const message = require('../messages/profile');
 
 const SQL = require('../helper/SQL');
 
-exports.list = async function (req, res) {
+exports.search = async function (req, res) {
   try {
-    const response = await Profile.listProfile();
-    const total = response.length;
+    const { nome } = req.body;
 
-    const { page, limit } = req.params;
+    const response = await Profile.searchProfile(nome);
 
-    const data = [];
-    let pages = [];
-    let indice = 0;
+    const pagedData = await pagingData.page(response, req.params);
 
-    response.map((item, key) => {
-      pages.push(item);
-      if (Math.trunc((key + 1) / limit) !== indice) {
-        data.push(pages);
-        pages = [];
-        indice++;
-      }
-    });
-    
-    pages[0] && data.push(pages);
-
-    return res.json({ data: data[page - 1], total });
+    return res.json(pagedData);
   } catch (err) {
     
     //! Erro Internal Server

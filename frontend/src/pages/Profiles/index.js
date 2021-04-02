@@ -9,36 +9,25 @@ import { CgPlayTrackPrev, CgPlayTrackNext } from 'react-icons/cg';
 
 import { Body, Data, Navigation } from './styles';
 
-export default function Perfils() {
+export default function Perfis() {
   const { searchProfiles } = useProfile();
 
   const [data, setData] = useState([]);
-  const [total, setTotal] = useState([]);
   const [limit, setLimit] = useState(10);
-  const [pages, setPages] = useState([]);
   const [totalPages, setTotalPages] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
 
+  const [search, setSearch] = useState('');
+
   useEffect(() => {
-    loadData();
-  }, [pages])
+    loadData(search);
+  }, [limit, currentPage, search])
 
-  async function loadData() {
-    const { data } = await searchProfiles(currentPage, limit);
-
-    setData(data.data)
-    setTotal(data.total);
-
-    const totalPages = Math.ceil(total / limit);
-
-    const arrayPages = [];
-
-    for (let i = 1; i <= totalPages; i++) {
-      arrayPages.push(i);
-    }
-
-    setPages(arrayPages);
-    setTotalPages(totalPages);
+  async function loadData() {    
+    const { data } = await searchProfiles(search, currentPage, limit);
+    
+    setData(data.data);
+    setTotalPages(Math.ceil(data.total / limit));
   }
 
   const handleLimit = useCallback((e) => {
@@ -46,17 +35,23 @@ export default function Perfils() {
     setCurrentPage(1);
   }, [])
 
-
   return (
     <Layout>      
       <Body>
-        <Body.Title>Perfis</Body.Title>
+        <Body.Title>
+          <h1> Perfis </h1>
+          <p> Cargos destinados aos usuários </p>
+        </Body.Title>
 
         {/* Cabeçalho do body */}
         <Body.Header>
           <Body.Filter>
-            <Body.Input placeholder="Pesquise pelo nome"/>
-
+            <Body.Input 
+              placeholder="Pesquise pelo nome" 
+              value={search} 
+              onChange={e => setSearch(e.target.value)}
+            />
+             
             <Body.Select onChange={handleLimit}>
               <option value="10">10 rows</option>
               <option value="20">20 rows</option>
@@ -72,9 +67,14 @@ export default function Perfils() {
         {/* Dados do banco de dados renderizados */}
         <Data>
           { 
-            data.map(item => (
-              <ComponentItemCard item={item} type="perfis" />
-            ))
+            data ? 
+              data.map((item, index) => (
+                <ComponentItemCard key={index} item={item} type="perfis" />
+              ))
+            :
+              <span> 
+                <p>Nenhum registro encontrado..</p> 
+              </span>
           }
         </Data>
         

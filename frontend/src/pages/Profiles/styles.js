@@ -5,11 +5,21 @@ import { lighten, darken } from 'polished';
 export const Body = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 30px;
+  padding: 15px 25px;
 `;
 
-Body.Title = styled.h1`
+Body.Title = styled.div`
   margin-bottom: 20px;
+  
+  h1 {
+    font-size: 26px;
+    color: #333;
+  }
+
+  p {
+    font-size: 14px;
+    color: #333;
+  }
 `;
 
 Body.Header = styled.div`
@@ -20,6 +30,7 @@ Body.Header = styled.div`
 
 Body.Filter = styled.div`
   display: flex;
+  align-items: center;
 `;
 
 Body.Button = styled.button`
@@ -35,13 +46,13 @@ Body.Button = styled.button`
 `;
 
 Body.Input = styled.input`
+  font-size: 14px;
   width: 400px;
-  height: 24px;
-  padding: 5px;
+  padding: 5pX 10px;
   border: 0;
   border-radius: 4px;
   border: 1px solid #eee;
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.15);
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.15);
 
   &:hover {
     transition: 0.25s;
@@ -58,7 +69,7 @@ Body.Select = styled.select`
   border: 0;
   border-radius: 4px;
   border: 1px solid #eee;
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.15);
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.15);
 
   &:hover {
     transition: 0.25s;
@@ -69,6 +80,12 @@ Body.Select = styled.select`
 
 //* Dados do banco de dados renderizados
 export const Data = styled.div`
+  span > p {
+    margin-top: 15px;
+    font-size: 15px;
+    text-align: center;
+  }
+
   height: 600px;
   overflow-y: scroll;
   margin-bottom: 15px;
@@ -77,6 +94,10 @@ export const Data = styled.div`
   border-radius: 4px;
 
   ::-webkit-scrollbar { width: 0; }
+
+  @media (max-height: 900px) {
+    height: 450px;
+  }
 `;
 
 //* Navegação dos dados renderizados
@@ -87,7 +108,9 @@ export const Navigation = styled.div`
 `;
 
 Navigation.Button = styled.button`
-  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  padding: 8px 15px;
   background: #FFFFFF;
   border-radius: 4px;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.15);

@@ -2,16 +2,21 @@ const pool = require('../../database/pool');
 
 const table = 'perfis';
 
-exports.listProfile = async function () {
+exports.searchProfile = async function (nome) {
   return new Promise(async (resolve, reject) => {
     try {
-      const query = `SELECT * FROM ${table}`;
+      if (nome !== "")
+        query = `SELECT * FROM ${table} WHERE nome LIKE CONCAT("%", ?, "%")`;
+      else 
+        query = `SELECT * FROM ${table}`;
+      
+      const binds = nome;
 
-      const result = await pool.execute(query);
+      const result = await pool.execute(query, binds);
 
       resolve(result);
     } catch (err) {
-      console.log("Exception from profile.js/listProfile:");
+      console.log("Exception from profile.js/searchProfile:");
       console.log(err);
 
       reject(err);

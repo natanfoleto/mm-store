@@ -4,10 +4,7 @@ import { useAuth } from '../../contexts/auth';
 
 import Logo from '../../assets/LogoMini.png';
 
-import { RiDashboard2Fill, RiUserSettingsFill, RiTruckFill, RiStarSFill, RiStackFill, RiLogoutCircleLine } from 'react-icons/ri';
-import { AiFillAppstore, AiFillSetting } from 'react-icons/ai';
-import { FaUserCircle, FaUsersCog, FaUsers, FaCashRegister } from 'react-icons/fa';
-import { BsToggleOn, BsToggleOff } from 'react-icons/bs';
+import { RiLogoutCircleLine } from 'react-icons/ri';
 
 import { Container, Content, Profile } from './styles';
 

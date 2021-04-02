@@ -7,10 +7,10 @@ export const Content = styled.div`
   justify-content: space-between;
   margin-bottom: 10px;
   height: auto;
-  padding: 15px;
+  padding: 10px;
   background: #FFF;
   border: 1px solid #eee;
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.15);
+  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.15);
   border-radius: 4px;
   cursor: pointer;
 

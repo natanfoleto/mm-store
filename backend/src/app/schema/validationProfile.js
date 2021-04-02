@@ -3,6 +3,16 @@ const JoiDate = require('@hapi/joi-date')
 const Joi = JoiBase.extend(JoiDate)
 
 const validationSchemas = {
+  profileSearch: Joi.object().keys({
+    nome: Joi
+      .string()
+      .required()
+      .allow(null, '')
+      .messages({
+        'any.required': 'nome é necessário',
+        'string.base': 'nome deve ser do tipo string',
+      })
+  }),
   profileCreate: Joi.object().keys({
     nome: Joi
       .string()

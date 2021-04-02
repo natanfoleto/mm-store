@@ -6,11 +6,11 @@ export const useProfile = () => {
   const [error, setError] = useState();
   const [loading, setLoading] = useState(false);
 
-  async function searchProfiles(page, limit) {
+  async function searchProfiles(nome, page, limit) {
     setLoading(true);
 
     try {
-      const { data } = await api.get(`/perfis/${page}/${limit}`);
+      const { data } = await api.post(`/perfis/search/${page}/${limit}`, { nome: nome });
 
       setError(null);
       setLoading(false);
