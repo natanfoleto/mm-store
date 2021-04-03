@@ -17,19 +17,17 @@ export default function Login() {
       <Container>
         <img src={Logo} alt='Logo' />
 
-        <Form onSubmit={handleSubmit}>
+        <Form onSubmit={handleSubmit} autoComplete="off">
           <Input 
             name="login" 
             type="text" 
             placeholder="Seu login" 
-            autoComplete="off" 
             required
           />
           <Input 
             name="password" 
             type="password" 
             placeholder="Sua senha secreta" 
-            autoComplete="off" 
             required
           />
 

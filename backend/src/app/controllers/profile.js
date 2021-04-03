@@ -27,9 +27,9 @@ exports.search = async function (req, res) {
 
 exports.create = async function (req, res) {
   try {
-    const body = req.body;
+    const { nome } = req.body;
 
-    const response = await Profile.insertProfile(body.nome);
+    const response = await Profile.insertProfile(nome);
 
     const sqlTreated = await SQL.build(response);
 

@@ -1,4 +1,4 @@
-import CardProfile from './Cases/Profile';
+import CardProfile from './Cases/Profiles';
 import CardUsers from './Cases/Users';
 
 import { Content } from './styles';

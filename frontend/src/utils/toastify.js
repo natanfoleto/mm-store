@@ -5,18 +5,15 @@ export default function toastify(type, message) {
     background: '#003464'
   }
 
-  const styleWarn = {
-    color: '#333',
-    background: '#FFF951'
-  }
-
   switch (type) {
     case 'default':
       toast(message, {
         position: toast.POSITION.TOP_CENTER,
-        hideProgressBar: true,
+        hideProgressBar: false,
         closeOnClick: true,
-        pauseOnHover: true
+        pauseOnHover: true,
+        draggable: false,
+        progress: undefined,
       });
       break;
 
@@ -24,37 +21,44 @@ export default function toastify(type, message) {
       toast.info(message, {
         style: styleInfo,
         position: toast.POSITION.TOP_CENTER,
-        hideProgressBar: true,
+        hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
+        draggable: false,
+        progress: undefined,
       });
       break;
 
     case 'warn':
       toast.warn(message, {
-        style: styleWarn,
         position: toast.POSITION.TOP_CENTER,
-        hideProgressBar: true,
+        hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
+        draggable: false,
+        progress: undefined,
       });
       break;
 
     case 'success':
       toast.success(message, {
         position: toast.POSITION.TOP_CENTER,
-        hideProgressBar: true,
+        hideProgressBar: false,
         closeOnClick: true,
-        pauseOnHover: true
+        pauseOnHover: true,
+        draggable: false,
+        progress: undefined,
       });
       break;
 
     case 'error':
-      toast.dark(message, {
+      toast.error(message, {
         position: toast.POSITION.TOP_CENTER,
-        hideProgressBar: true,
+        hideProgressBar: false,
         closeOnClick: true,
-        pauseOnHover: true
+        pauseOnHover: true,
+        draggable: false,
+        progress: undefined,
       });
       break;
 

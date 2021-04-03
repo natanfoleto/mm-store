@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 
 import Toast from '../utils/toastify';
 
@@ -7,6 +8,8 @@ import api from '../services/api';
 const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
+  const history = useHistory();
+
   const [user, setUser] = useState();
   const [loading, setLoading] = useState(true);
   const [loggingIn, setLoggingIn] = useState(false);
@@ -79,6 +82,8 @@ export const AuthProvider = ({ children }) => {
     localStorage.clear();
 
     setUser(null);
+
+    history.push('/');
   }
 
   return (

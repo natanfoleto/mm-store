@@ -13,6 +13,7 @@ Data.Actions = styled.div`
 
 Data.Button = styled.a`
   color: #333;
+  font-size: 13px;
   margin: 0 10px;
   cursor: pointer;
 
@@ -22,7 +23,7 @@ Data.Button = styled.a`
 `;
 
 Data.Hr = styled.hr`
-  height: 20px;
+  height: 16px;
   border: 1px solid #ddd;
 `;
 

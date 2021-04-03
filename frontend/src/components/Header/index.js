@@ -30,17 +30,6 @@ function Header() {
           <Link to="perfis"> Perfils </Link>
           <Link to=""> Usuários </Link>
           <Link to=""> Configurações </Link>
-
-          {/* <Link to="dashboard"> <RiDashboard2Fill size={24}/> </Link>
-          <Link to=""> <FaCashRegister size={24}/> </Link>
-          <Link to=""> <FaUsers size={24}/> </Link>
-          <Link to=""> <AiFillAppstore size={24}/> </Link>
-          <Link to=""> <RiStackFill size={24}/> </Link>
-          <Link to=""> <RiTruckFill size={24}/> </Link>
-          <Link to=""> <RiStarSFill size={24}/> </Link>
-          <Link to="perfils"> <RiUserSettingsFill size={24}/> </Link>
-          <Link to=""> <FaUsersCog size={24}/> </Link>
-          <Link to=""> <AiFillSetting size={24}/> </Link> */}
         </nav>
 
         <aside>

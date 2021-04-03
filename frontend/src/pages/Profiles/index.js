@@ -1,15 +1,17 @@
+import { useHistory } from 'react-router-dom';
 import { useEffect, useState, useCallback } from 'react';
 
 import Layout from '../_layouts/default';
 import useProfile from '../../hooks/useProfile';
 
-import ComponentItemCard from '../../components/ItemCard/index';
+import ComponentItemCard from '../../components/DataCard/index';
 
 import { CgPlayTrackPrev, CgPlayTrackNext } from 'react-icons/cg';
 
 import { Body, Data, Navigation } from './styles';
 
 export default function Perfis() {
+  const history = useHistory();
   const { searchProfiles } = useProfile();
 
   const [data, setData] = useState([]);
@@ -28,6 +30,10 @@ export default function Perfis() {
     
     setData(data.data);
     setTotalPages(Math.ceil(data.total / limit));
+  }
+
+  function handleCreate() {
+    history.push('/perfis/add')
   }
 
   const handleLimit = useCallback((e) => {
@@ -61,7 +67,9 @@ export default function Perfis() {
             </Body.Select>
           </Body.Filter>
 
-          <Body.Button>Criar</Body.Button>
+          <Body.Button onClick={handleCreate}>
+            Criar
+          </Body.Button>
         </Body.Header>
 
         {/* Dados do banco de dados renderizados */}
