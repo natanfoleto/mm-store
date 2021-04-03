@@ -3,7 +3,7 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 import Dashboard from "../pages/Dashboard";
 import Profiles from "../pages/Profiles";
 
-import FormProfiles from "../pages/forms/Profiles";
+import FormProfiles from "../pages/_forms/Profiles";
 
 import NotFound from "../pages/NotFound";
 

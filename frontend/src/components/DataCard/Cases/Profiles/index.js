@@ -28,7 +28,7 @@ function ComponentProfile({ item }) {
         <Data.Name> 
           {item.nome}
           <p>
-            {new Intl.DateTimeFormat('pt-BR', {dateStyle: 'full', timeStyle: 'long'}).format(new Date(item.created_at))}
+            {new Intl.DateTimeFormat('pt-BR', {dateStyle: 'full', timeStyle: 'long'}).format(new Date(item.updated_at))}
           </p>
         </Data.Name>
       </Data>

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { darken } from 'polished';
+import { darken, lighten } from 'polished';
 
 export const Content = styled.div`
   form {
@@ -19,6 +19,20 @@ export const Content = styled.div`
       &:hover {
         transition: 0.25s;
         background: ${darken(0.03, '#FFF')};
+      }
+    }
+
+    button {
+      width: 75px;
+      background: #003464;
+      color: #FFF;
+      padding: 5px;
+      margin-top: 10px;
+      border-radius: 4px;
+      box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.15);
+
+      &:hover {
+        background: ${lighten(0.07, '#003464')};
       }
     }
   }

@@ -37,6 +37,12 @@ export const AuthProvider = ({ children }) => {
 
     try {
       res = await api.post('/sessions', { login, password });
+
+      if (res.status === 206) {
+        Toast('default', res.data.error.details[0].message);
+
+        return;
+      }
     } catch (err) {
       Toast('error', err.toString());
 
@@ -46,14 +52,6 @@ export const AuthProvider = ({ children }) => {
     }
     
     const { result } = res.data;
-
-    if (res.status === 206) {
-      const message = res.data.error.details[0].message; 
-      
-      Toast('error', message);
-
-      setLoggingIn(false);
-    }
 
     if (res.status === 200 ) {
       if (result === 'error') {

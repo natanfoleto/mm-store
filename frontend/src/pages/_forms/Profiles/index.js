@@ -4,7 +4,7 @@ import { Form, Input } from '@rocketseat/unform';
 import { useHistory } from 'react-router-dom';
 
 import Layout from '../../_layouts/default';
-import LayoutForm from '../_layouts/default';
+import LayoutForm from '../../_layouts/form';
 
 import useProfile from '../../../hooks/useProfile';
 
@@ -53,9 +53,9 @@ export default function FormPerfis() {
               required
             />
 
-            <Body.Button type="submit">
+            <button type="submit">
               { pathname === '/perfis/add' ? 'Criar' : 'Atualizar'}
-            </Body.Button>
+            </button>
           </Form>
         </Body>
       </LayoutForm>  
