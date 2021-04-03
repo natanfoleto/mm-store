@@ -1,23 +1,21 @@
-import { Form, Input } from '@rocketseat/unform';
-import { Container } from './styles';
 import Layout from '../_layouts/auth';
-
-import { useAuth } from '../../contexts/auth';
-
 import Logo from '../../assets/Logo.png';
 
+import { Form, Input } from '@rocketseat/unform';
+import { useAuth } from '../../contexts/auth';
+import { Container } from './styles';
+
 export default function Login() {
-  const { signIn, loggingIn, error } = useAuth();
+  const { signIn, loggingIn } = useAuth();
 
   async function handleSubmit({ login, password }) {
-    await signIn(login, password);
+    await signIn(login, password); 
   }
 
   return (
     <Layout>
       <Container>
         <img src={Logo} alt='Logo' />
-        <p>{error}</p>
 
         <Form onSubmit={handleSubmit}>
           <Input 

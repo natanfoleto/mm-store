@@ -1,12 +1,13 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 
+import Toast from '../utils/toastify';
+
 import api from '../services/api';
 
 const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState();
-  const [error, setError] = useState();
   const [loading, setLoading] = useState(true);
   const [loggingIn, setLoggingIn] = useState(false);
 
@@ -34,7 +35,8 @@ export const AuthProvider = ({ children }) => {
     try {
       res = await api.post('/sessions', { login, password });
     } catch (err) {
-      setError(err.toString());
+      Toast('error', err.toString());
+
       setLoggingIn(false);
 
       return;
@@ -44,8 +46,9 @@ export const AuthProvider = ({ children }) => {
 
     if (res.status === 206) {
       const message = res.data.error.details[0].message; 
+      
+      Toast('error', message);
 
-      setError(message)
       setLoggingIn(false);
     }
 
@@ -53,7 +56,8 @@ export const AuthProvider = ({ children }) => {
       if (result === 'error') {
         const { message } = res.data;
     
-        setError(message);
+        Toast('info', message);
+
         setLoggingIn(false);
       }
   
@@ -63,7 +67,6 @@ export const AuthProvider = ({ children }) => {
         api.defaults.headers.Authorization = `Bearer ${token}`;
         
         setUser(usuario);
-        setError(null);
         setLoggingIn(false);
 
         localStorage.setItem('@Auth:user', JSON.stringify(usuario));
@@ -79,7 +82,7 @@ export const AuthProvider = ({ children }) => {
   }
 
   return (
-    <AuthContext.Provider value={{ signed: !!user, error, loading, user, loggingIn, signIn, signOut }}>
+    <AuthContext.Provider value={{ signed: !!user, loading, user, loggingIn, signIn, signOut }}>
       {children}
     </AuthContext.Provider>
   )

@@ -8,10 +8,10 @@ module.exports = {
         message: "Token inválido"
       },
       subcode3: {
-        message: "Nenhum usuário foi encontrado"
+        message: "Nenhum usuário foi encontrado!"
       },
       subcode4: {
-        message: "A senha está incorreta"
+        message: "A senha está incorreta!"
       },
       subcode99: {
         message: "Internal Server Error"
