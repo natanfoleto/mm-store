@@ -28,11 +28,11 @@ export default function Perfis() {
   }, [limit, currentPage, search])
 
   async function loadData() {    
-    const res = await searchProfiles(search, currentPage, limit);
+    const { data, total } = await searchProfiles(search, currentPage, limit);
     
-    if (res) {
-      setData(res.data.data);
-      setTotalPages(Math.ceil(res.data.total / limit));
+    if (data) {
+      setData(data);
+      setTotalPages(Math.ceil(total / limit));
     }    
   }
 

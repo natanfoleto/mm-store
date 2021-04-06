@@ -8,13 +8,18 @@ export const useProfile = () => {
   const history = useHistory();
   
   async function searchProfiles(nome, page, limit) {
-
     try {
-      const { data } = await api.post(`/perfis/search/${page}/${limit}`, { 
+      const res = await api.post(`/perfis/search/${page}/${limit}`, { 
         nome: nome 
       });
 
-      return { data }
+      if (res.status === 206) {
+        Toast('warn', res.data.error.details[0].message);
+
+        return false;
+      }
+
+      return res.data;
     } catch (err) {
       Toast('error', err.toString());
 
@@ -29,9 +34,9 @@ export const useProfile = () => {
       });
 
       if (res.status === 206) {
-        Toast('default', res.data.error.details[0].message);
+        Toast('warn', res.data.error.details[0].message);
 
-        return;
+        return false;
       }
 
       const { result, message } = res.data;
@@ -44,7 +49,7 @@ export const useProfile = () => {
     } catch (err) {
       Toast('error', err.toString());
 
-      return;
+      return false;
     }
   }
 
@@ -53,9 +58,9 @@ export const useProfile = () => {
       const res = await api.put('/perfis', data);
 
       if (res.status === 206) {
-        Toast('default', res.data.error.details[0].message);
+        Toast('warn', res.data.error.details[0].message);
 
-        return;
+        return false;
       }
 
       const { result, message } = res.data;
@@ -68,7 +73,7 @@ export const useProfile = () => {
     } catch (err) {
       Toast('error', err.toString());
 
-      return;
+      return false;
     }
   }
 
@@ -77,9 +82,9 @@ export const useProfile = () => {
       const res = await api.delete('/perfis', data);
 
       if (res.status === 206) {
-        Toast('default', res.data.error.details[0].message);
+        Toast('warn', res.data.error.details[0].message);
 
-        return;
+        return false;
       }
 
       const { result, message } = res.data;
@@ -93,7 +98,7 @@ export const useProfile = () => {
       Toast('error', err.toString());
 
 
-      return;
+      return false;
     }
   }
 

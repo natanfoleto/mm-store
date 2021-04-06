@@ -6,20 +6,8 @@ export default function toastify(type, message) {
   }
 
   switch (type) {
-    case 'default':
-      toast(message, {
-        position: toast.POSITION.TOP_CENTER,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: false,
-        progress: undefined,
-      });
-      break;
-
     case 'info':
       toast.info(message, {
-        style: styleInfo,
         position: toast.POSITION.TOP_CENTER,
         hideProgressBar: false,
         closeOnClick: true,
