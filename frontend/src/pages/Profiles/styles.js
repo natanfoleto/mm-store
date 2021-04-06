@@ -80,7 +80,7 @@ Body.Select = styled.select`
 `;
 
 //* Dados do banco de dados renderizados
-export const Data = styled.div`
+Body.Data = styled.div`
   span > p {
     margin-top: 15px;
     font-size: 15px;
@@ -102,13 +102,13 @@ export const Data = styled.div`
 `;
 
 //* Navegação dos dados renderizados
-export const Navigation = styled.div`
+Body.Navigation = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
 `;
 
-Navigation.Button = styled.button`
+Body.ButtonNavigation = styled.button`
   display: flex;
   align-items: center;
   padding: 8px 15px;
@@ -117,5 +117,5 @@ Navigation.Button = styled.button`
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.15);
 `;
 
-Navigation.Span = styled.span`
+Body.SpanNavigation = styled.span`
 `;

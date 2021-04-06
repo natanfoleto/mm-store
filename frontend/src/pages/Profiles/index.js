@@ -8,7 +8,7 @@ import ComponentItemCard from '../../components/DataCard/index';
 
 import { CgPlayTrackPrev, CgPlayTrackNext } from 'react-icons/cg';
 
-import { Body, Data, Navigation } from './styles';
+import { Body, Navigation } from './styles';
 
 export default function Perfis() {
   const history = useHistory();
@@ -74,7 +74,7 @@ export default function Perfis() {
         </Body.Header>
 
         {/* Dados do banco renderizados */}
-        <Data>
+        <Body.Data>
           { 
             data ? 
               data.map((item, index) => (
@@ -89,34 +89,33 @@ export default function Perfis() {
                 <p>Nenhum registro encontrado..</p> 
               </span>
           }
-        </Data>
+        </Body.Data>
         
         {/* Navegação dos dados renderizados */}
-        <Navigation>
-          <Navigation.Button
+        <Body.Navigation>
+          <Body.ButtonNavigation
             disabled={currentPage <= 1}
             onClick={() => {
               setCurrentPage(currentPage - 1)
             }} 
           > 
             <CgPlayTrackPrev size={22} /> 
-          </Navigation.Button>
+          </Body.ButtonNavigation>
             
-          <Navigation.Span>
+          <Body.SpanNavigation>
             Page <strong>{currentPage}</strong> of <strong>{totalPages}</strong>
-          </Navigation.Span>
+          </Body.SpanNavigation>
  
-          <Navigation.Button
+          <Body.ButtonNavigation
             disabled={currentPage >= totalPages}
             onClick={() => {
               setCurrentPage(currentPage + 1)
             }} 
           > 
             <CgPlayTrackNext size={22} /> 
-          </Navigation.Button>
+          </Body.ButtonNavigation>
              
-        </Navigation>
-
+        </Body.Navigation>
       </Body>
     </Layout>
   );
