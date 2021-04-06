@@ -3,28 +3,20 @@ import CardUsers from './Cases/Users';
 
 import { Content } from './styles';
 
-const ComponentContent = ({ children }) => {
-  return (
-    <Content>
-      {children}
-    </Content>
-  )
-}
-
-function ComponentItemCard({ item, type }) {
+export default function ComponentItemCard({ item, type }) {
   switch (type) {
     case "perfis":
       return (
-        <ComponentContent>
+        <Content>
           <CardProfile item={item} />
-        </ComponentContent>
+        </Content>
       );
 
     case "users":
       return (
-        <ComponentContent>
+        <Content>
           <CardUsers item={item} />
-        </ComponentContent>
+        </Content>
       );
   
     default:
@@ -33,5 +25,3 @@ function ComponentItemCard({ item, type }) {
       );
   }
 }
-
-export default ComponentItemCard;

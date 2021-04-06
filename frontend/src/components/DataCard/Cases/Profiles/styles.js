@@ -19,6 +19,9 @@ Data.Button = styled.a`
 
   &:hover {
     color: #003464;
+    -moz-transform: scale(1.1);
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
   }
 `;
 

@@ -12,6 +12,7 @@ import { Body, Data, Navigation } from './styles';
 
 export default function Perfis() {
   const history = useHistory();
+
   const { searchProfiles } = useProfile();
 
   const [data, setData] = useState([]);
@@ -33,7 +34,7 @@ export default function Perfis() {
   }
 
   function handleCreate() {
-    history.push('/perfis/add')
+    history.push('/perfis/add');
   }
 
   const handleLimit = useCallback((e) => {
@@ -72,12 +73,16 @@ export default function Perfis() {
           </Body.Button>
         </Body.Header>
 
-        {/* Dados do banco de dados renderizados */}
+        {/* Dados do banco renderizados */}
         <Data>
           { 
             data ? 
               data.map((item, index) => (
-                <ComponentItemCard key={index} item={item} type="perfis" />
+                <ComponentItemCard 
+                  key={index} 
+                  item={item} 
+                  type="perfis" 
+                />
               ))
             :
               <span> 

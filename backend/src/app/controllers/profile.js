@@ -8,8 +8,8 @@ const SQL = require('../helper/SQL');
 exports.search = async function (req, res) {
   try {
     const { nome } = req.body;
-
-    const response = await Profile.searchProfile(nome);
+    console.log(1)
+    const response = await Profile.searchProfile(nome || "");
 
     const pagedData = await pagingData.page(response, req.params);
 

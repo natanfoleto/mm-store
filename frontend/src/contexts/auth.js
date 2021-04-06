@@ -57,7 +57,7 @@ export const AuthProvider = ({ children }) => {
       if (result === 'error') {
         const { message } = res.data;
     
-        Toast('info', message);
+        Toast('error', message);
 
         setLoggingIn(false);
       }

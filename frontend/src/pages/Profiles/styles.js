@@ -42,6 +42,7 @@ Body.Button = styled.button`
 
   &:hover {
     background: ${lighten(0.07, '#003464')};
+    transition: 0.25s;
   }
 `;
 

@@ -23,7 +23,7 @@ export default function FormPerfis() {
   useEffect(() => {
     setProfile(history.location.state);
     setPathname(history.location.pathname);
-  }, [])
+  }, [history])
   
   async function handleSubmit(data) {
     if (pathname === '/perfis/add')

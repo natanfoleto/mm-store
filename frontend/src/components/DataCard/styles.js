@@ -7,7 +7,7 @@ export const Content = styled.div`
   justify-content: space-between;
   margin-bottom: 10px;
   height: auto;
-  padding: 10px;
+  padding: 12px;
   background: #FFF;
   border: 1px solid #eee;
   box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.15);

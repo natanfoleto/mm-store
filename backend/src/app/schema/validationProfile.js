@@ -6,8 +6,7 @@ const validationSchemas = {
   profileSearch: Joi.object().keys({
     nome: Joi
       .string()
-      .required()
-      .allow(null, '')
+      .allow('')
       .messages({
         'any.required': 'nome é necessário',
         'string.base': 'nome deve ser do tipo string',
@@ -39,12 +38,12 @@ const validationSchemas = {
     nome: Joi
       .string()
       .required()
-      .min(4)
+      .min(2)
       .messages({
         'any.required': 'nome é necessário',
         'string.base': 'nome deve ser do tipo string',
         'string.empty': 'nome não pode estar vazio',
-        'string.min': 'nome deve ter mais de 4 caracteres'
+        'string.min': 'nome deve ter mais de 2 caracteres'
       })
   }),
   profileDelete: Joi.object().keys({
