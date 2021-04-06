@@ -81,12 +81,6 @@ Body.Select = styled.select`
 
 //* Dados do banco de dados renderizados
 Body.Data = styled.div`
-  span > p {
-    margin-top: 15px;
-    font-size: 15px;
-    text-align: center;
-  }
-
   height: 600px;
   overflow-y: scroll;
   margin-bottom: 15px;
@@ -99,6 +93,13 @@ Body.Data = styled.div`
   @media (max-height: 900px) {
     height: 450px;
   }
+`;
+
+Body.LoadData = styled.div`
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 //* Navegação dos dados renderizados

@@ -18,7 +18,7 @@ export const useProfile = () => {
     } catch (err) {
       Toast('error', err.toString());
 
-      return;
+      return false;
     }
   }
 

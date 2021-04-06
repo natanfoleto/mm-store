@@ -7,17 +7,18 @@ import useProfile from '../../hooks/useProfile';
 import ComponentItemCard from '../../components/DataCard/index';
 
 import { CgPlayTrackPrev, CgPlayTrackNext } from 'react-icons/cg';
+import { BiLoader } from 'react-icons/bi';
 
-import { Body, Navigation } from './styles';
+import { Body } from './styles';
 
 export default function Perfis() {
   const history = useHistory();
 
   const { searchProfiles } = useProfile();
 
-  const [data, setData] = useState([]);
+  const [data, setData] = useState();
   const [limit, setLimit] = useState(10);
-  const [totalPages, setTotalPages] = useState([]);
+  const [totalPages, setTotalPages] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
 
   const [search, setSearch] = useState('');
@@ -27,10 +28,12 @@ export default function Perfis() {
   }, [limit, currentPage, search])
 
   async function loadData() {    
-    const { data } = await searchProfiles(search, currentPage, limit);
+    const res = await searchProfiles(search, currentPage, limit);
     
-    setData(data.data);
-    setTotalPages(Math.ceil(data.total / limit));
+    if (res) {
+      setData(res.data.data);
+      setTotalPages(Math.ceil(res.data.total / limit));
+    }    
   }
 
   function handleCreate() {
@@ -85,9 +88,9 @@ export default function Perfis() {
                 />
               ))
             :
-              <span> 
-                <p>Nenhum registro encontrado..</p> 
-              </span>
+              <Body.LoadData> 
+                <BiLoader size={22} />
+              </Body.LoadData>
           }
         </Body.Data>
         
