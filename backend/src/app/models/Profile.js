@@ -2,7 +2,7 @@ const pool = require('../../database/pool');
 
 const table = 'perfis';
 
-exports.searchProfile = async function (nome) {
+async function searchProfile(nome) {
   return new Promise(async (resolve, reject) => {
     try {
       if (nome !== "")
@@ -24,7 +24,7 @@ exports.searchProfile = async function (nome) {
   });
 }
 
-exports.insertProfile = async function (nome) {
+async function insertProfile(nome) {
   return new Promise(async (resolve, reject) => {
     try {
       const query = `INSERT INTO ${table} 
@@ -47,7 +47,7 @@ exports.insertProfile = async function (nome) {
   });
 }
 
-exports.updateProfile = async function (nome) {
+async function updateProfile(nome) {
   return new Promise(async (resolve, reject) => {
     try {
       const query = `UPDATE ${table} 
@@ -69,7 +69,7 @@ exports.updateProfile = async function (nome) {
   });
 }
 
-exports.deleteProfile = async function (id) {
+async function deleteProfile(id) {
   return new Promise(async (resolve, reject) => {
     try {
       const query = `DELETE FROM ${table}  
@@ -89,3 +89,5 @@ exports.deleteProfile = async function (id) {
     }
   });
 }
+
+module.exports = { searchProfile, insertProfile, updateProfile, deleteProfile }

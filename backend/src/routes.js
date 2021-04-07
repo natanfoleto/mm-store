@@ -32,15 +32,15 @@ routes.route('/sessions').post(validation(validationSession.sessionCreate, 'body
 
 //routes.use(auth.authenticate);
 
-routes.route('/usuarios').get(UserController.list);
+routes.route('/usuarios/search/:page/:limit').post(validation(validationUser.userSearch, 'body'), UserController.search);
 routes.route('/usuarios').post(validation(validationUser.userCreate, 'body'), UserController.create);
 routes.route('/usuarios').put(validation(validationUser.userUpdate, 'body'), UserController.update);
-routes.route('/usuarios').delete(validation(validationUser.userDelete, 'body'), UserController.delete);
+routes.route('/usuarios').delete(validation(validationUser.userDelete, 'body'), UserController.remove);
 
 routes.route('/perfis/search/:page/:limit').post(validation(validationProfile.profileSearch, 'body'), ProfileController.search);
 routes.route('/perfis').post(validation(validationProfile.profileCreate, 'body'), ProfileController.create);
 routes.route('/perfis').put(validation(validationProfile.profileUpdate, 'body'), ProfileController.update);
-routes.route('/perfis').delete(validation(validationProfile.profileDelete, 'body'), ProfileController.delete);
+routes.route('/perfis').delete(validation(validationProfile.profileDelete, 'body'), ProfileController.remove);
 
 routes.route('/produtos').get(ProductController.list);
 routes.route('/produtos').post(validation(validationProduct.productCreate, 'body'), ProductController.create);

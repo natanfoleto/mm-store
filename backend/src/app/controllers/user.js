@@ -1,14 +1,19 @@
 const User = require('../models/user');
+const pagingData = require('../utils/pagingData');
 const bcrypt = require('../utils/bcrypt');
 const message = require('../messages/user');
 
 const SQL = require('../helper/SQL');
 
-exports.list = async function (req, res) {
+async function search(req, res) {
   try {
-    const response = await User.listUser();
+    const { key } = req.body;
+    
+    const response = await User.searchUser(key || "");
 
-    return res.json(response);
+    const pagedData = await pagingData.page(response, req.params);
+
+    return res.json(pagedData);
   } catch (err) {
 
     //! Erro Internal Server
@@ -20,7 +25,7 @@ exports.list = async function (req, res) {
   }
 }
 
-exports.create = async function (req, res) {
+async function create(req, res) {
   try {
     const body = req.body;
 
@@ -67,7 +72,7 @@ exports.create = async function (req, res) {
   }
 }
 
-exports.update = async function (req, res) {
+async function update(req, res) {
   try {
     const body = req.body;
 
@@ -124,7 +129,7 @@ exports.update = async function (req, res) {
   }
 }
 
-exports.delete = async function (req, res) {
+async function remove(req, res) {
   try {
     const { id_usuario } = req.body;
 
@@ -165,3 +170,5 @@ exports.delete = async function (req, res) {
     });
   }
 }
+
+module.exports = { search, create, update, remove }

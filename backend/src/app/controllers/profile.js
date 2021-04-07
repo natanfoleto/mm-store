@@ -5,7 +5,7 @@ const message = require('../messages/profile');
 
 const SQL = require('../helper/SQL');
 
-exports.search = async function (req, res) {
+async function search(req, res) {
   try {
     const { nome } = req.body;
 
@@ -25,7 +25,7 @@ exports.search = async function (req, res) {
   }
 }
 
-exports.create = async function (req, res) {
+async function create(req, res) {
   try {
     const { nome } = req.body;
 
@@ -65,7 +65,7 @@ exports.create = async function (req, res) {
   }
 }
 
-exports.update = async function (req, res) {
+async function update(req, res) {
   try {
     const body = req.body;
 
@@ -120,7 +120,7 @@ exports.update = async function (req, res) {
   }
 }
 
-exports.delete = async function (req, res) {
+async function remove(req, res) {
   try {
     const { id_perfil } = req.body;
 
@@ -171,3 +171,5 @@ exports.delete = async function (req, res) {
     });
   }
 }
+
+module.exports = { search, create, update, remove }

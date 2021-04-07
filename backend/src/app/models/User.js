@@ -2,16 +2,22 @@ const pool = require('../../database/pool');
 
 const table = 'usuarios';
 
-exports.listUser = async function () {
+async function searchUser(key) {
   return new Promise(async (resolve, reject) => {
     try {
-      const query = `SELECT * FROM ${table}`;
+      query = `
+        (SELECT * FROM ${table} WHERE nome LIKE "%${key}%")
+        UNION
+        (SELECT * FROM ${table} WHERE login LIKE "%${key}%")
+        UNION
+        (SELECT * FROM ${table} WHERE id_perfil LIKE "%${key}%")
+      `;
 
       const result = await pool.execute(query);
 
       resolve(result);
     } catch (err) {
-      console.log("Exception from user.js/listUser:");
+      console.log("Exception from user.js/searchUser:");
       console.log(err);
 
       reject(err);
@@ -19,7 +25,7 @@ exports.listUser = async function () {
   });
 }
 
-exports.insertUser = async function (object) {
+async function insertUser(object) {
   return new Promise(async (resolve, reject) => {
     try {
       const query = `INSERT INTO ${table} 
@@ -42,7 +48,7 @@ exports.insertUser = async function (object) {
   });
 }
 
-exports.updateUser = async function (object) {
+async function updateUser(object) {
   return new Promise(async (resolve, reject) => {
     try {
       const query = `UPDATE ${table} 
@@ -64,7 +70,7 @@ exports.updateUser = async function (object) {
   });
 }
 
-exports.deleteUser = async function (id) {
+async function deleteUser(id) {
   return new Promise(async (resolve, reject) => {
     try {
       const query = `DELETE FROM ${table}  
@@ -85,7 +91,7 @@ exports.deleteUser = async function (id) {
   });
 }
 
-exports.findByProfile = async function (id_perfil) {
+async function findByProfile(id_perfil) {
   return new Promise(async (resolve, reject) => {
     try {
       const query = `SELECT * FROM ${table}
@@ -105,3 +111,5 @@ exports.findByProfile = async function (id_perfil) {
     }
   });
 }
+
+module.exports = { searchUser, insertUser, updateUser, deleteUser, findByProfile }
