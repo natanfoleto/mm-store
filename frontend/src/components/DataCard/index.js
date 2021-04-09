@@ -12,7 +12,7 @@ export default function ComponentItemCard({ item, type }) {
         </Content>
       );
 
-    case "users":
+    case "usuarios":
       return (
         <Content>
           <CardUsers item={item} />

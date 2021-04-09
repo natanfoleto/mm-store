@@ -1,10 +1,6 @@
 import { toast } from 'react-toastify'
 
 export default function toastify(type, message) {
-  const styleInfo = {
-    background: '#003464'
-  }
-
   switch (type) {
     case 'info':
       toast.info(message, {

@@ -4,13 +4,13 @@ import Toast from '../utils/toastify';
 
 import api from '../services/api';
 
-export const useProfile = () => {
+export const useUser = () => {
   const history = useHistory();
   
-  async function searchProfile(nome, page, limit) {
+  async function searchUser(key, page, limit) {
     try {
-      const res = await api.post(`/perfis/search/${page}/${limit}`, { 
-        nome: nome 
+      const res = await api.post(`/usuarios/search/${page}/${limit}`, { 
+        key: key 
       });
 
       if (res.status === 206) {
@@ -27,10 +27,13 @@ export const useProfile = () => {
     }
   }
 
-  async function createProfile(data) {   
+  async function createUser(data) {   
     try {
-      const res = await api.post('/perfis', {
-        nome: data.nome
+      const res = await api.post('/usuarios', {
+        id_perfil: data.id_perfil,
+        nome: data.nome,
+        login: data.login,
+        password: data.password
       });
 
       if (res.status === 206) {
@@ -53,9 +56,9 @@ export const useProfile = () => {
     }
   }
 
-  async function updateProfile(data) {
+  async function updateUser(data) {
     try {
-      const res = await api.put('/perfis', data);
+      const res = await api.put('/usuarios', data);
 
       if (res.status === 206) {
         Toast('warn', res.data.error.details[0].message);
@@ -77,9 +80,9 @@ export const useProfile = () => {
     }
   }
 
-  async function deleteProfile(data) {
+  async function deleteUser(data) {
     try {
-      const res = await api.delete('/perfis', data);
+      const res = await api.delete('/usuarios', data);
 
       if (res.status === 206) {
         Toast('warn', res.data.error.details[0].message);
@@ -102,7 +105,7 @@ export const useProfile = () => {
     }
   }
 
-  return { searchProfile, createProfile, updateProfile, deleteProfile }
+  return { searchUser, createUser, updateUser, deleteUser }
 }
 
-export default useProfile;
+export default useUser;

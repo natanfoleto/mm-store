@@ -1,15 +1,24 @@
 import PropTypes from 'prop-types';
 
-import { Content } from './styles';
+import Header from '../../../components/Header';
 
-export default function DefaultLayout({ children }) {
+import { Wrapper, Content } from './styles';
+
+export default function FormLayout({ children }) {
   return (
-    <Content>
-      {children}
-    </Content>
+    <Wrapper>
+      <Header />
+
+      <Content>
+        <Content.Header>
+        </Content.Header>
+
+        {children}
+      </Content>
+    </Wrapper>
   );
 }
 
-DefaultLayout.ProtoTypes = {
+FormLayout.ProtoTypes = {
   children: PropTypes.element.isRequired,
 }

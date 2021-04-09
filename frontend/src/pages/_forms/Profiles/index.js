@@ -3,14 +3,11 @@ import { Form, Input } from '@rocketseat/unform';
 
 import { useHistory } from 'react-router-dom';
 
-import Layout from '../../_layouts/default';
-import LayoutForm from '../../_layouts/form';
+import Layout from '../../_layouts/form';
 
 import useProfile from '../../../hooks/useProfile';
 
-import ButtonBack from '../../../components/ButtonBack';
-
-import { Body } from './styles';
+import { Body, FormContainer, IGroup, BGroup } from './styles';
 
 export default function FormPerfis() {
   const history = useHistory();
@@ -33,32 +30,55 @@ export default function FormPerfis() {
       await updateProfile(data);
   }
 
+  function handleCancel() {
+    history.goBack()
+  }
+
   return (
     <Layout>  
-      <LayoutForm>    
-        <Body>
-          <ButtonBack size={20} color={'#333'}/>
-
+      <Body>
+        <FormContainer>
           <Form initialData={profile} onSubmit={handleSubmit} autoComplete="off">
+            <FormContainer.Title>
+              <h1>Novo perfil!</h1>
+              <p>Crie um novo perfil, para delegar permissões aos usuários!</p>
+            </FormContainer.Title>
+
             <Input 
               type="text" 
               name="id_perfil"
               hidden={true}
             />
 
-            <Input 
-              type="text" 
-              name="nome"
-              placeholder="Escolha o nome do perfil"
-              required
-            />
+            <IGroup>
+              <IGroup.Label>Nome</IGroup.Label>
 
-            <button type="submit">
-              { pathname === '/perfis/add' ? 'Criar' : 'Atualizar'}
-            </button>
+              <Input 
+                type="text" 
+                name="nome"
+                required
+              />
+            </IGroup>
+
+            <BGroup>
+              <BGroup.Button 
+                type="submit" 
+                color="#003464"
+              >
+                { pathname === '/perfis/add' ? 'Criar' : 'Atualizar'}
+              </BGroup.Button>
+
+              <BGroup.Button 
+                type="button"
+                color="#e84545"
+                onClick={handleCancel}
+              >
+                Cancelar
+              </BGroup.Button>
+            </BGroup>
           </Form>
-        </Body>
-      </LayoutForm>  
+        </FormContainer>
+      </Body>
     </Layout>
   );
 }

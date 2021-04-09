@@ -2,7 +2,7 @@ import { useHistory } from 'react-router-dom';
 import { useEffect, useState, useCallback } from 'react';
 
 import Layout from '../_layouts/default';
-import useProfile from '../../hooks/useProfile';
+import useUser from '../../hooks/useUser';
 
 import ComponentItemCard from '../../components/DataCard/index';
 
@@ -14,7 +14,7 @@ import { Body } from './styles';
 export default function Perfis() {
   const history = useHistory();
 
-  const { searchProfile } = useProfile();
+  const { searchUser } = useUser();
 
   const [data, setData] = useState();
   const [limit, setLimit] = useState(10);
@@ -28,7 +28,7 @@ export default function Perfis() {
   }, [limit, currentPage, search])
 
   async function loadData() {    
-    const { data, total } = await searchProfile(search, currentPage, limit);
+    const { data, total } = await searchUser(search, currentPage, limit);
     
     if (data) {
       setData(data);
@@ -37,7 +37,7 @@ export default function Perfis() {
   }
 
   function handleCreate() {
-    history.push('/perfis/add');
+    history.push('/usuarios/add');
   }
 
   const handleLimit = useCallback((e) => {
@@ -49,15 +49,15 @@ export default function Perfis() {
     <Layout>      
       <Body>
         <Body.Title>
-          <h1> Perfis </h1>
-          <p> Cargos destinados aos usuários </p>
+          <h1> Usuários </h1>
+          <p> Somente os usuários tem acesso ao sistema </p>
         </Body.Title>
 
         {/* Cabeçalho do body */}
         <Body.Header>
           <Body.Filter>
             <Body.Input 
-              placeholder="Pesquise pelo nome" 
+              placeholder="Pesquise por um usuário" 
               value={search} 
               onChange={e => setSearch(e.target.value)}
             />
@@ -84,7 +84,7 @@ export default function Perfis() {
                 <ComponentItemCard 
                   key={index} 
                   item={item} 
-                  type="perfis" 
+                  type="usuarios" 
                 />
               ))
             :
