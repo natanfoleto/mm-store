@@ -5,9 +5,10 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "dev": "node src/server.js",
+    "default": "node src/server.js",
     "watch": "pm2 start src/server.js --watch",
-    "start": "pm2 start src/server.js -i max",
+    "start": "pm2 start src/server.js",
+    "max": "pm2 start src/server.js -i max",
     "reload": "pm2 reload src/server.js",
     "stop": "pm2 stop src/server.js",
     "delete": "pm2 delete src/server.js",

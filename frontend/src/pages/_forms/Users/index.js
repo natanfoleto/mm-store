@@ -19,29 +19,30 @@ export default function FormUsuarios() {
   const [user, setUser] = useState();
   const [profiles, setProfiles] = useState();
   const [pathname, setPathname] = useState();
-
+  
   useEffect(() => {
-    loadProfiles()
+    async function loadProfiles() {    
+      const { data } = await searchProfile('', 1, 100);
+      
+      if (data) {
+        let options = [];
+  
+        data.map((item) => {
+          const element = { id: item.id_perfil, title: item.nome };
+  
+          options.push(element)
+        });
+  
+        setProfiles(options);
+      }    
+    }
+
+    loadProfiles();
+
     setUser(history.location.state);
     setPathname(history.location.pathname);
-  }, [history])
+  }, [history, searchProfile])
 
-  async function loadProfiles() {    
-    const { data } = await searchProfile('', 1, 100);
-    
-    if (data) {
-      let options = [];
-
-      data.map((item) => {
-        const element = { id: item.id_perfil, title: item.nome };
-
-        options.push(element)
-      });
-
-      setProfiles(options);
-    }    
-  }
-  
   async function handleSubmit(data) {
     if (pathname === '/usuarios/add')
       await createUser(data)

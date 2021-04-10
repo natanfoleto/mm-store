@@ -24,17 +24,17 @@ export default function Perfis() {
   const [search, setSearch] = useState('');
 
   useEffect(() => {
-    loadData(search);
-  }, [limit, currentPage, search])
+    async function loadData() {    
+      const { data, total } = await searchProfile(search, currentPage, limit);
+      
+      if (data) {
+        setData(data);
+        setTotalPages(Math.ceil(total / limit));
+      }    
+    }
 
-  async function loadData() {    
-    const { data, total } = await searchProfile(search, currentPage, limit);
-    
-    if (data) {
-      setData(data);
-      setTotalPages(Math.ceil(total / limit));
-    }    
-  }
+    loadData();
+  }, [limit, currentPage, search, searchProfile])
 
   function handleCreate() {
     history.push('/perfis/add');
