@@ -1,4 +1,4 @@
-exports.page = async function (response, params) {
+export default async function page(response, params) {
   const { page, limit } = params;
   const total = response.length;
 

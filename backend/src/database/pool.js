@@ -1,6 +1,6 @@
-const { createPool } = require('mariadb');
+import { createPool } from 'mariadb'
 
-const mariadb = require('../config/database/mariadb');
+import mariadb from '../config/database/mariadb.js'
 
 const pool = new createPool({
   host: mariadb.host, 
@@ -10,7 +10,7 @@ const pool = new createPool({
   connectionLimit: mariadb.connectionLimit,
 });
   
-async function execute(sql, params = []) {
+async function executeQuery(sql, params = []) {
   let conn;
 
   try {
@@ -27,4 +27,4 @@ async function execute(sql, params = []) {
   }
 }
 
-module.exports.execute = execute;
+export { executeQuery }

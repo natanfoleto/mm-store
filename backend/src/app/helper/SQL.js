@@ -1,4 +1,4 @@
-exports.build = async function (response) {
+export default async function build (response) {
   if (typeof response.errno === "number") {
     return error(response);
   }

@@ -1,10 +1,11 @@
-const jwt = require('jsonwebtoken');
-const { promisify } = require('util');
-const message = require('../messages/session');
+import jwt from 'jsonwebtoken'
+import { promisify } from 'util'
 
-const authConfig = require('../../config/auth');
+import message from '../messages/session.js'
 
-exports.authenticate = async function (req, res, next) {
+import authConfig from '../../config/auth.js'
+
+export default async function authenticate(req, res, next) {
   const authHeader = req.headers.authorization;
 
   if (!authHeader) {

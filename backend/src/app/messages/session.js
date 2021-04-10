@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   error: {
     code1: {
       subcode1: {

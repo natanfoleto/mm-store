@@ -1,5 +1,6 @@
-const JoiBase = require('joi')
-const JoiDate = require('@hapi/joi-date')
+import JoiBase from 'joi'
+import JoiDate from '@hapi/joi-date'
+
 const Joi = JoiBase.extend(JoiDate)
 
 const validationSchemas = {
@@ -60,4 +61,4 @@ const validationSchemas = {
   }),
 }
 
-module.exports = validationSchemas
+export default validationSchemas

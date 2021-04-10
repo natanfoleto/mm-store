@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "type": "module",
   "scripts": {
-    "node": "node src/server.js",
-    "dev": "pm2 start src/server.js",
+    "dev": "node src/server.js",
     "watch": "pm2 start src/server.js --watch",
     "start": "pm2 start src/server.js -i max",
     "reload": "pm2 reload src/server.js",
