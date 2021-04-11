@@ -6,6 +6,22 @@ import message from '../messages/profile.js'
 import SQL from '../helper/SQL.js'
 
 class ProfileController {
+  async searchAll(req, res) {
+    try {  
+      const response = await Profile.searchProfile("");
+    
+      return res.json(response);
+    } catch (err) {
+      
+      //! Erro Internal Server
+      return res.status(400).json({
+        result: 'error',
+        message: message.error.code1.subcode99.message,
+        error: err.toString(),
+      });
+    }
+  }
+
   async search(req, res) {
     try {
       const { nome } = req.body;

@@ -6,26 +6,6 @@ import api from '../services/api';
 
 export const useUser = () => {
   const history = useHistory();
-  
-  async function searchUser(key, page, limit) {
-    try {
-      const res = await api.post(`/usuarios/search/${page}/${limit}`, { 
-        key: key 
-      });
-
-      if (res.status === 206) {
-        Toast('warn', res.data.error.details[0].message);
-
-        return false;
-      }
-
-      return res.data;
-    } catch (err) {
-      Toast('error', err.toString());
-
-      return false;
-    }
-  }
 
   async function createUser(data) {   
     try {
@@ -105,7 +85,7 @@ export const useUser = () => {
     }
   }
 
-  return { searchUser, createUser, updateUser, deleteUser }
+  return { createUser, updateUser, deleteUser }
 }
 
 export default useUser;

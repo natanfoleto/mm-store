@@ -1,10 +1,12 @@
 import { useHistory } from 'react-router-dom';
 import { useEffect, useState, useCallback } from 'react';
+import api from '../../services/api';
+import Toast from '../../utils/toastify';
 
 import Layout from '../_layouts/default';
-import useUser from '../../hooks/useUser';
 
-import ComponentItemCard from '../../components/DataCard/index';
+import ComponentCard from '../../components/DataCard/index';
+import Card from './components/Users';
 
 import { CgPlayTrackPrev, CgPlayTrackNext } from 'react-icons/cg';
 import { BiLoader } from 'react-icons/bi';
@@ -14,8 +16,6 @@ import { Body } from './styles';
 export default function Perfis() {
   const history = useHistory();
 
-  const { searchUser } = useUser();
-
   const [data, setData] = useState();
   const [limit, setLimit] = useState(10);
   const [totalPages, setTotalPages] = useState(0);
@@ -24,17 +24,31 @@ export default function Perfis() {
   const [search, setSearch] = useState('');
 
   useEffect(() => {
-    async function loadData() {    
-      const { data, total } = await searchUser(search, currentPage, limit);
-      
-      if (data) {
-        setData(data);
-        setTotalPages(Math.ceil(total / limit));
-      }    
+    async function searchUser() {
+      try {
+        const { status, data } = await api.post(`/usuarios/search/${currentPage}/${limit}`, { 
+          key: search 
+        });
+  
+        if (status === 206) {
+          Toast('warn', data.error.details[0].message);
+  
+          return false;
+        }
+
+        if (status === 200) {
+          setData(data.data);
+          setTotalPages(Math.ceil(data.total / limit));
+        }  
+      } catch (err) {
+        Toast('error', err.toString());
+  
+        return false;
+      }
     }
 
-    loadData(search);
-  }, [limit, currentPage, search, searchUser])
+    searchUser();
+  }, [limit, currentPage, search])
 
   function handleCreate() {
     history.push('/usuarios/add');
@@ -81,11 +95,11 @@ export default function Perfis() {
           { 
             data ? 
               data.map((item, index) => (
-                <ComponentItemCard 
-                  key={index} 
-                  item={item} 
-                  type="usuarios" 
-                />
+                <ComponentCard 
+                  key={index}
+                >
+                  <Card item={item} />
+                </ComponentCard>
               ))
             :
               <Body.LoadData> 

@@ -15,18 +15,22 @@ export default function FormPerfis() {
   const { createProfile, updateProfile } = useProfile();
 
   const [profile, setProfile] = useState();
-  const [pathname, setPathname] = useState();
+  const [operation, setOperation] = useState();
 
   useEffect(() => {
     setProfile(history.location.state);
-    setPathname(history.location.pathname);
+
+    if (history.location.pathname === '/perfis/add')
+      setOperation('ADD');
+    else
+      setOperation('EDIT');
   }, [history])
   
   async function handleSubmit(data) {
-    if (pathname === '/perfis/add')
+    if (operation === 'ADD')
       await createProfile(data)
 
-    if (pathname === '/perfis/edit')
+    if (operation === 'EDIT')
       await updateProfile(data);
   }
 
@@ -40,8 +44,8 @@ export default function FormPerfis() {
         <FormContainer>
           <Form initialData={profile} onSubmit={handleSubmit} autoComplete="off">
             <FormContainer.Title>
-              <h1>Novo perfil!</h1>
-              <p>Crie um novo perfil, para delegar permissões aos usuários!</p>
+              <h1> { operation === 'ADD' ? 'Novo perfil!' : 'Editar perfil!' }</h1>
+              <p>Utilize os perfis, para delegar permissões aos usuários!</p>
             </FormContainer.Title>
 
             <Input 
@@ -65,7 +69,7 @@ export default function FormPerfis() {
                 type="submit" 
                 color="#003464"
               >
-                { pathname === '/perfis/add' ? 'Criar' : 'Atualizar'}
+                { operation === 'ADD' ? 'Criar' : 'Atualizar'}
               </BGroup.Button>
 
               <BGroup.Button 

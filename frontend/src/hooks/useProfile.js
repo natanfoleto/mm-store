@@ -6,26 +6,6 @@ import api from '../services/api';
 
 export const useProfile = () => {
   const history = useHistory();
-  
-  async function searchProfile(nome, page, limit) {
-    try {
-      const res = await api.post(`/perfis/search/${page}/${limit}`, { 
-        nome: nome 
-      });
-
-      if (res.status === 206) {
-        Toast('warn', res.data.error.details[0].message);
-
-        return false;
-      }
-
-      return res.data;
-    } catch (err) {
-      Toast('error', err.toString());
-
-      return false;
-    }
-  }
 
   async function createProfile(data) {   
     try {
@@ -102,7 +82,7 @@ export const useProfile = () => {
     }
   }
 
-  return { searchProfile, createProfile, updateProfile, deleteProfile }
+  return { createProfile, updateProfile, deleteProfile }
 }
 
 export default useProfile;

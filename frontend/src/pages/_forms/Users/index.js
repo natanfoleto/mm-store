@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react'; 
 import { Form, Input, Select } from '@rocketseat/unform';
+import api from '../../../services/api';
+import Toast from '../../../utils/toastify';
 
 import { useHistory } from 'react-router-dom';
 
 import Layout from '../../_layouts/form';
 
 import useUser from '../../../hooks/useUser';
-import useProfile from '../../../hooks/useProfile';
 
 import { Body, FormContainer, IGroup, BGroup } from './styles';
 
@@ -14,41 +15,50 @@ export default function FormUsuarios() {
   const history = useHistory();
 
   const { createUser, updateUser } = useUser();
-  const { searchProfile } = useProfile();
 
   const [user, setUser] = useState();
   const [profiles, setProfiles] = useState();
-  const [pathname, setPathname] = useState();
+  const [operation, setOperation] = useState();
   
   useEffect(() => {
-    async function loadProfiles() {    
-      const { data } = await searchProfile('', 1, 100);
-      
-      if (data) {
-        let options = [];
+    async function searchAllProfiles() {
+      try {
+        const { data } = await api.get('/perfis/search/all');
   
-        data.map((item) => {
+        let newData = [];
+    
+        data.forEach((item) => {
           const element = { id: item.id_perfil, title: item.nome };
   
-          options.push(element)
+          newData.push(element)
         });
   
-        setProfiles(options);
-      }    
+        setProfiles(newData);
+      } catch (err) {
+        Toast('error', err.toString());
+  
+        return false;
+      }
     }
 
-    loadProfiles();
+    searchAllProfiles();
 
     setUser(history.location.state);
-    setPathname(history.location.pathname);
-  }, [history, searchProfile])
+
+    if (history.location.pathname === '/usuarios/add')
+      setOperation('ADD');
+    else
+      setOperation('EDIT');
+  }, [history])
 
   async function handleSubmit(data) {
-    if (pathname === '/usuarios/add')
+    if (operation === 'ADD') {
       await createUser(data)
+    } else {
+      delete data.password;
 
-    if (pathname === '/usuarios/edit')
       await updateUser(data);
+    }
   }
 
   function handleCancel() {
@@ -60,8 +70,8 @@ export default function FormUsuarios() {
       <Body>
         <FormContainer>
           <FormContainer.Title>
-            <h1>Novo usuário!</h1>
-            <p>Crie um novo usuário, para separar os tipos de acessos no sistema!</p>
+            <h1> { operation === 'ADD' ? 'Novo usuário!' : 'Editar usuário!' }</h1>
+            <p>Use os usuários, para criar acessos no sistema!</p>
           </FormContainer.Title>
 
           <Form initialData={user} onSubmit={handleSubmit} autoComplete="off">
@@ -75,7 +85,7 @@ export default function FormUsuarios() {
               <IGroup.Label>Escolha o perfil</IGroup.Label>
 
               <Select 
-                name="perfis" 
+                name="id_perfil" 
                 options={profiles ? profiles : []} 
                 required
               />
@@ -101,13 +111,15 @@ export default function FormUsuarios() {
               />
             </IGroup>
 
-            <IGroup>
+            <IGroup
+              style={ operation === 'EDIT' ? { display: 'none' } : { display: '' } }
+            >
               <IGroup.Label>Sua senha secreta</IGroup.Label>
               
               <Input 
                 type="password" 
                 name="password"
-                required
+                required={operation === 'EDIT' ? false : true}
               />
             </IGroup>
 
@@ -116,7 +128,7 @@ export default function FormUsuarios() {
                 type="submit" 
                 color="#003464"
               >
-                { pathname === '/usuarios/add' ? 'Criar' : 'Atualizar'}
+                { operation === 'ADD' ? 'Criar' : 'Atualizar'}
               </BGroup.Button>
 
               <BGroup.Button 
