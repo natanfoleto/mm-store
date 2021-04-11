@@ -70,9 +70,7 @@ routes.route('/clientes').delete(validation(validationClient.clientDelete, 'body
 routes.route('/contas').get(AccountController.list);
 
 routes.route('/enderecos').get(AddressController.list);
-routes.route('/enderecos').post(validation(validationAddress.addressCreate, 'body'), AddressController.create);
 routes.route('/enderecos').put(validation(validationAddress.addressUpdate, 'body'), AddressController.update);
-routes.route('/enderecos').delete(validation(validationAddress.addressDelete, 'body'), AddressController.remove);
 
 routes.route('/pedidos').get(WishController.list);
 routes.route('/pedidos').post(validation(validationWish.wishCreate, 'body'), WishController.create);

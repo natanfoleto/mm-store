@@ -1,4 +1,5 @@
 import Provider from '../models/provider.js'
+import Address from '../models/address.js'
 import Product from '../models/product.js'
 import message from '../messages/provider.js'
 
@@ -24,8 +25,11 @@ class ProviderController {
   async create(req, res) {
     try {
       const body = req.body;
+
+      const address = await Address.insertAddress();
   
       const provider = {
+        id_endereco: address.insertId || null,
         nome: body.nome,
         cpf_cnpj: body.cpf_cnpj,
         email: body.email || null,
@@ -143,6 +147,8 @@ class ProviderController {
       }
   
       const response = await Provider.deleteProvider(id_fornecedor);
+
+      await Address.deleteAddress(response[0].id_endereco);
   
       const sqlTreated = await SQL(response);
   

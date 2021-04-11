@@ -24,8 +24,8 @@ class Client {
     return new Promise(async (resolve, reject) => {
       try {
         const query = `INSERT INTO ${table} 
-          (nome, cpf, email, data_nasc, celular, password_hash) 
-          VALUES (?, ?, ?, ?, ?, ?)
+          (id_endereco, nome, cpf, email, data_nasc, celular, password_hash) 
+          VALUES (?, ?, ?, ?, ?, ?, ?)
           RETURNING *
         ;`;
   
@@ -70,6 +70,7 @@ class Client {
       try {
         const query = `DELETE FROM ${table}  
           WHERE id_cliente = ?
+          RETURNING id_endereco
         `;
   
         const binds = id;
@@ -79,27 +80,6 @@ class Client {
         resolve(result);
       } catch (err) {
         console.log("Exception from client.js/deleteClient:");
-        console.log(err);
-  
-        reject(err);
-      }
-    });
-  }
-  
-  async findClientByAddress(id_endereco) {
-    return new Promise(async (resolve, reject) => {
-      try {
-        const query = `SELECT * FROM ${table}
-          WHERE id_endereco = ?
-        `;
-  
-        const binds = id_endereco;
-  
-        const result = await executeQuery(query, binds);
-  
-        resolve(result);
-      } catch (err) {
-        console.log("Exception from user.js/findByAddress:");
         console.log(err);
   
         reject(err);

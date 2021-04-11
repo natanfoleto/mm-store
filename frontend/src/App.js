@@ -8,6 +8,10 @@ import { AuthProvider } from './contexts/auth';
 import GlobalStyle from './styles/global';
 
 function App() {  
+  const styleToast = {
+    "text-align": "center"
+  }
+  
   return (
     <>
       <Router>
@@ -15,7 +19,7 @@ function App() {
           <Routes />
         </AuthProvider>
         <GlobalStyle />
-        <ToastContainer autoClose={2500} />
+        <ToastContainer autoClose={2500} style={styleToast} />
       </Router>
     </>
   );

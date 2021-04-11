@@ -1,5 +1,6 @@
 import Client from '../models/client.js'
-import Account from './account.js'
+import Address from '../models/address.js'
+import Account from '../models/account.js'
 import message from '../messages/client.js'
 
 import SQL from '../helper/SQL.js'
@@ -24,8 +25,11 @@ class ClientController {
   async create(req, res) {
     try {
       const body = req.body;
+
+      const address = await Address.insertAddress();
   
       const client = {
+        id_endereco: address.insertId || null,
         nome: body.nome,
         cpf: body.cpf,
         email: body.email || null,
@@ -54,7 +58,7 @@ class ClientController {
       if (sqlTreated.result === 'success') {
   
         //TODO Criar conta e vincular com cliente
-        await Account.accountCreate(sqlTreated.sql[0].id_cliente)
+        await Account.insertAccount(sqlTreated.sql[0].id_cliente)
         
         return res.json({
           result: 'success',
@@ -139,6 +143,8 @@ class ClientController {
       const { id_cliente } = req.body;
   
       const response = await Client.deleteClient(id_cliente);
+
+      await Address.deleteAddress(response[0].id_endereco);
   
       const sqlTreated = await SQL(response);
   
@@ -157,9 +163,6 @@ class ClientController {
             message: message.error.code1.subcode2.message
           })
         }
-  
-        //TODO Excluir conta vinculada ao cliente
-        await Account.accountRemove(id_cliente);
       
         return res.json({
           result: 'success',

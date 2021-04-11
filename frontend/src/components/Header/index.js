@@ -4,12 +4,13 @@ import { useAuth } from '../../contexts/auth';
 
 import Logo from '../../assets/LogoMini.png';
 
+import { Tooltip } from '@material-ui/core'
 import { RiLogoutCircleLine } from 'react-icons/ri';
 
 import { Container, Content, Profile } from './styles';
 
 function Header() {
-  const { signOut } = useAuth();
+  const { user, signOut } = useAuth();
   
   function handleLogOut() {
     signOut();
@@ -33,13 +34,15 @@ function Header() {
         </nav>
 
         <aside>
-          <button onClick={handleLogOut}>
-            <RiLogoutCircleLine size={20}/> 
-          </button>
-
+          <Tooltip title="Logout" enterDelay={500} leaveDelay={200}>
+            <button onClick={handleLogOut}>
+              <RiLogoutCircleLine size={20}/> 
+            </button>
+          </Tooltip>
+          
           <Profile>
             <div>
-              <strong>Natan</strong>
+              <strong>{user.nome}</strong>
               <Link to="/profile">Meu perfil</Link>
             </div>
           </Profile>    

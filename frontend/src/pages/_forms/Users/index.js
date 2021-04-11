@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'; 
+import { useEffect, useState, useCallback } from 'react'; 
 import { Form, Input, Select } from '@rocketseat/unform';
 import api from '../../../services/api';
 import Toast from '../../../utils/toastify';
@@ -17,7 +17,8 @@ export default function FormUsuarios() {
   const { createUser, updateUser } = useUser();
 
   const [user, setUser] = useState();
-  const [profiles, setProfiles] = useState();
+  const [currentProfile, setCurrentProfile] = useState();
+  const [profiles, setProfiles] = useState([]);
   const [operation, setOperation] = useState();
   
   useEffect(() => {
@@ -45,10 +46,13 @@ export default function FormUsuarios() {
 
     setUser(history.location.state);
 
-    if (history.location.pathname === '/usuarios/add')
+    if (history.location.pathname === '/usuarios/add') {
       setOperation('ADD');
-    else
+    }
+    else {
       setOperation('EDIT');
+      setCurrentProfile(history.location.state.id_perfil);
+    }
   }, [history])
 
   async function handleSubmit(data) {
@@ -64,6 +68,10 @@ export default function FormUsuarios() {
   function handleCancel() {
     history.goBack()
   }
+
+  const handleSelect = useCallback((e) => {
+    setCurrentProfile(e.target.value);
+  }, [])
 
   return (
     <Layout>  
@@ -86,7 +94,9 @@ export default function FormUsuarios() {
 
               <Select 
                 name="id_perfil" 
-                options={profiles ? profiles : []} 
+                value={currentProfile}
+                onChange={handleSelect}
+                options={profiles} 
                 required
               />
             </IGroup>

@@ -25,12 +25,12 @@ function ComponentProfile({ item }) {
     <>
       <Data>
         <Data.Id> {item.id_perfil} </Data.Id>
-        <Data.Name> 
-          {item.nome}
+        <Data.DivColumn> 
+          <h1>{item.nome}</h1>
           <p>
             {new Intl.DateTimeFormat('pt-BR', {dateStyle: 'full', timeStyle: 'long'}).format(new Date(item.updated_at))}
           </p>
-        </Data.Name>
+        </Data.DivColumn>
       </Data>
 
       <Data.Actions>

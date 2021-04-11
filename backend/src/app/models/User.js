@@ -7,11 +7,29 @@ class User {
     return new Promise(async (resolve, reject) => {
       try {
         const query = `
-          (SELECT * FROM ${table} WHERE nome LIKE "%${key}%")
+          (
+            SELECT us.*, pf.nome AS perfil 
+            FROM ${table} AS us 
+            INNER JOIN perfis AS pf 
+            ON us.id_perfil = pf.id_perfil
+            WHERE us.nome LIKE "%${key}%"
+          )
           UNION
-          (SELECT * FROM ${table} WHERE login LIKE "%${key}%")
+          (
+            SELECT us.*, pf.nome AS perfil 
+            FROM ${table} AS us 
+            INNER JOIN perfis AS pf 
+            ON us.id_perfil = pf.id_perfil
+            WHERE us.login LIKE "%${key}%"
+          )
           UNION
-          (SELECT * FROM ${table} WHERE id_perfil LIKE "%${key}%")
+          (
+            SELECT us.*, pf.nome AS perfil 
+            FROM ${table} AS us 
+            INNER JOIN perfis AS pf 
+            ON us.id_perfil = pf.id_perfil
+            WHERE us.id_perfil LIKE "%${key}%"
+          )
         `;
   
         const result = await executeQuery(query);

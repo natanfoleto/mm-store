@@ -20,18 +20,15 @@ class Address {
     });
   }
   
-  async insertAddress(object) {
+  async insertAddress() {
     return new Promise(async (resolve, reject) => {
       try {
         const query = `INSERT INTO ${table} 
-          (id_pessoa, tipo_pessoa, logradouro, numero, cep, bairro, cidade, uf, latitude, longitude) 
-          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-          RETURNING *
-        ;`;
-  
-        const binds = Object.values(object);
-  
-        const result = await executeQuery(query, binds);
+          () 
+          VALUES ()
+        `;
+    
+        const result = await executeQuery(query);
   
         resolve(result);
       } catch (err) {

@@ -31,21 +31,37 @@ Data.Hr = styled.hr`
 `;
 
 Data.Id = styled.p`
-  font-size: 32px;
+  font-size: 30px;
   margin: 0 20px 0 10px;
   padding-right: 20px;
   border-right: 1px solid #ddd;
 `;
 
-Data.Name = styled.div`
-  font-size: 16px;
-  font-weight: bold;
+
+Data.DivColumn = styled.div`
+  margin-right: 15px;
+  padding-right: 20px;
+  border-right: 1px solid #ddd;
+
+  &:last-child {
+    padding-right: 0;
+    border-right: 0;
+  }
+
+  h1 {
+    font-size: 15px;
+    color: #333;
+  }
 
   p {
+    color: #333;
     font-size: 13px;
     font-weight: normal;
-    margin-top: 4px;
+    margin-top: 3px;
+    margin-right: 5px;
   }
 `;
 
-
+Data.DivRow = styled.div`
+  display: flex;
+`;

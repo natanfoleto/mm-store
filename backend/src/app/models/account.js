@@ -67,27 +67,6 @@ class Account {
       }
     });
   }
-  
-  async deleteAccount(id) {
-    return new Promise(async (resolve, reject) => {
-      try {
-        const query = `DELETE FROM ${table}  
-          WHERE id_cliente = ?
-        `;
-  
-        const binds = id;
-  
-        const result = await executeQuery(query, binds);
-  
-        resolve(result);
-      } catch (err) {
-        console.log("Exception from account.js/deleteAccount:");
-        console.log(err);
-  
-        reject(err);
-      }
-    });
-  }
 }
 
 export default new Account()

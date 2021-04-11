@@ -24,8 +24,8 @@ class Provider {
     return new Promise(async (resolve, reject) => {
       try {
         const query = `INSERT INTO ${table} 
-          (nome, cpf_cnpj, email, celular, obs) 
-          VALUES (?, ?, ?, ?, ?)
+          (id_endereco, nome, cpf_cnpj, email, celular, obs) 
+          VALUES (?, ?, ?, ?, ?, ?)
           RETURNING *
         ;`;
   
@@ -70,6 +70,7 @@ class Provider {
       try {
         const query = `DELETE FROM ${table}  
           WHERE id_fornecedor = ?
+          RETURNING id_endereco
         `;
   
         const binds = id;
@@ -79,27 +80,6 @@ class Provider {
         resolve(result);
       } catch (err) {
         console.log("Exception from provider.js/deleteProvider:");
-        console.log(err);
-  
-        reject(err);
-      }
-    });
-  }
-  
-  async findProviderByAddress(id_endereco) {
-    return new Promise(async (resolve, reject) => {
-      try {
-        const query = `SELECT * FROM ${table}
-          WHERE id_endereco = ?
-        `;
-  
-        const binds = id_endereco;
-  
-        const result = await executeQuery(query, binds);
-  
-        resolve(result);
-      } catch (err) {
-        console.log("Exception from user.js/findByAddress:");
         console.log(err);
   
         reject(err);

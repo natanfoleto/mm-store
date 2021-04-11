@@ -8,6 +8,7 @@ import Layout from '../_layouts/default';
 import ComponentCard from '../../components/DataCard/index';
 import Card from './components/Card';
 
+import { Tooltip } from '@material-ui/core'
 import { CgPlayTrackPrev, CgPlayTrackNext } from 'react-icons/cg';
 import { BiLoader } from 'react-icons/bi';
 
@@ -76,13 +77,16 @@ export default function Perfis() {
               onChange={e => setSearch(e.target.value)}
             />
              
-            <Body.Select onChange={handleLimit}>
-              <option value="10">10 rows</option>
-              <option value="20">20 rows</option>
-              <option value="30">30 rows</option>
-              <option value="50">50 rows</option>
-              <option value="100">100 rows</option>
-            </Body.Select>
+            <Tooltip title="Linhas por página" enterDelay={500} leaveDelay={200} placement="top">
+              <Body.Select onChange={handleLimit}>
+                <option value="10">10 rows</option>
+                <option value="20">20 rows</option>
+                <option value="30">30 rows</option>
+                <option value="50">50 rows</option>
+                <option value="100">100 rows</option>
+              </Body.Select>
+            </Tooltip>
+
           </Body.Filter>
 
           <Body.Button onClick={handleCreate}>
