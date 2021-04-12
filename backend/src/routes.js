@@ -13,6 +13,8 @@ import validationProvider from './app/schema/validationProvider.js'
 import validationClient from './app/schema/validationClient.js'
 import validationAddress from './app/schema/validationAddress.js'
 import validationWish from './app/schema/validationWish.js'
+import validationPermission from './app/schema/validationPermission.js'
+import validationPermissions from './app/schema/validationPermissions.js'
 
 import SessionController from './app/controllers/session.js'
 import UserController from './app/controllers/user.js'
@@ -25,6 +27,8 @@ import ClientController from './app/controllers/client.js'
 import AccountController from './app/controllers/account.js'
 import AddressController from './app/controllers/address.js'
 import WishController from './app/controllers/wish.js'
+import PermissionController from './app/controllers/permission.js'
+import PermissionsController from './app/controllers/permissions.js'
 
 const routes = new Router();
 
@@ -76,5 +80,15 @@ routes.route('/pedidos').get(WishController.list);
 routes.route('/pedidos').post(validation(validationWish.wishCreate, 'body'), WishController.create);
 routes.route('/pedidos').put(validation(validationWish.wishUpdate, 'body'), WishController.update);
 routes.route('/pedidos').delete(validation(validationWish.wishDelete, 'body'), WishController.remove);
+
+routes.route('/permissao/search/:page/:limit').post(validation(validationPermission.permissionSearch, 'body'), PermissionController.search);
+routes.route('/permissao').post(validation(validationPermission.permissionCreate, 'body'), PermissionController.create);
+routes.route('/permissao').put(validation(validationPermission.permissionUpdate, 'body'), PermissionController.update);
+routes.route('/permissao').delete(validation(validationPermission.permissionDelete, 'body'), PermissionController.remove);
+
+routes.route('/permissoes/search/:page/:limit').post(validation(validationPermissions.permissionsSearch, 'body'), PermissionsController.search);
+routes.route('/permissoes').post(validation(validationPermissions.permissionsCreate, 'body'), PermissionsController.create);
+routes.route('/permissoes').put(validation(validationPermissions.permissionsUpdate, 'body'), PermissionsController.update);
+routes.route('/permissoes').delete(validation(validationPermissions.permissionsDelete, 'body'), PermissionsController.remove);
 
 export default routes;

@@ -143,8 +143,6 @@ class ClientController {
       const { id_cliente } = req.body;
   
       const response = await Client.deleteClient(id_cliente);
-
-      await Address.deleteAddress(response[0].id_endereco);
   
       const sqlTreated = await SQL(response);
   
@@ -157,12 +155,14 @@ class ClientController {
       if (sqlTreated.result === 'success') {
   
         //* Nenhum cliente encontrado com os parâmetros passados
-        if (sqlTreated.sql.affectedRows === 0) {
+        if (!response[0]) {
           return res.json({
             result: 'error',
             message: message.error.code1.subcode2.message
           })
         }
+
+        await Address.deleteAddress(response[0].id_endereco);
       
         return res.json({
           result: 'success',

@@ -1,16 +1,19 @@
-import Provider from '../models/provider.js'
-import Address from '../models/address.js'
-import Product from '../models/product.js'
-import message from '../messages/provider.js'
+import Permisson from '../models/permission.js'
+import pagingData from '../utils/pagingData.js'
+import message from '../messages/permission.js'
 
 import SQL from '../helper/SQL.js'
 
-class ProviderController {
-  async list(req, res) {
+class PermissionController {
+  async search(req, res) {
     try {
-      const response = await Provider.listProvider();
-  
-      return res.json(response);
+      const { key } = req.body;
+      
+      const response = await Permisson.searchPermission(key || "");
+
+      const pagedData = await pagingData(response, req.params);
+
+      return res.json(pagedData);
     } catch (err) {
   
       //! Erro Internal Server
@@ -25,25 +28,20 @@ class ProviderController {
   async create(req, res) {
     try {
       const body = req.body;
-
-      const address = await Address.insertAddress();
   
-      const provider = {
-        id_endereco: address.insertId || null,
-        nome: body.nome,
-        cpf_cnpj: body.cpf_cnpj,
-        email: body.email || null,
-        celular: body.celular || null,
-        obs: body.obs || null
+      const permission = {
+        tipo: body.tipo,
+        descricao: body.descricao,
+        contexto: body.contexto
       }
   
-      const response = await Provider.insertProvider(provider);
+      const response = await Permisson.insertPermission(permission);
   
       const sqlTreated = await SQL(response);
   
       //! Erro ao executar query no banco
       if (sqlTreated.result === 'error') {
-  
+
         //! Erro de cadastro duplicado
         if (sqlTreated.errno === 1062) {
           return res.json({
@@ -77,27 +75,24 @@ class ProviderController {
     try {
       const body = req.body;
   
-      const provider = {
-        nome: body.nome,
-        cpf_cnpj: body.cpf_cnpj,
-        email: body.email || null,
-        celular: body.celular || null,
-        obs: body.obs || null,
-        updated_at: new Date(),
-        id_fornecedor: body.id_fornecedor
+      const permission = {
+        tipo: body.tipo,
+        descricao: body.descricao,
+        contexto: body.contexto || null,
+        id_permissao: body.id_permissao
       }
   
-      const response = await Provider.updateProvider(provider);
+      const response = await Permisson.updatePermission(permission);
   
       const sqlTreated = await SQL(response);
   
       //! Erro ao executar query no banco
       if (sqlTreated.result === 'error') {
-  
+
         //! Erro de cadastro duplicado
         if (sqlTreated.errno === 1062) {
           return res.json({
-            result: sqlTreated.result,
+            result: 'error',
             message: message.error.code1.subcode1.message
           })
         }
@@ -106,7 +101,7 @@ class ProviderController {
       //* Query executada com sucesso
       if (sqlTreated.result === 'success') {
   
-        //* Nenhum usuário encontrado com os parâmetros passados
+        //* Nenhuma permissão encontrada com os parâmetros passados
         if (sqlTreated.sql.affectedRows === 0) {
           return res.json({
             result: 'error',
@@ -134,19 +129,9 @@ class ProviderController {
   
   async remove(req, res) {
     try {
-      const { id_fornecedor } = req.body;
+      const { id_permissao } = req.body;
   
-      const products = await Product.findProductByProvider(id_fornecedor);
-  
-      //* Existem produtos atrelados a este fornecedor
-      if (products[0]) {
-        return res.json({
-          result: 'error',
-          message: message.error.code1.subcode3.message
-        })
-      }
-  
-      const response = await Provider.deleteProvider(id_fornecedor);
+      const response = await Permisson.deletePermission(id_permissao);
   
       const sqlTreated = await SQL(response);
   
@@ -158,16 +143,14 @@ class ProviderController {
       //* Query executada com sucesso
       if (sqlTreated.result === 'success') {
   
-        //* Nenhum usuário encontrado com os parâmetros passados
-        if (!response[0]) {
+        //* Nenhuma permissão encontrada com os parâmetros passados
+        if (sqlTreated.sql.affectedRows === 0) {
           return res.json({
             result: 'error',
             message: message.error.code1.subcode2.message
           })
         }
-
-        await Address.deleteAddress(response[0].id_endereco);
-
+  
         return res.json({
           result: 'success',
           message: message.success.code1.subcode3.message
@@ -187,4 +170,4 @@ class ProviderController {
   }
 }
 
-export default new ProviderController()
+export default new PermissionController()
