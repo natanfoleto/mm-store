@@ -112,7 +112,7 @@ class ClientController {
       //* Query executada com sucesso
       if (sqlTreated.result === 'success') {
   
-        //* Nenhum usuário encontrado com os parâmetros passados
+        //* Nenhum cliente encontrado com os parâmetros passados
         if (sqlTreated.sql.affectedRows === 0) {
           return res.json({
             result: 'error',
