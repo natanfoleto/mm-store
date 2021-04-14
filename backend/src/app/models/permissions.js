@@ -3,24 +3,19 @@ import { executeQuery } from '../../database/pool.js'
 const table = 'permissoes_perfis';
 
 class Permissions {
-  async searchPermissions(key) {
+  async searchPermissions(perfil) {
     return new Promise(async (resolve, reject) => {
       try {
         const query = `
-          (
-            SELECT * 
-            FROM ${table} 
-            WHERE id_perfil LIKE "%${key}%"
-          )
-          UNION
-          (
-            SELECT * 
-            FROM ${table} 
-            WHERE id_permissao LIKE "%${key}%"
-          )
+          SELECT permissoes_perfis.*, permissoes.tipo, permissoes.descricao, permissoes.contexto
+          FROM ${table} 
+          INNER JOIN permissoes ON (permissoes.id_permissao = permissoes_perfis.id_permissao)
+          WHERE id_perfil = ?
         `;
   
-        const result = await executeQuery(query);
+        const binds = perfil;
+
+        const result = await executeQuery(query, binds);
   
         resolve(result);
       } catch (err) {

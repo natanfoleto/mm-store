@@ -5,12 +5,21 @@ const Joi = JoiBase.extend(JoiDate)
 
 const validationSchemas = {
   permissionSearch: Joi.object().keys({
-    key: Joi
+    tipo: Joi
       .string()
       .allow('')
+      .required()
       .messages({
-        'any.required': 'parâmetro key é necessário',
-        'string.base': 'key deve ser do tipo string',
+        'any.required': 'parâmetro tipo é necessário',
+        'string.base': 'key deve tipo do tipo string',
+      }),
+    contexto: Joi
+      .string()
+      .allow('')
+      .required()
+      .messages({
+        'any.required': 'parâmetro contexto é necessário',
+        'string.base': 'contexto deve ser do tipo string',
       })
   }),
   permissionCreate: Joi.object().keys({

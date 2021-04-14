@@ -7,13 +7,13 @@ import SQL from '../helper/SQL.js'
 class PermissionsController {
   async search(req, res) {
     try {
-      const { key } = req.body;
+      const { perfil } = req.params;
       
-      const response = await Permissons.searchPermissions(key || "");
+      const response = await Permissons.searchPermissions(perfil);
 
-      const pagedData = await pagingData(response, req.params);
+      //const pagedData = await pagingData(response, req.params);
 
-      return res.json(pagedData);
+      return res.json(response);
     } catch (err) {
   
       //! Erro Internal Server

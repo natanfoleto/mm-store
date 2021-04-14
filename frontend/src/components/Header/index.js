@@ -30,7 +30,7 @@ function Header() {
           <Link to=""> Pedidos </Link>
           <Link to="/perfis"> Perfils </Link>
           <Link to="/usuarios"> Usuários </Link>
-          <Link to=""> Configurações </Link>
+          <Link to="/settings"> Configurações </Link>
         </nav>
 
         <aside>

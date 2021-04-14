@@ -58,7 +58,6 @@ export const Content = styled.div`
       color: #FFF;
       padding: 10px 20px;
       border-radius: 4px;
-      box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.15);
     }
   }
 `;

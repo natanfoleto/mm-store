@@ -11,19 +11,19 @@ export const Body = styled.div`
   border-bottom: 1px solid #eee;
 `;
 
-export const FormContainer = styled.div`
+export const Container = styled.div`
   width: 600px;
   padding: 50px 25px;
 
   h1 {
-    font-size: 36px;
+    font-size: 34px;
   }
 `;
 
-FormContainer.Title = styled.div`
+Container.Title = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: flex-end;  
+  align-items: flex-end;
 
   margin-bottom: 10px;
 `;
@@ -47,6 +47,7 @@ export const BGroup = styled.div`
 
 BGroup.Button = styled.button`
   background: ${props => (props.color)};
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.15);
 
   &:hover {
     background: ${props => (lighten(0.04, props.color))};

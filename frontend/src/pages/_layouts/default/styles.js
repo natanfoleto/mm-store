@@ -6,6 +6,9 @@ export const Wrapper = styled.div`
   min-width: 100vw;
   min-height: 100vh;
   background: #FFF;
+  overflow-y: scroll;
+
+  ::-webkit-scrollbar { width: 0; }
   
   button {
     border: 0;

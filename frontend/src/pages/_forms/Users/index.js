@@ -9,7 +9,7 @@ import Layout from '../../_layouts/form';
 
 import useUser from '../../../hooks/useUser';
 
-import { Body, FormContainer, IGroup, BGroup } from './styles';
+import { Body, Container, IGroup, BGroup } from './styles';
 
 export default function FormUsuarios() {
   const history = useHistory();
@@ -76,11 +76,11 @@ export default function FormUsuarios() {
   return (
     <Layout>  
       <Body>
-        <FormContainer>
-          <FormContainer.Title>
+        <Container>
+          <Container.Title>
             <h1> { operation === 'ADD' ? 'Novo usuário!' : 'Editar usuário!' }</h1>
             <p>Use os usuários, para criar acessos no sistema!</p>
-          </FormContainer.Title>
+          </Container.Title>
 
           <Form initialData={user} onSubmit={handleSubmit} autoComplete="off">
             <Input 
@@ -150,7 +150,7 @@ export default function FormUsuarios() {
               </BGroup.Button>
             </BGroup>
           </Form>
-        </FormContainer>
+        </Container>
       </Body>
     </Layout>
   );

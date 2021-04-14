@@ -3,28 +3,50 @@ import { executeQuery } from '../../database/pool.js'
 const table = 'permissoes';
 
 class Permission {
-  async searchPermission(key) {
+  async searchPermissionAll() {
     return new Promise(async (resolve, reject) => {
       try {
         const query = `
-          (
-            SELECT * 
-            FROM ${table} 
-            WHERE tipo LIKE "%${key}%"
-          )
-          UNION
-          (
-            SELECT * 
-            FROM ${table} 
-            WHERE descricao LIKE "%${key}%"
-          )
-          UNION
-          (
-            SELECT * 
-            FROM ${table} 
-            WHERE contexto LIKE "%${key}%"
-          )
+          SELECT * 
+          FROM ${table} 
         `;
+  
+        const result = await executeQuery(query);
+  
+        resolve(result);
+      } catch (err) {
+        console.log("Exception from permission.js/listPermission:");
+        console.log(err);
+  
+        reject(err);
+      }
+    });
+  }
+
+  async searchPermission(params) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        let query;
+
+        if ('tipo' in params && 'contexto' in params) {
+          query = `
+            SELECT * 
+            FROM ${table} 
+            WHERE tipo = '${params.tipo}' AND contexto = '${params.contexto}'
+          `;
+        } else if ('tipo' in params) {
+          query = `
+            SELECT * 
+            FROM ${table} 
+            WHERE tipo = '${params.tipo}'
+          `;
+        } else if ('contexto' in params) {
+          query = `
+            SELECT * 
+            FROM ${table} 
+            WHERE contexto = '${params.contexto}'
+          `;
+        }
   
         const result = await executeQuery(query);
   

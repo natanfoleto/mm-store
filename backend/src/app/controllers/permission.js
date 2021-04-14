@@ -1,19 +1,36 @@
 import Permisson from '../models/permission.js'
-import pagingData from '../utils/pagingData.js'
 import message from '../messages/permission.js'
 
 import SQL from '../helper/SQL.js'
 
+function isEmpty(str) {
+  return (!str || str.length === 0 );
+}
+
 class PermissionController {
   async search(req, res) {
     try {
-      const { key } = req.body;
-      
-      const response = await Permisson.searchPermission(key || "");
+      let params, response;
 
-      const pagedData = await pagingData(response, req.params);
+      const { tipo, contexto } = req.body;
 
-      return res.json(pagedData);
+      if (!isEmpty(tipo) && !isEmpty(contexto)) {
+        params = { tipo: tipo, contexto: contexto }
+
+        response = await Permisson.searchPermission(params);
+      } else if (!isEmpty(tipo) && isEmpty(contexto)) {
+        params = { tipo: tipo }
+
+        response = await Permisson.searchPermission(params);
+      } else if (isEmpty(tipo) && !isEmpty(contexto)) {
+        params = { contexto: contexto }
+
+        response = await Permisson.searchPermission(params);
+      } else {
+        response = await Permisson.searchPermissionAll();
+      }
+
+      return res.json(response);
     } catch (err) {
   
       //! Erro Internal Server
