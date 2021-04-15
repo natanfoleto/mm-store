@@ -8,7 +8,7 @@ import SQL from '../helper/SQL.js'
 class ProfileController {
   async searchAll(req, res) {
     try {  
-      const response = await Profile.searchProfile("");
+      const response = await Profile.searchAll();
     
       return res.json(response);
     } catch (err) {
@@ -26,7 +26,7 @@ class ProfileController {
     try {
       const { nome } = req.body;
   
-      const response = await Profile.searchProfile(nome || "");
+      const response = await Profile.search(nome || "");
   
       const pagedData = await pagingData(response, req.params);
   

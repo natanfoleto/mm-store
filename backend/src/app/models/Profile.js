@@ -3,7 +3,24 @@ import { executeQuery } from '../../database/pool.js'
 const table = 'perfis';
 
 class Profile {
-  async searchProfile(nome) {
+  async searchAll() {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const query = `SELECT * FROM ${table}`;
+          
+        const result = await executeQuery(query);
+  
+        resolve(result);
+      } catch (err) {
+        console.log("Exception from profile.js/searchAll:");
+        console.log(err);
+  
+        reject(err);
+      }
+    });
+  }
+
+  async search(nome) {
     return new Promise(async (resolve, reject) => {
       try {
         let query
@@ -19,7 +36,7 @@ class Profile {
   
         resolve(result);
       } catch (err) {
-        console.log("Exception from profile.js/searchProfile:");
+        console.log("Exception from profile.js/search:");
         console.log(err);
   
         reject(err);
