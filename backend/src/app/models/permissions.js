@@ -50,28 +50,6 @@ class Permissions {
     });
   }
   
-  async updatePermissions(object) {
-    return new Promise(async (resolve, reject) => {
-      try {
-        const query = `UPDATE ${table} 
-          SET id_perfil = ?, id_permissao = ?
-          WHERE id_permissao_perfil = ?
-        `;
-  
-        const binds = Object.values(object);
-  
-        const result = await executeQuery(query, binds);
-  
-        resolve(result);
-      } catch (err) {
-        console.log("Exception from permissions.js/updatePermissions:");
-        console.log(err);
-  
-        reject(err);
-      }
-    });
-  }
-  
   async deletePermissions(id) {
     return new Promise(async (resolve, reject) => {
       try {

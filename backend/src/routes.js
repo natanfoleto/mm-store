@@ -88,7 +88,6 @@ routes.route('/permissao').delete(validation(validationPermission.permissionDele
 
 routes.route('/permissoes/search/:perfil').get(validation(validationPermissions.permissionsSearch, 'body'), PermissionsController.search);
 routes.route('/permissoes').post(validation(validationPermissions.permissionsCreate, 'body'), PermissionsController.create);
-routes.route('/permissoes').put(validation(validationPermissions.permissionsUpdate, 'body'), PermissionsController.update);
 routes.route('/permissoes').delete(validation(validationPermissions.permissionsDelete, 'body'), PermissionsController.remove);
 
 export default routes;

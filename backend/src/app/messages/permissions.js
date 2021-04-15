@@ -5,9 +5,6 @@ export default {
         message: "Permissões cadastradas com sucesso"
       },
       subcode2: {
-        message: "Permissões atualizadas com sucesso"
-      },
-      subcode3: {
         message: "Permissões deletadas com sucesso"
       }
     }
