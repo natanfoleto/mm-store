@@ -36,7 +36,7 @@ export default function FormPerfis() {
         const { data, status } = await api.get(`/permissoes/search/${history.location.state.id_perfil}`);
 
         if (status === 206) {
-          Toast('warn', res.data.error.details[0].message);
+          Toast('warn', data.error.details[0].message);
   
           return false;
         }
@@ -58,7 +58,7 @@ export default function FormPerfis() {
         });
 
         if (status === 206) {
-          Toast('warn', res.data.error.details[0].message);
+          Toast('warn', data.error.details[0].message);
   
           return false;
         }
