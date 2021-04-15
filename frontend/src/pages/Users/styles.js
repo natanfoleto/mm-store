@@ -31,6 +31,29 @@ Body.Header = styled.div`
 Body.Filter = styled.div`
   display: flex;
   align-items: center;
+
+  p {
+    color: #555;
+    margin: 0 0 0 10px;
+  }
+
+  select {
+    color: #777;
+    font-size: 14px;
+    padding: 5px;
+    margin: 0 10px;
+    border-radius: 2px;
+    border: 0;
+    border-radius: 4px;
+    border: 1px solid #eee;
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.15);
+
+    &:hover {
+      transition: 0.25s;
+      color: #000;
+      background: ${darken(0.03, '#FFF')};
+    }
+  }
 `;
 
 Body.Button = styled.button`
@@ -57,24 +80,6 @@ Body.Input = styled.input`
 
   &:hover {
     transition: 0.25s;
-    background: ${darken(0.03, '#FFF')};
-  }
-`;
-
-Body.Select = styled.select`
-  color: #777;
-  font-size: 14px;
-  padding: 5px;
-  margin: 0 10px;
-  border-radius: 2px;
-  border: 0;
-  border-radius: 4px;
-  border: 1px solid #eee;
-  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.15);
-
-  &:hover {
-    transition: 0.25s;
-    color: #000;
     background: ${darken(0.03, '#FFF')};
   }
 `;

@@ -74,7 +74,7 @@ Permissions.Label = styled.label`
 Permissions.Current = styled.div`
   display: flex;
   flex-direction: column;
-  margin-top: 20px;
+  margin-top: 25px;
 
   .pd-id {
     width: 0px;
@@ -98,6 +98,7 @@ Permissions.Current = styled.div`
   .pd-delete {
     width: 20px;
     text-align: right;
+    padding: 0 5px 0 0;
 
     &:hover {
       cursor: pointer;
@@ -108,7 +109,7 @@ Permissions.Current = styled.div`
 Permissions.All = styled.div`
   display: flex;
   flex-direction: column;
-  margin-top: 20px;
+  margin-top: 25px;
 
   select {
     color: #333;
@@ -141,7 +142,7 @@ Permissions.Ph = styled.div`
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid #ddd;
-  padding: 5px;
+  padding: 5px 0 5px 5px;
   margin: 5px 0; 
   background: #F7F7F7;
   border-radius: 3px;
@@ -156,7 +157,7 @@ Permissions.Pr = styled.div`
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid #ddd;
-  padding: 3px 5px;
+  padding: 5px 0 5px 5px;
   margin-top: 4px; 
   background: #F7F7F7;
   border-radius: 3px;

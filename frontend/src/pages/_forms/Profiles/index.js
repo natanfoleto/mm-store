@@ -6,6 +6,7 @@ import Toast from '../../../utils/toastify';
 import { useHistory } from 'react-router-dom';
 
 import Layout from '../../_layouts/form';
+import Alert from '../../../components/Alert';
 
 import useProfile from '../../../hooks/useProfile';
 import usePermissions from '../../../hooks/usePermissions';
@@ -22,13 +23,26 @@ export default function FormPerfis() {
 
   const [profile, setProfile] = useState();
   const [operation, setOperation] = useState();
+  const [buttonAvailable, setButtonAvailable] = useState(true);
 
   const [currentPermissions, setCurrentPermissions] = useState();
   const [allPermissions, setAllPermissions] = useState([]);
-  const [permission, setPermission] = useState(null);
+  const [permission, setPermission] = useState();
   const [type, setType] = useState('');
   const [context, setContext] = useState('');
   const [refresh, setRefresh] = useState(true);
+
+  const types = [
+    { id: '', title: 'Todos'},
+    { id: 'T', title: 'T'},
+    { id: 'F', title: 'F'}
+  ]
+
+  const contexts = [
+    { id: '', title: 'Todos'},
+    { id: 'Perfis', title: 'Perfis'},
+    { id: 'Configurações', title: 'Configurações'}
+  ]
 
   useEffect(() => {
     async function searchPermissions() {
@@ -79,8 +93,10 @@ export default function FormPerfis() {
       }
     }
 
-    searchPermission();
-    searchPermissions();
+    if (history.location.pathname === '/perfis/edit') {
+      searchPermission();
+      searchPermissions();
+    }
 
     setProfile(history.location.state);
 
@@ -92,12 +108,15 @@ export default function FormPerfis() {
   
   async function handleSubmit(data) {
     delete data.permission;
+    delete data.types;
+    delete data.contexts;
 
     if (operation === 'ADD')
       await createProfile(data)
 
-    if (operation === 'EDIT')
+    if (operation === 'EDIT') 
       await updateProfile(data);
+
   }
 
   function handleCancel() {
@@ -160,86 +179,105 @@ export default function FormPerfis() {
               <Input 
                 type="text" 
                 name="nome"
+                onChange={() => { setButtonAvailable(false) }}
+                maxLength={50}
                 required
               />
             </IGroup>
 
-            <Permissions>
-              <Permissions.Current>
-                <Permissions.Label>Permissões</Permissions.Label>
-
-                <Permissions.Ph>
-                  <Permissions.Pd className="pd-id"> ID </Permissions.Pd>
-                  <Permissions.Pd className="pd-description"> Descrição </Permissions.Pd>
-                  <Permissions.Pd className="pd-type"> Tipo </Permissions.Pd>
-                  <Permissions.Pd className="pd-context"> Contexto </Permissions.Pd>
-                  <Permissions.Pd className="pd-delete" />
-                </Permissions.Ph>
-
-                { currentPermissions && currentPermissions.map((item, index) => (
-                  <Permissions.Pr key={item.id_permissao_perfil}>
-                    <Permissions.Pd className="pd-id"> {index+1} </Permissions.Pd>
-                    <Permissions.Pd className="pd-description"> {item.descricao} </Permissions.Pd>
-                    <Permissions.Pd className="pd-type"> {item.tipo} </Permissions.Pd>
-                    <Permissions.Pd className="pd-context"> {item.contexto} </Permissions.Pd>
-                    <Permissions.Pd className="pd-delete"> <IoIosRemove size={16} color="#555" onClick={() => { handleDeletePermission(item) }}/> </Permissions.Pd>
-                  </Permissions.Pr>
-                )) }
-              </Permissions.Current>
-
-              <Permissions.All>
-                <Permissions.Label>Adicionar uma permissão</Permissions.Label>
-
-                <Permissions.Ph>
-                  <Permissions.Pd className="pd-description"> Permissão </Permissions.Pd>
-                  <Permissions.Pd className="pd-type"> Tipo </Permissions.Pd>
-                  <Permissions.Pd className="pd-context"> Contexto </Permissions.Pd>
-                </Permissions.Ph>
-
-                <Permissions.Filters>
-                  <Select 
-                    className="pd-description"
-                    name="permission" 
-                    value={permission}
-                    onChange={handlePermission}
-                    options={allPermissions}
-                  />
-
-                  <select 
-                    onChange={handleType} 
-                    className="pd-type"
-                  >
-                    <option value="">Todos</option>
-                    <option value="T">Tela</option>
-                    <option value="F">Função</option>
-                  </select>
-
-                  <select 
-                    onChange={handleContext} 
-                    className="pd-context"
-                  >
-                    <option value="">Todos</option>
-                    <option value="Perfis">Perfis</option>
-                    <option value="Configurações">Configurações</option>
-                  </select>
-                </Permissions.Filters>
-              </Permissions.All>
-
-              <Permissions.Button
-                type="button"
-                onClick={handleAddPermission}
-                disabled={!permission}
+            { operation === 'ADD' &&
+              <Alert 
+                color="#856404"
+                background="#FFF3CD"
+                borderColor="#FFEEBA"
               > 
-                Adicionar 
-              </Permissions.Button>
-            </Permissions>
+                Ao salvar, você editar o perfil pra definir suas configurações de permissão. 
+              </Alert>
+            }
+
+            { operation === 'EDIT' &&
+              <Permissions>
+                <Permissions.Current>
+                  <Permissions.Label>Permissões</Permissions.Label>
+
+                  <Permissions.Ph>
+                    <Permissions.Pd className="pd-id"> ID </Permissions.Pd>
+                    <Permissions.Pd className="pd-description"> Descrição </Permissions.Pd>
+                    <Permissions.Pd className="pd-type"> Tipo </Permissions.Pd>
+                    <Permissions.Pd className="pd-context"> Contexto </Permissions.Pd>
+                    <Permissions.Pd className="pd-delete" />
+                  </Permissions.Ph>
+
+                  { currentPermissions && currentPermissions.map((item, index) => (
+                    <Permissions.Pr key={item.id_permissao_perfil}>
+                      <Permissions.Pd className="pd-id"> {index+1} </Permissions.Pd>
+                      <Permissions.Pd className="pd-description"> {item.descricao} </Permissions.Pd>
+                      <Permissions.Pd className="pd-type"> {item.tipo} </Permissions.Pd>
+                      <Permissions.Pd className="pd-context"> {item.contexto} </Permissions.Pd>
+                      <Permissions.Pd className="pd-delete"> <IoIosRemove size={16} color="#555" onClick={() => { handleDeletePermission(item) }}/> </Permissions.Pd>
+                    </Permissions.Pr>
+                  )) }
+                </Permissions.Current>
+
+                <Permissions.All>
+                  <Permissions.Label>Adicionar uma permissão</Permissions.Label>
+
+                  <Permissions.Ph>
+                    <Permissions.Pd className="pd-description"> Permissão </Permissions.Pd>
+                    <Permissions.Pd className="pd-type"> Tipo </Permissions.Pd>
+                    <Permissions.Pd className="pd-context"> Contexto </Permissions.Pd>
+                  </Permissions.Ph>
+
+                  <Permissions.Filters>
+                    <Select 
+                      className="pd-description"
+                      name="permission" 
+                      value={permission}
+                      onChange={handlePermission}
+                      options={allPermissions}
+                    />
+
+                    <Select 
+                      name="types" 
+                      options={types}
+                      onChange={handleType} 
+                      className="pd-type"
+                    />
+
+                    <Select 
+                      name="contexts" 
+                      options={contexts}
+                      onChange={handleContext} 
+                      className="pd-context"
+                    />
+                  </Permissions.Filters>
+                </Permissions.All>
+
+                <Permissions.Button
+                  type="button"
+                  onClick={handleAddPermission}
+                  disabled={!permission}
+                > 
+                  Adicionar 
+                </Permissions.Button>
+
+                <Alert 
+                  color="#856404"
+                  background="#FFF3CD"
+                  borderColor="#FFEEBA"
+                > 
+                  As alterações nas permissões, passam valer imediatamente quando é adicionada ou removida. 
+                </Alert>
+              </Permissions>
+            }
 
             <BGroup>
               <BGroup.Button 
                 type="submit" 
                 color="#003464"
+                disabled={buttonAvailable}
               >
-                { operation === 'ADD' ? 'Criar' : 'Atualizar'}
+                Salvar
               </BGroup.Button>
 
               <BGroup.Button 

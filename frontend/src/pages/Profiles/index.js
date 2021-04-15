@@ -1,4 +1,5 @@
 import { useHistory } from 'react-router-dom';
+import { Select } from '@rocketseat/unform';
 import { useEffect, useState, useCallback } from 'react';
 import api from '../../services/api';
 import Toast from '../../utils/toastify';
@@ -8,7 +9,6 @@ import Layout from '../_layouts/default';
 import ComponentCard from '../../components/DataCard/index';
 import Card from './components/Card';
 
-import { Tooltip } from '@material-ui/core'
 import { CgPlayTrackPrev, CgPlayTrackNext } from 'react-icons/cg';
 import { BiLoader } from 'react-icons/bi';
 
@@ -23,6 +23,14 @@ export default function Perfis() {
   const [currentPage, setCurrentPage] = useState(1);
 
   const [search, setSearch] = useState('');
+
+  const rows = [
+    { id: 10, title: '10 rows' },
+    { id: 20, title: '20 rows' },
+    { id: 30, title: '30 rows' },
+    { id: 50, title: '50 rows' },
+    { id: 100, title: '100 rows' }
+  ]
 
   useEffect(() => {
     async function searchProfile() {
@@ -73,19 +81,18 @@ export default function Perfis() {
           <Body.Filter>
             <Body.Input 
               placeholder="Pesquise pelo nome" 
-              value={search} 
+              value={search}
+              maxLength={50}
               onChange={e => setSearch(e.target.value)}
             />
-             
-            <Tooltip title="Linhas por página" enterDelay={500} leaveDelay={200} placement="top">
-              <Body.Select onChange={handleLimit}>
-                <option value="10">10 rows</option>
-                <option value="20">20 rows</option>
-                <option value="30">30 rows</option>
-                <option value="50">50 rows</option>
-                <option value="100">100 rows</option>
-              </Body.Select>
-            </Tooltip>
+
+            <p>Rows: </p>
+
+            <Select 
+              name="rows"
+              options={rows}
+              onChange={handleLimit}
+            />
 
           </Body.Filter>
 

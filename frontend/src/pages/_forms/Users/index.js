@@ -18,6 +18,7 @@ export default function FormUsuarios() {
 
   const [user, setUser] = useState();
   const [currentProfile, setCurrentProfile] = useState();
+  const [buttonAvailable, setButtonAvailable] = useState(true);
   const [profiles, setProfiles] = useState([]);
   const [operation, setOperation] = useState();
   
@@ -71,6 +72,7 @@ export default function FormUsuarios() {
 
   const handleSelect = useCallback((e) => {
     setCurrentProfile(e.target.value);
+    setButtonAvailable(false);
   }, [])
 
   return (
@@ -107,6 +109,8 @@ export default function FormUsuarios() {
               <Input 
                 type="text" 
                 name="nome"
+                maxLength={100}
+                onChange={() => { setButtonAvailable(false) }}
                 required
               />
             </IGroup>
@@ -117,6 +121,8 @@ export default function FormUsuarios() {
               <Input 
                 type="text" 
                 name="login"
+                maxLength={50}
+                onChange={() => { setButtonAvailable(false) }}
                 required
               />
             </IGroup>
@@ -129,6 +135,8 @@ export default function FormUsuarios() {
               <Input 
                 type="password" 
                 name="password"
+                maxLength={32}
+                onChange={() => { setButtonAvailable(false) }}
                 required={operation === 'EDIT' ? false : true}
               />
             </IGroup>
@@ -137,8 +145,9 @@ export default function FormUsuarios() {
               <BGroup.Button 
                 type="submit" 
                 color="#003464"
+                disabled={buttonAvailable}
               >
-                { operation === 'ADD' ? 'Criar' : 'Atualizar'}
+                Salvar
               </BGroup.Button>
 
               <BGroup.Button 

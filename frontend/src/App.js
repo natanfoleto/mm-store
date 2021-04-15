@@ -9,7 +9,7 @@ import GlobalStyle from './styles/global';
 
 function App() {  
   const styleToast = {
-    "text-align": "center"
+    textAlign: 'center'
   }
   
   return (
