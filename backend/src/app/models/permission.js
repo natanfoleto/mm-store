@@ -3,12 +3,13 @@ import { executeQuery } from '../../database/pool.js'
 const table = 'permissoes';
 
 class Permission {
-  async searchPermissionAll() {
+  async searchPermissionAll(params) {
     return new Promise(async (resolve, reject) => {
       try {
         const query = `
-          SELECT * 
-          FROM ${table} 
+          SELECT permissoes.* FROM ${table}
+          LEFT JOIN permissoes_perfis ON (permissoes_perfis.id_permissao = permissoes.id_permissao AND permissoes_perfis.id_perfil = ${params.id_perfil})
+          WHERE permissoes_perfis.id_permissao_perfil IS NULL
         `;
   
         const result = await executeQuery(query);
@@ -27,24 +28,27 @@ class Permission {
     return new Promise(async (resolve, reject) => {
       try {
         let query;
-
+        
         if ('tipo' in params && 'contexto' in params) {
           query = `
-            SELECT * 
-            FROM ${table} 
-            WHERE tipo = '${params.tipo}' AND contexto = '${params.contexto}'
+            SELECT permissoes.* FROM ${table}
+            LEFT JOIN permissoes_perfis 
+            ON (permissoes_perfis.id_permissao = permissoes.id_permissao AND permissoes_perfis.id_perfil = ${params.id_perfil})
+            WHERE permissoes_perfis.id_permissao_perfil IS NULL AND permissoes.tipo = '${params.tipo}' AND permissoes.contexto = '${params.contexto}'
           `;
         } else if ('tipo' in params) {
           query = `
-            SELECT * 
-            FROM ${table} 
-            WHERE tipo = '${params.tipo}'
+            SELECT permissoes.* FROM ${table}
+            LEFT JOIN permissoes_perfis 
+            ON (permissoes_perfis.id_permissao = permissoes.id_permissao AND permissoes_perfis.id_perfil = ${params.id_perfil})
+            WHERE permissoes_perfis.id_permissao_perfil IS NULL AND permissoes.tipo = '${params.tipo}'
           `;
         } else if ('contexto' in params) {
           query = `
-            SELECT * 
-            FROM ${table} 
-            WHERE contexto = '${params.contexto}'
+            SELECT permissoes.* FROM ${table}
+            LEFT JOIN permissoes_perfis 
+            ON (permissoes_perfis.id_permissao = permissoes.id_permissao AND permissoes_perfis.id_perfil = ${params.id_perfil})
+            WHERE permissoes_perfis.id_permissao_perfil IS NULL AND permissoes.contexto = '${params.contexto}'
           `;
         }
   

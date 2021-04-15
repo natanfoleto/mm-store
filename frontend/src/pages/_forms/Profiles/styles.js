@@ -45,115 +45,6 @@ IGroup.Label = styled.label`
   margin-bottom: 2px;
 `;
 
-export const Permissions = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin-top: 20px;
-
-  select {
-    color: #333;
-    background: #F7F7F7;
-    margin-top: 4px;
-    border-bottom: 1px solid #ddd !important;
-    border-radius: 0px !important;
-    height: 26px !important;
-    box-shadow: 0px 0px 0px rgba(255, 255, 255, 1) !important;
-  }
-
-  .item-title {
-    font-weight: bold;
-    padding: 5px;
-    margin: 8px 0; 
-  }
-
-  .item-title-permission {
-    font-weight: bold;
-    padding: 5px;
-    margin: 8px 0; 
-  }
-`;
-
-Permissions.Button = styled.button`
-  margin-top: 10px;
-  background: #F7F7F7;
-  color: #333 !important;
-  border-bottom: 1px solid #ddd !important;
-  border-radius: 2px !important;
-  padding: 5px 0 !important;
-  box-shadow: 0px 0px 0px rgba(255, 255, 255, 1) !important;
-`;
-
-Permissions.Button = styled.button`
-  margin-top: 10px;
-  background: #F7F7F7;
-  color: #333 !important;
-  border-bottom: 1px solid #ddd !important;
-  border-radius: 2px !important;
-  padding: 5px 0 !important;
-  box-shadow: 0px 0px 0px rgba(255, 255, 255, 1) !important;
-`;
-
-Permissions.Item = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px solid #ddd;
-  padding: 2px 5px;
-  margin-top: 4px; 
-  background: #F7F7F7;
-  border-radius: 3px;
-
-  .item-id {
-    width: 0px;
-  }
-
-  .item-description {
-    width: 350px;
-    text-align: left;
-  }
-
-  .item-type {
-    width: 50px;
-    text-align: center;
-  }
-
-  .item-context {
-    width: 125px;
-    text-align: left;
-  }
-
-  .item-delete {
-    width: 20px;
-    text-align: right;
-
-    &:hover {
-      cursor: pointer;
-    }
-  }
-`;
-
-Permissions.AddItem = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-radius: 3px;
-
-  .item-description-permission {
-    width: 350px;
-    text-align: left;
-  }
-
-  .item-type-permission {
-    width: 125px;
-    text-align: left;
-  }
-
-  .item-context-permission {
-    width: 125px;
-    text-align: left;
-  }
-`;
-
 export const BGroup = styled.div`
   display: flex;
   justify-content: space-between;
@@ -170,3 +61,123 @@ BGroup.Button = styled.button`
   }
 `;
 
+export const Permissions = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+Permissions.Label = styled.label`
+  color: #444;
+  margin-bottom: 2px;
+`;
+
+Permissions.Current = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+
+  .pd-id {
+    width: 0px;
+  }
+
+  .pd-description {
+    width: 350px;
+    text-align: left;
+  }
+
+  .pd-type {
+    width: 50px;
+    text-align: center;
+  }
+
+  .pd-context {
+    width: 125px;
+    text-align: left;
+  }
+
+  .pd-delete {
+    width: 20px;
+    text-align: right;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+`;
+
+Permissions.All = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+
+  select {
+    color: #333;
+    background: #F7F7F7;
+    margin-top: 4px;
+    border-bottom: 1px solid #ddd !important;
+    border-radius: 0px !important;
+    height: 26px !important;
+    box-shadow: 0px 0px 0px rgba(255, 255, 255, 1) !important;
+  }
+
+  .pd-description {
+    width: 350px;
+    text-align: left;
+  }
+
+  .pd-type {
+    width: 125px;
+    text-align: left;
+  }
+
+  .pd-context {
+    width: 125px;
+    text-align: left;
+  }
+`;
+
+Permissions.Ph = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #ddd;
+  padding: 5px;
+  margin: 5px 0; 
+  background: #F7F7F7;
+  border-radius: 3px;
+
+  p {
+    font-weight: bold;
+  }
+`;
+
+Permissions.Pr = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #ddd;
+  padding: 3px 5px;
+  margin-top: 4px; 
+  background: #F7F7F7;
+  border-radius: 3px;
+`;
+
+Permissions.Filters = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 3px;
+`;
+
+Permissions.Pd = styled.p`
+`;
+
+Permissions.Button = styled.button`
+  margin-top: 15px;
+  background: #F7F7F7;
+  color: #333 !important;
+  border-bottom: 1px solid #ddd !important;
+  border-radius: 2px !important;
+  padding: 5px 0 !important;
+  box-shadow: 0px 0px 0px rgba(255, 255, 255, 1) !important;
+`;

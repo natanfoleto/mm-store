@@ -1,19 +1,13 @@
-import { useHistory } from 'react-router-dom';
-
 import Toast from '../utils/toastify';
 
 import api from '../services/api';
 
-export const useUser = () => {
-  const history = useHistory();
-
-  async function createUser(data) {   
+export const usePermissions = () => {
+  async function createPermissions(data) {   
     try {
-      const res = await api.post('/usuarios', {
+      const res = await api.post('/permissoes', {
         id_perfil: data.id_perfil,
-        nome: data.nome,
-        login: data.login,
-        password: data.password
+        id_permissao: data.id_permissao
       });
 
       if (res.status === 206) {
@@ -25,9 +19,6 @@ export const useUser = () => {
       const { result, message } = res.data;
       
       Toast(result, message);
-
-      if (result === 'success')
-        history.goBack()
      
     } catch (err) {
       Toast('error', err.toString());
@@ -36,9 +27,9 @@ export const useUser = () => {
     }
   }
 
-  async function updateUser(data) {
+  async function deletePermissions(data) {
     try {
-      const res = await api.put('/usuarios', data);
+      const res = await api.delete('/permissoes', data);
 
       if (res.status === 206) {
         Toast('warn', res.data.error.details[0].message);
@@ -50,9 +41,6 @@ export const useUser = () => {
       
       Toast(result, message);
 
-      if (result === 'success')
-        history.goBack()
-     
     } catch (err) {
       Toast('error', err.toString());
 
@@ -60,32 +48,7 @@ export const useUser = () => {
     }
   }
 
-  async function deleteUser(data) {
-    try {
-      const res = await api.delete('/usuarios', data);
-
-      if (res.status === 206) {
-        Toast('warn', res.data.error.details[0].message);
-
-        return false;
-      }
-
-      const { result, message } = res.data;
-      
-      Toast(result, message);
-      
-      if (result === 'success') 
-        history.go(0)
-
-    } catch (err) {
-      Toast('error', err.toString());
-
-
-      return false;
-    }
-  }
-
-  return { createUser, updateUser, deleteUser }
+  return { createPermissions, deletePermissions }
 }
 
-export default useUser;
+export default usePermissions;

@@ -12,22 +12,24 @@ class PermissionController {
     try {
       let params, response;
 
-      const { tipo, contexto } = req.body;
+      const { tipo, contexto, id_perfil } = req.body;
 
       if (!isEmpty(tipo) && !isEmpty(contexto)) {
-        params = { tipo: tipo, contexto: contexto }
+        params = { tipo: tipo, contexto: contexto, id_perfil: id_perfil }
 
         response = await Permisson.searchPermission(params);
       } else if (!isEmpty(tipo) && isEmpty(contexto)) {
-        params = { tipo: tipo }
+        params = { tipo: tipo, id_perfil: id_perfil }
 
         response = await Permisson.searchPermission(params);
       } else if (isEmpty(tipo) && !isEmpty(contexto)) {
-        params = { contexto: contexto }
+        params = { contexto: contexto, id_perfil: id_perfil }
 
         response = await Permisson.searchPermission(params);
       } else {
-        response = await Permisson.searchPermissionAll();
+        params = { id_perfil: id_perfil }
+
+        response = await Permisson.searchPermissionAll(params);
       }
 
       return res.json(response);

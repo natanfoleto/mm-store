@@ -8,6 +8,7 @@ import { useHistory } from 'react-router-dom';
 import Layout from '../../_layouts/form';
 
 import useProfile from '../../../hooks/useProfile';
+import usePermissions from '../../../hooks/usePermissions';
 
 import { IoIosRemove } from 'react-icons/io';
 
@@ -17,20 +18,30 @@ export default function FormPerfis() {
   const history = useHistory();
 
   const { createProfile, updateProfile } = useProfile();
+  const { createPermissions, deletePermissions } = usePermissions();
 
   const [profile, setProfile] = useState();
   const [operation, setOperation] = useState();
-  const [permissions, setPermissions] = useState();
-  const [permission, setPermission] = useState([]);
+
+  const [currentPermissions, setCurrentPermissions] = useState();
+  const [allPermissions, setAllPermissions] = useState([]);
+  const [permission, setPermission] = useState(null);
   const [type, setType] = useState('');
   const [context, setContext] = useState('');
+  const [refresh, setRefresh] = useState(true);
 
   useEffect(() => {
     async function searchPermissions() {
       try {
-        const { data } = await api.get(`/permissoes/search/${history.location.state.id_perfil}`);
+        const { data, status } = await api.get(`/permissoes/search/${history.location.state.id_perfil}`);
 
-        setPermissions(data);
+        if (status === 206) {
+          Toast('warn', res.data.error.details[0].message);
+  
+          return false;
+        }
+
+        setCurrentPermissions(data);
       } catch (err) {
         Toast('error', err.toString());
   
@@ -40,10 +51,17 @@ export default function FormPerfis() {
 
     async function searchPermission() {
       try {
-        const { data } = await api.post('/permissao/search', {
+        const { data, status } = await api.post('/permissao/search', {
           tipo: type,
-          contexto: context
+          contexto: context,
+          id_perfil: history.location.state.id_perfil
         });
+
+        if (status === 206) {
+          Toast('warn', res.data.error.details[0].message);
+  
+          return false;
+        }
 
         let newData = [];
     
@@ -53,7 +71,7 @@ export default function FormPerfis() {
           newData.push(element)
         });
   
-        setPermission(newData);
+        setAllPermissions(newData);
       } catch (err) {
         Toast('error', err.toString());
   
@@ -70,9 +88,11 @@ export default function FormPerfis() {
       setOperation('ADD');
     else
       setOperation('EDIT');
-  }, [history, type, context])
+  }, [history, type, context, refresh])
   
   async function handleSubmit(data) {
+    delete data.permission;
+
     if (operation === 'ADD')
       await createProfile(data)
 
@@ -84,14 +104,9 @@ export default function FormPerfis() {
     history.goBack()
   }
 
-  async function handleDeletePermission(item) {
-    if(window.confirm(`Deseja excluir a permissão de "${item.descricao}" do perfil ${profile.nome}?`)) {
-      
-      alert('Excluido')
-    } else {
-      return;
-    }
-  }
+  const handlePermission = useCallback((e) => {
+    setPermission(e.target.value);
+  }, [])
 
   const handleType = useCallback((e) => {
     setType(e.target.value);
@@ -100,6 +115,28 @@ export default function FormPerfis() {
   const handleContext = useCallback((e) => {
     setContext(e.target.value);
   }, [])
+
+  async function handleAddPermission() {
+    await createPermissions({
+      id_perfil: profile.id_perfil,
+      id_permissao: permission
+    })
+
+    setPermission('');
+    setRefresh(!refresh);
+  }
+
+  async function handleDeletePermission(item) {
+    if(window.confirm(`Deseja excluir a permissão de "${item.descricao}" do perfil ${profile.nome}?`)) {
+      
+      await deletePermissions({ data: { id_permissao_perfil: item.id_permissao_perfil } });
+
+      setRefresh(!refresh);
+
+    } else {
+      return;
+    }
+  }
 
   return (
     <Layout>  
@@ -128,63 +165,73 @@ export default function FormPerfis() {
             </IGroup>
 
             <Permissions>
-              <label>Permissões</label>
+              <Permissions.Current>
+                <Permissions.Label>Permissões</Permissions.Label>
 
-              <Permissions.Item className="item-title">
-                <p className="item-id"> ID </p>
-                <p className="item-description"> Descrição </p>
-                <p className="item-type"> Tipo </p>
-                <p className="item-context"> Contexto </p>
-                <p className="item-delete"> <IoIosRemove size={20} color="#555"/> </p>
-              </Permissions.Item>
+                <Permissions.Ph>
+                  <Permissions.Pd className="pd-id"> ID </Permissions.Pd>
+                  <Permissions.Pd className="pd-description"> Descrição </Permissions.Pd>
+                  <Permissions.Pd className="pd-type"> Tipo </Permissions.Pd>
+                  <Permissions.Pd className="pd-context"> Contexto </Permissions.Pd>
+                  <Permissions.Pd className="pd-delete" />
+                </Permissions.Ph>
 
-              { permissions && permissions.map((item, index) => (
-                <Permissions.Item key={item.id_permissao_perfil}>
-                  <p className="item-id"> {index+1} </p>
-                  <p className="item-description"> {item.descricao} </p>
-                  <p className="item-type"> {item.tipo} </p>
-                  <p className="item-context"> {item.contexto} </p>
-                  <p className="item-delete"> <IoIosRemove size={20} color="#555" onClick={() => { handleDeletePermission(item) }}/> </p>
-                </Permissions.Item>
-              )) }
+                { currentPermissions && currentPermissions.map((item, index) => (
+                  <Permissions.Pr key={item.id_permissao_perfil}>
+                    <Permissions.Pd className="pd-id"> {index+1} </Permissions.Pd>
+                    <Permissions.Pd className="pd-description"> {item.descricao} </Permissions.Pd>
+                    <Permissions.Pd className="pd-type"> {item.tipo} </Permissions.Pd>
+                    <Permissions.Pd className="pd-context"> {item.contexto} </Permissions.Pd>
+                    <Permissions.Pd className="pd-delete"> <IoIosRemove size={16} color="#555" onClick={() => { handleDeletePermission(item) }}/> </Permissions.Pd>
+                  </Permissions.Pr>
+                )) }
+              </Permissions.Current>
 
-              <label>Adicionar uma permissão</label>
+              <Permissions.All>
+                <Permissions.Label>Adicionar uma permissão</Permissions.Label>
 
-              <Permissions.Item className="item-title-permission">
-                <p className="item-description-permission"> Permissão </p>
-                <p className="item-type-permission"> Tipo </p>
-                <p className="item-context-permission"> Contexto </p>
-              </Permissions.Item>
+                <Permissions.Ph>
+                  <Permissions.Pd className="pd-description"> Permissão </Permissions.Pd>
+                  <Permissions.Pd className="pd-type"> Tipo </Permissions.Pd>
+                  <Permissions.Pd className="pd-context"> Contexto </Permissions.Pd>
+                </Permissions.Ph>
 
-              <Permissions.AddItem>
-                <Select 
-                  className="item-description-permission"
-                  name="permission" 
-                  value={permission[0]}
-                  // onChange={handleSelect}
-                  options={permission}
-                />
+                <Permissions.Filters>
+                  <Select 
+                    className="pd-description"
+                    name="permission" 
+                    value={permission}
+                    onChange={handlePermission}
+                    options={allPermissions}
+                  />
 
-                <select 
-                  onChange={handleType} 
-                  className="item-type-permission"
-                >
-                  <option value="">Todos</option>
-                  <option value="T">Tela</option>
-                  <option value="F">Função</option>
-                </select>
+                  <select 
+                    onChange={handleType} 
+                    className="pd-type"
+                  >
+                    <option value="">Todos</option>
+                    <option value="T">Tela</option>
+                    <option value="F">Função</option>
+                  </select>
 
-                <select 
-                  onChange={handleContext} 
-                  className="item-context-permission"
-                >
-                  <option value="">Todos</option>
-                  <option value="Perfis">Perfis</option>
-                  <option value="Configurações">Configurações</option>
-                </select>
-              </Permissions.AddItem>
+                  <select 
+                    onChange={handleContext} 
+                    className="pd-context"
+                  >
+                    <option value="">Todos</option>
+                    <option value="Perfis">Perfis</option>
+                    <option value="Configurações">Configurações</option>
+                  </select>
+                </Permissions.Filters>
+              </Permissions.All>
 
-              <Permissions.Button type="button"> Adicionar </Permissions.Button>
+              <Permissions.Button
+                type="button"
+                onClick={handleAddPermission}
+                disabled={!permission}
+              > 
+                Adicionar 
+              </Permissions.Button>
             </Permissions>
 
             <BGroup>

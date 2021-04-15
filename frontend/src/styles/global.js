@@ -26,6 +26,10 @@ export default createGlobalStyle `
 
   body, input, button {
     font: 14px 'Roboto', sans-serif;
+
+    &:disabled {
+      cursor: not-allowed;
+    }
   }
 
   a {

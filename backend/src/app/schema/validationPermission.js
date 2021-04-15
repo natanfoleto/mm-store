@@ -5,6 +5,16 @@ const Joi = JoiBase.extend(JoiDate)
 
 const validationSchemas = {
   permissionSearch: Joi.object().keys({
+    id_perfil: Joi
+      .number()
+      .required()
+      .min(1)
+      .messages({
+        'any.required': 'id_perfil é necessário',
+        'number.base': 'id_perfil deve ser um número',
+        'number.empty': 'id_perfil não pode estar vazio',
+        'number.min': 'id_perfil deve ser maior que 0'
+      }),
     tipo: Joi
       .string()
       .allow('')
