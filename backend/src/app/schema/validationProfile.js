@@ -5,7 +5,7 @@ const Joi = JoiBase.extend(JoiDate)
 
 const validationSchemas = {
   profileSearch: Joi.object().keys({
-    nome: Joi
+    key: Joi
       .string()
       .allow('')
       .messages({

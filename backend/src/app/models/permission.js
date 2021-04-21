@@ -3,20 +3,19 @@ import { executeQuery } from '../../database/pool.js'
 const table = 'permissoes';
 
 class Permission {
-  async searchPermissionAll(params) {
+  async searchPermission(key) {
     return new Promise(async (resolve, reject) => {
       try {
         const query = `
-          SELECT permissoes.* FROM ${table}
-          LEFT JOIN permissoes_perfis ON (permissoes_perfis.id_permissao = permissoes.id_permissao AND permissoes_perfis.id_perfil = ${params.id_perfil})
-          WHERE permissoes_perfis.id_permissao_perfil IS NULL
+          SELECT * FROM ${table}
+          WHERE descricao LIKE "%${key}%"
         `;
   
         const result = await executeQuery(query);
   
         resolve(result);
       } catch (err) {
-        console.log("Exception from permission.js/listPermission:");
+        console.log("Exception from permission.js/searchPermissionAll:");
         console.log(err);
   
         reject(err);
@@ -24,7 +23,7 @@ class Permission {
     });
   }
 
-  async searchPermission(params) {
+  async searchPermissionForProfile(params) {
     return new Promise(async (resolve, reject) => {
       try {
         let query;
@@ -50,13 +49,19 @@ class Permission {
             ON (permissoes_perfis.id_permissao = permissoes.id_permissao AND permissoes_perfis.id_perfil = ${params.id_perfil})
             WHERE permissoes_perfis.id_permissao_perfil IS NULL AND permissoes.contexto = '${params.contexto}'
           `;
+        } else {
+          query = `
+            SELECT permissoes.* FROM ${table}
+            LEFT JOIN permissoes_perfis ON (permissoes_perfis.id_permissao = permissoes.id_permissao AND permissoes_perfis.id_perfil = ${params.id_perfil})
+            WHERE permissoes_perfis.id_permissao_perfil IS NULL
+          `;
         }
   
         const result = await executeQuery(query);
   
         resolve(result);
       } catch (err) {
-        console.log("Exception from permission.js/listPermission:");
+        console.log("Exception from permission.js/searchPermission:");
         console.log(err);
   
         reject(err);

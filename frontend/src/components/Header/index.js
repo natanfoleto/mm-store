@@ -28,9 +28,9 @@ function Header() {
           <Link to=""> Categorias </Link>
           <Link to=""> Fornecedores </Link>
           <Link to=""> Pedidos </Link>
-          <Link to="/perfis"> Perfils </Link>
           <Link to="/usuarios"> Usuários </Link>
-          <Link to="/settings"> Configurações </Link>
+          <Link to="/perfis"> Perfis </Link>
+          <Link to="/permissoes"> Permissões </Link>
         </nav>
 
         <aside>

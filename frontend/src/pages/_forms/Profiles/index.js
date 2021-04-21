@@ -34,8 +34,8 @@ export default function FormPerfis() {
 
   const types = [
     { id: '', title: 'Todos'},
-    { id: 'T', title: 'T'},
-    { id: 'F', title: 'F'}
+    { id: 'T', title: 'Tela'},
+    { id: 'F', title: 'Função'}
   ]
 
   const contexts = [
@@ -45,9 +45,9 @@ export default function FormPerfis() {
   ]
 
   useEffect(() => {
-    async function searchPermissions() {
+    async function searchPermissionsProfiles() {
       try {
-        const { data, status } = await api.get(`/permissoes/search/${history.location.state.id_perfil}`);
+        const { data, status } = await api.get(`/permissions/search/${history.location.state.id_perfil}`);
 
         if (status === 206) {
           Toast('warn', data.error.details[0].message);
@@ -63,13 +63,15 @@ export default function FormPerfis() {
       }
     }
 
-    async function searchPermission() {
+    async function searchPermissions() {
       try {
-        const { data, status } = await api.post('/permissao/search', {
+        const { data, status } = await api.post('/permission/searchforprofile', {
           tipo: type,
           contexto: context,
           id_perfil: history.location.state.id_perfil
         });
+
+        console.log(data)
 
         if (status === 206) {
           Toast('warn', data.error.details[0].message);
@@ -94,8 +96,8 @@ export default function FormPerfis() {
     }
 
     if (history.location.pathname === '/perfis/edit') {
-      searchPermission();
       searchPermissions();
+      searchPermissionsProfiles();
     }
 
     setProfile(history.location.state);

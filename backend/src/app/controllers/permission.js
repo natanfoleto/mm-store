@@ -1,4 +1,5 @@
 import Permisson from '../models/permission.js'
+import pagingData from '../utils/pagingData.js'
 import message from '../messages/permission.js'
 
 import SQL from '../helper/SQL.js'
@@ -10,6 +11,26 @@ function isEmpty(str) {
 class PermissionController {
   async search(req, res) {
     try {
+      const { key } = req.body;
+      
+      const response = await Permisson.searchPermission(key || "");
+
+      const pagedData = await pagingData(response, req.params);
+
+      return res.json(pagedData);
+    } catch (err) {
+  
+      //! Erro Internal Server
+      return res.status(400).json({
+        result: 'error',
+        message: message.error.code1.subcode99.message,
+        error: err.toString(),
+      });
+    }
+  }
+
+  async searchForProfile(req, res) {
+    try {
       let params, response;
 
       const { tipo, contexto, id_perfil } = req.body;
@@ -17,19 +38,19 @@ class PermissionController {
       if (!isEmpty(tipo) && !isEmpty(contexto)) {
         params = { tipo: tipo, contexto: contexto, id_perfil: id_perfil }
 
-        response = await Permisson.searchPermission(params);
+        response = await Permisson.searchPermissionForProfile(params);
       } else if (!isEmpty(tipo) && isEmpty(contexto)) {
         params = { tipo: tipo, id_perfil: id_perfil }
 
-        response = await Permisson.searchPermission(params);
+        response = await Permisson.searchPermissionForProfile(params);
       } else if (isEmpty(tipo) && !isEmpty(contexto)) {
         params = { contexto: contexto, id_perfil: id_perfil }
 
-        response = await Permisson.searchPermission(params);
+        response = await Permisson.searchPermissionForProfile(params);
       } else {
         params = { id_perfil: id_perfil }
 
-        response = await Permisson.searchPermissionAll(params);
+        response = await Permisson.searchPermissionForProfile(params);
       }
 
       return res.json(response);

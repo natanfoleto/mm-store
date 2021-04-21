@@ -9,7 +9,7 @@ export const useUser = () => {
 
   async function createUser(data) {   
     try {
-      const res = await api.post('/usuarios', {
+      const res = await api.post('/users', {
         id_perfil: data.id_perfil,
         nome: data.nome,
         login: data.login,
@@ -38,7 +38,7 @@ export const useUser = () => {
 
   async function updateUser(data) {
     try {
-      const res = await api.put('/usuarios', data);
+      const res = await api.put('/users', data);
 
       if (res.status === 206) {
         Toast('warn', res.data.error.details[0].message);
@@ -62,7 +62,7 @@ export const useUser = () => {
 
   async function deleteUser(data) {
     try {
-      const res = await api.delete('/usuarios', data);
+      const res = await api.delete('/users', data);
 
       if (res.status === 206) {
         Toast('warn', res.data.error.details[0].message);

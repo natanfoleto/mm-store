@@ -6,27 +6,11 @@ import message from '../messages/profile.js'
 import SQL from '../helper/SQL.js'
 
 class ProfileController {
-  async searchAll(req, res) {
-    try {  
-      const response = await Profile.searchAll();
-    
-      return res.json(response);
-    } catch (err) {
-      
-      //! Erro Internal Server
-      return res.status(400).json({
-        result: 'error',
-        message: message.error.code1.subcode99.message,
-        error: err.toString(),
-      });
-    }
-  }
-
   async search(req, res) {
     try {
-      const { nome } = req.body;
+      const { key } = req.body;
   
-      const response = await Profile.search(nome || "");
+      const response = await Profile.searchProfile(key || "");
   
       const pagedData = await pagingData(response, req.params);
   

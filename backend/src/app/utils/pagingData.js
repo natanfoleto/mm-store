@@ -2,6 +2,10 @@ export default async function page(response, params) {
   const { page, limit } = params;
   const total = response.length;
 
+  if (limit === "0") {
+    return { data: response, total }
+  }
+
   const data = [];
   let pages = [];
   let indice = 0;

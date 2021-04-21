@@ -5,7 +5,7 @@ import api from '../services/api';
 export const usePermissions = () => {
   async function createPermissions(data) {   
     try {
-      const res = await api.post('/permissoes', {
+      const res = await api.post('/permissions', {
         id_perfil: data.id_perfil,
         id_permissao: data.id_permissao
       });
@@ -29,7 +29,7 @@ export const usePermissions = () => {
 
   async function deletePermissions(data) {
     try {
-      const res = await api.delete('/permissoes', data);
+      const res = await api.delete('/permissions', data);
 
       if (res.status === 206) {
         Toast('warn', res.data.error.details[0].message);

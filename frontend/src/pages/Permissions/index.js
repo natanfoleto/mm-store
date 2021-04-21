@@ -7,14 +7,14 @@ import Toast from '../../utils/toastify';
 import Layout from '../_layouts/default';
 
 import ComponentCard from '../../components/DataCard/index';
-import Card from './components/Users';
+import Card from './components/Card';
 
 import { CgPlayTrackPrev, CgPlayTrackNext } from 'react-icons/cg';
 import { BiLoader } from 'react-icons/bi';
 
 import { Body } from '../../styles/crud';
 
-export default function Users() {
+export default function Permissions() {
   const history = useHistory();
 
   const [data, setData] = useState();
@@ -35,12 +35,12 @@ export default function Users() {
   ]
 
   useEffect(() => {
-    async function searchUser() {
+    async function searchPermissions() {
       try {
-        const { status, data } = await api.post(`/users/search/${currentPage}/${limit}`, { 
-          key: search 
+        const { data, status } = await api.post(`/permission/search/${currentPage}/${limit}`, {
+          key: search
         });
-  
+
         if (status === 206) {
           Toast('warn', data.error.details[0].message);
   
@@ -55,7 +55,7 @@ export default function Users() {
             ? Math.ceil(data.total / limit)
             : Math.ceil(data.total / data.total)
           );
-        }  
+        } 
       } catch (err) {
         Toast('error', err.toString());
   
@@ -63,11 +63,11 @@ export default function Users() {
       }
     }
 
-    searchUser();
+    searchPermissions();
   }, [limit, currentPage, search])
 
   function handleCreate() {
-    history.push('/usuarios/add');
+    history.push('/permissoes/add');
   }
 
   const handleLimit = useCallback((e) => {
@@ -79,26 +79,27 @@ export default function Users() {
     <Layout>      
       <Body>
         <Body.Title>
-          <h1> Usuários </h1>
-          <p> Somente os usuários tem acesso ao sistema </p>
+          <h1> Permissões </h1>
+          <p> Configuração que permite os usuários realizar feitos </p>
         </Body.Title>
 
         {/* Cabeçalho do body */}
         <Body.Header>
           <Body.Filter>
             <Body.Input 
-              placeholder="Pesquise por um usuário" 
-              value={search} 
+              placeholder="Pesquise por permissão"
+              value={search}
               maxLength={50}
               onChange={e => setSearch(e.target.value)}
             />
-             
+
             <Select 
               name="rows"
               options={rows}
               onChange={handleLimit}
-              placeholder={`${limit} linhas`}
+              placeholder={`${limit} rows`}
             />
+
           </Body.Filter>
 
           <Body.Button onClick={handleCreate}>
@@ -112,7 +113,7 @@ export default function Users() {
             data ? 
               data.map((item, index) => (
                 <ComponentCard 
-                  key={index}
+                  key={index} 
                 >
                   <Card item={item} />
                 </ComponentCard>
@@ -148,7 +149,8 @@ export default function Users() {
             }} 
           > 
             <CgPlayTrackNext size={22} /> 
-          </Body.ButtonNavigation>   
+          </Body.ButtonNavigation>
+             
         </Body.Navigation>
       </Body>
     </Layout>

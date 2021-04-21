@@ -36,58 +36,58 @@ routes.route('/sessions').post(validation(validationSession.sessionCreate, 'body
 
 //routes.use(auth);
 
-routes.route('/usuarios/search/:page/:limit').post(validation(validationUser.userSearch, 'body'), UserController.search);
-routes.route('/usuarios').post(validation(validationUser.userCreate, 'body'), UserController.create);
-routes.route('/usuarios').put(validation(validationUser.userUpdate, 'body'), UserController.update);
-routes.route('/usuarios').delete(validation(validationUser.userDelete, 'body'), UserController.remove);
+routes.route('/users/search/:page/:limit').post(validation(validationUser.userSearch, 'body'), UserController.search);
+routes.route('/users').post(validation(validationUser.userCreate, 'body'), UserController.create);
+routes.route('/users').put(validation(validationUser.userUpdate, 'body'), UserController.update);
+routes.route('/users').delete(validation(validationUser.userDelete, 'body'), UserController.remove);
 
-routes.route('/perfis/search/all').get(ProfileController.searchAll);
-routes.route('/perfis/search/:page/:limit').post(validation(validationProfile.profileSearch, 'body'), ProfileController.search);
-routes.route('/perfis').post(validation(validationProfile.profileCreate, 'body'), ProfileController.create);
-routes.route('/perfis').put(validation(validationProfile.profileUpdate, 'body'), ProfileController.update);
-routes.route('/perfis').delete(validation(validationProfile.profileDelete, 'body'), ProfileController.remove);
+routes.route('/profiles/search/:page/:limit').post(validation(validationProfile.profileSearch, 'body'), ProfileController.search);
+routes.route('/profiles').post(validation(validationProfile.profileCreate, 'body'), ProfileController.create);
+routes.route('/profiles').put(validation(validationProfile.profileUpdate, 'body'), ProfileController.update);
+routes.route('/profiles').delete(validation(validationProfile.profileDelete, 'body'), ProfileController.remove);
 
-routes.route('/produtos').get(ProductController.list);
-routes.route('/produtos').post(validation(validationProduct.productCreate, 'body'), ProductController.create);
-routes.route('/produtos').put(validation(validationProduct.productUpdate, 'body'), ProductController.update);
-routes.route('/produtos').delete(validation(validationProduct.productDelete, 'body'), ProductController.remove);
+routes.route('/products').get(ProductController.list);
+routes.route('/products').post(validation(validationProduct.productCreate, 'body'), ProductController.create);
+routes.route('/products').put(validation(validationProduct.productUpdate, 'body'), ProductController.update);
+routes.route('/products').delete(validation(validationProduct.productDelete, 'body'), ProductController.remove);
 
-routes.route('/fotos').get(PhotoController.list);
-routes.route('/fotos').post(validation(validationPhoto.photoCreate, 'body'), PhotoController.create);
-routes.route('/fotos').delete(validation(validationPhoto.photoDelete, 'body'), PhotoController.remove);
+routes.route('/photos').get(PhotoController.list);
+routes.route('/photos').post(validation(validationPhoto.photoCreate, 'body'), PhotoController.create);
+routes.route('/photos').delete(validation(validationPhoto.photoDelete, 'body'), PhotoController.remove);
 
-routes.route('/categorias').get(CategoryController.list);
-routes.route('/categorias').post(validation(validationCategory.categoryCreate, 'body'), CategoryController.create);
-routes.route('/categorias').put(validation(validationCategory.categoryUpdate, 'body'), CategoryController.update);
-routes.route('/categorias').delete(validation(validationCategory.categoryDelete, 'body'), CategoryController.remove);
+routes.route('/categories').get(CategoryController.list);
+routes.route('/categories').post(validation(validationCategory.categoryCreate, 'body'), CategoryController.create);
+routes.route('/categories').put(validation(validationCategory.categoryUpdate, 'body'), CategoryController.update);
+routes.route('/categories').delete(validation(validationCategory.categoryDelete, 'body'), CategoryController.remove);
 
-routes.route('/fornecedores').get(ProviderController.list);
-routes.route('/fornecedores').post(validation(validationProvider.providerCreate, 'body'), ProviderController.create);
-routes.route('/fornecedores').put(validation(validationProvider.providerUpdate, 'body'), ProviderController.update);
-routes.route('/fornecedores').delete(validation(validationProvider.providerDelete, 'body'), ProviderController.remove);
+routes.route('/providers').get(ProviderController.list);
+routes.route('/providers').post(validation(validationProvider.providerCreate, 'body'), ProviderController.create);
+routes.route('/providers').put(validation(validationProvider.providerUpdate, 'body'), ProviderController.update);
+routes.route('/providers').delete(validation(validationProvider.providerDelete, 'body'), ProviderController.remove);
 
-routes.route('/clientes').get(ClientController.list);
-routes.route('/clientes').post(validation(validationClient.clientCreate, 'body'), ClientController.create);
-routes.route('/clientes').put(validation(validationClient.clientUpdate, 'body'), ClientController.update);
-routes.route('/clientes').delete(validation(validationClient.clientDelete, 'body'), ClientController.remove);
+routes.route('/clients').get(ClientController.list);
+routes.route('/clients').post(validation(validationClient.clientCreate, 'body'), ClientController.create);
+routes.route('/clients').put(validation(validationClient.clientUpdate, 'body'), ClientController.update);
+routes.route('/clients').delete(validation(validationClient.clientDelete, 'body'), ClientController.remove);
 
-routes.route('/contas').get(AccountController.list);
+routes.route('/accounts').get(AccountController.list);
 
-routes.route('/enderecos').get(AddressController.list);
-routes.route('/enderecos').put(validation(validationAddress.addressUpdate, 'body'), AddressController.update);
+routes.route('/address').get(AddressController.list);
+routes.route('/address').put(validation(validationAddress.addressUpdate, 'body'), AddressController.update);
 
-routes.route('/pedidos').get(WishController.list);
-routes.route('/pedidos').post(validation(validationWish.wishCreate, 'body'), WishController.create);
-routes.route('/pedidos').put(validation(validationWish.wishUpdate, 'body'), WishController.update);
-routes.route('/pedidos').delete(validation(validationWish.wishDelete, 'body'), WishController.remove);
+routes.route('/wishs').get(WishController.list);
+routes.route('/wishs').post(validation(validationWish.wishCreate, 'body'), WishController.create);
+routes.route('/wishs').put(validation(validationWish.wishUpdate, 'body'), WishController.update);
+routes.route('/wishs').delete(validation(validationWish.wishDelete, 'body'), WishController.remove);
 
-routes.route('/permissao/search').post(validation(validationPermission.permissionSearch, 'body'), PermissionController.search);
-routes.route('/permissao').post(validation(validationPermission.permissionCreate, 'body'), PermissionController.create);
-routes.route('/permissao').put(validation(validationPermission.permissionUpdate, 'body'), PermissionController.update);
-routes.route('/permissao').delete(validation(validationPermission.permissionDelete, 'body'), PermissionController.remove);
+routes.route('/permission/searchforprofile').post(validation(validationPermission.permissionSearchForProfile, 'body'), PermissionController.searchForProfile);
+routes.route('/permission/search/:page/:limit').post(validation(validationPermission.permissionSearch, 'body'), PermissionController.search);
+routes.route('/permission').post(validation(validationPermission.permissionCreate, 'body'), PermissionController.create);
+routes.route('/permission').put(validation(validationPermission.permissionUpdate, 'body'), PermissionController.update);
+routes.route('/permission').delete(validation(validationPermission.permissionDelete, 'body'), PermissionController.remove);
 
-routes.route('/permissoes/search/:perfil').get(validation(validationPermissions.permissionsSearch, 'body'), PermissionsController.search);
-routes.route('/permissoes').post(validation(validationPermissions.permissionsCreate, 'body'), PermissionsController.create);
-routes.route('/permissoes').delete(validation(validationPermissions.permissionsDelete, 'body'), PermissionsController.remove);
+routes.route('/permissions/search/:perfil').get(validation(validationPermissions.permissionsSearch, 'body'), PermissionsController.search);
+routes.route('/permissions').post(validation(validationPermissions.permissionsCreate, 'body'), PermissionsController.create);
+routes.route('/permissions').delete(validation(validationPermissions.permissionsDelete, 'body'), PermissionsController.remove);
 
 export default routes;

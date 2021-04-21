@@ -25,11 +25,11 @@ export default function FormUsuarios() {
   useEffect(() => {
     async function searchAllProfiles() {
       try {
-        const { data } = await api.get('/perfis/search/all');
+        const { data } = await api.post('/profiles/search/1/0');
   
         let newData = [];
     
-        data.forEach((item) => {
+        data.data.forEach((item) => {
           const element = { id: item.id_perfil, title: item.nome };
   
           newData.push(element)

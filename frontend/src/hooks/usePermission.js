@@ -4,13 +4,15 @@ import Toast from '../utils/toastify';
 
 import api from '../services/api';
 
-export const useProfile = () => {
+export const usePermission = () => {
   const history = useHistory();
 
-  async function createProfile(data) {   
+  async function createPermission(data) {   
     try {
-      const res = await api.post('/profiles', {
-        nome: data.nome
+      const res = await api.post('/permission', {
+        tipo: data.tipo,
+        descricao: data.descricao,
+        contexto: data.contexto
       });
 
       if (res.status === 206) {
@@ -33,9 +35,9 @@ export const useProfile = () => {
     }
   }
 
-  async function updateProfile(data) {
+  async function updatePermission(data) {
     try {
-      const res = await api.put('/profiles', data);
+      const res = await api.put('/permission', data);
 
       if (res.status === 206) {
         Toast('warn', res.data.error.details[0].message);
@@ -57,9 +59,9 @@ export const useProfile = () => {
     }
   }
 
-  async function deleteProfile(data) {
+  async function deletePermission(data) {
     try {
-      const res = await api.delete('/profiles', data);
+      const res = await api.delete('/permission', data);
 
       if (res.status === 206) {
         Toast('warn', res.data.error.details[0].message);
@@ -82,7 +84,7 @@ export const useProfile = () => {
     }
   }
 
-  return { createProfile, updateProfile, deleteProfile }
+  return { createPermission, updatePermission, deletePermission }
 }
 
-export default useProfile;
+export default usePermission;

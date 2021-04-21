@@ -3,34 +3,17 @@ import { executeQuery } from '../../database/pool.js'
 const table = 'perfis';
 
 class Profile {
-  async searchAll() {
-    return new Promise(async (resolve, reject) => {
-      try {
-        const query = `SELECT * FROM ${table}`;
-          
-        const result = await executeQuery(query);
-  
-        resolve(result);
-      } catch (err) {
-        console.log("Exception from profile.js/searchAll:");
-        console.log(err);
-  
-        reject(err);
-      }
-    });
-  }
-
-  async search(nome) {
+  async searchProfile(key) {
     return new Promise(async (resolve, reject) => {
       try {
         let query
 
-        if (nome !== "")
+        if (key !== "")
           query = `SELECT * FROM ${table} WHERE nome LIKE CONCAT("%", ?, "%")`;
         else 
           query = `SELECT * FROM ${table}`;
         
-        const binds = nome;
+        const binds = key;
   
         const result = await executeQuery(query, binds);
   

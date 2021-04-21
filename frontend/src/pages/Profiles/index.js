@@ -12,31 +12,33 @@ import Card from './components/Card';
 import { CgPlayTrackPrev, CgPlayTrackNext } from 'react-icons/cg';
 import { BiLoader } from 'react-icons/bi';
 
-import { Body } from './styles';
+import { Body } from '../../styles/crud';
 
-export default function Perfis() {
+export default function Profiles() {
   const history = useHistory();
 
   const [data, setData] = useState();
   const [limit, setLimit] = useState(10);
+  const [totalRecords, setTotalRecords] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
 
   const [search, setSearch] = useState('');
 
   const rows = [
-    { id: 10, title: '10 rows' },
-    { id: 20, title: '20 rows' },
-    { id: 30, title: '30 rows' },
-    { id: 50, title: '50 rows' },
-    { id: 100, title: '100 rows' }
+    { id: '10', title: '10 linhas' },
+    { id: '20', title: '20 linhas' },
+    { id: '30', title: '30 linhas' },
+    { id: '50', title: '50 linhas' },
+    { id: '100', title: '100 linhas' },
+    { id: '0', title: 'Todas linhas' },
   ]
 
   useEffect(() => {
     async function searchProfile() {
       try {
-        const { status, data } = await api.post(`/perfis/search/${currentPage}/${limit}`, { 
-          nome: search 
+        const { status, data } = await api.post(`/profiles/search/${currentPage}/${limit}`, { 
+          key: search 
         });
   
         if (status === 206) {
@@ -47,7 +49,12 @@ export default function Perfis() {
 
         if (status === 200) {
           setData(data.data);
-          setTotalPages(Math.ceil(data.total / limit));
+          setTotalRecords(data.total);
+          setTotalPages(
+            limit === 0 
+            ? Math.ceil(data.total / limit)
+            : Math.ceil(data.total / data.total)
+          );
         }
       } catch (err) {
         Toast('error', err.toString());
@@ -86,12 +93,11 @@ export default function Perfis() {
               onChange={e => setSearch(e.target.value)}
             />
 
-            <p>Rows: </p>
-
             <Select 
               name="rows"
               options={rows}
               onChange={handleLimit}
+              placeholder={`${limit} rows`}
             />
 
           </Body.Filter>
@@ -132,6 +138,8 @@ export default function Perfis() {
             
           <Body.SpanNavigation>
             Page <strong>{currentPage}</strong> of <strong>{totalPages}</strong>
+            <br />
+            <strong>{totalRecords}</strong> registro(s) encontrado(s)
           </Body.SpanNavigation>
  
           <Body.ButtonNavigation
