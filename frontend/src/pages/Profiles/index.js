@@ -20,7 +20,7 @@ export default function Profiles() {
   const [data, setData] = useState();
   const [limit, setLimit] = useState(10);
   const [totalRecords, setTotalRecords] = useState(0);
-  const [totalPages, setTotalPages] = useState(0);
+  const [totalPages, setTotalPages] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
 
   const [search, setSearch] = useState('');
@@ -50,10 +50,11 @@ export default function Profiles() {
         if (status === 200) {
           setData(data.data);
           setTotalRecords(data.total);
+
           setTotalPages(
             limit === 0 
             ? Math.ceil(data.total / limit)
-            : Math.ceil(data.total / data.total)
+            : (data.total / data.total)
           );
         }
       } catch (err) {
@@ -137,7 +138,7 @@ export default function Profiles() {
           </Body.ButtonNavigation>
             
           <Body.SpanNavigation>
-            Page <strong>{currentPage}</strong> of <strong>{totalPages}</strong>
+            Page <strong>{currentPage}</strong> of <strong>{totalPages ? totalPages : 1}</strong>
             <br />
             <strong>{totalRecords}</strong> registro(s) encontrado(s)
           </Body.SpanNavigation>

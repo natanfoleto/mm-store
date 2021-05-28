@@ -2,12 +2,12 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
   background: #FFF;
-  padding: 0 30px;
+  padding: 0 2rem;
   border-bottom: 1px solid #ddd;
 `;
 
 export const Content = styled.div`
-  height: 64px;
+  height: 4rem;
   max-width: 100vw;
   margin: 0 auto;
   display: flex;
@@ -19,10 +19,10 @@ export const Content = styled.div`
     align-items: center;
 
     img {
-      height: 25px;
-      width: 55px;
-      margin-right: 15px;
-      padding-right: 20px;
+      height: 1.5rem;
+      width: 3.5rem;
+      margin-right: 1rem;
+      padding-right: 1.25rem;
       border-right: 1px solid #ddd;
 
       &:hover {
@@ -31,8 +31,8 @@ export const Content = styled.div`
     }
 
     a {
-      margin: 0 4px;
-      padding: 7px;
+      margin: 0 0.25rem;
+      padding: 0.5rem;
       border-radius: 2px;
       color: #003464;
 
@@ -61,8 +61,8 @@ export const Content = styled.div`
 
 export const Profile = styled.div`
   display: flex;
-  margin-left: 15px;
-  padding-left: 20px;
+  margin-left: 1rem;
+  padding-left: 1.25rem;
   border-left: 1px solid #ddd;
 
   div {
@@ -76,7 +76,7 @@ export const Profile = styled.div`
     a {
       display: block;
       margin-top: 2px;
-      font-size: 12px;
+      font-size: 0.75rem;
       color: #999;
     }
   }

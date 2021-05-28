@@ -12,11 +12,11 @@ export const Body = styled.div`
 `;
 
 export const Container = styled.div`
-  width: 600px;
-  padding: 50px 25px;
+  width: 38rem;
+  padding: 3rem 1.5rem;
 
   h1 {
-    font-size: 34px;
+    font-size: 2rem;
   }
 `;
 
@@ -25,13 +25,13 @@ Container.Title = styled.div`
   flex-direction: column;
   align-items: flex-end;
 
-  margin-bottom: 10px;
+  margin-bottom: 0.5rem;
 `;
 
 export const IGroup = styled.div`
   display: flex;
   flex-direction: column;
-  margin-top: 15px;
+  margin-top: 1rem;
 `;
 
 IGroup.Label = styled.label`
@@ -42,7 +42,7 @@ IGroup.Label = styled.label`
 export const BGroup = styled.div`
   display: flex;
   justify-content: space-between;
-  margin-top: 15px;
+  margin-top: 1rem;
 `;
 
 BGroup.Button = styled.button`

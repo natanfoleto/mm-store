@@ -9,11 +9,11 @@ export const Container = styled.div`
   width: 100%;
 
   img {
-    height: 350px;
-    width: 350px;
+    height: 22rem;
+    width: 22rem;
   }
 
   p {
-    font-size: 28px;
+    font-size: 1.75px;
   }
 `;

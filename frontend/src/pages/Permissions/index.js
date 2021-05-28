@@ -1,6 +1,6 @@
+import { useEffect, useState, useCallback } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Select } from '@rocketseat/unform';
-import { useEffect, useState, useCallback } from 'react';
 import api from '../../services/api';
 import Toast from '../../utils/toastify';
 
@@ -137,7 +137,7 @@ export default function Permissions() {
           </Body.ButtonNavigation>
             
           <Body.SpanNavigation>
-            Page <strong>{currentPage}</strong> of <strong>{totalPages}</strong>
+            Page <strong>{currentPage}</strong> of <strong>{totalPages ? totalPages : 1}</strong>
             <br />
             <strong>{totalRecords}</strong> registro(s) encontrado(s)
           </Body.SpanNavigation>

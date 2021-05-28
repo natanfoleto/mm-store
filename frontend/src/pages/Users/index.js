@@ -7,7 +7,7 @@ import Toast from '../../utils/toastify';
 import Layout from '../_layouts/default';
 
 import ComponentCard from '../../components/DataCard/index';
-import Card from './components/Users';
+import Card from './components/Card';
 
 import { CgPlayTrackPrev, CgPlayTrackNext } from 'react-icons/cg';
 import { BiLoader } from 'react-icons/bi';
@@ -136,7 +136,7 @@ export default function Users() {
           </Body.ButtonNavigation>
             
           <Body.SpanNavigation>
-            Page <strong>{currentPage}</strong> of <strong>{totalPages}</strong>
+            Page <strong>{currentPage}</strong> of <strong>{totalPages ? totalPages : 1}</strong>
             <br />
             <strong>{totalRecords}</strong> registro(s) encontrado(s)
           </Body.SpanNavigation>

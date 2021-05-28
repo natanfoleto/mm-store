@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 // * Conteúdo do componente
 export const Data = styled.div`
+  width: 100%;
   display: flex;
   align-items: center;
 `;
@@ -13,8 +14,8 @@ Data.Actions = styled.div`
 
 Data.Button = styled.a`
   color: #333;
-  font-size: 13px;
-  margin: 0 10px;
+  font-size: 0.875rem;
+  margin: 0 0.875rem;
   cursor: pointer;
 
   &:hover {
@@ -26,21 +27,21 @@ Data.Button = styled.a`
 `;
 
 Data.Hr = styled.hr`
-  height: 16px;
+  height: 1rem;
   border: 1px solid #ddd;
 `;
 
 Data.Id = styled.p`
-  font-size: 30px;
-  margin: 0 20px 0 10px;
-  padding-right: 20px;
+  font-size: 2rem;
+  margin: 0 1.25rem 0 0.875rem;
+  padding-right: 1.25rem;
   border-right: 1px solid #ddd;
 `;
 
 
 Data.DivColumn = styled.div`
-  margin-right: 15px;
-  padding-right: 20px;
+  margin-right: 1rem;
+  padding-right: 1.25rem;
   border-right: 1px solid #ddd;
 
   &:last-child {
@@ -49,16 +50,16 @@ Data.DivColumn = styled.div`
   }
 
   h1 {
-    font-size: 15px;
+    font-size: 1rem;
     color: #333;
   }
 
   p {
     color: #333;
-    font-size: 13px;
+    font-size: 0.8rem;
     font-weight: normal;
     margin-top: 3px;
-    margin-right: 5px;
+    margin-right: 0.25rem;
   }
 `;
 

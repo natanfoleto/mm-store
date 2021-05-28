@@ -6,8 +6,8 @@ export const Content = styled.div`
   align-items: center;
   justify-content: space-between;
 
-  padding: 15px;
-  border-radius: 4px;
+  padding: 1rem;
+  border-radius: 0.25rem;
   margin-top: ${props => (props.marginTop)};
   background: ${props => (props.background)};
   border: 1px solid ${props => (props.borderColor)};

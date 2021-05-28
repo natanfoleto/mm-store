@@ -26,8 +26,9 @@ export default function FormPermissions() {
   ]
 
   const contexts = [
+    { id: 'Permissões', title: 'Permissões' },
     { id: 'Perfis', title: 'Perfis' },
-    { id: 'Usuários', title: 'Usuários' }
+    { id: 'Usuários', title: 'Usuários' },
   ]
   
   useEffect(() => {

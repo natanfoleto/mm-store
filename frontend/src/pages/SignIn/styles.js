@@ -2,9 +2,9 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
   img {
-    height: 130px;
-    width: 320px;
-    margin-bottom: 10px;
+    height: 8rem;
+    width: 20rem;
+    margin-bottom: .05rem;
   }
 
   button {
@@ -15,8 +15,8 @@ export const Container = styled.div`
     
     img {
       background-color:red;
-      width: 44px;
-      height: 44px;
+      width: 2.5rem;
+      height: 2.5rem;
     }
   }
 `;

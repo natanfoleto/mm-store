@@ -11,20 +11,22 @@ const pool = new createPool({
 });
   
 async function executeQuery(sql, params = []) {
-  let conn;
+  return new Promise(async (resolve, reject) => {
+    let conn;
 
-  try {
-    conn = await pool.getConnection();
+    try {
+      conn = await pool.getConnection();
 
-    const res = await conn.query(sql, params);
-    
-    return res;
-  } catch (err) {
-    
-    return err;
-  } finally {
-    if(conn) conn.release();
-  }
+      const res = await conn.query(sql, params);
+      
+      resolve(res);
+    } catch (err) {
+      
+      reject(err);
+    } finally {
+      if(conn) conn.release();
+    }
+  });
 }
 
 export { executeQuery }

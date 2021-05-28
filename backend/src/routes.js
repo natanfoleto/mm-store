@@ -82,6 +82,7 @@ routes.route('/wishs').delete(validation(validationWish.wishDelete, 'body'), Wis
 
 routes.route('/permission/searchforprofile').post(validation(validationPermission.permissionSearchForProfile, 'body'), PermissionController.searchForProfile);
 routes.route('/permission/search/:page/:limit').post(validation(validationPermission.permissionSearch, 'body'), PermissionController.search);
+routes.route('/permission/searchprofile').post(validation(validationPermission.permissionSearchProfile, 'body'), PermissionController.searchProfile);
 routes.route('/permission').post(validation(validationPermission.permissionCreate, 'body'), PermissionController.create);
 routes.route('/permission').put(validation(validationPermission.permissionUpdate, 'body'), PermissionController.update);
 routes.route('/permission').delete(validation(validationPermission.permissionDelete, 'body'), PermissionController.remove);

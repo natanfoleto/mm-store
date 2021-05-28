@@ -4,135 +4,145 @@ const table = 'permissoes';
 
 class Permission {
   async searchPermission(key) {
-    return new Promise(async (resolve, reject) => {
-      try {
-        const query = `
-          SELECT * FROM ${table}
-          WHERE descricao LIKE "%${key}%"
-        `;
-  
-        const result = await executeQuery(query);
-  
-        resolve(result);
-      } catch (err) {
-        console.log("Exception from permission.js/searchPermissionAll:");
-        console.log(err);
-  
-        reject(err);
-      }
-    });
+    try {
+      const query = `
+        SELECT * FROM ${table}
+        WHERE descricao LIKE "%${key}%"
+      `;
+
+      const result = await executeQuery(query);
+
+      return result;
+    } catch (err) {
+      console.log("Exception from permission.js/searchPermissionAll:");
+      console.log(err);
+
+      return err;
+    }
   }
 
   async searchPermissionForProfile(params) {
-    return new Promise(async (resolve, reject) => {
-      try {
-        let query;
-        
-        if ('tipo' in params && 'contexto' in params) {
-          query = `
-            SELECT permissoes.* FROM ${table}
-            LEFT JOIN permissoes_perfis 
-            ON (permissoes_perfis.id_permissao = permissoes.id_permissao AND permissoes_perfis.id_perfil = ${params.id_perfil})
-            WHERE permissoes_perfis.id_permissao_perfil IS NULL AND permissoes.tipo = '${params.tipo}' AND permissoes.contexto = '${params.contexto}'
-          `;
-        } else if ('tipo' in params) {
-          query = `
-            SELECT permissoes.* FROM ${table}
-            LEFT JOIN permissoes_perfis 
-            ON (permissoes_perfis.id_permissao = permissoes.id_permissao AND permissoes_perfis.id_perfil = ${params.id_perfil})
-            WHERE permissoes_perfis.id_permissao_perfil IS NULL AND permissoes.tipo = '${params.tipo}'
-          `;
-        } else if ('contexto' in params) {
-          query = `
-            SELECT permissoes.* FROM ${table}
-            LEFT JOIN permissoes_perfis 
-            ON (permissoes_perfis.id_permissao = permissoes.id_permissao AND permissoes_perfis.id_perfil = ${params.id_perfil})
-            WHERE permissoes_perfis.id_permissao_perfil IS NULL AND permissoes.contexto = '${params.contexto}'
-          `;
-        } else {
-          query = `
-            SELECT permissoes.* FROM ${table}
-            LEFT JOIN permissoes_perfis ON (permissoes_perfis.id_permissao = permissoes.id_permissao AND permissoes_perfis.id_perfil = ${params.id_perfil})
-            WHERE permissoes_perfis.id_permissao_perfil IS NULL
-          `;
-        }
-  
-        const result = await executeQuery(query);
-  
-        resolve(result);
-      } catch (err) {
-        console.log("Exception from permission.js/searchPermission:");
-        console.log(err);
-  
-        reject(err);
+    try {
+      let query;
+      
+      if ('tipo' in params && 'contexto' in params) {
+        query = `
+          SELECT permissoes.* FROM ${table}
+          LEFT JOIN permissoes_perfis 
+          ON (permissoes_perfis.id_permissao = permissoes.id_permissao AND permissoes_perfis.id_perfil = ${params.id_perfil})
+          WHERE permissoes_perfis.id_permissao_perfil IS NULL AND permissoes.tipo = '${params.tipo}' AND permissoes.contexto = '${params.contexto}'
+        `;
+      } else if ('tipo' in params) {
+        query = `
+          SELECT permissoes.* FROM ${table}
+          LEFT JOIN permissoes_perfis 
+          ON (permissoes_perfis.id_permissao = permissoes.id_permissao AND permissoes_perfis.id_perfil = ${params.id_perfil})
+          WHERE permissoes_perfis.id_permissao_perfil IS NULL AND permissoes.tipo = '${params.tipo}'
+        `;
+      } else if ('contexto' in params) {
+        query = `
+          SELECT permissoes.* FROM ${table}
+          LEFT JOIN permissoes_perfis 
+          ON (permissoes_perfis.id_permissao = permissoes.id_permissao AND permissoes_perfis.id_perfil = ${params.id_perfil})
+          WHERE permissoes_perfis.id_permissao_perfil IS NULL AND permissoes.contexto = '${params.contexto}'
+        `;
+      } else {
+        query = `
+          SELECT permissoes.* FROM ${table}
+          LEFT JOIN permissoes_perfis ON (permissoes_perfis.id_permissao = permissoes.id_permissao AND permissoes_perfis.id_perfil = ${params.id_perfil})
+          WHERE permissoes_perfis.id_permissao_perfil IS NULL
+        `;
       }
-    });
+
+      const result = await executeQuery(query);
+
+      return result;
+    } catch (err) {
+      console.log("Exception from permission.js/searchPermission:");
+      console.log(err);
+
+      return err;
+    }
+  }
+
+  async searchProfilePermissions(id_perfil) {
+    try {
+      const query = `
+        SELECT permissoes.* FROM ${table}
+        LEFT JOIN permissoes_perfis 
+        ON (permissoes_perfis.id_permissao = permissoes.id_permissao AND permissoes_perfis.id_perfil = ${id_perfil})
+        WHERE permissoes_perfis.id_permissao_perfil IS NOT NULL
+      `;
+
+      const result = await executeQuery(query);
+
+      return result;
+    } catch (err) {
+      console.log("Exception from permissions.js/listPermissions:");
+      console.log(err);
+
+      return err;
+    }
   }
   
   async insertPermission(object) {
-    return new Promise(async (resolve, reject) => {
-      try {
-        const query = `INSERT INTO ${table} 
-          (tipo, descricao, contexto) 
-          VALUES (?, ?, ?)
-          RETURNING *
-        ;`;
-  
-        const binds = Object.values(object);
-  
-        const result = await executeQuery(query, binds);
-  
-        resolve(result);
-      } catch (err) {
-        console.log("Exception from permission.js/insertPermission:");
-        console.log(err);
-  
-        reject(err);
-      }
-    });
+    try {
+      const query = `INSERT INTO ${table} 
+        (tipo, descricao, contexto) 
+        VALUES (?, ?, ?)
+        RETURNING *
+      ;`;
+
+      const binds = Object.values(object);
+
+      const result = await executeQuery(query, binds);
+
+      return result;
+    } catch (err) {
+      console.log("Exception from permission.js/insertPermission:");
+      console.log(err);
+
+      return err;
+    }
   }
   
   async updatePermission(object) {
-    return new Promise(async (resolve, reject) => {
-      try {
-        const query = `UPDATE ${table} 
-          SET tipo = ?, descricao = ?, contexto = ?
-          WHERE id_permissao = ?
-        `;
-  
-        const binds = Object.values(object);
-  
-        const result = await executeQuery(query, binds);
-  
-        resolve(result);
-      } catch (err) {
-        console.log("Exception from permission.js/updatePermission:");
-        console.log(err);
-  
-        reject(err);
-      }
-    });
+    try {
+      const query = `UPDATE ${table} 
+        SET tipo = ?, descricao = ?, contexto = ?
+        WHERE id_permissao = ?
+      `;
+
+      const binds = Object.values(object);
+
+      const result = await executeQuery(query, binds);
+
+      return result;
+    } catch (err) {
+      console.log("Exception from permission.js/updatePermission:");
+      console.log(err);
+
+      return err;
+    }
   }
   
   async deletePermission(id) {
-    return new Promise(async (resolve, reject) => {
-      try {
-        const query = `DELETE FROM ${table}  
-          WHERE id_permissao = ?
-        `;
-  
-        const binds = id;
-  
-        const result = await executeQuery(query, binds);
-  
-        resolve(result);
-      } catch (err) {
-        console.log("Exception from permission.js/deletePermission:");
-        console.log(err);
-  
-        reject(err);
-      }
-    });
+    try {
+      const query = `DELETE FROM ${table}  
+        WHERE id_permissao = ?
+      `;
+
+      const binds = id;
+
+      const result = await executeQuery(query, binds);
+
+      return result;
+    } catch (err) {
+      console.log("Exception from permission.js/deletePermission:");
+      console.log(err);
+
+      return err;
+    }
   }
 }
 

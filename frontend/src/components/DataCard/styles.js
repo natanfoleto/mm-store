@@ -5,13 +5,13 @@ import { darken } from 'polished';
 export const Content = styled.div`
   display: flex;
   justify-content: space-between;
-  margin-bottom: 10px;
+  margin-bottom: 0.625rem;
   height: auto;
-  padding: 12px;
+  padding: 0.75rem;
   background: #FFF;
   border: 1px solid #eee;
   box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.15);
-  border-radius: 4px;
+  border-radius: 0.25rem;
   cursor: pointer;
 
   &:last-child {

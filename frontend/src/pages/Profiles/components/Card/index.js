@@ -23,7 +23,7 @@ function ComponentProfile({ item }) {
 
   return (
     <>
-      <Data>
+      <Data onClick={() => { handleEdit(item) }}>
         <Data.Id> {item.id_perfil} </Data.Id>
         <Data.DivColumn> 
           <h1>{item.nome}</h1>
@@ -37,7 +37,7 @@ function ComponentProfile({ item }) {
         <Data.Button onClick={() => { handleEdit(item) }}> Editar </Data.Button>
         <Data.Hr />
         <Data.Button onClick={() => { handleDelete(item) }} > Excluir </Data.Button>  
-      </Data.Actions>      
+      </Data.Actions>  
     </>
   );
 }

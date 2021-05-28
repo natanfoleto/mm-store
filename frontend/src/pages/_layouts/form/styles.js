@@ -21,16 +21,16 @@ export const Content = styled.div`
   justify-content: center;
 
   form {
-    margin: 20px 0;
+    margin: 1.5rem 0;
     display: flex;
     flex-direction: column;
 
     input {
-      font-size: 14px;
-      height: 24px;
-      padding: 5px 10px;
+      font-size: 0.875rem;
+      height: 1.5rem;
+      padding: 0.25rem 0.5rem;
       border: 0;
-      border-radius: 4px;
+      border-radius: 0.25rem;
       border: 1px solid #eee;
       box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.15);
 
@@ -41,10 +41,10 @@ export const Content = styled.div`
     }
 
     select {
-      font-size: 14px;
-      height: 36px;
-      padding: 0 5px;
-      border-radius: 4px;
+      font-size: 0.875rem;
+      height: 2.15rem;
+      padding: 0 0.25rem;
+      border-radius: 0.25px;
       border: 1px solid #eee;
       box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.15);
 
@@ -56,12 +56,12 @@ export const Content = styled.div`
 
     button {
       color: #FFF;
-      padding: 10px 20px;
-      border-radius: 4px;
+      padding: 0.5rem 1.25rem;
+      border-radius: 0.25rem;
     }
   }
 `;
 
 Content.Header = styled.div`
-  height: 54px;
+  height: 3.25rem;
 `;

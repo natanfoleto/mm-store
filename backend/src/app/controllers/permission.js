@@ -64,6 +64,24 @@ class PermissionController {
       });
     }
   }
+
+  async searchProfile(req, res) {
+    try {
+      const { id_perfil } = req.body;
+
+      const response = await Permisson.searchProfilePermissions(id_perfil);
+      
+      return res.json(response);
+    } catch (err) {
+  
+      //! Erro Internal Server
+      return res.status(400).json({
+        result: 'error',
+        message: message.error.code1.subcode99.message,
+        error: err.toString(),
+      });
+    }
+  }
   
   async create(req, res) {
     try {

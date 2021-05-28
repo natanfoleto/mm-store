@@ -41,6 +41,18 @@ const validationSchemas = {
         'string.base': 'contexto deve ser do tipo string',
       })
   }),
+  permissionSearchProfile: Joi.object().keys({
+    id_perfil: Joi
+      .number()
+      .required()
+      .min(1)
+      .messages({
+        'any.required': 'id_perfil é necessário',
+        'number.base': 'id_perfil deve ser um número',
+        'number.empty': 'id_perfil não pode estar vazio',
+        'number.min': 'id_perfil deve ser maior que 0'
+      })
+  }),
   permissionCreate: Joi.object().keys({
     tipo: Joi
       .string()

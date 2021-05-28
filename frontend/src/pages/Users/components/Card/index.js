@@ -30,7 +30,7 @@ function ComponentProfile({ item }) {
 
   return (
     <>
-      <Data>
+      <Data onClick={() => { handleEdit(item) }}>
         <Data.Id> {item.id_usuario} </Data.Id>
         <Data.DivColumn> 
           <h1>{item.nome}</h1>

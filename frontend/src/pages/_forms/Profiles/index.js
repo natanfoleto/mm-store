@@ -71,8 +71,6 @@ export default function FormPerfis() {
           id_perfil: history.location.state.id_perfil
         });
 
-        console.log(data)
-
         if (status === 206) {
           Toast('warn', data.error.details[0].message);
   
@@ -145,6 +143,7 @@ export default function FormPerfis() {
 
     setPermission('');
     setRefresh(!refresh);
+    setButtonAvailable(false);
   }
 
   async function handleDeletePermission(item) {
