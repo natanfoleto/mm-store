@@ -30,7 +30,7 @@ const validationSchemas = {
       .messages({
         'any.required': 'path é necessário',
         'string.base': 'path deve ser do tipo string',
-        'string.empty': 'path não pode estar vazio',
+        'string.empty': 'path não pode estar vazio'
       }),
     url: Joi
       .string()
@@ -38,8 +38,8 @@ const validationSchemas = {
       .messages({
         'any.required': 'url é necessário',
         'string.base': 'url deve ser do tipo string',
-        'string.empty': 'url não pode estar vazio',
-      }),
+        'string.empty': 'url não pode estar vazio'
+      })
   }),
   photoDelete: Joi.object().keys({
     id_foto: Joi
@@ -51,8 +51,8 @@ const validationSchemas = {
         'number.base': 'id_foto deve ser um número',
         'number.empty': 'id_foto não pode estar vazio',
         'number.min': 'id_foto deve ser maior que 0'
-      }),
-  }),
+      })
+  })
 }
 
 export default validationSchemas

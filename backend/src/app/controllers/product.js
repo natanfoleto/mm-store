@@ -4,26 +4,25 @@ import message from '../messages/product.js'
 import SQL from '../helper/SQL.js'
 
 class ProductController {
-  async list(req, res) {
+  async list (req, res) {
     try {
-      const response = await Product.listProduct();
-  
-      return res.json(response);
+      const response = await Product.listProduct()
+
+      return res.json(response)
     } catch (err) {
-  
       //! Erro Internal Server
       return res.status(400).json({
         result: 'error',
         message: message.error.code1.subcode99.message,
-        error: err.toString(),
-      });
+        error: err.toString()
+      })
     }
   }
-  
-  async create(req, res) {
+
+  async create (req, res) {
     try {
-      const body = req.body;
-  
+      const body = req.body
+
       const product = {
         id_categoria: body.id_categoria,
         id_fornecedor: body.id_fornecedor || null,
@@ -34,14 +33,13 @@ class ProductController {
         estoque: body.estoque,
         tamanho: body.tamanho || null
       }
-  
-      const response = await Product.insertProduct(product);
-  
-      const sqlTreated = await SQL(response);
-  
+
+      const response = await Product.insertProduct(product)
+
+      const sqlTreated = await SQL(response)
+
       //! Erro ao executar query no banco
       if (sqlTreated.result === 'error') {
-  
         //! Erro de cadastro duplicado
         if (sqlTreated.errno === 1062) {
           return res.json({
@@ -50,7 +48,7 @@ class ProductController {
           })
         }
       }
-  
+
       //* Query executada com sucesso
       if (sqlTreated.result === 'success') {
         return res.json({
@@ -58,23 +56,22 @@ class ProductController {
           message: message.success.code1.subcode1.message
         })
       }
-  
-      return res.json(sqlTreated);
+
+      return res.json(sqlTreated)
     } catch (err) {
-  
       //! Erro Internal Server
       return res.status(400).json({
         result: 'error',
         message: message.error.code1.subcode99.message,
-        error: err.toString(),
-      });
+        error: err.toString()
+      })
     }
   }
-  
-  async update(req, res) {
+
+  async update (req, res) {
     try {
-      const body = req.body;
-  
+      const body = req.body
+
       const product = {
         id_categoria: body.id_categoria,
         id_fornecedor: body.id_fornecedor || null,
@@ -87,14 +84,13 @@ class ProductController {
         updated_at: new Date(),
         id_produto: body.id_produto
       }
-  
-      const response = await Product.updateProduct(product);
-  
-      const sqlTreated = await SQL(response);
-  
+
+      const response = await Product.updateProduct(product)
+
+      const sqlTreated = await SQL(response)
+
       //! Erro ao executar query no banco
       if (sqlTreated.result === 'error') {
-  
         //! Erro de cadastro duplicado
         if (sqlTreated.errno === 1062) {
           return res.json({
@@ -103,10 +99,9 @@ class ProductController {
           })
         }
       }
-  
+
       //* Query executada com sucesso
       if (sqlTreated.result === 'success') {
-  
         //* Nenhum usuário encontrado com os parâmetros passados
         if (sqlTreated.sql.affectedRows === 0) {
           return res.json({
@@ -114,41 +109,39 @@ class ProductController {
             message: message.error.code1.subcode2.message
           })
         }
-  
+
         return res.json({
           result: sqlTreated.result,
           message: message.success.code1.subcode2.message
         })
       }
-  
-      return res.json(sqlTreated);
+
+      return res.json(sqlTreated)
     } catch (err) {
-  
       //! Erro Internal Server
       return res.status(400).json({
         result: 'error',
         message: message.error.code1.subcode99.message,
-        error: err.toString(),
-      });
+        error: err.toString()
+      })
     }
   }
-  
-  async remove(req, res) {
+
+  async remove (req, res) {
     try {
-      const { id_produto } = req.body;
-  
-      const response = await Product.deleteProduct(id_produto);
-  
-      const sqlTreated = await SQL(response);
-  
+      const { id_produto } = req.body
+
+      const response = await Product.deleteProduct(id_produto)
+
+      const sqlTreated = await SQL(response)
+
       //! Erro ao executar query no banco
       if (sqlTreated.result === 'error') {
         return res.json(sqlTreated)
       }
-  
+
       //* Query executada com sucesso
       if (sqlTreated.result === 'success') {
-  
         //* Nenhum usuário encontrado com os parâmetros passados
         if (sqlTreated.sql.affectedRows === 0) {
           return res.json({
@@ -156,22 +149,21 @@ class ProductController {
             message: message.error.code1.subcode2.message
           })
         }
-  
+
         return res.json({
           result: 'success',
           message: message.success.code1.subcode3.message
-        });
+        })
       }
-  
-      return res.json(sqlTreated);
+
+      return res.json(sqlTreated)
     } catch (err) {
-  
       //! Internal Server Error
       return res.status(400).json({
         result: 'error',
         message: message.error.code1.subcode99.message,
-        error: err.toString(),
-      });
+        error: err.toString()
+      })
     }
   }
 }

@@ -78,15 +78,15 @@ const validationSchemas = {
       .allow(null)
       .messages({
         'number.base': 'latitude deve ser do tipo number',
-        'number.empty': 'latitude não pode estar vazio',
+        'number.empty': 'latitude não pode estar vazio'
       }),
     longitude: Joi
       .number()
       .allow(null)
       .messages({
         'number.base': 'latitude deve ser do tipo number',
-        'number.empty': 'latitude não pode estar vazio',
-      }),
+        'number.empty': 'latitude não pode estar vazio'
+      })
   }),
   addressDelete: Joi.object().keys({
     id_endereco: Joi
@@ -98,8 +98,8 @@ const validationSchemas = {
         'number.base': 'id_endereco deve ser um número',
         'number.empty': 'id_endereco não pode estar vazio',
         'number.min': 'id_endereco deve ser maior que 0'
-      }),
-  }),
+      })
+  })
 }
 
 export default validationSchemas

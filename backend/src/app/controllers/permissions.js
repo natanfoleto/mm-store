@@ -4,37 +4,36 @@ import message from '../messages/permissions.js'
 import SQL from '../helper/SQL.js'
 
 class PermissionsController {
-  async search(req, res) {
+  async search (req, res) {
     try {
-      const { perfil } = req.params;
-      
-      const response = await Permissons.searchPermissions(perfil);
+      const { perfil } = req.params
 
-      return res.json(response);
+      const response = await Permissons.searchPermissions(perfil)
+
+      return res.json(response)
     } catch (err) {
-  
       //! Erro Internal Server
       return res.status(400).json({
         result: 'error',
         message: message.error.code1.subcode99.message,
-        error: err.toString(),
-      });
+        error: err.toString()
+      })
     }
   }
-  
-  async create(req, res) {
+
+  async create (req, res) {
     try {
-      const body = req.body;
-  
+      const body = req.body
+
       const permissions = {
         id_perfil: body.id_perfil,
         id_permissao: body.id_permissao
       }
-  
-      const response = await Permissons.insertPermissions(permissions);
-  
-      const sqlTreated = await SQL(response);
-  
+
+      const response = await Permissons.insertPermissions(permissions)
+
+      const sqlTreated = await SQL(response)
+
       //* Query executada com sucesso
       if (sqlTreated.result === 'success') {
         return res.json({
@@ -42,30 +41,28 @@ class PermissionsController {
           message: message.success.code1.subcode1.message
         })
       }
-  
-      return res.json(sqlTreated);
+
+      return res.json(sqlTreated)
     } catch (err) {
-  
       //! Erro Internal Server
       return res.status(400).json({
         result: 'error',
         message: message.error.code1.subcode99.message,
-        error: err.toString(),
-      });
+        error: err.toString()
+      })
     }
   }
-  
-  async remove(req, res) {
+
+  async remove (req, res) {
     try {
-      const { id_permissao_perfil } = req.body;
-  
-      const response = await Permissons.deletePermissions(id_permissao_perfil);
-  
-      const sqlTreated = await SQL(response);
-  
+      const { id_permissao_perfil } = req.body
+
+      const response = await Permissons.deletePermissions(id_permissao_perfil)
+
+      const sqlTreated = await SQL(response)
+
       //* Query executada com sucesso
       if (sqlTreated.result === 'success') {
-  
         //* Nenhuma das permissões encontradas com os parâmetros passados
         if (sqlTreated.sql.affectedRows === 0) {
           return res.json({
@@ -73,22 +70,21 @@ class PermissionsController {
             message: message.error.code1.subcode1.message
           })
         }
-  
+
         return res.json({
           result: 'success',
           message: message.success.code1.subcode2.message
-        });
+        })
       }
-  
-      return res.json(sqlTreated);
+
+      return res.json(sqlTreated)
     } catch (err) {
-  
       //! Internal Server Error
       return res.status(400).json({
         result: 'error',
         message: message.error.code1.subcode99.message,
-        error: err.toString(),
-      });
+        error: err.toString()
+      })
     }
   }
 }

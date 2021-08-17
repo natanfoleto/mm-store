@@ -48,8 +48,8 @@ const validationSchemas = {
         'number.base': 'id_categoria deve ser um número',
         'number.empty': 'id_categoria não pode estar vazio',
         'number.min': 'id_categoria deve ser maior que 0'
-      }),
-  }),
+      })
+  })
 }
 
 export default validationSchemas

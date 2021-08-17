@@ -11,7 +11,7 @@ const validationSchemas = {
       .messages({
         'any.required': 'login é necessário',
         'string.base': 'login deve ser do tipo string',
-        'string.empty': 'login não pode estar vazio',
+        'string.empty': 'login não pode estar vazio'
       }),
     password: Joi
       .string()
@@ -19,9 +19,9 @@ const validationSchemas = {
       .messages({
         'any.required': 'password é necessário',
         'string.base': 'password deve ser do tipo string',
-        'string.empty': 'password não pode estar vazio',
-      }),
-  }),
+        'string.empty': 'password não pode estar vazio'
+      })
+  })
 }
 
 export default validationSchemas

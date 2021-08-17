@@ -6,28 +6,27 @@ import message from '../messages/client.js'
 import SQL from '../helper/SQL.js'
 
 class ClientController {
-  async list(req, res) {
+  async list (req, res) {
     try {
-      const response = await Client.listClient();
-  
-      return res.json(response);
+      const response = await Client.listClient()
+
+      return res.json(response)
     } catch (err) {
-  
       //! Erro Internal Server
       return res.status(400).json({
         result: 'error',
         message: message.error.code1.subcode99.message,
-        error: err.toString(),
-      });
+        error: err.toString()
+      })
     }
   }
-  
-  async create(req, res) {
-    try {
-      const body = req.body;
 
-      const address = await Address.insertAddress();
-  
+  async create (req, res) {
+    try {
+      const body = req.body
+
+      const address = await Address.insertAddress()
+
       const client = {
         id_endereco: address.insertId || null,
         nome: body.nome,
@@ -37,14 +36,13 @@ class ClientController {
         celular: body.celular || null,
         password: body.password
       }
-  
-      const response = await Client.insertClient(client);
-  
-      const sqlTreated = await SQL(response);
-  
+
+      const response = await Client.insertClient(client)
+
+      const sqlTreated = await SQL(response)
+
       //! Erro ao executar query no banco
       if (sqlTreated.result === 'error') {
-  
         //! Erro de cadastro duplicado
         if (sqlTreated.errno === 1062) {
           return res.json({
@@ -53,35 +51,33 @@ class ClientController {
           })
         }
       }
-  
+
       //* Query executada com sucesso
       if (sqlTreated.result === 'success') {
-  
-        //TODO Criar conta e vincular com cliente
+        // TODO Criar conta e vincular com cliente
         await Account.insertAccount(sqlTreated.sql[0].id_cliente)
-        
+
         return res.json({
           result: 'success',
           message: message.success.code1.subcode1.message
         })
       }
-  
-      return res.json(sqlTreated);
+
+      return res.json(sqlTreated)
     } catch (err) {
-  
       //! Erro Internal Server
       return res.status(400).json({
         result: 'error',
         message: message.error.code1.subcode99.message,
-        error: err.toString(),
-      });
+        error: err.toString()
+      })
     }
   }
-  
-  async update(req, res) {
+
+  async update (req, res) {
     try {
-      const body = req.body;
-  
+      const body = req.body
+
       const client = {
         nome: body.nome,
         cpf: body.cpf,
@@ -92,14 +88,13 @@ class ClientController {
         updated_at: new Date(),
         id_cliente: body.id_cliente
       }
-  
-      const response = await Client.updateClient(client);
-  
-      const sqlTreated = await SQL(response);
-  
+
+      const response = await Client.updateClient(client)
+
+      const sqlTreated = await SQL(response)
+
       //! Erro ao executar query no banco
       if (sqlTreated.result === 'error') {
-  
         //! Erro de cadastro duplicado
         if (sqlTreated.errno === 1062) {
           return res.json({
@@ -108,10 +103,9 @@ class ClientController {
           })
         }
       }
-  
+
       //* Query executada com sucesso
       if (sqlTreated.result === 'success') {
-  
         //* Nenhum cliente encontrado com os parâmetros passados
         if (sqlTreated.sql.affectedRows === 0) {
           return res.json({
@@ -119,41 +113,39 @@ class ClientController {
             message: message.error.code1.subcode2.message
           })
         }
-  
+
         return res.json({
           result: sqlTreated.result,
           message: message.success.code1.subcode2.message
         })
       }
-  
-      return res.json(sqlTreated);
+
+      return res.json(sqlTreated)
     } catch (err) {
-  
       //! Erro Internal Server
       return res.status(400).json({
         result: 'error',
         message: message.error.code1.subcode99.message,
-        error: err.toString(),
-      });
+        error: err.toString()
+      })
     }
   }
-  
-  async remove(req, res) {
+
+  async remove (req, res) {
     try {
-      const { id_cliente } = req.body;
-  
-      const response = await Client.deleteClient(id_cliente);
-  
-      const sqlTreated = await SQL(response);
-  
+      const { id_cliente } = req.body
+
+      const response = await Client.deleteClient(id_cliente)
+
+      const sqlTreated = await SQL(response)
+
       //! Erro ao executar query no banco
       if (sqlTreated.result === 'error') {
         return res.json(sqlTreated)
       }
-  
+
       //* Query executada com sucesso
       if (sqlTreated.result === 'success') {
-  
         //* Nenhum cliente encontrado com os parâmetros passados
         if (!response[0]) {
           return res.json({
@@ -162,23 +154,22 @@ class ClientController {
           })
         }
 
-        await Address.deleteAddress(response[0].id_endereco);
-      
+        await Address.deleteAddress(response[0].id_endereco)
+
         return res.json({
           result: 'success',
           message: message.success.code1.subcode3.message
-        });
+        })
       }
-  
-      return res.json(sqlTreated);
+
+      return res.json(sqlTreated)
     } catch (err) {
-  
       //! Internal Server Error
       return res.status(400).json({
         result: 'error',
         message: message.error.code1.subcode99.message,
-        error: err.toString(),
-      });
+        error: err.toString()
+      })
     }
   }
 }

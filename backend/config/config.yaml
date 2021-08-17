@@ -1,0 +1,43 @@
+######################################################################
+## Configurações da aplicação.
+######################################################################
+app:
+  API_NAME: 'api-chatbot'
+  API_SWINT_MAX_REQUEST_SIZE: '15mb'
+  API_AUTH_SECRET_KEY: '466f669d33e6b9a05942e1c5324c7834'
+  API_AUTH_EXPIRES_IN: '7d'
+
+######################################################################
+## Configurações do PostgreSQL.
+######################################################################
+
+mariadb:
+  API_BACKEND_MDB_HOST: 'localhost'
+  API_BACKEND_MDB_USER: 'root'
+  API_BACKEND_MDB_PASSWORD: '143010'
+  API_BACKEND_MDB_DATABASE: 'mm_store'
+  API_BACKEND_MDB_CONNECTION_LIMIT: 5
+
+######################################################################
+## Configurações YENV ref: https://www.npmjs.com/package/yenv
+######################################################################
+
+# Development config uses base config
+development:
+  # We can compose more than one at a time.
+  ~compose: [app, mariadb]
+  # Declare additional settings..
+  DEV_MODE: true
+
+# Development config uses base config
+test:
+  # We can compose more than one at a time.
+  ~compose: [app, mariadb]
+  # Declare additional settings..
+  DEV_MODE: true
+
+# Production config composes and overrides other sections
+production:
+  ~compose: development
+  DEV_MODE: false
+

@@ -80,7 +80,7 @@ const validationSchemas = {
         'string.base': 'tamanho deve ser do tipo string',
         'string.empty': 'tamanho não pode estar vazio',
         'string.min': 'tamanho deve maior que 0'
-      }),
+      })
   }),
   productUpdate: Joi.object().keys({
     id_produto: Joi
@@ -168,7 +168,7 @@ const validationSchemas = {
         'string.base': 'tamanho deve ser do tipo string',
         'string.empty': 'tamanho não pode estar vazio',
         'string.min': 'tamanho deve maior que 0'
-      }),
+      })
   }),
   productDelete: Joi.object().keys({
     id_produto: Joi
@@ -180,8 +180,8 @@ const validationSchemas = {
         'number.base': 'id_produto deve ser do tipo number',
         'number.empty': 'id_produto não pode estar vazio',
         'number.min': 'id_produto deve ser maior que 0'
-      }),
-  }),
+      })
+  })
 }
 
 export default validationSchemas

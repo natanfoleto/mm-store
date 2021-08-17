@@ -50,7 +50,7 @@ const validationSchemas = {
         'string.base': 'obs deve ser do tipo string',
         'string.empty': 'obs não pode estar vazio',
         'string.min': 'obs deve maior que 0'
-      }),
+      })
   }),
   providerUpdate: Joi.object().keys({
     id_fornecedor: Joi
@@ -108,7 +108,7 @@ const validationSchemas = {
         'string.base': 'obs deve ser do tipo string',
         'string.empty': 'obs não pode estar vazio',
         'string.min': 'obs deve maior que 0'
-      }),
+      })
   }),
   providerDelete: Joi.object().keys({
     id_fornecedor: Joi
@@ -120,8 +120,8 @@ const validationSchemas = {
         'number.base': 'id_fornecedor deve ser do tipo number',
         'number.empty': 'id_fornecedor não pode estar vazio',
         'number.min': 'id_fornecedor deve ser maior que 0'
-      }),
-  }),
+      })
+  })
 }
 
 export default validationSchemas

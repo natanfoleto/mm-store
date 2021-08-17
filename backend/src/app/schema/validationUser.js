@@ -10,7 +10,7 @@ const validationSchemas = {
       .allow('')
       .messages({
         'any.required': 'parâmetro key é necessário',
-        'string.base': 'key deve ser do tipo string',
+        'string.base': 'key deve ser do tipo string'
       })
   }),
   userCreate: Joi.object().keys({
@@ -55,7 +55,7 @@ const validationSchemas = {
         'string.empty': 'password não pode estar vazio',
         'string.min': 'password deve ter mais de 6 caracteres',
         'string.max': 'password deve ter menos de 32 caracteres'
-      }),
+      })
   }),
   userUpdate: Joi.object().keys({
     id_usuario: Joi
@@ -97,7 +97,7 @@ const validationSchemas = {
         'string.base': 'login deve ser do tipo string',
         'string.empty': 'login não pode estar vazio',
         'string.min': 'login deve ter mais de 5 caracteres'
-      }),
+      })
   }),
   userDelete: Joi.object().keys({
     id_usuario: Joi
@@ -109,8 +109,8 @@ const validationSchemas = {
         'number.base': 'id_usuario deve ser um número',
         'number.empty': 'id_usuario não pode estar vazio',
         'number.min': 'id_usuario deve ser maior que 0'
-      }),
-  }),
+      })
+  })
 }
 
 export default validationSchemas

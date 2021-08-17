@@ -10,7 +10,7 @@ const validationSchemas = {
       .allow('')
       .messages({
         'any.required': 'nome é necessário',
-        'string.base': 'nome deve ser do tipo string',
+        'string.base': 'nome deve ser do tipo string'
       })
   }),
   profileCreate: Joi.object().keys({
@@ -57,8 +57,8 @@ const validationSchemas = {
         'number.base': 'id_perfil deve ser um número',
         'number.empty': 'id_perfil não pode estar vazio',
         'number.min': 'id_perfil deve ser maior que 0'
-      }),
-  }),
+      })
+  })
 }
 
 export default validationSchemas

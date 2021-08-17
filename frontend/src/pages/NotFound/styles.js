@@ -14,6 +14,6 @@ export const Container = styled.div`
   }
 
   p {
-    font-size: 1.75px;
+    font-size: 1.75rem;
   }
 `;

@@ -10,7 +10,7 @@ const validationSchemas = {
       .allow('')
       .messages({
         'any.required': 'parâmetro key é necessário',
-        'string.base': 'key deve ser do tipo string',
+        'string.base': 'key deve ser do tipo string'
       })
   }),
   permissionsCreate: Joi.object().keys({
@@ -45,8 +45,8 @@ const validationSchemas = {
         'number.base': 'id_permissao_perfil deve ser um número',
         'number.empty': 'id_permissao_perfil não pode estar vazio',
         'number.min': 'id_permissao_perfil deve ser maior que 0'
-      }),
-  }),
+      })
+  })
 }
 
 export default validationSchemas

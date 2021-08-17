@@ -5,8 +5,8 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "default": "node src/server.js",
-    "watch": "pm2 start src/server.js --watch",
+    "node": "node src/server.js",
+    "dev": "pm2 start src/server.js --watch",
     "start": "pm2 start src/server.js",
     "max": "pm2 start src/server.js -i max",
     "reload": "pm2 reload src/server.js",
@@ -22,6 +22,14 @@
     "helmet": "^4.2.0",
     "joi": "^17.4.0",
     "jsonwebtoken": "^8.5.1",
-    "mariadb": "^2.5.2"
+    "mariadb": "^2.5.2",
+    "yenv": "^3.0.0"
+  },
+  "devDependencies": {
+    "eslint": "^7.32.0",
+    "eslint-config-standard": "^16.0.3",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.2.1"
   }
 }

@@ -1,32 +1,29 @@
 import { createPool } from 'mariadb'
 
-import mariadb from '../config/database/mariadb.js'
+import env from '../lib/configLoader.js'
 
 const pool = new createPool({
-  host: mariadb.host, 
-  user: mariadb.user, 
-  password: mariadb.password,
-  database: mariadb.database,
-  connectionLimit: mariadb.connectionLimit,
-});
-  
-async function executeQuery(sql, params = []) {
-  return new Promise(async (resolve, reject) => {
-    let conn;
+  host: env.API_BACKEND_MDB_HOST,
+  user: env.API_BACKEND_MDB_USER,
+  password: env.API_BACKEND_MDB_PASSWORD.toString(),
+  database: env.API_BACKEND_MDB_DATABASE,
+  connectionLimit: env.API_BACKEND_MDB_CONNECTION_LIMIT
+})
 
-    try {
-      conn = await pool.getConnection();
+async function executeQuery (sql, params = []) {
+  let conn
 
-      const res = await conn.query(sql, params);
-      
-      resolve(res);
-    } catch (err) {
-      
-      reject(err);
-    } finally {
-      if(conn) conn.release();
-    }
-  });
+  try {
+    conn = await pool.getConnection()
+
+    const res = await conn.query(sql, params)
+
+    return res
+  } catch (err) {
+    throw new Error(err)
+  } finally {
+    if (conn) conn.release()
+  }
 }
 
 export { executeQuery }

@@ -36,7 +36,7 @@ const validationSchemas = {
         'string.empty': 'email não pode estar vazio',
         'string.min': 'email deve maior que 0'
       }),
-    data_nasc: Joi 
+    data_nasc: Joi
       .date().format(['YYYY-MM-DD']).max('now').greater('1900-1-1').utc()
       .required()
       .messages({
@@ -62,7 +62,7 @@ const validationSchemas = {
         'string.base': 'password deve ser do tipo string',
         'string.empty': 'password não pode estar vazio',
         'string.min': 'password deve maior que 0'
-      }),
+      })
   }),
   clientUpdate: Joi.object().keys({
     id_cliente: Joi
@@ -106,7 +106,7 @@ const validationSchemas = {
         'string.empty': 'email não pode estar vazio',
         'string.min': 'email deve maior que 0'
       }),
-    data_nasc: Joi 
+    data_nasc: Joi
       .date().format(['YYYY-MM-DD']).max('now').greater('1900-1-1').utc()
       .required()
       .messages({
@@ -132,7 +132,7 @@ const validationSchemas = {
         'string.base': 'celular deve ser do tipo string',
         'string.empty': 'celular não pode estar vazio',
         'string.min': 'celular deve maior que 0'
-      }),
+      })
   }),
   clientDelete: Joi.object().keys({
     id_cliente: Joi
@@ -144,8 +144,8 @@ const validationSchemas = {
         'number.base': 'id_cliente deve ser do tipo number',
         'number.empty': 'id_cliente não pode estar vazio',
         'number.min': 'id_cliente deve ser maior que 0'
-      }),
-  }),
+      })
+  })
 }
 
 export default validationSchemas

@@ -2,27 +2,27 @@ export default {
   success: {
     code1: {
       subcode1: {
-        message: "Usuário cadastrado com sucesso"
+        message: 'Usuário cadastrado com sucesso'
       },
       subcode2: {
-        message: "Usuário atualizado com sucesso"
+        message: 'Usuário atualizado com sucesso'
       },
       subcode3: {
-        message: "Usuário deletado com sucesso"
+        message: 'Usuário deletado com sucesso'
       }
     }
   },
   error: {
     code1: {
       subcode1: {
-        message: "Já existe um usuário com este login"
+        message: 'Já existe um usuário com este login'
       },
       subcode2: {
-        message: "Nenhum usuário foi encontrado"
+        message: 'Nenhum usuário foi encontrado'
       },
       subcode99: {
-        message: "Internal Server Error"
-      },
+        message: 'Internal Server Error'
+      }
     }
-  },
+  }
 }

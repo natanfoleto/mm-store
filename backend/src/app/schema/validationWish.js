@@ -30,7 +30,7 @@ const validationSchemas = {
       .allow(null)
       .messages({
         'string.base': 'url_foto deve ser do tipo string',
-        'string.empty': 'url_foto não pode estar vazio',
+        'string.empty': 'url_foto não pode estar vazio'
       })
   }),
   wishUpdate: Joi.object().keys({
@@ -59,7 +59,7 @@ const validationSchemas = {
       .allow(null)
       .messages({
         'string.base': 'url_foto deve ser do tipo string',
-        'string.empty': 'url_foto não pode estar vazio',
+        'string.empty': 'url_foto não pode estar vazio'
       })
   }),
   wishDelete: Joi.object().keys({
@@ -72,8 +72,8 @@ const validationSchemas = {
         'number.base': 'id_pedido deve ser um número',
         'number.empty': 'id_pedido não pode estar vazio',
         'number.min': 'id_pedido deve ser maior que 0'
-      }),
-  }),
+      })
+  })
 }
 
 export default validationSchemas
