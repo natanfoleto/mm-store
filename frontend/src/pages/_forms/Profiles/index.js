@@ -192,7 +192,7 @@ export default function FormPerfis() {
                 background="#FFF3CD"
                 borderColor="#FFEEBA"
               > 
-                Ao salvar, você editar o perfil pra definir suas configurações de permissão. 
+                Ao salvar, você pode editar o perfil pra definir suas configurações de permissão. 
               </Alert>
             }
 

@@ -23,7 +23,12 @@ class SessionController {
         })
       }
 
+      const { sql } = sqlTreated
       const { id_usuario, id_perfil, nome, password_hash } = sqlTreated.sql[0]
+
+      const permissoes = sql.map((item) => {
+        return item.id_permissao
+      })
 
       //* Comparar senha passada com a senha atual do usuário
       if (!(await checkPassword(password, password_hash))) {
@@ -38,7 +43,8 @@ class SessionController {
         usuario: {
           id_usuario,
           id_perfil,
-          nome
+          nome,
+          permissoes
         },
         token: jwt.sign({ id_usuario }, env.API_AUTH_SECRET_KEY, {
           expiresIn: env.API_AUTH_EXPIRES_IN

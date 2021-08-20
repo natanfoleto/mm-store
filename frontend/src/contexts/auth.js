@@ -17,7 +17,7 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     async function loadStorageData() {
       const storageUser = await localStorage.getItem('@Auth:user');
-      const storageToken = await localStorage.getItem('@AUth:token');
+      const storageToken = await localStorage.getItem('@Auth:token');
 
       if (storageUser && storageToken) {
         api.defaults.headers.Authorization = `Bearer ${storageToken}`;
@@ -71,7 +71,7 @@ export const AuthProvider = ({ children }) => {
         setLoggingIn(false);
 
         localStorage.setItem('@Auth:user', JSON.stringify(usuario));
-        localStorage.setItem('@AUth:token', token);
+        localStorage.setItem('@Auth:token', token);
       }
     }
   }
