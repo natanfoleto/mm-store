@@ -2,7 +2,7 @@ import Permisson from '../models/permission.js'
 import pagingData from '../utils/pagingData.js'
 import message from '../messages/permission.js'
 
-import SQL from '../helper/SQL.js'
+import SQL from '../../lib/SQL.js'
 
 function isEmpty (str) {
   return (!str || str.length === 0)

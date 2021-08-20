@@ -1,7 +1,7 @@
 import Address from '../models/address.js'
 import message from '../messages/address.js'
 
-import SQL from '../helper/SQL.js'
+import SQL from '../../lib/SQL.js'
 
 class AddressController {
   async list (req, res) {

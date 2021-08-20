@@ -3,7 +3,7 @@ import Address from '../models/address.js'
 import Account from '../models/account.js'
 import message from '../messages/client.js'
 
-import SQL from '../helper/SQL.js'
+import SQL from '../../lib/SQL.js'
 
 class ClientController {
   async list (req, res) {

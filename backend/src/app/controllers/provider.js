@@ -3,7 +3,7 @@ import Address from '../models/address.js'
 import Product from '../models/product.js'
 import message from '../messages/provider.js'
 
-import SQL from '../helper/SQL.js'
+import SQL from '../../lib/SQL.js'
 
 class ProviderController {
   async list (req, res) {

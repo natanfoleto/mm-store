@@ -1,7 +1,7 @@
 import Product from '../models/product.js'
 import message from '../messages/product.js'
 
-import SQL from '../helper/SQL.js'
+import SQL from '../../lib/SQL.js'
 
 class ProductController {
   async list (req, res) {

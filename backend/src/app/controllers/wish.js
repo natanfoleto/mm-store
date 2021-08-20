@@ -1,7 +1,7 @@
 import Wish from '../models/wish.js'
 import message from '../messages/wish.js'
 
-import SQL from '../helper/SQL.js'
+import SQL from '../../lib/SQL.js'
 
 class WishController {
   async list (req, res) {

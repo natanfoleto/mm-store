@@ -2,7 +2,7 @@ import Category from '../models/category.js'
 import Product from '../models/product.js'
 import message from '../messages/category.js'
 
-import SQL from '../helper/SQL.js'
+import SQL from '../../lib/SQL.js'
 
 class CategoryController {
   async list (req, res) {

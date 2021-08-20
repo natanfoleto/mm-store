@@ -1,7 +1,7 @@
 import Permissons from '../models/permissions.js'
 import message from '../messages/permissions.js'
 
-import SQL from '../helper/SQL.js'
+import SQL from '../../lib/SQL.js'
 
 class PermissionsController {
   async search (req, res) {

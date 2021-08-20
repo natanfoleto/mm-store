@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken'
 import Session from '../models/session.js'
 import { checkPassword } from '../utils/bcrypt.js'
-import SQL from '../helper/SQL.js'
+import SQL from '../../lib/SQL.js'
 import message from '../messages/session.js'
 import env from '../../lib/configLoader.js'
 

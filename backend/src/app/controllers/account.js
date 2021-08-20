@@ -1,7 +1,7 @@
 import Account from '../models/account.js'
 import message from '../messages/account.js'
 
-import SQL from '../helper/SQL.js'
+import SQL from '../../lib/SQL.js'
 
 class AccountController {
   async list (req, res) {

@@ -3,7 +3,7 @@ import pagingData from '../utils/pagingData.js'
 import { encryptPassword } from '../utils/bcrypt.js'
 import message from '../messages/user.js'
 
-import SQL from '../helper/SQL.js'
+import SQL from '../../lib/SQL.js'
 
 class UserController {
   async search (req, res) {

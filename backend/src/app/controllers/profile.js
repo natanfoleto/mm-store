@@ -3,7 +3,7 @@ import User from '../models/user.js'
 import pagingData from '../utils/pagingData.js'
 import message from '../messages/profile.js'
 
-import SQL from '../helper/SQL.js'
+import SQL from '../../lib/SQL.js'
 
 class ProfileController {
   async search (req, res) {

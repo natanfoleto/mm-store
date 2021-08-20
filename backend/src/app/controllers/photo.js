@@ -1,7 +1,7 @@
 import Photo from '../models/photo.js'
 import message from '../messages/photo.js'
 
-import SQL from '../helper/SQL.js'
+import SQL from '../../lib/SQL.js'
 
 class PhotoController {
   async list (req, res) {
