@@ -20,11 +20,12 @@ class Provider {
 
   async insertProvider (object) {
     try {
-      const query = `INSERT INTO ${table} 
+      const query = `
+        INSERT INTO ${table} 
         (id_endereco, nome, cpf_cnpj, email, celular, obs) 
         VALUES (?, ?, ?, ?, ?, ?)
         RETURNING *
-      ;`
+      `
 
       const binds = Object.values(object)
 
@@ -41,7 +42,8 @@ class Provider {
 
   async updateProvider (object) {
     try {
-      const query = `UPDATE ${table} 
+      const query = `
+        UPDATE ${table} 
         SET nome = ?, cpf_cnpj = ?, email = ?, celular = ?, obs = ?, updated_at = ?
         WHERE id_fornecedor = ?
       `
@@ -61,7 +63,8 @@ class Provider {
 
   async deleteProvider (id) {
     try {
-      const query = `DELETE FROM ${table}  
+      const query = `
+        DELETE FROM ${table}  
         WHERE id_fornecedor = ?
         RETURNING id_endereco
       `

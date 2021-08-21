@@ -20,11 +20,12 @@ class Photo {
 
   async insertPhoto (object) {
     try {
-      const query = `INSERT INTO ${table} 
+      const query = `
+        INSERT INTO ${table} 
         (id_produto, nome, path, url) 
         VALUES (?, ?, ?, ?)
         RETURNING *
-      ;`
+      `
 
       const binds = Object.values(object)
 
@@ -41,7 +42,8 @@ class Photo {
 
   async deletePhoto (id) {
     try {
-      const query = `DELETE FROM ${table}  
+      const query = `
+        DELETE FROM ${table}  
         WHERE id_foto = ?
       `
 

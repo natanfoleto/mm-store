@@ -24,11 +24,12 @@ class Profile {
 
   async insertProfile (nome) {
     try {
-      const query = `INSERT INTO ${table} 
+      const query = `
+        INSERT INTO ${table} 
         (nome) 
         VALUES (?)
         RETURNING *
-      ;`
+      `
 
       const binds = nome
 
@@ -45,7 +46,8 @@ class Profile {
 
   async updateProfile (nome) {
     try {
-      const query = `UPDATE ${table} 
+      const query = `
+        UPDATE ${table} 
         SET nome = ?, updated_at = ? 
         WHERE id_perfil = ?
       `
@@ -65,7 +67,8 @@ class Profile {
 
   async deleteProfile (id) {
     try {
-      const query = `DELETE FROM ${table}  
+      const query = `
+        DELETE FROM ${table}  
         WHERE id_perfil = ?
       `
 

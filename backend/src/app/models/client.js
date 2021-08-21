@@ -20,11 +20,12 @@ class Client {
 
   async insertClient (object) {
     try {
-      const query = `INSERT INTO ${table} 
+      const query = `
+        INSERT INTO ${table} 
         (id_endereco, nome, cpf, email, data_nasc, celular, password_hash) 
         VALUES (?, ?, ?, ?, ?, ?, ?)
         RETURNING *
-      ;`
+      `
 
       const binds = Object.values(object)
 
@@ -41,7 +42,8 @@ class Client {
 
   async updateClient (object) {
     try {
-      const query = `UPDATE ${table} 
+      const query = `
+        UPDATE ${table} 
         SET nome = ?, cpf = ?, email = ?, data_nasc = ?, celular = ?, password_hash = ?, updated_at = ?
         WHERE id_cliente = ?
       `
@@ -61,7 +63,8 @@ class Client {
 
   async deleteClient (id) {
     try {
-      const query = `DELETE FROM ${table}  
+      const query = `
+        DELETE FROM ${table}  
         WHERE id_cliente = ?
         RETURNING id_endereco
       `

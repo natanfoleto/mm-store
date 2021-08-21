@@ -5,7 +5,8 @@ const table = 'contas'
 class Account {
   async listAccount () {
     try {
-      const query = `SELECT ${table}.*, clientes.nome, clientes.cpf
+      const query = `
+        SELECT ${table}.*, clientes.nome, clientes.cpf
         FROM ${table}
         INNER JOIN clientes ON (clientes.id_cliente = ${table}.id_cliente)
       `
@@ -23,11 +24,12 @@ class Account {
 
   async insertAccount (id_cliente) {
     try {
-      const query = `INSERT INTO ${table} 
+      const query = `
+        INSERT INTO ${table} 
         (id_cliente) 
         VALUES (?)
         RETURNING *
-      ;`
+      `
 
       const binds = id_cliente
 
@@ -44,7 +46,8 @@ class Account {
 
   async updateAccount (object) {
     try {
-      const query = `UPDATE ${table} 
+      const query = `
+        UPDATE ${table} 
         SET saldo = ?
         WHERE id_conta = ?
       `

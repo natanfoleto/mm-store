@@ -20,11 +20,12 @@ class Wish {
 
   async insertWish (object) {
     try {
-      const query = `INSERT INTO ${table} 
+      const query = `
+        INSERT INTO ${table} 
         (id_cliente, descricao, url_foto) 
         VALUES (?, ?, ?)
         RETURNING *
-      ;`
+      `
 
       const binds = Object.values(object)
 
@@ -41,7 +42,8 @@ class Wish {
 
   async updateWish (object) {
     try {
-      const query = `UPDATE ${table} 
+      const query = `
+        UPDATE ${table} 
         SET descricao = ?, url_foto = ?
         WHERE id_pedido = ?
       `
@@ -61,7 +63,8 @@ class Wish {
 
   async deleteWish (id) {
     try {
-      const query = `DELETE FROM ${table}  
+      const query = `
+        DELETE FROM ${table}  
         WHERE id_pedido = ?
       `
 
