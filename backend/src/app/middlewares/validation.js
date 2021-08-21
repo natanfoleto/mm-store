@@ -6,7 +6,10 @@ export default function validation (schema, property) {
     if (valid) {
       next()
     } else {
-      res.status(206).json(validate)
+      res.status(422).json({
+        result: 'warn',
+        message: validate.error.details[0].message
+      })
     }
   }
 }

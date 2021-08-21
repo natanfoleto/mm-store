@@ -3,6 +3,8 @@ import { Form, Input, Select } from '@rocketseat/unform';
 
 import { useHistory } from 'react-router-dom';
 
+import { typesPermission, contextsPermisssion } from '../../../services/dataLocal'
+
 import Layout from '../../_layouts/form';
 
 import usePermission from '../../../hooks/usePermission';
@@ -19,17 +21,6 @@ export default function FormPermissions() {
   const [operation, setOperation] = useState();
   const [currentType, setCurrentType] = useState();
   const [currentContext, setCurrentContext] = useState()
-
-  const types = [
-    { id: 'Leitura', title: 'Leitura' },
-    { id: 'Escrita', title: 'Escrita' }
-  ]
-
-  const contexts = [
-    { id: 'Permissions', title: 'Permissions' },
-    { id: 'Profiles', title: 'Profiles' },
-    { id: 'Users', title: 'Users' },
-  ]
   
   useEffect(() => {
     setPermission(history.location.state);
@@ -114,7 +105,7 @@ export default function FormPermissions() {
               <Select 
                 name="tipo" 
                 value={currentType}
-                options={types} 
+                options={typesPermission} 
                 onChange={handleSelectType}
                 required
               />
@@ -126,7 +117,7 @@ export default function FormPermissions() {
               <Select 
                 name="contexto" 
                 value={currentContext}
-                options={contexts} 
+                options={contextsPermisssion} 
                 onChange={handleSelectContext}
                 required
               />

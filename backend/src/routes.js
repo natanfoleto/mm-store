@@ -1,6 +1,7 @@
 import { Router } from 'express'
 
-// import auth from './app/middlewares/auth.js'
+import auth from './app/middlewares/auth.js'
+import { is } from './app/middlewares/permission.js'
 import validation from './app/middlewares/validation.js'
 
 import validationSession from './app/schema/validationSession.js'
@@ -34,17 +35,17 @@ const routes = new Router()
 
 routes.route('/sessions').post(validation(validationSession.sessionCreate, 'body'), SessionController.create)
 
-// routes.use(auth);
+routes.use(auth)
 
-routes.route('/users/search/:page/:limit').post(validation(validationUser.userSearch, 'body'), UserController.search)
 routes.route('/users').post(validation(validationUser.userCreate, 'body'), UserController.create)
 routes.route('/users').put(validation(validationUser.userUpdate, 'body'), UserController.update)
 routes.route('/users').delete(validation(validationUser.userDelete, 'body'), UserController.remove)
+routes.route('/users/search/:page/:limit').post(validation(validationUser.userSearch, 'body'), UserController.search)
 
-routes.route('/profiles/search/:page/:limit').post(validation(validationProfile.profileSearch, 'body'), ProfileController.search)
 routes.route('/profiles').post(validation(validationProfile.profileCreate, 'body'), ProfileController.create)
 routes.route('/profiles').put(validation(validationProfile.profileUpdate, 'body'), ProfileController.update)
 routes.route('/profiles').delete(validation(validationProfile.profileDelete, 'body'), ProfileController.remove)
+routes.route('/profiles/search/:page/:limit').post(validation(validationProfile.profileSearch, 'body'), ProfileController.search)
 
 routes.route('/products').get(ProductController.list)
 routes.route('/products').post(validation(validationProduct.productCreate, 'body'), ProductController.create)
@@ -80,15 +81,14 @@ routes.route('/wishs').post(validation(validationWish.wishCreate, 'body'), WishC
 routes.route('/wishs').put(validation(validationWish.wishUpdate, 'body'), WishController.update)
 routes.route('/wishs').delete(validation(validationWish.wishDelete, 'body'), WishController.remove)
 
-routes.route('/permission/searchforprofile').post(validation(validationPermission.permissionSearchForProfile, 'body'), PermissionController.searchForProfile)
-routes.route('/permission/search/:page/:limit').post(validation(validationPermission.permissionSearch, 'body'), PermissionController.search)
-routes.route('/permission/searchprofile').post(validation(validationPermission.permissionSearchProfile, 'body'), PermissionController.searchProfile)
-routes.route('/permission').post(validation(validationPermission.permissionCreate, 'body'), PermissionController.create)
-routes.route('/permission').put(validation(validationPermission.permissionUpdate, 'body'), PermissionController.update)
-routes.route('/permission').delete(validation(validationPermission.permissionDelete, 'body'), PermissionController.remove)
+routes.route('/permission/search/:page/:limit').post(is(['VIEW_PERMISSION']), validation(validationPermission.permissionSearch, 'body'), PermissionController.search)
+routes.route('/permission').post(is(['CREATE_PERMISSION']), validation(validationPermission.permissionCreate, 'body'), PermissionController.create)
+routes.route('/permission').put(is(['EDIT_PERMISSION']), validation(validationPermission.permissionUpdate, 'body'), PermissionController.update)
+routes.route('/permission').delete(is(['DELETE_PERMISSION']), validation(validationPermission.permissionDelete, 'body'), PermissionController.remove)
+routes.route('/permission/search/forprofile').post(validation(validationPermission.permissionSearchForProfile, 'body'), PermissionController.searchForProfile)
 
+routes.route('/permissions').post(is(['CREATE_PERMISSIONS']), validation(validationPermissions.permissionsCreate, 'body'), PermissionsController.create)
+routes.route('/permissions').delete(is(['DELETE_PERMISSIONS']), validation(validationPermissions.permissionsDelete, 'body'), PermissionsController.remove)
 routes.route('/permissions/search/:perfil').get(validation(validationPermissions.permissionsSearch, 'body'), PermissionsController.search)
-routes.route('/permissions').post(validation(validationPermissions.permissionsCreate, 'body'), PermissionsController.create)
-routes.route('/permissions').delete(validation(validationPermissions.permissionsDelete, 'body'), PermissionsController.remove)
 
 export default routes

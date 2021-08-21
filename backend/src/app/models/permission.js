@@ -67,26 +67,6 @@ class Permission {
     }
   }
 
-  async searchProfilePermissions (id_perfil) {
-    try {
-      const query = `
-        SELECT permissoes.* FROM ${table}
-        LEFT JOIN permissoes_perfis 
-        ON (permissoes_perfis.id_permissao = permissoes.id_permissao AND permissoes_perfis.id_perfil = ${id_perfil})
-        WHERE permissoes_perfis.id_permissao_perfil IS NOT NULL
-      `
-
-      const result = await executeQuery(query)
-
-      return result
-    } catch (err) {
-      console.log('Exception from permissions.js/listPermissions:')
-      console.log(err)
-
-      return err
-    }
-  }
-
   async insertPermission (object) {
     try {
       const query = `

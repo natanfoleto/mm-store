@@ -66,6 +66,28 @@ class Permissions {
       return err
     }
   }
+
+  async userFindPermissions (id_usuario) {
+    try {
+      const query = `
+        SELECT pm.* FROM usuarios us
+        INNER JOIN permissoes_perfis pp ON (us.id_perfil = pp.id_perfil)
+        INNER JOIN permissoes pm ON (pp.id_permissao = pm.id_permissao)
+        WHERE id_usuario = ?
+      `
+
+      const binds = id_usuario
+
+      const result = await executeQuery(query, binds)
+
+      return result
+    } catch (err) {
+      console.log('Exception from session.js/userFindPermissions:')
+      console.log(err)
+
+      return err
+    }
+  }
 }
 
 export default new Permissions()

@@ -4,9 +4,7 @@ class Session {
   async findUser (login) {
     try {
       const query = `
-        SELECT us.*, pm.* FROM usuarios us
-        INNER JOIN permissoes_perfis pp ON (us.id_perfil = pp.id_perfil)
-        INNER JOIN permissoes pm ON (pp.id_permissao = pm.id_permissao)
+        SELECT * FROM usuarios
         WHERE login = ?
       `
 

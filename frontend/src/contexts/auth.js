@@ -33,35 +33,19 @@ export const AuthProvider = ({ children }) => {
   async function signIn(login, password) {
     setLoggingIn(true);
 
-    let res;
-
     try {
-      res = await api.post('/sessions', { login, password });
+      const res = await api.post('/sessions', { login, password });
 
-      if (res.status === 206) {
-        Toast('default', res.data.error.details[0].message);
-
-        return;
-      }
-    } catch (err) {
-      Toast('error', err.toString());
-
-      setLoggingIn(false);
-
-      return;
-    }
+      const { result } = res.data;
     
-    const { result } = res.data;
-
-    if (res.status === 200 ) {
       if (result === 'error') {
         const { message } = res.data;
     
-        Toast('error', message);
+        Toast(result, message);
 
         setLoggingIn(false);
       }
-  
+
       if (result === 'success') {
         const { usuario, token } = res.data;
     
@@ -73,6 +57,20 @@ export const AuthProvider = ({ children }) => {
         localStorage.setItem('@Auth:user', JSON.stringify(usuario));
         localStorage.setItem('@Auth:token', token);
       }
+    } catch (err) {
+      const { data, status } = err.response
+
+      setLoggingIn(false);
+
+      if (status === 422) {
+        Toast(data.result, data.message);
+
+        return;
+      }
+      
+      Toast('error', err.toString());
+
+      return;
     }
   }
 

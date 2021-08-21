@@ -1,6 +1,7 @@
 import { useEffect, useState, useCallback } from 'react'; 
 import { Form, Input, Select } from '@rocketseat/unform';
 import api from '../../../services/api';
+import { typesProfile, contextsProfile } from '../../../services/dataLocal'
 import Toast from '../../../utils/toastify';
 
 import { useHistory } from 'react-router-dom';
@@ -32,50 +33,34 @@ export default function FormPerfis() {
   const [context, setContext] = useState('');
   const [refresh, setRefresh] = useState(true);
 
-  const types = [
-    { id: '', title: 'Todos'},
-    { id: 'Leitura', title: 'Leitura'},
-    { id: 'Escrita', title: 'Escrita'}
-  ]
-
-  const contexts = [
-    { id: '', title: 'Todos'},
-    { id: 'Perfis', title: 'Perfis'},
-    { id: 'Permissions', title: 'Permissions'}
-  ]
-
   useEffect(() => {
     async function searchPermissionsProfiles() {
       try {
-        const { data, status } = await api.get(`/permissions/search/${history.location.state.id_perfil}`);
-
-        if (status === 206) {
-          Toast('warn', data.error.details[0].message);
-  
-          return false;
-        }
+        const { data } = await api.get(`/permissions/search/${history.location.state.id_perfil}`);
 
         setCurrentPermissions(data);
       } catch (err) {
+        const { data, status } = err.response
+
+        if (status === 403 || status === 422) {
+          Toast(data.result, data.message);
+  
+          return;
+        }
+        
         Toast('error', err.toString());
   
-        return false;
+        return;
       }
     }
 
     async function searchPermissions() {
       try {
-        const { data, status } = await api.post('/permission/searchforprofile', {
+        const { data } = await api.post('/permission/search/forprofile', {
           tipo: type,
           contexto: context,
           id_perfil: history.location.state.id_perfil
         });
-
-        if (status === 206) {
-          Toast('warn', data.error.details[0].message);
-  
-          return false;
-        }
 
         let newData = [];
     
@@ -87,9 +72,17 @@ export default function FormPerfis() {
   
         setAllPermissions(newData);
       } catch (err) {
+        const { data, status } = err.response
+
+        if (status === 403 || status === 422) {
+          Toast(data.result, data.message);
+  
+          return;
+        }
+        
         Toast('error', err.toString());
   
-        return false;
+        return;
       }
     }
 
@@ -240,14 +233,14 @@ export default function FormPerfis() {
 
                     <Select 
                       name="types" 
-                      options={types}
+                      options={typesProfile}
                       onChange={handleType} 
                       className="pd-type"
                     />
 
                     <Select 
                       name="contexts" 
-                      options={contexts}
+                      options={contextsProfile}
                       onChange={handleContext} 
                       className="pd-context"
                     />

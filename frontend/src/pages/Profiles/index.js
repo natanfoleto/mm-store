@@ -2,6 +2,7 @@ import { useHistory } from 'react-router-dom';
 import { Select } from '@rocketseat/unform';
 import { useEffect, useState, useCallback } from 'react';
 import api from '../../services/api';
+import { rows } from '../../services/dataLocal'
 import Toast from '../../utils/toastify';
 
 import Layout from '../_layouts/default';
@@ -25,42 +26,33 @@ export default function Profiles() {
 
   const [search, setSearch] = useState('');
 
-  const rows = [
-    { id: '10', title: '10 linhas' },
-    { id: '20', title: '20 linhas' },
-    { id: '30', title: '30 linhas' },
-    { id: '50', title: '50 linhas' },
-    { id: '100', title: '100 linhas' },
-    { id: '0', title: 'Todas linhas' },
-  ]
-
   useEffect(() => {
     async function searchProfile() {
       try {
-        const { status, data } = await api.post(`/profiles/search/${currentPage}/${limit}`, { 
+        const { data } = await api.post(`/profiles/search/${currentPage}/${limit}`, { 
           key: search 
         });
-  
-        if (status === 206) {
-          Toast('warn', data.error.details[0].message);
-  
-          return false;
-        }
 
-        if (status === 200) {
-          setData(data.data);
-          setTotalRecords(data.total);
+        setData(data.data);
+        setTotalRecords(data.total);
 
-          setTotalPages(
-            limit === 0 
-            ? Math.ceil(data.total / limit)
-            : (data.total / data.total)
-          );
-        }
+        setTotalPages(
+          limit === 0 
+          ? Math.ceil(data.total / limit)
+          : (data.total / data.total)
+        );
       } catch (err) {
+        const { data, status } = err.response
+
+        if (status === 403 || status === 422) {
+          Toast(data.result, data.message);
+  
+          return;
+        }
+        
         Toast('error', err.toString());
   
-        return false;
+        return;
       }
     }
 

@@ -16,12 +16,6 @@ export const usePermission = () => {
         contexto: data.contexto
       });
 
-      if (res.status === 206) {
-        Toast('warn', res.data.error.details[0].message);
-
-        return false;
-      }
-
       const { result, message } = res.data;
       
       Toast(result, message);
@@ -30,22 +24,24 @@ export const usePermission = () => {
         history.goBack()
      
     } catch (err) {
-      Toast('error', err.toString());
+        const { data, status } = err.response
 
-      return false;
-    }
+        if (status === 403 || status === 422) {
+          Toast(data.result, data.message);
+  
+          return;
+        }
+        
+        Toast('error', err.toString());
+  
+        return;
+      }
   }
 
   async function updatePermission(data) {
     try {
       const res = await api.put('/permission', data);
 
-      if (res.status === 206) {
-        Toast('warn', res.data.error.details[0].message);
-
-        return false;
-      }
-
       const { result, message } = res.data;
       
       Toast(result, message);
@@ -54,21 +50,23 @@ export const usePermission = () => {
         history.goBack()
      
     } catch (err) {
+      const { data, status } = err.response
+
+      if (status === 403 || status === 422) {
+        Toast(data.result, data.message);
+
+        return;
+      }
+      
       Toast('error', err.toString());
 
-      return false;
+      return;
     }
   }
 
   async function deletePermission(data) {
     try {
       const res = await api.delete('/permission', data);
-
-      if (res.status === 206) {
-        Toast('warn', res.data.error.details[0].message);
-
-        return false;
-      }
 
       const { result, message } = res.data;
       
@@ -78,10 +76,17 @@ export const usePermission = () => {
         history.go(0)
 
     } catch (err) {
+      const { data, status } = err.response
+
+      if (status === 403 || status === 422) {
+        Toast(data.result, data.message);
+
+        return;
+      }
+      
       Toast('error', err.toString());
 
-
-      return false;
+      return;
     }
   }
 

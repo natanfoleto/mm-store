@@ -13,12 +13,6 @@ export const useProfile = () => {
         nome: data.nome
       });
 
-      if (res.status === 206) {
-        Toast('warn', res.data.error.details[0].message);
-
-        return false;
-      }
-
       const { result, message } = res.data;
       
       Toast(result, message);
@@ -27,9 +21,17 @@ export const useProfile = () => {
         history.goBack()
      
     } catch (err) {
+      const { data, status } = err.response
+
+      if (status === 403 || status === 422) {
+        Toast(data.result, data.message);
+
+        return;
+      }
+      
       Toast('error', err.toString());
 
-      return false;
+      return;
     }
   }
 
@@ -37,12 +39,6 @@ export const useProfile = () => {
     try {
       const res = await api.put('/profiles', data);
 
-      if (res.status === 206) {
-        Toast('warn', res.data.error.details[0].message);
-
-        return false;
-      }
-
       const { result, message } = res.data;
       
       Toast(result, message);
@@ -51,21 +47,23 @@ export const useProfile = () => {
         history.goBack()
      
     } catch (err) {
+      const { data, status } = err.response
+
+      if (status === 403 || status === 422) {
+        Toast(data.result, data.message);
+
+        return;
+      }
+      
       Toast('error', err.toString());
 
-      return false;
+      return;
     }
   }
 
   async function deleteProfile(data) {
     try {
       const res = await api.delete('/profiles', data);
-
-      if (res.status === 206) {
-        Toast('warn', res.data.error.details[0].message);
-
-        return false;
-      }
 
       const { result, message } = res.data;
       
@@ -75,10 +73,17 @@ export const useProfile = () => {
         history.go(0)
 
     } catch (err) {
+      const { data, status } = err.response
+
+      if (status === 403 || status === 422) {
+        Toast(data.result, data.message);
+
+        return;
+      }
+      
       Toast('error', err.toString());
 
-
-      return false;
+      return;
     }
   }
 

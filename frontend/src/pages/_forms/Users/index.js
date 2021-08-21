@@ -37,9 +37,17 @@ export default function FormUsuarios() {
   
         setProfiles(newData);
       } catch (err) {
+        const { data, status } = err.response
+
+        if (status === 403 || status === 422) {
+          Toast(data.result, data.message);
+  
+          return;
+        }
+        
         Toast('error', err.toString());
   
-        return false;
+        return;
       }
     }
 

@@ -10,20 +10,22 @@ export const usePermissions = () => {
         id_permissao: data.id_permissao
       });
 
-      if (res.status === 206) {
-        Toast('warn', res.data.error.details[0].message);
-
-        return false;
-      }
-
       const { result, message } = res.data;
       
       Toast(result, message);
      
     } catch (err) {
+      const { data, status } = err.response
+
+      if (status === 403 || status === 422) {
+        Toast(data.result, data.message);
+
+        return;
+      }
+      
       Toast('error', err.toString());
 
-      return false;
+      return;
     }
   }
 
@@ -31,20 +33,22 @@ export const usePermissions = () => {
     try {
       const res = await api.delete('/permissions', data);
 
-      if (res.status === 206) {
-        Toast('warn', res.data.error.details[0].message);
-
-        return false;
-      }
-
       const { result, message } = res.data;
       
       Toast(result, message);
 
     } catch (err) {
+      const { data, status } = err.response
+
+      if (status === 403 || status === 422) {
+        Toast(data.result, data.message);
+
+        return;
+      }
+      
       Toast('error', err.toString());
 
-      return false;
+      return;
     }
   }
 

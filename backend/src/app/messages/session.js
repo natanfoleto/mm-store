@@ -8,10 +8,7 @@ export default {
         message: 'Token inválido'
       },
       subcode3: {
-        message: 'Nenhum usuário foi encontrado!'
-      },
-      subcode4: {
-        message: 'A senha está incorreta!'
+        message: 'Usuário ou senha, incorretos!'
       },
       subcode99: {
         message: 'Internal Server Error'
