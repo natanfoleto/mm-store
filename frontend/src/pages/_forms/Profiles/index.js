@@ -41,7 +41,7 @@ export default function FormPerfis() {
   const contexts = [
     { id: '', title: 'Todos'},
     { id: 'Perfis', title: 'Perfis'},
-    { id: 'Configurações', title: 'Configurações'}
+    { id: 'Permissions', title: 'Permissions'}
   ]
 
   useEffect(() => {
