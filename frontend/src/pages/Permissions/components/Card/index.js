@@ -26,6 +26,13 @@ function ComponentPermission({ item }) {
       <Data onClick={() => { handleEdit(item) }}>
         <Data.Id> {item.id_permissao} </Data.Id>
         <Data.DivColumn> 
+          <h1>Nome</h1>
+          <p>
+            {item.nome}  
+          </p>
+        </Data.DivColumn>
+
+        <Data.DivColumn> 
           <h1>Descrição</h1>
           <p>
             {item.descricao}  

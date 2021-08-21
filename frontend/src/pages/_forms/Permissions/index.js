@@ -21,14 +21,14 @@ export default function FormPermissions() {
   const [currentContext, setCurrentContext] = useState()
 
   const types = [
-    { id: 'T', title: 'Tela' },
-    { id: 'F', title: 'Função' }
+    { id: 'Leitura', title: 'Leitura' },
+    { id: 'Escrita', title: 'Escrita' }
   ]
 
   const contexts = [
-    { id: 'Permissões', title: 'Permissões' },
-    { id: 'Perfis', title: 'Perfis' },
-    { id: 'Usuários', title: 'Usuários' },
+    { id: 'Permissions', title: 'Permissions' },
+    { id: 'Profiles', title: 'Profiles' },
+    { id: 'Users', title: 'Users' },
   ]
   
   useEffect(() => {
@@ -84,6 +84,18 @@ export default function FormPermissions() {
               hidden={true}
             />
             
+            <IGroup>
+              <IGroup.Label>Nome</IGroup.Label>
+
+              <Input 
+                type="text" 
+                name="nome"
+                maxLength={50}
+                onChange={() => { setButtonAvailable(false) }}
+                required
+              />
+            </IGroup>
+
             <IGroup>
               <IGroup.Label>Descrição</IGroup.Label>
 

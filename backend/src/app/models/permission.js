@@ -25,32 +25,34 @@ class Permission {
     try {
       let query
 
+      console.log(params)
+
       if ('tipo' in params && 'contexto' in params) {
         query = `
           SELECT permissoes.* FROM ${table}
           LEFT JOIN permissoes_perfis 
           ON (permissoes_perfis.id_permissao = permissoes.id_permissao AND permissoes_perfis.id_perfil = ${params.id_perfil})
-          WHERE permissoes_perfis.id_permissao_perfil IS NULL AND permissoes.tipo = '${params.tipo}' AND permissoes.contexto = '${params.contexto}'
+          WHERE permissoes_perfis.id_perfil IS NULL AND permissoes.tipo = '${params.tipo}' AND permissoes.contexto = '${params.contexto}'
         `
       } else if ('tipo' in params) {
         query = `
           SELECT permissoes.* FROM ${table}
           LEFT JOIN permissoes_perfis 
           ON (permissoes_perfis.id_permissao = permissoes.id_permissao AND permissoes_perfis.id_perfil = ${params.id_perfil})
-          WHERE permissoes_perfis.id_permissao_perfil IS NULL AND permissoes.tipo = '${params.tipo}'
+          WHERE permissoes_perfis.id_perfil IS NULL AND permissoes.tipo = '${params.tipo}'
         `
       } else if ('contexto' in params) {
         query = `
           SELECT permissoes.* FROM ${table}
           LEFT JOIN permissoes_perfis 
           ON (permissoes_perfis.id_permissao = permissoes.id_permissao AND permissoes_perfis.id_perfil = ${params.id_perfil})
-          WHERE permissoes_perfis.id_permissao_perfil IS NULL AND permissoes.contexto = '${params.contexto}'
+          WHERE permissoes_perfis.id_perfil IS NULL AND permissoes.contexto = '${params.contexto}'
         `
       } else {
         query = `
           SELECT permissoes.* FROM ${table}
           LEFT JOIN permissoes_perfis ON (permissoes_perfis.id_permissao = permissoes.id_permissao AND permissoes_perfis.id_perfil = ${params.id_perfil})
-          WHERE permissoes_perfis.id_permissao_perfil IS NULL
+          WHERE permissoes_perfis.id_perfil IS NULL
         `
       }
 
@@ -89,8 +91,8 @@ class Permission {
     try {
       const query = `
         INSERT INTO ${table} 
-        (tipo, descricao, contexto) 
-        VALUES (?, ?, ?)
+        (nome, tipo, descricao, contexto) 
+        VALUES (?, ?, ?, ?)
         RETURNING *
       `
 
@@ -111,7 +113,7 @@ class Permission {
     try {
       const query = `
         UPDATE ${table} 
-        SET tipo = ?, descricao = ?, contexto = ?
+        SET nome = ?, tipo = ?, descricao = ?, contexto = ?
         WHERE id_permissao = ?
       `
 

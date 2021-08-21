@@ -30,27 +30,21 @@ class PermissionController {
 
   async searchForProfile (req, res) {
     try {
-      let params, response
+      let params
 
       const { tipo, contexto, id_perfil } = req.body
 
       if (!isEmpty(tipo) && !isEmpty(contexto)) {
         params = { tipo: tipo, contexto: contexto, id_perfil: id_perfil }
-
-        response = await Permisson.searchPermissionForProfile(params)
       } else if (!isEmpty(tipo) && isEmpty(contexto)) {
         params = { tipo: tipo, id_perfil: id_perfil }
-
-        response = await Permisson.searchPermissionForProfile(params)
       } else if (isEmpty(tipo) && !isEmpty(contexto)) {
         params = { contexto: contexto, id_perfil: id_perfil }
-
-        response = await Permisson.searchPermissionForProfile(params)
       } else {
         params = { id_perfil: id_perfil }
-
-        response = await Permisson.searchPermissionForProfile(params)
       }
+
+      const response = await Permisson.searchPermissionForProfile(params)
 
       return res.json(response)
     } catch (err) {
@@ -85,6 +79,7 @@ class PermissionController {
       const body = req.body
 
       const permission = {
+        nome: body.nome,
         tipo: body.tipo,
         descricao: body.descricao,
         contexto: body.contexto
@@ -129,6 +124,7 @@ class PermissionController {
       const body = req.body
 
       const permission = {
+        nome: body.nome,
         tipo: body.tipo,
         descricao: body.descricao,
         contexto: body.contexto || null,

@@ -34,8 +34,8 @@ export default function FormPerfis() {
 
   const types = [
     { id: '', title: 'Todos'},
-    { id: 'T', title: 'Tela'},
-    { id: 'F', title: 'Função'}
+    { id: 'Leitura', title: 'Leitura'},
+    { id: 'Escrita', title: 'Escrita'}
   ]
 
   const contexts = [

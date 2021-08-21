@@ -54,10 +54,20 @@ const validationSchemas = {
       })
   }),
   permissionCreate: Joi.object().keys({
+    nome: Joi
+      .string()
+      .required()
+      .max(50)
+      .messages({
+        'any.required': 'nome é necessário',
+        'string.base': 'nome deve ser do tipo string',
+        'string.empty': 'nome não pode estar vazio',
+        'string.max': 'nome deve ter no máximo 1 caracter'
+      }),
     tipo: Joi
       .string()
       .required()
-      .max(1)
+      .max(25)
       .messages({
         'any.required': 'tipo é necessário',
         'string.base': 'tipo deve ser do tipo string',
@@ -92,10 +102,20 @@ const validationSchemas = {
         'number.empty': 'id_permissao não pode estar vazio',
         'number.min': 'id_permissao deve ser maior que 0'
       }),
+    nome: Joi
+      .string()
+      .required()
+      .max(50)
+      .messages({
+        'any.required': 'nome é necessário',
+        'string.base': 'nome deve ser do tipo string',
+        'string.empty': 'nome não pode estar vazio',
+        'string.max': 'nome deve ter no máximo 1 caracter'
+      }),
     tipo: Joi
       .string()
       .required()
-      .max(1)
+      .max(25)
       .messages({
         'any.required': 'tipo é necessário',
         'string.base': 'tipo deve ser do tipo string',

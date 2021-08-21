@@ -20,7 +20,7 @@ function Header() {
     <Container>
       <Content>
         <nav>
-          <img src={Logo} alt="GoRecicle" />
+          <img src={Logo} alt="MMStore" />
           <Link to="/"> Dashboard </Link>
           <Link to=""> Vendas </Link>
           <Link to=""> Clientes </Link>
