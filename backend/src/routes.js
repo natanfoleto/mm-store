@@ -37,15 +37,15 @@ routes.route('/sessions').post(validation(validationSession.sessionCreate, 'body
 
 routes.use(auth)
 
-routes.route('/users').post(validation(validationUser.userCreate, 'body'), UserController.create)
-routes.route('/users').put(validation(validationUser.userUpdate, 'body'), UserController.update)
-routes.route('/users').delete(validation(validationUser.userDelete, 'body'), UserController.remove)
-routes.route('/users/search/:page/:limit').post(validation(validationUser.userSearch, 'body'), UserController.search)
+routes.route('/users').post(is(['CREATE_USERS']), validation(validationUser.userCreate, 'body'), UserController.create)
+routes.route('/users').put(is(['EDIT_USERS']), validation(validationUser.userUpdate, 'body'), UserController.update)
+routes.route('/users').delete(is(['DELETE_USERS']), validation(validationUser.userDelete, 'body'), UserController.remove)
+routes.route('/users/search/:page/:limit').post(is(['VIEW_USERS']), validation(validationUser.userSearch, 'body'), UserController.search)
 
-routes.route('/profiles').post(validation(validationProfile.profileCreate, 'body'), ProfileController.create)
-routes.route('/profiles').put(validation(validationProfile.profileUpdate, 'body'), ProfileController.update)
-routes.route('/profiles').delete(validation(validationProfile.profileDelete, 'body'), ProfileController.remove)
-routes.route('/profiles/search/:page/:limit').post(validation(validationProfile.profileSearch, 'body'), ProfileController.search)
+routes.route('/profiles').post(is(['CREATE_PROFILES']), validation(validationProfile.profileCreate, 'body'), ProfileController.create)
+routes.route('/profiles').put(is(['EDIT_PROFILES']), validation(validationProfile.profileUpdate, 'body'), ProfileController.update)
+routes.route('/profiles').delete(is(['DELETE_PROFILES']), validation(validationProfile.profileDelete, 'body'), ProfileController.remove)
+routes.route('/profiles/search/:page/:limit').post(is(['VIEW_PROFILES']), validation(validationProfile.profileSearch, 'body'), ProfileController.search)
 
 routes.route('/products').get(ProductController.list)
 routes.route('/products').post(validation(validationProduct.productCreate, 'body'), ProductController.create)

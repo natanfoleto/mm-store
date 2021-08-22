@@ -40,7 +40,7 @@ function is (profile) {
 
     return res.status(403).json({
       result: 'error',
-      message: 'Ação bloqueada! Este usuário não tem permissão.'
+      message: 'Uauário não tem permissão pra visualizar ou realizar esta ação!'
     })
   }
 

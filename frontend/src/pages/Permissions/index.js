@@ -23,6 +23,7 @@ export default function Permissions() {
   const [totalRecords, setTotalRecords] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
+  const [viewPermission, setViewPermission] = useState(false);
 
   const [search, setSearch] = useState('');
 
@@ -45,6 +46,9 @@ export default function Permissions() {
 
         if (status === 403 || status === 422) {
           Toast(data.result, data.message);
+
+          if (status === 403)
+            setViewPermission(true)
   
           return;
         }
@@ -82,6 +86,7 @@ export default function Permissions() {
               placeholder="Pesquise por permissão"
               value={search}
               maxLength={50}
+              disabled={viewPermission}
               onChange={e => setSearch(e.target.value)}
             />
 
@@ -89,6 +94,7 @@ export default function Permissions() {
               name="rows"
               options={rows}
               onChange={handleLimit}
+              disabled={viewPermission}
               placeholder={`${limit} rows`}
             />
 

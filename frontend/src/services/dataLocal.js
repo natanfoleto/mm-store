@@ -13,9 +13,9 @@ const typesPermission = [
 ]
 
 const contextsPermisssion = [
-  { id: 'Permissions', title: 'Permissions' },
-  { id: 'Profiles', title: 'Profiles' },
   { id: 'Users', title: 'Users' },
+  { id: 'Profiles', title: 'Profiles' },
+  { id: 'Permissions', title: 'Permissions' },
 ]
 
 const typesProfile = [
@@ -26,7 +26,8 @@ const typesProfile = [
 
 const contextsProfile = [
   { id: '', title: 'Todos'},
-  { id: 'Perfis', title: 'Perfis'},
+  { id: 'Users', title: 'Users'},
+  { id: 'Profiles', title: 'Profiles'},
   { id: 'Permissions', title: 'Permissions'}
 ]
 

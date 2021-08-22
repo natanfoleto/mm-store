@@ -23,6 +23,7 @@ export default function Profiles() {
   const [totalRecords, setTotalRecords] = useState(0);
   const [totalPages, setTotalPages] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
+  const [viewPermission, setViewPermission] = useState(false);
 
   const [search, setSearch] = useState('');
 
@@ -46,6 +47,9 @@ export default function Profiles() {
 
         if (status === 403 || status === 422) {
           Toast(data.result, data.message);
+
+          if (status === 403)
+            setViewPermission(true)
   
           return;
         }
@@ -84,12 +88,14 @@ export default function Profiles() {
               value={search}
               maxLength={50}
               onChange={e => setSearch(e.target.value)}
+              disabled={viewPermission}
             />
 
             <Select 
               name="rows"
               options={rows}
               onChange={handleLimit}
+              disabled={viewPermission}
               placeholder={`${limit} rows`}
             />
 
