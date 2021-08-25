@@ -1,19 +1,17 @@
-import Permissons from '../models/permissions.js'
+import Permissions from '../models/permissions.js'
 import message from '../messages/permissions.js'
-
-import SQL from '../../lib/SQL.js'
 
 class PermissionsController {
   async search (req, res) {
     try {
       const { perfil } = req.params
 
-      const response = await Permissons.searchPermissions(perfil)
+      const response = await Permissions.searchPermissions([perfil])
 
       return res.json(response)
     } catch (err) {
       //! Erro Internal Server
-      return res.status(400).json({
+      return res.json({
         result: 'error',
         message: message.error.code1.subcode99.message,
         error: err.toString()
@@ -23,29 +21,38 @@ class PermissionsController {
 
   async create (req, res) {
     try {
-      const body = req.body
+      const { id_perfil, id_permissao } = req.body
 
-      const permissions = {
-        id_perfil: body.id_perfil,
-        id_permissao: body.id_permissao
+      const permissions = [id_perfil, id_permissao]
+
+      const { count } = await Permissions.selectCountPermissions(permissions)
+
+      if (Number(count) > 0) {
+        //! Erro de cadastro duplicado
+        return res.json({
+          result: 'error',
+          message: message.error.code1.subcode1.message
+        })
       }
 
-      const response = await Permissons.insertPermissions(permissions)
+      const response = await Permissions.insertPermissions(permissions)
 
-      const sqlTreated = await SQL(response)
-
-      //* Query executada com sucesso
-      if (sqlTreated.result === 'success') {
+      if (response[0]) {
+        //* Query executada com sucesso
         return res.json({
           result: 'success',
           message: message.success.code1.subcode1.message
         })
+      } else {
+        //! Erro ao executar query
+        return res.json({
+          result: 'error',
+          message: response
+        })
       }
-
-      return res.json(sqlTreated)
     } catch (err) {
       //! Erro Internal Server
-      return res.status(400).json({
+      return res.json({
         result: 'error',
         message: message.error.code1.subcode99.message,
         error: err.toString()
@@ -57,30 +64,33 @@ class PermissionsController {
     try {
       const { id_permissao_perfil } = req.body
 
-      const response = await Permissons.deletePermissions(id_permissao_perfil)
+      const response = await Permissions.deletePermissions(id_permissao_perfil)
 
-      const sqlTreated = await SQL(response)
+      const { affectedRows } = response
 
-      //* Query executada com sucesso
-      if (sqlTreated.result === 'success') {
-        //* Nenhuma das permissões encontradas com os parâmetros passados
-        if (sqlTreated.sql.affectedRows === 0) {
+      if (affectedRows) {
+        //* Query executada com sucesso
+        return res.json({
+          result: 'success',
+          message: message.success.code1.subcode2.message
+        })
+      } else {
+        //* Nenhum permissão encontrada com os parâmetros passados
+        if (affectedRows === 0) {
           return res.json({
             result: 'error',
             message: message.error.code1.subcode1.message
           })
         }
-
+        //! Erro ao executar query
         return res.json({
-          result: 'success',
-          message: message.success.code1.subcode2.message
+          result: 'error',
+          message: response
         })
       }
-
-      return res.json(sqlTreated)
     } catch (err) {
       //! Internal Server Error
-      return res.status(400).json({
+      return res.json({
         result: 'error',
         message: message.error.code1.subcode99.message,
         error: err.toString()

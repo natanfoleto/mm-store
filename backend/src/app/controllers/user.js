@@ -3,8 +3,6 @@ import pagingData from '../utils/pagingData.js'
 import { encryptPassword } from '../utils/bcrypt.js'
 import message from '../messages/user.js'
 
-import SQL from '../../lib/SQL.js'
-
 class UserController {
   async search (req, res) {
     try {
@@ -27,42 +25,40 @@ class UserController {
 
   async create (req, res) {
     try {
-      const body = req.body
+      const { id_perfil, nome, login, password } = req.body
 
-      const user = {
-        id_perfil: body.id_perfil,
-        nome: body.nome,
-        login: body.login,
-        password_hash: await encryptPassword(body.password)
+      const { count } = await User.selectCountUser([login])
+
+      if (Number(count) > 0) {
+        //! Erro de cadastro duplicado
+        return res.json({
+          result: 'error',
+          message: message.error.code1.subcode1.message
+        })
       }
+
+      const password_hash = await encryptPassword(password)
+
+      const user = [id_perfil, nome, login, password_hash]
 
       const response = await User.insertUser(user)
 
-      const sqlTreated = await SQL(response)
-
-      //! Erro ao executar query no banco
-      if (sqlTreated.result === 'error') {
-        //! Erro de cadastro duplicado
-        if (sqlTreated.errno === 1062) {
-          return res.json({
-            result: 'error',
-            message: message.error.code1.subcode1.message
-          })
-        }
-      }
-
-      //* Query executada com sucesso
-      if (sqlTreated.result === 'success') {
+      if (response[0]) {
+        //* Query executada com sucesso
         return res.json({
           result: 'success',
           message: message.success.code1.subcode1.message
         })
+      } else {
+        //! Erro ao executar query
+        return res.json({
+          result: 'error',
+          message: response
+        })
       }
-
-      return res.json(sqlTreated)
     } catch (err) {
       //! Erro Internal Server
-      return res.status(400).json({
+      return res.json({
         result: 'error',
         message: message.error.code1.subcode99.message,
         error: err.toString()
@@ -72,51 +68,47 @@ class UserController {
 
   async update (req, res) {
     try {
-      const body = req.body
+      const { id_perfil, nome, login, id_usuario } = req.body
 
-      const user = {
-        id_perfil: body.id_perfil,
-        nome: body.nome,
-        login: body.login,
-        updated_at: new Date(),
-        id_usuario: body.id_usuario
+      const { count } = await User.selectCountUser([login])
+
+      if (Number(count) > 0) {
+        //! Erro de cadastro duplicado
+        return res.json({
+          result: 'error',
+          message: message.error.code1.subcode1.message
+        })
       }
+
+      const user = [id_perfil, nome, login, new Date(), id_usuario]
 
       const response = await User.updateUser(user)
 
-      const sqlTreated = await SQL(response)
+      const { affectedRows } = response
 
-      //! Erro ao executar query no banco
-      if (sqlTreated.result === 'error') {
-        //! Erro de cadastro duplicado
-        if (sqlTreated.errno === 1062) {
-          return res.json({
-            result: sqlTreated.result,
-            message: message.error.code1.subcode1.message
-          })
-        }
-      }
-
-      //* Query executada com sucesso
-      if (sqlTreated.result === 'success') {
+      if (affectedRows) {
+        //* Query executada com sucesso
+        return res.json({
+          result: 'success',
+          message: message.success.code1.subcode2.message
+        })
+      } else {
         //* Nenhum usuário encontrado com os parâmetros passados
-        if (sqlTreated.sql.affectedRows === 0) {
+        if (affectedRows === 0) {
           return res.json({
             result: 'error',
             message: message.error.code1.subcode2.message
           })
         }
-
+        //! Erro ao executar query
         return res.json({
-          result: sqlTreated.result,
-          message: message.success.code1.subcode2.message
+          result: 'error',
+          message: response
         })
       }
-
-      return res.json(sqlTreated)
     } catch (err) {
       //! Erro Internal Server
-      return res.status(400).json({
+      return res.json({
         result: 'error',
         message: message.error.code1.subcode99.message,
         error: err.toString()
@@ -130,30 +122,28 @@ class UserController {
 
       const response = await User.deleteUser(id_usuario)
 
-      const sqlTreated = await SQL(response)
+      const { affectedRows } = response
 
-      //! Erro ao executar query no banco
-      if (sqlTreated.result === 'error') {
-        return res.json(sqlTreated)
-      }
-
-      //* Query executada com sucesso
-      if (sqlTreated.result === 'success') {
+      if (affectedRows) {
+        //* Query executada com sucesso
+        return res.json({
+          result: 'success',
+          message: message.success.code1.subcode3.message
+        })
+      } else {
         //* Nenhum usuário encontrado com os parâmetros passados
-        if (sqlTreated.sql.affectedRows === 0) {
+        if (affectedRows === 0) {
           return res.json({
             result: 'error',
             message: message.error.code1.subcode2.message
           })
         }
-
+        //! Erro ao executar query
         return res.json({
-          result: 'success',
-          message: message.success.code1.subcode3.message
+          result: 'error',
+          message: response
         })
       }
-
-      return res.json(sqlTreated)
     } catch (err) {
       //! Internal Server Error
       return res.status(400).json({

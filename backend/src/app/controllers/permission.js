@@ -1,8 +1,6 @@
-import Permisson from '../models/permission.js'
+import Permission from '../models/permission.js'
 import pagingData from '../utils/pagingData.js'
 import message from '../messages/permission.js'
-
-import SQL from '../../lib/SQL.js'
 
 function isEmpty (str) {
   return (!str || str.length === 0)
@@ -13,7 +11,7 @@ class PermissionController {
     try {
       const { key } = req.body
 
-      const response = await Permisson.searchPermission(key || '')
+      const response = await Permission.searchPermission(key || '')
 
       const pagedData = await pagingData(response, req.params)
 
@@ -44,7 +42,7 @@ class PermissionController {
         params = { id_perfil: id_perfil }
       }
 
-      const response = await Permisson.searchPermissionForProfile(params)
+      const response = await Permission.searchPermissionForProfile(params)
 
       return res.json(response)
     } catch (err) {
@@ -59,42 +57,38 @@ class PermissionController {
 
   async create (req, res) {
     try {
-      const body = req.body
+      const { nome, tipo, descricao, contexto } = req.body
 
-      const permission = {
-        nome: body.nome,
-        tipo: body.tipo,
-        descricao: body.descricao,
-        contexto: body.contexto
-      }
+      const { count } = await Permission.selectCountPermission([nome])
 
-      const response = await Permisson.insertPermission(permission)
-
-      const sqlTreated = await SQL(response)
-
-      //! Erro ao executar query no banco
-      if (sqlTreated.result === 'error') {
+      if (Number(count) > 0) {
         //! Erro de cadastro duplicado
-        if (sqlTreated.errno === 1062) {
-          return res.json({
-            result: 'error',
-            message: message.error.code1.subcode1.message
-          })
-        }
+        return res.json({
+          result: 'error',
+          message: message.error.code1.subcode1.message
+        })
       }
 
-      //* Query executada com sucesso
-      if (sqlTreated.result === 'success') {
+      const permission = [nome, tipo, descricao, contexto]
+
+      const response = await Permission.insertPermission(permission)
+
+      if (response[0]) {
+        //* Query executada com sucesso
         return res.json({
           result: 'success',
           message: message.success.code1.subcode1.message
         })
+      } else {
+        //! Erro ao executar query
+        return res.json({
+          result: 'error',
+          message: response
+        })
       }
-
-      return res.json(sqlTreated)
     } catch (err) {
       //! Erro Internal Server
-      return res.status(400).json({
+      return res.json({
         result: 'error',
         message: message.error.code1.subcode99.message,
         error: err.toString()
@@ -104,51 +98,47 @@ class PermissionController {
 
   async update (req, res) {
     try {
-      const body = req.body
+      const { nome, tipo, descricao, contexto, id_permissao } = req.body
 
-      const permission = {
-        nome: body.nome,
-        tipo: body.tipo,
-        descricao: body.descricao,
-        contexto: body.contexto || null,
-        id_permissao: body.id_permissao
-      }
+      const { count } = await Permission.selectCountPermission([nome])
 
-      const response = await Permisson.updatePermission(permission)
-
-      const sqlTreated = await SQL(response)
-
-      //! Erro ao executar query no banco
-      if (sqlTreated.result === 'error') {
+      if (Number(count) > 0) {
         //! Erro de cadastro duplicado
-        if (sqlTreated.errno === 1062) {
-          return res.json({
-            result: 'error',
-            message: message.error.code1.subcode1.message
-          })
-        }
+        return res.json({
+          result: 'error',
+          message: message.error.code1.subcode1.message
+        })
       }
 
-      //* Query executada com sucesso
-      if (sqlTreated.result === 'success') {
-        //* Nenhuma permissão encontrada com os parâmetros passados
-        if (sqlTreated.sql.affectedRows === 0) {
+      const permission = [nome, tipo, descricao, contexto || null, id_permissao]
+
+      const response = await Permission.updatePermission(permission)
+
+      const { affectedRows } = response
+
+      if (affectedRows) {
+        //* Query executada com sucesso
+        return res.json({
+          result: 'success',
+          message: message.success.code1.subcode2.message
+        })
+      } else {
+        //* Nenhuma permissão encontrado com os parâmetros passados
+        if (affectedRows === 0) {
           return res.json({
             result: 'error',
             message: message.error.code1.subcode2.message
           })
         }
-
+        //! Erro ao executar query
         return res.json({
-          result: sqlTreated.result,
-          message: message.success.code1.subcode2.message
+          result: 'error',
+          message: response
         })
       }
-
-      return res.json(sqlTreated)
     } catch (err) {
       //! Erro Internal Server
-      return res.status(400).json({
+      return res.json({
         result: 'error',
         message: message.error.code1.subcode99.message,
         error: err.toString()
@@ -160,35 +150,33 @@ class PermissionController {
     try {
       const { id_permissao } = req.body
 
-      const response = await Permisson.deletePermission(id_permissao)
+      const response = await Permission.deletePermission(id_permissao)
 
-      const sqlTreated = await SQL(response)
+      const { affectedRows } = response
 
-      //! Erro ao executar query no banco
-      if (sqlTreated.result === 'error') {
-        return res.json(sqlTreated)
-      }
-
-      //* Query executada com sucesso
-      if (sqlTreated.result === 'success') {
-        //* Nenhuma permissão encontrada com os parâmetros passados
-        if (sqlTreated.sql.affectedRows === 0) {
+      if (affectedRows) {
+        //* Query executada com sucesso
+        return res.json({
+          result: 'success',
+          message: message.success.code1.subcode3.message
+        })
+      } else {
+        //* Nenhuma permissão encontrado com os parâmetros passados
+        if (affectedRows === 0) {
           return res.json({
             result: 'error',
             message: message.error.code1.subcode2.message
           })
         }
-
+        //! Erro ao executar query
         return res.json({
-          result: 'success',
-          message: message.success.code1.subcode3.message
+          result: 'error',
+          message: response
         })
       }
-
-      return res.json(sqlTreated)
     } catch (err) {
       //! Internal Server Error
-      return res.status(400).json({
+      return res.json({
         result: 'error',
         message: message.error.code1.subcode99.message,
         error: err.toString()

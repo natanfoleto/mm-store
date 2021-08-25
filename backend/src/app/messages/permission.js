@@ -15,7 +15,7 @@ export default {
   error: {
     code1: {
       subcode1: {
-        message: 'Já existe uma permissão com essa descrição'
+        message: 'Já existe uma permissão com esse nome'
       },
       subcode2: {
         message: 'Nenhuma permissão foi encontrada'

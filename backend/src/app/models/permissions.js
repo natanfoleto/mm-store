@@ -1,26 +1,35 @@
 import { executeQuery } from '../../database/pool.js'
 
-const table = 'permissoes_perfis'
-
 class Permissions {
-  async searchPermissions (perfil) {
+  async selectCountPermissions (params) {
+    try {
+      const query = `
+        SELECT COUNT(id_perfil) as count 
+        FROM permissoes_perfis 
+        WHERE id_perfil = ? AND id_permissao = ?
+      `
+
+      const result = await executeQuery(query, params)
+
+      return result[0]
+    } catch (err) {
+      return err
+    }
+  }
+
+  async searchPermissions (params) {
     try {
       const query = `
         SELECT permissoes_perfis.*, permissoes.tipo, permissoes.descricao, permissoes.contexto
-        FROM ${table} 
+        FROM permissoes_perfis 
         INNER JOIN permissoes ON (permissoes.id_permissao = permissoes_perfis.id_permissao)
         WHERE id_perfil = ?
       `
 
-      const binds = perfil
-
-      const result = await executeQuery(query, binds)
+      const result = await executeQuery(query, params)
 
       return result
     } catch (err) {
-      console.log('Exception from permissions.js/listPermissions:')
-      console.log(err)
-
       return err
     }
   }
@@ -28,7 +37,7 @@ class Permissions {
   async insertPermissions (object) {
     try {
       const query = `
-        INSERT INTO ${table} 
+        INSERT INTO permissoes_perfis 
         (id_perfil, id_permissao) 
         VALUES (?, ?)
         RETURNING *
@@ -47,22 +56,17 @@ class Permissions {
     }
   }
 
-  async deletePermissions (id) {
+  async deletePermissions (params) {
     try {
       const query = `
-        DELETE FROM ${table}  
+        DELETE FROM permissoes_perfis  
         WHERE id_permissao_perfil = ?
       `
 
-      const binds = id
-
-      const result = await executeQuery(query, binds)
+      const result = await executeQuery(query, params)
 
       return result
     } catch (err) {
-      console.log('Exception from permissions.js/deletePermissions:')
-      console.log(err)
-
       return err
     }
   }

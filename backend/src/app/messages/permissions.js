@@ -12,6 +12,9 @@ export default {
   error: {
     code1: {
       subcode1: {
+        message: 'Este perfil, já tem esta permissão'
+      },
+      subcode2: {
         message: 'Nenhuma das permissões foram encontradas'
       },
       subcode99: {

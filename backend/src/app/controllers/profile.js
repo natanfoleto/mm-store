@@ -3,8 +3,6 @@ import User from '../models/user.js'
 import pagingData from '../utils/pagingData.js'
 import message from '../messages/profile.js'
 
-import SQL from '../../lib/SQL.js'
-
 class ProfileController {
   async search (req, res) {
     try {
@@ -29,33 +27,36 @@ class ProfileController {
     try {
       const { nome } = req.body
 
-      const response = await Profile.insertProfile(nome)
+      const { count } = await Profile.selectCountProfile([nome])
 
-      const sqlTreated = await SQL(response)
-
-      //! Erro ao executar query no banco
-      if (sqlTreated.result === 'error') {
+      if (Number(count) > 0) {
         //! Erro de cadastro duplicado
-        if (sqlTreated.errno === 1062) {
-          return res.json({
-            result: 'error',
-            message: message.error.code1.subcode1.message
-          })
-        }
+        return res.json({
+          result: 'error',
+          message: message.error.code1.subcode1.message
+        })
       }
 
-      //* Query executada com sucesso
-      if (sqlTreated.result === 'success') {
+      const profile = [nome]
+
+      const response = await Profile.insertProfile(profile)
+
+      if (response[0]) {
+        //* Query executada com sucesso
         return res.json({
           result: 'success',
           message: message.success.code1.subcode1.message
         })
+      } else {
+        //! Erro ao executar query
+        return res.json({
+          result: 'error',
+          message: response
+        })
       }
-
-      return res.json(sqlTreated)
     } catch (err) {
       //! Erro Internal Server
-      return res.status(400).json({
+      return res.json({
         result: 'error',
         message: message.error.code1.subcode99.message,
         error: err.toString()
@@ -65,49 +66,47 @@ class ProfileController {
 
   async update (req, res) {
     try {
-      const body = req.body
+      const { nome, id_perfil } = req.body
 
-      const profile = {
-        nome: body.nome,
-        updated_at: new Date(),
-        id_perfil: body.id_perfil
+      const { count } = await Profile.selectCountProfile([nome])
+
+      if (Number(count) > 0) {
+        //! Erro de cadastro duplicado
+        return res.json({
+          result: 'error',
+          message: message.error.code1.subcode1.message
+        })
       }
+
+      const profile = [nome, new Date(), id_perfil]
 
       const response = await Profile.updateProfile(profile)
 
-      const sqlTreated = await SQL(response)
+      const { affectedRows } = response
 
-      //! Erro ao executar query no banco
-      if (sqlTreated.result === 'error') {
-        //! Erro de cadastro duplicado
-        if (sqlTreated.errno === 1062) {
-          return res.json({
-            result: sqlTreated.result,
-            message: message.error.code1.subcode1.message
-          })
-        }
-      }
-
-      //* Query executada com sucesso
-      if (sqlTreated.result === 'success') {
-        //* Nenhum usuário encontrado com os parâmetros passados
-        if (sqlTreated.sql.affectedRows === 0) {
+      if (affectedRows) {
+        //* Query executada com sucesso
+        return res.json({
+          result: 'success',
+          message: message.success.code1.subcode2.message
+        })
+      } else {
+        //* Nenhum perfil encontrado com os parâmetros passados
+        if (affectedRows === 0) {
           return res.json({
             result: 'error',
             message: message.error.code1.subcode2.message
           })
         }
-
+        //! Erro ao executar query
         return res.json({
-          result: sqlTreated.result,
-          message: message.success.code1.subcode2.message
+          result: 'error',
+          message: response
         })
       }
-
-      return res.json(sqlTreated)
     } catch (err) {
       //! Erro Internal Server
-      return res.status(400).json({
+      return res.json({
         result: 'error',
         message: message.error.code1.subcode99.message,
         error: err.toString()
@@ -119,7 +118,7 @@ class ProfileController {
     try {
       const { id_perfil } = req.body
 
-      const users = await User.findUserByProfile(id_perfil)
+      const users = await User.findUserByProfile([id_perfil])
 
       //* Existem usuários atrelados a este perfil
       if (users[0]) {
@@ -131,33 +130,31 @@ class ProfileController {
 
       const response = await Profile.deleteProfile(id_perfil)
 
-      const sqlTreated = await SQL(response)
+      const { affectedRows } = response
 
-      //! Erro ao executar query no banco
-      if (sqlTreated.result === 'error') {
-        return res.json(sqlTreated)
-      }
-
-      //* Query executada com sucesso
-      if (sqlTreated.result === 'success') {
-        //* Nenhum usuário encontrado com os parâmetros passados
-        if (sqlTreated.sql.affectedRows === 0) {
+      if (affectedRows) {
+        //* Query executada com sucesso
+        return res.json({
+          result: 'success',
+          message: message.success.code1.subcode3.message
+        })
+      } else {
+        //* Nenhum perfil encontrado com os parâmetros passados
+        if (affectedRows === 0) {
           return res.json({
             result: 'error',
             message: message.error.code1.subcode2.message
           })
         }
-
+        //! Erro ao executar query
         return res.json({
-          result: 'success',
-          message: message.success.code1.subcode3.message
+          result: 'error',
+          message: response
         })
       }
-
-      return res.json(sqlTreated)
     } catch (err) {
       //! Internal Server Error
-      return res.status(400).json({
+      return res.json({
         result: 'error',
         message: message.error.code1.subcode99.message,
         error: err.toString()

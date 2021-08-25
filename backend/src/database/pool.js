@@ -20,7 +20,8 @@ async function executeQuery (sql, params = []) {
 
     return res
   } catch (err) {
-    throw new Error(err)
+    console.log(err)
+    return err
   } finally {
     if (conn) conn.release()
   }

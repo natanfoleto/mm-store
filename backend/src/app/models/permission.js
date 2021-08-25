@@ -1,12 +1,24 @@
 import { executeQuery } from '../../database/pool.js'
 
-const table = 'permissoes'
-
 class Permission {
+  async selectCountPermission (params) {
+    try {
+      const query = `
+        SELECT COUNT(nome) as count FROM permissoes WHERE nome = ?
+      `
+
+      const result = await executeQuery(query, params)
+
+      return result[0]
+    } catch (err) {
+      return err
+    }
+  }
+
   async searchPermission (key) {
     try {
       const query = `
-        SELECT * FROM ${table}
+        SELECT * FROM permissoes
         WHERE descricao LIKE "%${key}%"
       `
 
@@ -14,9 +26,6 @@ class Permission {
 
       return result
     } catch (err) {
-      console.log('Exception from permission.js/searchPermissionAll:')
-      console.log(err)
-
       return err
     }
   }
@@ -27,28 +36,28 @@ class Permission {
 
       if ('tipo' in params && 'contexto' in params) {
         query = `
-          SELECT permissoes.* FROM ${table}
+          SELECT permissoes.* FROM permissoes
           LEFT JOIN permissoes_perfis 
           ON (permissoes_perfis.id_permissao = permissoes.id_permissao AND permissoes_perfis.id_perfil = ${params.id_perfil})
           WHERE permissoes_perfis.id_perfil IS NULL AND permissoes.tipo = '${params.tipo}' AND permissoes.contexto = '${params.contexto}'
         `
       } else if ('tipo' in params) {
         query = `
-          SELECT permissoes.* FROM ${table}
+          SELECT permissoes.* FROM permissoes
           LEFT JOIN permissoes_perfis 
           ON (permissoes_perfis.id_permissao = permissoes.id_permissao AND permissoes_perfis.id_perfil = ${params.id_perfil})
           WHERE permissoes_perfis.id_perfil IS NULL AND permissoes.tipo = '${params.tipo}'
         `
       } else if ('contexto' in params) {
         query = `
-          SELECT permissoes.* FROM ${table}
+          SELECT permissoes.* FROM permissoes
           LEFT JOIN permissoes_perfis 
           ON (permissoes_perfis.id_permissao = permissoes.id_permissao AND permissoes_perfis.id_perfil = ${params.id_perfil})
           WHERE permissoes_perfis.id_perfil IS NULL AND permissoes.contexto = '${params.contexto}'
         `
       } else {
         query = `
-          SELECT permissoes.* FROM ${table}
+          SELECT permissoes.* FROM permissoes
           LEFT JOIN permissoes_perfis ON (permissoes_perfis.id_permissao = permissoes.id_permissao AND permissoes_perfis.id_perfil = ${params.id_perfil})
           WHERE permissoes_perfis.id_perfil IS NULL
         `
@@ -65,65 +74,50 @@ class Permission {
     }
   }
 
-  async insertPermission (object) {
+  async insertPermission (params) {
     try {
       const query = `
-        INSERT INTO ${table} 
+        INSERT INTO permissoes 
         (nome, tipo, descricao, contexto) 
         VALUES (?, ?, ?, ?)
         RETURNING *
       `
 
-      const binds = Object.values(object)
-
-      const result = await executeQuery(query, binds)
+      const result = await executeQuery(query, params)
 
       return result
     } catch (err) {
-      console.log('Exception from permission.js/insertPermission:')
-      console.log(err)
-
       return err
     }
   }
 
-  async updatePermission (object) {
+  async updatePermission (params) {
     try {
       const query = `
-        UPDATE ${table} 
+        UPDATE permissoes 
         SET nome = ?, tipo = ?, descricao = ?, contexto = ?
         WHERE id_permissao = ?
       `
 
-      const binds = Object.values(object)
-
-      const result = await executeQuery(query, binds)
+      const result = await executeQuery(query, params)
 
       return result
     } catch (err) {
-      console.log('Exception from permission.js/updatePermission:')
-      console.log(err)
-
       return err
     }
   }
 
-  async deletePermission (id) {
+  async deletePermission (params) {
     try {
       const query = `
-        DELETE FROM ${table}  
+        DELETE FROM permissoes  
         WHERE id_permissao = ?
       `
 
-      const binds = id
-
-      const result = await executeQuery(query, binds)
+      const result = await executeQuery(query, params)
 
       return result
     } catch (err) {
-      console.log('Exception from permission.js/deletePermission:')
-      console.log(err)
-
       return err
     }
   }

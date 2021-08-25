@@ -1,13 +1,25 @@
 import { executeQuery } from '../../database/pool.js'
 
-const table = 'perfis'
-
 class Profile {
+  async selectCountProfile (params) {
+    try {
+      const query = `
+        SELECT COUNT(nome) as count FROM perfis WHERE nome = ?
+      `
+
+      const result = await executeQuery(query, params)
+
+      return result[0]
+    } catch (err) {
+      return err
+    }
+  }
+
   async searchProfile (key) {
     try {
       let query
 
-      if (key !== '') { query = `SELECT * FROM ${table} WHERE nome LIKE CONCAT("%", ?, "%")` } else { query = `SELECT * FROM ${table}` }
+      if (key !== '') { query = 'SELECT * FROM perfis WHERE nome LIKE CONCAT("%", ?, "%")' } else { query = 'SELECT * FROM perfis' }
 
       const binds = key
 
@@ -22,65 +34,50 @@ class Profile {
     }
   }
 
-  async insertProfile (nome) {
+  async insertProfile (params) {
     try {
       const query = `
-        INSERT INTO ${table} 
+        INSERT INTO perfis 
         (nome) 
         VALUES (?)
         RETURNING *
       `
 
-      const binds = nome
-
-      const result = await executeQuery(query, binds)
+      const result = await executeQuery(query, params)
 
       return result
     } catch (err) {
-      console.log('Exception from profile.js/insertProfile:')
-      console.log(err)
-
       return err
     }
   }
 
-  async updateProfile (nome) {
+  async updateProfile (params) {
     try {
       const query = `
-        UPDATE ${table} 
+        UPDATE perfis 
         SET nome = ?, updated_at = ? 
         WHERE id_perfil = ?
       `
 
-      const binds = Object.values(nome)
-
-      const result = await executeQuery(query, binds)
+      const result = await executeQuery(query, params)
 
       return result
     } catch (err) {
-      console.log('Exception from profile.js/updateProfile:')
-      console.log(err)
-
       return err
     }
   }
 
-  async deleteProfile (id) {
+  async deleteProfile (params) {
     try {
       const query = `
-        DELETE FROM ${table}  
+        DELETE FROM perfis  
         WHERE id_perfil = ?
       `
 
-      const binds = id
-
-      const result = await executeQuery(query, binds)
+      const result = await executeQuery(query, params)
 
       return result
     } catch (err) {
-      console.log('Exception from profile.js/deleteProfile:')
-      console.log(err)
-
       return err
     }
   }
