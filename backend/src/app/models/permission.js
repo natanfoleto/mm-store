@@ -25,8 +25,6 @@ class Permission {
     try {
       let query
 
-      console.log(params)
-
       if ('tipo' in params && 'contexto' in params) {
         query = `
           SELECT permissoes.* FROM ${table}

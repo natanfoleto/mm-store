@@ -1,5 +1,6 @@
 import jwt from 'jsonwebtoken'
 import Session from '../models/session.js'
+import Audit from '../models/audit.js'
 import { checkPassword } from '../utils/bcrypt.js'
 import SQL from '../../lib/SQL.js'
 import message from '../messages/session.js'
@@ -33,6 +34,18 @@ class SessionController {
         })
       }
 
+      req.body.password = '*'
+
+      const audit = {
+        login,
+        route: req.originalUrl,
+        method: req.method,
+        body: req.body,
+        moment: new Date()
+      }
+
+      await Audit.insertAudit(audit)
+
       return res.json({
         result: 'success',
         usuario: {
@@ -40,7 +53,10 @@ class SessionController {
           id_perfil,
           nome
         },
-        token: jwt.sign({ id_usuario }, env.API_AUTH_SECRET_KEY, {
+        token: jwt.sign({
+          id_usuario,
+          login
+        }, env.API_AUTH_SECRET_KEY, {
           expiresIn: env.API_AUTH_EXPIRES_IN
         })
       })

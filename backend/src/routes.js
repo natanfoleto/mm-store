@@ -1,6 +1,7 @@
 import { Router } from 'express'
 
 import auth from './app/middlewares/auth.js'
+import audit from './app/middlewares/audit.js'
 import { is } from './app/middlewares/permission.js'
 import validation from './app/middlewares/validation.js'
 
@@ -37,58 +38,60 @@ routes.route('/sessions').post(validation(validationSession.sessionCreate, 'body
 
 routes.use(auth)
 
+routes.route('/users/search/:page/:limit').post(is(['VIEW_USERS']), validation(validationUser.userSearch, 'body'), UserController.search)
+routes.route('/profiles/search/:page/:limit').post(is(['VIEW_PROFILES']), validation(validationProfile.profileSearch, 'body'), ProfileController.search)
+routes.route('/permission/search/:page/:limit').post(is(['VIEW_PERMISSION']), validation(validationPermission.permissionSearch, 'body'), PermissionController.search)
+routes.route('/permission/search/forprofile').post(validation(validationPermission.permissionSearchForProfile, 'body'), PermissionController.searchForProfile)
+routes.route('/permissions/search/:perfil').get(validation(validationPermissions.permissionsSearch, 'body'), PermissionsController.search)
+routes.route('/products').get(ProductController.list)
+routes.route('/photos').get(PhotoController.list)
+routes.route('/categories').get(CategoryController.list)
+routes.route('/providers').get(ProviderController.list)
+routes.route('/clients').get(ClientController.list)
+routes.route('/accounts').get(AccountController.list)
+routes.route('/address').get(AddressController.list)
+routes.route('/wishs').get(WishController.list)
+
+routes.use(audit)
+
 routes.route('/users').post(is(['CREATE_USERS']), validation(validationUser.userCreate, 'body'), UserController.create)
 routes.route('/users').put(is(['EDIT_USERS']), validation(validationUser.userUpdate, 'body'), UserController.update)
 routes.route('/users').delete(is(['DELETE_USERS']), validation(validationUser.userDelete, 'body'), UserController.remove)
-routes.route('/users/search/:page/:limit').post(is(['VIEW_USERS']), validation(validationUser.userSearch, 'body'), UserController.search)
 
 routes.route('/profiles').post(is(['CREATE_PROFILES']), validation(validationProfile.profileCreate, 'body'), ProfileController.create)
 routes.route('/profiles').put(is(['EDIT_PROFILES']), validation(validationProfile.profileUpdate, 'body'), ProfileController.update)
 routes.route('/profiles').delete(is(['DELETE_PROFILES']), validation(validationProfile.profileDelete, 'body'), ProfileController.remove)
-routes.route('/profiles/search/:page/:limit').post(is(['VIEW_PROFILES']), validation(validationProfile.profileSearch, 'body'), ProfileController.search)
 
-routes.route('/products').get(ProductController.list)
 routes.route('/products').post(validation(validationProduct.productCreate, 'body'), ProductController.create)
 routes.route('/products').put(validation(validationProduct.productUpdate, 'body'), ProductController.update)
 routes.route('/products').delete(validation(validationProduct.productDelete, 'body'), ProductController.remove)
 
-routes.route('/photos').get(PhotoController.list)
 routes.route('/photos').post(validation(validationPhoto.photoCreate, 'body'), PhotoController.create)
 routes.route('/photos').delete(validation(validationPhoto.photoDelete, 'body'), PhotoController.remove)
 
-routes.route('/categories').get(CategoryController.list)
 routes.route('/categories').post(validation(validationCategory.categoryCreate, 'body'), CategoryController.create)
 routes.route('/categories').put(validation(validationCategory.categoryUpdate, 'body'), CategoryController.update)
 routes.route('/categories').delete(validation(validationCategory.categoryDelete, 'body'), CategoryController.remove)
 
-routes.route('/providers').get(ProviderController.list)
 routes.route('/providers').post(validation(validationProvider.providerCreate, 'body'), ProviderController.create)
 routes.route('/providers').put(validation(validationProvider.providerUpdate, 'body'), ProviderController.update)
 routes.route('/providers').delete(validation(validationProvider.providerDelete, 'body'), ProviderController.remove)
 
-routes.route('/clients').get(ClientController.list)
 routes.route('/clients').post(validation(validationClient.clientCreate, 'body'), ClientController.create)
 routes.route('/clients').put(validation(validationClient.clientUpdate, 'body'), ClientController.update)
 routes.route('/clients').delete(validation(validationClient.clientDelete, 'body'), ClientController.remove)
 
-routes.route('/accounts').get(AccountController.list)
-
-routes.route('/address').get(AddressController.list)
 routes.route('/address').put(validation(validationAddress.addressUpdate, 'body'), AddressController.update)
 
-routes.route('/wishs').get(WishController.list)
 routes.route('/wishs').post(validation(validationWish.wishCreate, 'body'), WishController.create)
 routes.route('/wishs').put(validation(validationWish.wishUpdate, 'body'), WishController.update)
 routes.route('/wishs').delete(validation(validationWish.wishDelete, 'body'), WishController.remove)
 
-routes.route('/permission/search/:page/:limit').post(is(['VIEW_PERMISSION']), validation(validationPermission.permissionSearch, 'body'), PermissionController.search)
 routes.route('/permission').post(is(['CREATE_PERMISSION']), validation(validationPermission.permissionCreate, 'body'), PermissionController.create)
 routes.route('/permission').put(is(['EDIT_PERMISSION']), validation(validationPermission.permissionUpdate, 'body'), PermissionController.update)
 routes.route('/permission').delete(is(['DELETE_PERMISSION']), validation(validationPermission.permissionDelete, 'body'), PermissionController.remove)
-routes.route('/permission/search/forprofile').post(validation(validationPermission.permissionSearchForProfile, 'body'), PermissionController.searchForProfile)
 
 routes.route('/permissions').post(is(['CREATE_PERMISSIONS']), validation(validationPermissions.permissionsCreate, 'body'), PermissionsController.create)
 routes.route('/permissions').delete(is(['DELETE_PERMISSIONS']), validation(validationPermissions.permissionsDelete, 'body'), PermissionsController.remove)
-routes.route('/permissions/search/:perfil').get(validation(validationPermissions.permissionsSearch, 'body'), PermissionsController.search)
 
 export default routes
