@@ -1,6 +1,6 @@
 export default function validation (schema, property) {
   return async (req, res, next) => {
-    const validate = schema.validate(req[property])
+    const validate = schema.validate(req[property || 'body'])
     const valid = validate.error == null
 
     if (valid) {

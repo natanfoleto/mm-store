@@ -1,82 +1,79 @@
 import { executeQuery } from '../../database/pool.js'
 
-const table = 'categorias'
-
 class Category {
-  async listCategory () {
+  async selectCountCategory (params) {
     try {
-      const query = `SELECT * FROM ${table}`
+      const query = `
+        SELECT COUNT(nome) as count FROM categorias WHERE nome = ?
+      `
+
+      const result = await executeQuery(query, params)
+
+      return result[0]
+    } catch (err) {
+      return err
+    }
+  }
+
+  async searchCategory (key) {
+    try {
+      const query = `
+        SELECT * FROM categorias
+        WHERE nome LIKE "%${key}%"
+      `
 
       const result = await executeQuery(query)
 
       return result
     } catch (err) {
-      console.log('Exception from category.js/listCategory:')
-      console.log(err)
-
       return err
     }
   }
 
-  async insertCategory (nome) {
+  async insertCategory (params) {
     try {
       const query = `
-        INSERT INTO ${table} 
+        INSERT INTO categorias 
         (nome) 
         VALUES (?)
         RETURNING *
       `
 
-      const binds = nome
-
-      const result = await executeQuery(query, binds)
+      const result = await executeQuery(query, params)
 
       return result
     } catch (err) {
-      console.log('Exception from category.js/insertCategory:')
-      console.log(err)
-
       return err
     }
   }
 
-  async updateCategory (nome) {
+  async updateCategory (params) {
     try {
       const query = `
-        UPDATE ${table} 
+        UPDATE categorias 
         SET nome = ?, updated_at = ? 
         WHERE id_categoria = ?
       `
 
-      const binds = Object.values(nome)
-
-      const result = await executeQuery(query, binds)
+      const result = await executeQuery(query, params)
 
       return result
     } catch (err) {
-      console.log('Exception from category.js/updateCategory:')
-      console.log(err)
-
       return err
     }
   }
 
-  async deleteCategory (id) {
+  async deleteCategory (params) {
     try {
       const query = `
-        DELETE FROM ${table}  
+        DELETE FROM categorias  
         WHERE id_categoria = ?
       `
 
-      const binds = id
-
-      const result = await executeQuery(query, binds)
+      const result = await executeQuery(query, params)
 
       return result
     } catch (err) {
-      console.log('Exception from category.js/deleteCategory:')
-      console.log(err)
-
       return err
     }
   }

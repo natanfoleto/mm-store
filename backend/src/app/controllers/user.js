@@ -15,7 +15,7 @@ class UserController {
       return res.json(pagedData)
     } catch (err) {
       //! Erro Internal Server
-      return res.status(400).json({
+      return res.json({
         result: 'error',
         message: message.error.code1.subcode99.message,
         error: err.toString()
@@ -27,7 +27,7 @@ class UserController {
     try {
       const { id_perfil, nome, login, password } = req.body
 
-      const { count } = await User.selectCountUser([login])
+      const { count } = await User.selectCountUser(login)
 
       if (Number(count) > 0) {
         //! Erro de cadastro duplicado
@@ -70,7 +70,7 @@ class UserController {
     try {
       const { id_perfil, nome, login, id_usuario } = req.body
 
-      const { count } = await User.selectCountUser([login])
+      const { count } = await User.selectCountUser(login)
 
       if (Number(count) > 0) {
         //! Erro de cadastro duplicado

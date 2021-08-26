@@ -59,7 +59,7 @@ class PermissionController {
     try {
       const { nome, tipo, descricao, contexto } = req.body
 
-      const { count } = await Permission.selectCountPermission([nome])
+      const { count } = await Permission.selectCountPermission(nome)
 
       if (Number(count) > 0) {
         //! Erro de cadastro duplicado
@@ -100,7 +100,7 @@ class PermissionController {
     try {
       const { nome, tipo, descricao, contexto, id_permissao } = req.body
 
-      const { count } = await Permission.selectCountPermission([nome])
+      const { count } = await Permission.selectCountPermission(nome)
 
       if (Number(count) > 0) {
         //! Erro de cadastro duplicado

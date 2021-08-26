@@ -1,17 +1,20 @@
 import Product from '../models/product.js'
+import pagingData from '../utils/pagingData.js'
 import message from '../messages/product.js'
 
-import SQL from '../../lib/SQL.js'
-
 class ProductController {
-  async list (req, res) {
+  async search (req, res) {
     try {
-      const response = await Product.listProduct()
+      const { key } = req.body
 
-      return res.json(response)
+      const response = await Product.searchProduct(key || '')
+
+      const pagedData = await pagingData(response, req.params)
+
+      return res.json(pagedData)
     } catch (err) {
       //! Erro Internal Server
-      return res.status(400).json({
+      return res.json({
         result: 'error',
         message: message.error.code1.subcode99.message,
         error: err.toString()
@@ -21,46 +24,44 @@ class ProductController {
 
   async create (req, res) {
     try {
-      const body = req.body
+      const {
+        id_categoria, id_fornecedor, nome, preco_custo,
+        preco_venda, preco_promocional, estoque, tamanho
+      } = req.body
 
-      const product = {
-        id_categoria: body.id_categoria,
-        id_fornecedor: body.id_fornecedor || null,
-        nome: body.nome,
-        preco_custo: body.preco_custo,
-        preco_venda: body.preco_venda,
-        preco_promocional: body.preco_promocional || null,
-        estoque: body.estoque,
-        tamanho: body.tamanho || null
+      const { count } = await Product.selectCountProduct(nome)
+
+      if (Number(count) > 0) {
+        //! Erro de cadastro duplicado
+        return res.json({
+          result: 'error',
+          message: message.error.code1.subcode1.message
+        })
       }
+
+      const product = [
+        id_categoria, id_fornecedor || null, nome, preco_custo,
+        preco_venda, preco_promocional || null, estoque, tamanho || null
+      ]
 
       const response = await Product.insertProduct(product)
 
-      const sqlTreated = await SQL(response)
-
-      //! Erro ao executar query no banco
-      if (sqlTreated.result === 'error') {
-        //! Erro de cadastro duplicado
-        if (sqlTreated.errno === 1062) {
-          return res.json({
-            result: 'error',
-            message: message.error.code1.subcode1.message
-          })
-        }
-      }
-
-      //* Query executada com sucesso
-      if (sqlTreated.result === 'success') {
+      if (response[0]) {
+        //* Query executada com sucesso
         return res.json({
           result: 'success',
           message: message.success.code1.subcode1.message
         })
+      } else {
+        //! Erro ao executar query
+        return res.json({
+          result: 'error',
+          message: response
+        })
       }
-
-      return res.json(sqlTreated)
     } catch (err) {
       //! Erro Internal Server
-      return res.status(400).json({
+      return res.json({
         result: 'error',
         message: message.error.code1.subcode99.message,
         error: err.toString()
@@ -70,56 +71,53 @@ class ProductController {
 
   async update (req, res) {
     try {
-      const body = req.body
+      const {
+        id_categoria, id_fornecedor, nome, preco_custo, preco_venda,
+        preco_promocional, estoque, tamanho, id_produto
+      } = req.body
 
-      const product = {
-        id_categoria: body.id_categoria,
-        id_fornecedor: body.id_fornecedor || null,
-        nome: body.nome,
-        preco_custo: body.preco_custo,
-        preco_venda: body.preco_venda,
-        preco_promocional: body.preco_promocional || null,
-        estoque: body.estoque,
-        tamanho: body.tamanho || null,
-        updated_at: new Date(),
-        id_produto: body.id_produto
+      const { count } = await Product.selectCountProduct(nome)
+
+      if (Number(count) > 0) {
+        //! Erro de cadastro duplicado
+        return res.json({
+          result: 'error',
+          message: message.error.code1.subcode1.message
+        })
       }
+
+      const product = [
+        id_categoria, id_fornecedor, nome, preco_custo, preco_venda,
+        preco_promocional, estoque, tamanho, new Date(), id_produto
+      ]
 
       const response = await Product.updateProduct(product)
 
-      const sqlTreated = await SQL(response)
+      const { affectedRows } = response
 
-      //! Erro ao executar query no banco
-      if (sqlTreated.result === 'error') {
-        //! Erro de cadastro duplicado
-        if (sqlTreated.errno === 1062) {
-          return res.json({
-            result: sqlTreated.result,
-            message: message.error.code1.subcode1.message
-          })
-        }
-      }
-
-      //* Query executada com sucesso
-      if (sqlTreated.result === 'success') {
-        //* Nenhum usuário encontrado com os parâmetros passados
-        if (sqlTreated.sql.affectedRows === 0) {
+      if (affectedRows) {
+        //* Query executada com sucesso
+        return res.json({
+          result: 'success',
+          message: message.success.code1.subcode2.message
+        })
+      } else {
+        //* Nenhum produto encontrado com os parâmetros passados
+        if (affectedRows === 0) {
           return res.json({
             result: 'error',
             message: message.error.code1.subcode2.message
           })
         }
-
+        //! Erro ao executar query
         return res.json({
-          result: sqlTreated.result,
-          message: message.success.code1.subcode2.message
+          result: 'error',
+          message: response
         })
       }
-
-      return res.json(sqlTreated)
     } catch (err) {
       //! Erro Internal Server
-      return res.status(400).json({
+      return res.json({
         result: 'error',
         message: message.error.code1.subcode99.message,
         error: err.toString()
@@ -133,30 +131,28 @@ class ProductController {
 
       const response = await Product.deleteProduct(id_produto)
 
-      const sqlTreated = await SQL(response)
+      const { affectedRows } = response
 
-      //! Erro ao executar query no banco
-      if (sqlTreated.result === 'error') {
-        return res.json(sqlTreated)
-      }
-
-      //* Query executada com sucesso
-      if (sqlTreated.result === 'success') {
-        //* Nenhum usuário encontrado com os parâmetros passados
-        if (sqlTreated.sql.affectedRows === 0) {
+      if (affectedRows) {
+        //* Query executada com sucesso
+        return res.json({
+          result: 'success',
+          message: message.success.code1.subcode3.message
+        })
+      } else {
+        //* Nenhum produto encontrado com os parâmetros passados
+        if (affectedRows === 0) {
           return res.json({
             result: 'error',
             message: message.error.code1.subcode2.message
           })
         }
-
+        //! Erro ao executar query
         return res.json({
-          result: 'success',
-          message: message.success.code1.subcode3.message
+          result: 'error',
+          message: response
         })
       }
-
-      return res.json(sqlTreated)
     } catch (err) {
       //! Internal Server Error
       return res.status(400).json({
