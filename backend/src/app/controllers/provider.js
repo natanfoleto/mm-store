@@ -73,7 +73,7 @@ class ProviderController {
 
       const count = await Provider.selectCountProvider([cpf_cnpj, email])
 
-      if (count && count.id !== id_fornecedor) {
+      if (count && count.id !== Number(id_fornecedor)) {
         //! Erro de cadastro duplicado
         return res.json({
           result: 'error',

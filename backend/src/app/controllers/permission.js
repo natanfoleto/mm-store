@@ -102,7 +102,7 @@ class PermissionController {
 
       const count = await Permission.selectCountPermission(nome)
 
-      if (count && count.id !== id_permissao) {
+      if (count && count.id !== Number(id_permissao)) {
         //! Erro de cadastro duplicado
         return res.json({
           result: 'error',

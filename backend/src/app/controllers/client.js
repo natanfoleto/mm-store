@@ -80,7 +80,7 @@ class ClientController {
 
       const count = await Client.selectCountClient([cpf, email])
 
-      if (count && count.id !== id_cliente) {
+      if (count && count.id !== Number(id_cliente)) {
         //! Erro de cadastro duplicado
         return res.json({
           result: 'error',

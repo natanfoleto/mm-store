@@ -70,7 +70,7 @@ class ProfileController {
 
       const count = await Profile.selectCountProfile(nome)
 
-      if (count && count.id !== id_perfil) {
+      if (count && count.id !== Number(id_perfil)) {
         //! Erro de cadastro duplicado
         return res.json({
           result: 'error',

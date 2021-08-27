@@ -68,7 +68,7 @@ class CategoryController {
 
       const count = await Category.selectCountCategory(nome)
 
-      if (count && count.id !== id_categoria) {
+      if (count && count.id !== Number(id_categoria)) {
         //! Erro de cadastro duplicado
         return res.json({
           result: 'error',

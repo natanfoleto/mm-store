@@ -78,7 +78,7 @@ class ProductController {
 
       const count = await Product.selectCountProduct(nome)
 
-      if (count && count.id !== id_produto) {
+      if (count && count.id !== Number(id_produto)) {
         //! Erro de cadastro duplicado
         return res.json({
           result: 'error',
