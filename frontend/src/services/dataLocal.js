@@ -49,8 +49,17 @@ const contextsProfile = [
   { id: 'Permissions', title: 'Permissions'}
 ]
 
+const produtctSizes = [
+  { id: 'P', title: 'P' },
+  { id: 'PP', title: 'PP' },
+  { id: 'M', title: 'M' },
+  { id: 'G', title: 'G' },
+  { id: 'GG', title: 'GG' }
+]
+
 export { 
   rows, 
   typesPermission, contextsPermisssion, 
-  typesProfile, contextsProfile
+  typesProfile, contextsProfile,
+  produtctSizes
 }

@@ -4,12 +4,12 @@ import Toast from '../utils/toastify';
 
 import api from '../services/api';
 
-export const useProfile = () => {
+export const useProduct = () => {
   const history = useHistory();
 
-  async function createProfile(data) {   
+  async function createProduct(data) {   
     try {
-      const res = await api.post('/profiles', data);
+      const res = await api.post('/products', data)
 
       const { result, message } = res.data;
       
@@ -33,9 +33,9 @@ export const useProfile = () => {
     }
   }
 
-  async function updateProfile(data) {
+  async function updateProduct(data) {
     try {
-      const res = await api.put('/profiles', data);
+      const res = await api.put('/products', data);
 
       const { result, message } = res.data;
       
@@ -59,9 +59,9 @@ export const useProfile = () => {
     }
   }
 
-  async function deleteProfile(data) {
+  async function deleteProduct(data) {
     try {
-      const res = await api.delete('/profiles', data);
+      const res = await api.delete('/products', data);
 
       const { result, message } = res.data;
       
@@ -85,7 +85,7 @@ export const useProfile = () => {
     }
   }
 
-  return { createProfile, updateProfile, deleteProfile }
+  return { createProduct, updateProduct, deleteProduct }
 }
 
-export default useProfile;
+export default useProduct;

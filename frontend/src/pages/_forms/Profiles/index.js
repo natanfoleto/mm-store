@@ -104,12 +104,14 @@ export default function FormProfile() {
     delete data.types;
     delete data.contexts;
 
-    if (operation === 'ADD')
+    if (operation === 'ADD') {
+      delete data.id_perfil;
+
       await createProfile(data)
+    }
 
     if (operation === 'EDIT') 
       await updateProfile(data);
-
   }
 
   function handleCancel() {

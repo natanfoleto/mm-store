@@ -31,6 +31,8 @@ export default function FormCategory() {
 
   async function handleSubmit(data) {
     if (operation === 'ADD') {
+      delete data.id_categoria;
+
       await createCategory(data)
     } else {
       await updateCategory(data);

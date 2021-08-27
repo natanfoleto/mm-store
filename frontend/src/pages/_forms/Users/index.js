@@ -66,6 +66,8 @@ export default function FormUser() {
 
   async function handleSubmit(data) {
     if (operation === 'ADD') {
+      delete data.id_usuario;
+
       await createUser(data)
     } else {
       delete data.password;

@@ -2,27 +2,20 @@ import { useHistory } from 'react-router-dom';
 
 import { Data } from './styles';
 
-import Toast from '../../../../utils/toastify';
+import useProduct from '../../../../hooks/useProduct';
 
-import useUser from '../../../../hooks/useUser';
-import { useAuth } from '../../../../contexts/auth'; 
-
-function ComponentUser({ item }) {
+function ComponentProduct({ item }) {
   const history = useHistory();
 
-  const { user } = useAuth();
-  const { deleteUser } = useUser();
+  const { deleteProduct } = useProduct();
 
   function handleEdit(item) {
-    history.push('/usuarios/edit', item);
+    history.push('/produtos/edit', item);
   }
 
   async function handleDelete(item) {
-    if(window.confirm(`Deseja mesmo excluir o usuário ${item.nome}?`)) {
-      if (item.id_usuario === user.id_usuario)
-        Toast('warn', 'Você não pode excluir o usuário que está logado!');
-      else
-        await deleteUser({ data: { id_usuario: item.id_usuario }});
+    if(window.confirm(`Deseja mesmo excluir o produto ${item.nome}?`)) {
+        await deleteProduct({ data: { id_produto: item.id_produto }});
     } else {
       return;
     }
@@ -31,16 +24,30 @@ function ComponentUser({ item }) {
   return (
     <>
       <Data onClick={() => { handleEdit(item) }}>
-        <Data.Id> {item.id_usuario} </Data.Id>
+        <Data.Id> {item.id_produto} </Data.Id>
         <Data.DivColumn> 
           <h1>{item.nome}</h1>
-          <p>{item.login}</p>
+          <p>{item.categoria}</p>
         </Data.DivColumn>
 
         <Data.DivColumn> 
-          <h1>Perfil</h1>
+          <h1>Estoque</h1>
           <p>
-            {item.perfil}  
+            {item.estoque}  
+          </p>
+        </Data.DivColumn>
+
+        <Data.DivColumn> 
+          <h1>Tamanho</h1>
+          <p>
+            {item.tamanho}  
+          </p>
+        </Data.DivColumn>
+
+        <Data.DivColumn> 
+          <h1>Preço</h1>
+          <p>
+            {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(item.preco_venda)}
           </p>
         </Data.DivColumn>
         
@@ -61,4 +68,4 @@ function ComponentUser({ item }) {
   );
 }
 
-export default ComponentUser;
+export default ComponentProduct;

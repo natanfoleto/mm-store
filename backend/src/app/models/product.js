@@ -19,17 +19,22 @@ class Product {
     try {
       const query = `
         (
-          SELECT * FROM produtos
-          WHERE nome LIKE "%${key}%"
+          SELECT pd.*, ct.nome AS categoria
+          FROM produtos pd
+          INNER JOIN categorias ct ON pd.id_categoria = ct.id_categoria
+          WHERE pd.nome LIKE "%${key}%"
         )
         UNION
         (
-          SELECT * FROM produtos
-          WHERE preco_custo LIKE "%${key}%"
+          SELECT pd.*, ct.nome AS categoria
+          FROM produtos pd
+          INNER JOIN categorias ct ON pd.id_categoria = ct.id_categoria
+          WHERE pd.preco_custo LIKE "%${key}%"
         )
         UNION
         (
-          SELECT pd.* FROM produtos pd
+          SELECT pd.*, ct.nome AS categoria
+          FROM produtos pd
           INNER JOIN categorias ct ON pd.id_categoria = ct.id_categoria
           WHERE ct.nome LIKE "%${key}%"
         )

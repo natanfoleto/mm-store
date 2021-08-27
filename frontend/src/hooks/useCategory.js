@@ -9,9 +9,7 @@ export const useCategory = () => {
 
   async function createCategory(data) {   
     try {
-      const res = await api.post('/categories', {
-        nome: data.nome
-      });
+      const res = await api.post('/categories', data)
 
       const { result, message } = res.data;
       

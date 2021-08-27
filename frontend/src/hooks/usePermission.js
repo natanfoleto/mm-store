@@ -9,12 +9,7 @@ export const usePermission = () => {
 
   async function createPermission(data) {   
     try {
-      const res = await api.post('/permission', {
-        nome: data.nome,
-        tipo: data.tipo,
-        descricao: data.descricao,
-        contexto: data.contexto
-      });
+      const res = await api.post('/permission', data);
 
       const { result, message } = res.data;
       

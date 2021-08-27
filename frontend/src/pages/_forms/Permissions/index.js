@@ -37,6 +37,8 @@ export default function FormPermission() {
 
   async function handleSubmit(data) {
     if (operation === 'ADD') {
+      delete data.id_permissao;
+
       await createPermission(data)
     } else {
       delete data.password;

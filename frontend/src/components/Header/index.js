@@ -24,7 +24,7 @@ function Header() {
           <Link to="/"> Dashboard </Link>
           <Link to=""> Vendas </Link>
           <Link to=""> Clientes </Link>
-          <Link to=""> Produtos </Link>
+          <Link to="/produtos"> Produtos </Link>
           <Link to="/categorias"> Categorias </Link>
           <Link to=""> Fornecedores </Link>
           <Link to=""> Pedidos </Link>

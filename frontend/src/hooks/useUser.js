@@ -9,12 +9,7 @@ export const useUser = () => {
 
   async function createUser(data) {   
     try {
-      const res = await api.post('/users', {
-        id_perfil: data.id_perfil,
-        nome: data.nome,
-        login: data.login,
-        password: data.password
-      });
+      const res = await api.post('/users', data);
 
       const { result, message } = res.data;
       

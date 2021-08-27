@@ -5,10 +5,9 @@ import api from '../services/api';
 export const usePermissions = () => {
   async function createPermissions(data) {   
     try {
-      const res = await api.post('/permissions', {
-        id_perfil: data.id_perfil,
-        id_permissao: data.id_permissao
-      });
+      const res = await api.post('/permissions', data);
+
+      console.log(data)
 
       const { result, message } = res.data;
       
