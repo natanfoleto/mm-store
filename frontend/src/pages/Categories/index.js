@@ -15,33 +15,33 @@ import { BiLoader } from 'react-icons/bi';
 
 import { Body } from '../../styles/crud';
 
-export default function Users() {
+export default function Categories() {
   const history = useHistory();
 
   const [data, setData] = useState();
   const [limit, setLimit] = useState(10);
   const [totalRecords, setTotalRecords] = useState(0);
-  const [totalPages, setTotalPages] = useState(0);
+  const [totalPages, setTotalPages] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
   const [viewPermission, setViewPermission] = useState(false);
 
   const [search, setSearch] = useState('');
 
   useEffect(() => {
-    async function searchUser() {
+    async function searchProfile() {
       try {
-        const { data } = await api.post(`/users/search/${currentPage}/${limit}`, { 
+        const { data } = await api.post(`/categories/search/${currentPage}/${limit}`, { 
           key: search 
         });
 
         setData(data.data);
         setTotalRecords(data.total);
+
         setTotalPages(
           Number(limit) === 0 
           ? Math.ceil(data.total / data.total)
           : Math.ceil(data.total / limit)
         );
-
       } catch (err) {
         const { data, status } = err.response
 
@@ -60,11 +60,11 @@ export default function Users() {
       }
     }
 
-    searchUser();
+    searchProfile();
   }, [limit, currentPage, search])
 
   function handleCreate() {
-    history.push('/usuarios/add');
+    history.push('/categorias/add');
   }
 
   const handleLimit = useCallback((e) => {
@@ -76,28 +76,29 @@ export default function Users() {
     <Layout>      
       <Body>
         <Body.Title>
-          <h1> Usuários </h1>
-          <p> Somente os usuários tem acesso ao sistema </p>
+          <h1> Categorias </h1>
+          <p> Categorias de produtos </p>
         </Body.Title>
 
         {/* Cabeçalho do body */}
         <Body.Header>
           <Body.Filter>
             <Body.Input 
-              placeholder="Pesquise por um usuário" 
-              value={search} 
+              placeholder="Pesquise pelo nome" 
+              value={search}
               maxLength={50}
               onChange={e => setSearch(e.target.value)}
               disabled={viewPermission}
             />
-             
+
             <Select 
               name="rows"
               options={rows}
               onChange={handleLimit}
               disabled={viewPermission}
-              placeholder={`${limit} linhas`}
+              placeholder={`${limit} rows`}
             />
+
           </Body.Filter>
 
           <Body.Button onClick={handleCreate}>
@@ -111,7 +112,7 @@ export default function Users() {
             data ? 
               data.map((item, index) => (
                 <ComponentCard 
-                  key={index}
+                  key={index} 
                 >
                   <Card item={item} />
                 </ComponentCard>
@@ -147,7 +148,8 @@ export default function Users() {
             }} 
           > 
             <CgPlayTrackNext size={22} /> 
-          </Body.ButtonNavigation>   
+          </Body.ButtonNavigation>
+             
         </Body.Navigation>
       </Body>
     </Layout>

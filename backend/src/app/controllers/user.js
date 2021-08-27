@@ -70,8 +70,6 @@ class UserController {
     try {
       const { id_perfil, nome, login, id_usuario } = req.body
 
-      console.log(req.body)
-
       const count = await User.selectCountUser(login)
 
       if (count && count.id !== Number(id_usuario)) {

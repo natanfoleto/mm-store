@@ -11,7 +11,7 @@ import useUser from '../../../hooks/useUser';
 
 import { Body, Container, IGroup, BGroup } from './styles';
 
-export default function FormUsuarios() {
+export default function FormUser() {
   const history = useHistory();
 
   const { createUser, updateUser } = useUser();

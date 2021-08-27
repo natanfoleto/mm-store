@@ -3,10 +3,12 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 import Dashboard from "../pages/Dashboard";
 import Profiles from "../pages/Profiles";
 import Users from "../pages/Users";
+import Categories from "../pages/Categories";
 import Permissions from "../pages/Permissions";
 
 import FormProfiles from "../pages/_forms/Profiles";
 import FormUsers from "../pages/_forms/Users";
+import FormCategories from "../pages/_forms/Categories";
 import FormPermissions from "../pages/_forms/Permissions";
 
 import NotFound from "../pages/NotFound";
@@ -24,6 +26,10 @@ export default function Routes() {
         <Route exact path="/usuarios" component={Users} />
         <Route exact path="/usuarios/add" component={FormUsers} />
         <Route exact path="/usuarios/edit" component={FormUsers} />
+
+        <Route exact path="/categorias" component={Categories} />
+        <Route exact path="/categorias/add" component={FormCategories} />
+        <Route exact path="/categorias/edit" component={FormCategories} />
 
         <Route exact path="/permissoes" component={Permissions} />
         <Route exact path="/permissoes/add" component={FormPermissions} />

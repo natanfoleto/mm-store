@@ -11,7 +11,7 @@ import usePermission from '../../../hooks/usePermission';
 
 import { Body, Container, IGroup, BGroup } from './styles';
 
-export default function FormPermissions() {
+export default function FormPermission() {
   const history = useHistory();
 
   const { createPermission, updatePermission } = usePermission();

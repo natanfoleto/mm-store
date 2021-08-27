@@ -16,7 +16,7 @@ import { IoIosRemove } from 'react-icons/io';
 
 import { Body, Container, IGroup, BGroup, Permissions } from './styles';
 
-export default function FormPerfis() {
+export default function FormProfile() {
   const history = useHistory();
 
   const { createProfile, updateProfile } = useProfile();
