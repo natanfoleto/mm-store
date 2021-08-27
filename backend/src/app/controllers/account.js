@@ -1,72 +1,24 @@
 import Account from '../models/account.js'
+import pagingData from '../utils/pagingData.js'
 import message from '../messages/account.js'
 
-import SQL from '../../lib/SQL.js'
-
 class AccountController {
-  async list (req, res) {
+  async search (req, res) {
     try {
-      const response = await Account.listAccount()
+      const { key } = req.body
 
-      return res.json(response)
+      const response = await Account.searchAccount(key || '')
+
+      const pagedData = await pagingData(response, req.params)
+
+      return res.json(pagedData)
     } catch (err) {
       //! Erro Internal Server
-      return res.status(400).json({
+      return res.json({
         result: 'error',
         message: message.error.code1.subcode99.message,
         error: err.toString()
       })
-    }
-  }
-
-  async create (account) {
-    try {
-      const response = await Account.insertAccount(account)
-
-      const sqlTreated = await SQL(response)
-
-      return sqlTreated
-    } catch (err) {
-      //! Erro Internal Server
-      return {
-        result: 'error',
-        message: message.error.code1.subcode99.message,
-        error: err.toString()
-      }
-    }
-  }
-
-  async update (account) {
-    try {
-      const response = await Account.update(account)
-
-      const sqlTreated = await SQL(response)
-
-      return sqlTreated
-    } catch (err) {
-      //! Erro Internal Server
-      return {
-        result: 'error',
-        message: message.error.code1.subcode99.message,
-        error: err.toString()
-      }
-    }
-  }
-
-  async remove (id) {
-    try {
-      const response = await Account.deleteAccount(id)
-
-      const sqlTreated = await SQL(response)
-
-      return sqlTreated
-    } catch (err) {
-      //! Internal Server Error
-      return {
-        result: 'error',
-        message: message.error.code1.subcode99.message,
-        error: err.toString()
-      }
     }
   }
 }

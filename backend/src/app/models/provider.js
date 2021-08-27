@@ -1,83 +1,98 @@
 import { executeQuery } from '../../database/pool.js'
 
-const table = 'fornecedores'
-
 class Provider {
-  async listProvider () {
+  async selectCountProvider (params) {
     try {
-      const query = `SELECT * FROM ${table}`
+      const query = `
+        SELECT COUNT(*) as count FROM fornecedores 
+        WHERE cpf_cnpj = ? OR email = ?
+      `
+
+      const result = await executeQuery(query, params)
+
+      return result[0]
+    } catch (err) {
+      return err
+    }
+  }
+
+  async searchProvider (key) {
+    try {
+      const query = `
+      (
+        SELECT * FROM fornecedores
+        WHERE nome LIKE "%${key}%"
+      )
+      UNION
+      (
+        SELECT * FROM fornecedores
+        WHERE cpf_cnpj LIKE "%${key}%"
+      )
+      UNION
+      (
+        SELECT * FROM fornecedores
+        WHERE email LIKE "%${key}%"
+      )
+      UNION
+      (
+        SELECT * FROM fornecedores
+        WHERE celular LIKE "%${key}%"
+      )
+    `
 
       const result = await executeQuery(query)
 
       return result
     } catch (err) {
-      console.log('Exception from provider.js/listProvider:')
-      console.log(err)
-
       return err
     }
   }
 
-  async insertProvider (object) {
+  async insertProvider (params) {
     try {
       const query = `
-        INSERT INTO ${table} 
+        INSERT INTO fornecedores 
         (id_endereco, nome, cpf_cnpj, email, celular, obs) 
         VALUES (?, ?, ?, ?, ?, ?)
         RETURNING *
       `
 
-      const binds = Object.values(object)
-
-      const result = await executeQuery(query, binds)
+      const result = await executeQuery(query, params)
 
       return result
     } catch (err) {
-      console.log('Exception from provider.js/insertProvider:')
-      console.log(err)
-
       return err
     }
   }
 
-  async updateProvider (object) {
+  async updateProvider (params) {
     try {
       const query = `
-        UPDATE ${table} 
+        UPDATE fornecedores 
         SET nome = ?, cpf_cnpj = ?, email = ?, celular = ?, obs = ?, updated_at = ?
         WHERE id_fornecedor = ?
       `
 
-      const binds = Object.values(object)
-
-      const result = await executeQuery(query, binds)
+      const result = await executeQuery(query, params)
 
       return result
     } catch (err) {
-      console.log('Exception from provider.js/updateProvider:')
-      console.log(err)
-
       return err
     }
   }
 
-  async deleteProvider (id) {
+  async deleteProvider (params) {
     try {
       const query = `
-        DELETE FROM ${table}  
+        DELETE FROM fornecedores  
         WHERE id_fornecedor = ?
         RETURNING id_endereco
       `
 
-      const binds = id
-
-      const result = await executeQuery(query, binds)
+      const result = await executeQuery(query, params)
 
       return result
     } catch (err) {
-      console.log('Exception from provider.js/deleteProvider:')
-      console.log(err)
-
       return err
     }
   }

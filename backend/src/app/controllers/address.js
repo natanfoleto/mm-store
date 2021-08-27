@@ -1,17 +1,20 @@
 import Address from '../models/address.js'
+import pagingData from '../utils/pagingData.js'
 import message from '../messages/address.js'
 
-import SQL from '../../lib/SQL.js'
-
 class AddressController {
-  async list (req, res) {
+  async search (req, res) {
     try {
-      const response = await Address.listAddress()
+      const { key } = req.body
 
-      return res.json(response)
+      const response = await Address.searchAddress(key || '')
+
+      const pagedData = await pagingData(response, req.params)
+
+      return res.json(pagedData)
     } catch (err) {
       //! Erro Internal Server
-      return res.status(400).json({
+      return res.json({
         result: 'error',
         message: message.error.code1.subcode99.message,
         error: err.toString()
@@ -21,49 +24,37 @@ class AddressController {
 
   async update (req, res) {
     try {
-      const body = req.body
+      const { logradouro, numero, cep, bairro, cidade, uf, latitude, longitude, id_endereco } = req.body
 
-      const address = {
-        logradouro: body.logradouro,
-        numero: body.numero,
-        cep: body.cep || null,
-        bairro: body.bairro || null,
-        cidade: body.cidade,
-        uf: body.uf,
-        latitude: body.latitude || null,
-        longitude: body.longitude || null,
-        id_endereco: body.id_endereco
-      }
+      const address = [logradouro, numero, cep, bairro, cidade, uf, latitude, longitude, id_endereco]
 
       const response = await Address.updateAddress(address)
 
-      const sqlTreated = await SQL(response)
+      const { affectedRows } = response
 
-      //! Erro ao executar query no banco
-      if (sqlTreated.result === 'error') {
-        return res.json(sqlTreated)
-      }
-
-      //* Query executada com sucesso
-      if (sqlTreated.result === 'success') {
-        //* Nenhum usuário encontrado com os parâmetros passados
-        if (sqlTreated.sql.affectedRows === 0) {
+      if (affectedRows) {
+        //* Query executada com sucesso
+        return res.json({
+          result: 'success',
+          message: message.success.code1.subcode2.message
+        })
+      } else {
+        //* Nenhum endereço encontrado com os parâmetros passados
+        if (affectedRows === 0) {
           return res.json({
             result: 'error',
             message: message.error.code1.subcode1.message
           })
         }
-
+        //! Erro ao executar query
         return res.json({
-          result: sqlTreated.result,
-          message: message.success.code1.subcode2.message
+          result: 'error',
+          message: response
         })
       }
-
-      return res.json(sqlTreated)
     } catch (err) {
       //! Erro Internal Server
-      return res.status(400).json({
+      return res.json({
         result: 'error',
         message: message.error.code1.subcode99.message,
         error: err.toString()

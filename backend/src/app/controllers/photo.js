@@ -1,17 +1,18 @@
 import Photo from '../models/photo.js'
+import pagingData from '../utils/pagingData.js'
 import message from '../messages/photo.js'
 
-import SQL from '../../lib/SQL.js'
-
 class PhotoController {
-  async list (req, res) {
+  async search (req, res) {
     try {
-      const response = await Photo.listPhoto()
+      const response = await Photo.searchPhoto()
 
-      return res.json(response)
+      const pagedData = await pagingData(response, req.params)
+
+      return res.json(pagedData)
     } catch (err) {
       //! Erro Internal Server
-      return res.status(400).json({
+      return res.json({
         result: 'error',
         message: message.error.code1.subcode99.message,
         error: err.toString()
@@ -21,36 +22,28 @@ class PhotoController {
 
   async create (req, res) {
     try {
-      const body = req.body
+      const { id_produto, nome, path, url } = req.body
 
-      const photo = {
-        id_produto: body.id_produto,
-        nome: body.nome || null,
-        path: body.path,
-        url: body.url
-      }
+      const photo = [id_produto, nome, path, url]
 
       const response = await Photo.insertPhoto(photo)
 
-      const sqlTreated = await SQL(response)
-
-      //! Erro ao executar query no banco
-      if (sqlTreated.result === 'error') {
-        return res.json(sqlTreated)
-      }
-
-      //* Query executada com sucesso
-      if (sqlTreated.result === 'success') {
+      if (response[0]) {
+        //* Query executada com sucesso
         return res.json({
           result: 'success',
           message: message.success.code1.subcode1.message
         })
+      } else {
+        //! Erro ao executar query
+        return res.json({
+          result: 'error',
+          message: response
+        })
       }
-
-      return res.json(sqlTreated)
     } catch (err) {
       //! Erro Internal Server
-      return res.status(400).json({
+      return res.json({
         result: 'error',
         message: message.error.code1.subcode99.message,
         error: err.toString()
@@ -64,33 +57,31 @@ class PhotoController {
 
       const response = await Photo.deletePhoto(id_foto)
 
-      const sqlTreated = await SQL(response)
+      const { affectedRows } = response
 
-      //! Erro ao executar query no banco
-      if (sqlTreated.result === 'error') {
-        return res.json(sqlTreated)
-      }
-
-      //* Query executada com sucesso
-      if (sqlTreated.result === 'success') {
-        //* Nenhum pedido encontrado com os parâmetros passados
-        if (sqlTreated.sql.affectedRows === 0) {
+      if (affectedRows) {
+        //* Query executada com sucesso
+        return res.json({
+          result: 'success',
+          message: message.success.code1.subcode2.message
+        })
+      } else {
+        //* Nenhuma foto encontrado com os parâmetros passados
+        if (affectedRows === 0) {
           return res.json({
             result: 'error',
             message: message.error.code1.subcode1.message
           })
         }
-
+        //! Erro ao executar query
         return res.json({
-          result: 'success',
-          message: message.success.code1.subcode2.message
+          result: 'error',
+          message: response
         })
       }
-
-      return res.json(sqlTreated)
     } catch (err) {
       //! Internal Server Error
-      return res.status(400).json({
+      return res.json({
         result: 'error',
         message: message.error.code1.subcode99.message,
         error: err.toString()

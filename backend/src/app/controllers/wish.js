@@ -1,17 +1,20 @@
 import Wish from '../models/wish.js'
+import pagingData from '../utils/pagingData.js'
 import message from '../messages/wish.js'
 
-import SQL from '../../lib/SQL.js'
-
 class WishController {
-  async list (req, res) {
+  async search (req, res) {
     try {
-      const response = await Wish.listWish()
+      const { key } = req.body
 
-      return res.json(response)
+      const response = await Wish.searchWish(key || '')
+
+      const pagedData = await pagingData(response, req.params)
+
+      return res.json(pagedData)
     } catch (err) {
       //! Erro Internal Server
-      return res.status(400).json({
+      return res.json({
         result: 'error',
         message: message.error.code1.subcode99.message,
         error: err.toString()
@@ -21,35 +24,28 @@ class WishController {
 
   async create (req, res) {
     try {
-      const body = req.body
+      const { id_cliente, descricao, url_foto } = req.body
 
-      const wish = {
-        id_cliente: body.id_cliente,
-        descricao: body.descricao,
-        url_foto: body.url_foto || null
-      }
+      const wish = [id_cliente, descricao, url_foto]
 
       const response = await Wish.insertWish(wish)
 
-      const sqlTreated = await SQL(response)
-
-      //! Erro ao executar query no banco
-      if (sqlTreated.result === 'error') {
-        return res.json(sqlTreated)
-      }
-
-      //* Query executada com sucesso
-      if (sqlTreated.result === 'success') {
+      if (response[0]) {
+        //* Query executada com sucesso
         return res.json({
           result: 'success',
           message: message.success.code1.subcode1.message
         })
+      } else {
+        //! Erro ao executar query
+        return res.json({
+          result: 'error',
+          message: response
+        })
       }
-
-      return res.json(sqlTreated)
     } catch (err) {
       //! Erro Internal Server
-      return res.status(400).json({
+      return res.json({
         result: 'error',
         message: message.error.code1.subcode99.message,
         error: err.toString()
@@ -59,43 +55,37 @@ class WishController {
 
   async update (req, res) {
     try {
-      const body = req.body
+      const { descricao, url_foto, id_pedido } = req.body
 
-      const wish = {
-        descricao: body.descricao,
-        url_foto: body.url_foto || null,
-        id_pedido: body.id_pedido
-      }
+      const wish = [descricao, url_foto, id_pedido]
 
       const response = await Wish.updateWish(wish)
 
-      const sqlTreated = await SQL(response)
+      const { affectedRows } = response
 
-      //! Erro ao executar query no banco
-      if (sqlTreated.result === 'error') {
-        return res.json(sqlTreated)
-      }
-
-      //* Query executada com sucesso
-      if (sqlTreated.result === 'success') {
+      if (affectedRows) {
+        //* Query executada com sucesso
+        return res.json({
+          result: 'success',
+          message: message.success.code1.subcode2.message
+        })
+      } else {
         //* Nenhum pedido encontrado com os parâmetros passados
-        if (sqlTreated.sql.affectedRows === 0) {
+        if (affectedRows === 0) {
           return res.json({
             result: 'error',
             message: message.error.code1.subcode1.message
           })
         }
-
+        //! Erro ao executar query
         return res.json({
-          result: sqlTreated.result,
-          message: message.success.code1.subcode2.message
+          result: 'error',
+          message: response
         })
       }
-
-      return res.json(sqlTreated)
     } catch (err) {
       //! Erro Internal Server
-      return res.status(400).json({
+      return res.json({
         result: 'error',
         message: message.error.code1.subcode99.message,
         error: err.toString()
@@ -109,33 +99,31 @@ class WishController {
 
       const response = await Wish.deleteWish(id_pedido)
 
-      const sqlTreated = await SQL(response)
+      const { affectedRows } = response
 
-      //! Erro ao executar query no banco
-      if (sqlTreated.result === 'error') {
-        return res.json(sqlTreated)
-      }
-
-      //* Query executada com sucesso
-      if (sqlTreated.result === 'success') {
+      if (affectedRows) {
+        //* Query executada com sucesso
+        return res.json({
+          result: 'success',
+          message: message.success.code1.subcode3.message
+        })
+      } else {
         //* Nenhum pedido encontrado com os parâmetros passados
-        if (sqlTreated.sql.affectedRows === 0) {
+        if (affectedRows === 0) {
           return res.json({
             result: 'error',
             message: message.error.code1.subcode1.message
           })
         }
-
+        //! Erro ao executar query
         return res.json({
-          result: 'success',
-          message: message.success.code1.subcode3.message
+          result: 'error',
+          message: response
         })
       }
-
-      return res.json(sqlTreated)
     } catch (err) {
       //! Internal Server Error
-      return res.status(400).json({
+      return res.json({
         result: 'error',
         message: message.error.code1.subcode99.message,
         error: err.toString()

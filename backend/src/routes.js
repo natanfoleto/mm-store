@@ -13,6 +13,7 @@ import validationPhoto from './app/schema/validationPhoto.js'
 import validationCategory from './app/schema/validationCategory.js'
 import validationProvider from './app/schema/validationProvider.js'
 import validationClient from './app/schema/validationClient.js'
+import validationAccount from './app/schema/validationAccount.js'
 import validationAddress from './app/schema/validationAddress.js'
 import validationWish from './app/schema/validationWish.js'
 import validationPermission from './app/schema/validationPermission.js'
@@ -43,14 +44,15 @@ routes.route('/profiles/search/:page/:limit').post(is(['VIEW_PROFILES']), valida
 routes.route('/permission/search/:page/:limit').post(is(['VIEW_PERMISSION']), validation(validationPermission.permissionSearch), PermissionController.search)
 routes.route('/categories/search/:page/:limit').post(is(['VIEW_CATEGORIES']), validation(validationCategory.categorySearch), CategoryController.search)
 routes.route('/products/search/:page/:limit').post(is(['VIEW_PRODUCTS']), validation(validationProduct.productSearch), ProductController.search)
+routes.route('/photos/search/:page/:limit').post(is(['VIEW_PHOTOS']), validation(validationPhoto.photoSearch), PhotoController.search)
+routes.route('/providers/search/:page/:limit').post(is(['VIEW_PROVIDERS']), validation(validationProvider.providerSearch), ProviderController.search)
+routes.route('/clients/search/:page/:limit').post(is(['VIEW_CLIENTS']), validation(validationClient.clientSearch), ClientController.search)
+routes.route('/accounts/search/:page/:limit').post(is(['VIEW_ACCOUNTS']), validation(validationAccount.accountSearch), AccountController.search)
+routes.route('/address/search/:page/:limit').post(is(['VIEW_ADDRESS']), validation(validationAddress.addressSearch), AddressController.search)
+routes.route('/wishs/search/:page/:limit').post(is(['VIEW_WISHS']), validation(validationWish.wishSearch), WishController.search)
+
 routes.route('/permission/search/forprofile').post(validation(validationPermission.permissionSearchForProfile), PermissionController.searchForProfile)
 routes.route('/permissions/search/:perfil').get(validation(validationPermissions.permissionsSearch), PermissionsController.search)
-routes.route('/photos').get(PhotoController.list)
-routes.route('/providers').get(ProviderController.list)
-routes.route('/clients').get(ClientController.list)
-routes.route('/accounts').get(AccountController.list)
-routes.route('/address').get(AddressController.list)
-routes.route('/wishs').get(WishController.list)
 
 routes.use(audit)
 
@@ -62,30 +64,30 @@ routes.route('/profiles').post(is(['CREATE_PROFILES']), validation(validationPro
 routes.route('/profiles').put(is(['EDIT_PROFILES']), validation(validationProfile.profileUpdate), ProfileController.update)
 routes.route('/profiles').delete(is(['DELETE_PROFILES']), validation(validationProfile.profileDelete), ProfileController.remove)
 
-routes.route('/products').post(validation(validationProduct.productCreate), ProductController.create)
-routes.route('/products').put(validation(validationProduct.productUpdate), ProductController.update)
-routes.route('/products').delete(validation(validationProduct.productDelete), ProductController.remove)
+routes.route('/products').post(is(['CREATE_PRODUCTS']), validation(validationProduct.productCreate), ProductController.create)
+routes.route('/products').put(is(['EDIT_PRODUCTS']), validation(validationProduct.productUpdate), ProductController.update)
+routes.route('/products').delete(is(['DELETE_PRODUCTS']), validation(validationProduct.productDelete), ProductController.remove)
 
-routes.route('/photos').post(validation(validationPhoto.photoCreate), PhotoController.create)
-routes.route('/photos').delete(validation(validationPhoto.photoDelete), PhotoController.remove)
+routes.route('/photos').post(is(['CREATE_PHOTOS']), validation(validationPhoto.photoCreate), PhotoController.create)
+routes.route('/photos').delete(is(['DELETE_PHOTOS']), validation(validationPhoto.photoDelete), PhotoController.remove)
 
-routes.route('/categories').post(validation(validationCategory.categoryCreate), CategoryController.create)
-routes.route('/categories').put(validation(validationCategory.categoryUpdate), CategoryController.update)
-routes.route('/categories').delete(validation(validationCategory.categoryDelete), CategoryController.remove)
+routes.route('/categories').post(is(['CREATE_CATEGORIES']), validation(validationCategory.categoryCreate), CategoryController.create)
+routes.route('/categories').put(is(['EDIT_CATEGORIES']), validation(validationCategory.categoryUpdate), CategoryController.update)
+routes.route('/categories').delete(is(['DELETE_CATEGORIES']), validation(validationCategory.categoryDelete), CategoryController.remove)
 
-routes.route('/providers').post(validation(validationProvider.providerCreate), ProviderController.create)
-routes.route('/providers').put(validation(validationProvider.providerUpdate), ProviderController.update)
-routes.route('/providers').delete(validation(validationProvider.providerDelete), ProviderController.remove)
+routes.route('/providers').post(is(['CREATE_PROVIDERS']), validation(validationProvider.providerCreate), ProviderController.create)
+routes.route('/providers').put(is(['EDIT_PROVIDERS']), validation(validationProvider.providerUpdate), ProviderController.update)
+routes.route('/providers').delete(is(['DELETE_PROVIDERS']), validation(validationProvider.providerDelete), ProviderController.remove)
 
-routes.route('/clients').post(validation(validationClient.clientCreate), ClientController.create)
-routes.route('/clients').put(validation(validationClient.clientUpdate), ClientController.update)
-routes.route('/clients').delete(validation(validationClient.clientDelete), ClientController.remove)
+routes.route('/clients').post(is(['CREATE_CLIENTS']), validation(validationClient.clientCreate), ClientController.create)
+routes.route('/clients').put(is(['CREATE_CLIENTS']), validation(validationClient.clientUpdate), ClientController.update)
+routes.route('/clients').delete(is(['CREATE_CLIENTS']), validation(validationClient.clientDelete), ClientController.remove)
 
-routes.route('/address').put(validation(validationAddress.addressUpdate), AddressController.update)
+routes.route('/address').put(is(['EDIT_ADDRESS']), validation(validationAddress.addressUpdate), AddressController.update)
 
-routes.route('/wishs').post(validation(validationWish.wishCreate), WishController.create)
-routes.route('/wishs').put(validation(validationWish.wishUpdate), WishController.update)
-routes.route('/wishs').delete(validation(validationWish.wishDelete), WishController.remove)
+routes.route('/wishs').post(is(['CREATE_WISHS']), validation(validationWish.wishCreate), WishController.create)
+routes.route('/wishs').put(is(['EDIT_WISHS']), validation(validationWish.wishUpdate), WishController.update)
+routes.route('/wishs').delete(is(['DELETE_WISHS']), validation(validationWish.wishDelete), WishController.remove)
 
 routes.route('/permission').post(is(['CREATE_PERMISSION']), validation(validationPermission.permissionCreate), PermissionController.create)
 routes.route('/permission').put(is(['EDIT_PERMISSION']), validation(validationPermission.permissionUpdate), PermissionController.update)

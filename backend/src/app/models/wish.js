@@ -1,82 +1,73 @@
 import { executeQuery } from '../../database/pool.js'
 
-const table = 'pedidos'
-
 class Wish {
-  async listWish () {
+  async searchWish (key) {
     try {
-      const query = `SELECT * FROM ${table}`
+      const query = `
+        (
+          SELECT * FROM pedidos
+          WHERE descricao LIKE "%${key}%"
+        )
+        UNION
+        (
+          SELECT pd.* FROM pedidos pd
+          INNER JOIN clientes cl ON cl.id_cliente = pd.id_cliente
+          WHERE cl.nome LIKE "%${key}%"
+        )
+      `
 
       const result = await executeQuery(query)
 
       return result
     } catch (err) {
-      console.log('Exception from wish.js/listWish:')
-      console.log(err)
-
       return err
     }
   }
 
-  async insertWish (object) {
+  async insertWish (params) {
     try {
       const query = `
-        INSERT INTO ${table} 
+        INSERT INTO pedidos 
         (id_cliente, descricao, url_foto) 
         VALUES (?, ?, ?)
         RETURNING *
       `
 
-      const binds = Object.values(object)
-
-      const result = await executeQuery(query, binds)
+      const result = await executeQuery(query, params)
 
       return result
     } catch (err) {
-      console.log('Exception from wish.js/insertWish:')
-      console.log(err)
-
       return err
     }
   }
 
-  async updateWish (object) {
+  async updateWish (params) {
     try {
       const query = `
-        UPDATE ${table} 
+        UPDATE pedidos 
         SET descricao = ?, url_foto = ?
         WHERE id_pedido = ?
       `
 
-      const binds = Object.values(object)
-
-      const result = await executeQuery(query, binds)
+      const result = await executeQuery(query, params)
 
       return result
     } catch (err) {
-      console.log('Exception from wish.js/updateWish:')
-      console.log(err)
-
       return err
     }
   }
 
-  async deleteWish (id) {
+  async deleteWish (params) {
     try {
       const query = `
-        DELETE FROM ${table}  
+        DELETE FROM pedidos  
         WHERE id_pedido = ?
       `
 
-      const binds = id
-
-      const result = await executeQuery(query, binds)
+      const result = await executeQuery(query, params)
 
       return result
     } catch (err) {
-      console.log('Exception from wish.js/deleteWish:')
-      console.log(err)
-
       return err
     }
   }

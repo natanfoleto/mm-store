@@ -1,61 +1,60 @@
 import { executeQuery } from '../../database/pool.js'
 
-const table = 'fotos_produtos'
-
 class Photo {
-  async listPhoto () {
+  async selectCountPhoto (params) {
     try {
-      const query = `SELECT * FROM ${table}`
+      const query = `
+        SELECT COUNT(url) as count FROM fotos_produtos WHERE url = ?
+      `
+
+      const result = await executeQuery(query, params)
+
+      return result[0]
+    } catch (err) {
+      return err
+    }
+  }
+
+  async searchPhoto () {
+    try {
+      const query = 'SELECT * FROM fotos_produtos'
 
       const result = await executeQuery(query)
 
       return result
     } catch (err) {
-      console.log('Exception from photo.js/listPhoto:')
-      console.log(err)
-
       return err
     }
   }
 
-  async insertPhoto (object) {
+  async insertPhoto (params) {
     try {
       const query = `
-        INSERT INTO ${table} 
+        INSERT INTO fotos_produtos
         (id_produto, nome, path, url) 
         VALUES (?, ?, ?, ?)
         RETURNING *
       `
 
-      const binds = Object.values(object)
-
-      const result = await executeQuery(query, binds)
+      const result = await executeQuery(query, params)
 
       return result
     } catch (err) {
-      console.log('Exception from photo.js/insertPhoto:')
-      console.log(err)
-
       return err
     }
   }
 
-  async deletePhoto (id) {
+  async deletePhoto (params) {
     try {
       const query = `
-        DELETE FROM ${table}  
+        DELETE FROM fotos_produtos 
         WHERE id_foto = ?
       `
 
-      const binds = id
-
-      const result = await executeQuery(query, binds)
+      const result = await executeQuery(query, params)
 
       return result
     } catch (err) {
-      console.log('Exception from photo.js/deletePhoto:')
-      console.log(err)
-
       return err
     }
   }

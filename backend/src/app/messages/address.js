@@ -17,9 +17,6 @@ export default {
       subcode1: {
         message: 'Nenhum endereço foi encontrado'
       },
-      subcode2: {
-        message: 'Existem clientes ou fornecedores atrelados a este endereço'
-      },
       subcode99: {
         message: 'Internal Server Error'
       }

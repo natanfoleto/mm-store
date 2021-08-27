@@ -1,83 +1,98 @@
 import { executeQuery } from '../../database/pool.js'
 
-const table = 'clientes'
-
 class Client {
-  async listClient () {
+  async selectCountClient (params) {
     try {
-      const query = `SELECT * FROM ${table}`
+      const query = `
+        SELECT COUNT(*) as count FROM clientes 
+        WHERE cpf = ? OR email = ?
+      `
+
+      const result = await executeQuery(query, params)
+
+      return result[0]
+    } catch (err) {
+      return err
+    }
+  }
+
+  async searchClient (key) {
+    try {
+      const query = `
+        (
+          SELECT * FROM clientes
+          WHERE nome LIKE "%${key}%"
+        )
+        UNION
+        (
+          SELECT * FROM clientes
+          WHERE cpf LIKE "%${key}%"
+        )
+        UNION
+        (
+          SELECT * FROM clientes
+          WHERE email LIKE "%${key}%"
+        )
+        UNION
+        (
+          SELECT * FROM clientes
+          WHERE celular LIKE "%${key}%"
+        )
+      `
 
       const result = await executeQuery(query)
 
       return result
     } catch (err) {
-      console.log('Exception from client.js/listClient:')
-      console.log(err)
-
       return err
     }
   }
 
-  async insertClient (object) {
+  async insertClient (params) {
     try {
       const query = `
-        INSERT INTO ${table} 
+        INSERT INTO clientes 
         (id_endereco, nome, cpf, email, data_nasc, celular, password_hash) 
         VALUES (?, ?, ?, ?, ?, ?, ?)
         RETURNING *
       `
 
-      const binds = Object.values(object)
-
-      const result = await executeQuery(query, binds)
+      const result = await executeQuery(query, params)
 
       return result
     } catch (err) {
-      console.log('Exception from client.js/insertClient:')
-      console.log(err)
-
       return err
     }
   }
 
-  async updateClient (object) {
+  async updateClient (params) {
     try {
       const query = `
-        UPDATE ${table} 
+        UPDATE clientes 
         SET nome = ?, cpf = ?, email = ?, data_nasc = ?, celular = ?, password_hash = ?, updated_at = ?
         WHERE id_cliente = ?
       `
 
-      const binds = Object.values(object)
-
-      const result = await executeQuery(query, binds)
+      const result = await executeQuery(query, params)
 
       return result
     } catch (err) {
-      console.log('Exception from client.js/updateClient:')
-      console.log(err)
-
       return err
     }
   }
 
-  async deleteClient (id) {
+  async deleteClient (params) {
     try {
       const query = `
-        DELETE FROM ${table}  
+        DELETE FROM clientes  
         WHERE id_cliente = ?
         RETURNING id_endereco
       `
 
-      const binds = id
-
-      const result = await executeQuery(query, binds)
+      const result = await executeQuery(query, params)
 
       return result
     } catch (err) {
-      console.log('Exception from client.js/deleteClient:')
-      console.log(err)
-
       return err
     }
   }

@@ -4,6 +4,15 @@ import JoiDate from '@hapi/joi-date'
 const Joi = JoiBase.extend(JoiDate)
 
 const validationSchemas = {
+  clientSearch: Joi.object().keys({
+    key: Joi
+      .string()
+      .allow('')
+      .messages({
+        'any.required': 'parâmetro key é necessário',
+        'string.base': 'key deve ser do tipo string'
+      })
+  }),
   clientCreate: Joi.object().keys({
     nome: Joi
       .string()

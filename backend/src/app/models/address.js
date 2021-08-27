@@ -1,21 +1,16 @@
 import { executeQuery } from '../../database/pool.js'
 
-const table = 'enderecos'
-
 class Address {
-  async listAddress () {
+  async searchAddress () {
     try {
       const query = `
-        SELECT * from ${table}
+        SELECT * from enderecos
       `
 
       const result = await executeQuery(query)
 
       return result
     } catch (err) {
-      console.log('Exception from address.js/listAddress:')
-      console.log(err)
-
       return err
     }
   }
@@ -23,7 +18,7 @@ class Address {
   async insertAddress () {
     try {
       const query = `
-        INSERT INTO ${table} 
+        INSERT INTO enderecos 
         () 
         VALUES ()
       `
@@ -32,50 +27,22 @@ class Address {
 
       return result
     } catch (err) {
-      console.log('Exception from address.js/insertAddress:')
-      console.log(err)
-
       return err
     }
   }
 
-  async updateAddress (object) {
+  async updateAddress (params) {
     try {
       const query = `
-        UPDATE ${table} 
+        UPDATE enderecos 
         SET logradouro = ?, numero = ?, cep = ?, bairro = ?, cidade = ?, uf = ?, latitude = ?, longitude = ?
         WHERE id_endereco = ?
       `
 
-      const binds = Object.values(object)
-
-      const result = await executeQuery(query, binds)
+      const result = await executeQuery(query, params)
 
       return result
     } catch (err) {
-      console.log('Exception from address.js/updateAddress:')
-      console.log(err)
-
-      return err
-    }
-  }
-
-  async deleteAddress (id) {
-    try {
-      const query = `
-        DELETE FROM ${table}  
-        WHERE id_endereco = ?
-      `
-
-      const binds = id
-
-      const result = await executeQuery(query, binds)
-
-      return result
-    } catch (err) {
-      console.log('Exception from address.js/deleteAddress:')
-      console.log(err)
-
       return err
     }
   }
