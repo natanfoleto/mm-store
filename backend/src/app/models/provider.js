@@ -4,7 +4,7 @@ class Provider {
   async selectCountProvider (params) {
     try {
       const query = `
-        SELECT COUNT(*) as count FROM fornecedores 
+        SELECT id_fornecedor as id FROM fornecedores 
         WHERE cpf_cnpj = ? OR email = ?
       `
 

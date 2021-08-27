@@ -4,7 +4,7 @@ class Category {
   async selectCountCategory (params) {
     try {
       const query = `
-        SELECT COUNT(nome) as count FROM categorias WHERE nome = ?
+        SELECT id_categoria as id FROM categorias WHERE nome = ?
       `
 
       const result = await executeQuery(query, params)

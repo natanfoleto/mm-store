@@ -38,9 +38,9 @@ export default function Profiles() {
         setTotalRecords(data.total);
 
         setTotalPages(
-          limit === 0 
+          Number(limit) === 0 
           ? Math.ceil(data.total / limit)
-          : (data.total / data.total)
+          : Math.ceil(data.total / data.total)
         );
       } catch (err) {
         const { data, status } = err.response

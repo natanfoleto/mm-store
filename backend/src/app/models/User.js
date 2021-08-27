@@ -4,7 +4,7 @@ class User {
   async selectCountUser (params) {
     try {
       const query = `
-        SELECT COUNT(login) as count FROM usuarios WHERE login = ?
+        SELECT id_usuario as id FROM usuarios WHERE login = ?
       `
 
       const result = await executeQuery(query, params)

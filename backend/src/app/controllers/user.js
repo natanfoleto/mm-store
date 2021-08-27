@@ -27,9 +27,9 @@ class UserController {
     try {
       const { id_perfil, nome, login, password } = req.body
 
-      const { count } = await User.selectCountUser(login)
+      const count = await User.selectCountUser(login)
 
-      if (Number(count) > 0) {
+      if (count) {
         //! Erro de cadastro duplicado
         return res.json({
           result: 'error',
@@ -70,9 +70,9 @@ class UserController {
     try {
       const { id_perfil, nome, login, id_usuario } = req.body
 
-      const { count } = await User.selectCountUser(login)
+      const count = await User.selectCountUser(login)
 
-      if (Number(count) > 0) {
+      if (count && count.id !== id_usuario) {
         //! Erro de cadastro duplicado
         return res.json({
           result: 'error',

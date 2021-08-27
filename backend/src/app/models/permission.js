@@ -4,7 +4,7 @@ class Permission {
   async selectCountPermission (params) {
     try {
       const query = `
-        SELECT COUNT(nome) as count FROM permissoes WHERE nome = ?
+        SELECT id_permissao as id FROM permissoes WHERE nome = ?
       `
 
       const result = await executeQuery(query, params)

@@ -4,7 +4,7 @@ class Client {
   async selectCountClient (params) {
     try {
       const query = `
-        SELECT COUNT(*) as count FROM clientes 
+        SELECT id_cliente as id FROM clientes 
         WHERE cpf = ? OR email = ?
       `
 

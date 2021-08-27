@@ -28,9 +28,9 @@ class ProviderController {
     try {
       const { nome, cpf_cnpj, email, celular, obs } = req.body
 
-      const { count } = await Provider.selectCountProvider([cpf_cnpj, email])
+      const count = await Provider.selectCountProvider([cpf_cnpj, email])
 
-      if (Number(count) > 0) {
+      if (count) {
         //! Erro de cadastro duplicado
         return res.json({
           result: 'error',
@@ -71,9 +71,9 @@ class ProviderController {
     try {
       const { nome, cpf_cnpj, email, celular, obs, id_fornecedor } = req.body
 
-      const { count } = await Provider.selectCountProvider([cpf_cnpj, email])
+      const count = await Provider.selectCountProvider([cpf_cnpj, email])
 
-      if (Number(count) > 0) {
+      if (count && count.id !== id_fornecedor) {
         //! Erro de cadastro duplicado
         return res.json({
           result: 'error',

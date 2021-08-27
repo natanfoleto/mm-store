@@ -39,6 +39,8 @@ routes.route('/sessions').post(validation(validationSession.sessionCreate), Sess
 
 routes.use(auth)
 
+routes.route('/permission/search/forprofile').post(validation(validationPermission.permissionSearchForProfile), PermissionController.searchForProfile)
+routes.route('/permissions/search/:perfil').get(validation(validationPermissions.permissionsSearch), PermissionsController.search)
 routes.route('/users/search/:page/:limit').post(is(['VIEW_USERS']), validation(validationUser.userSearch), UserController.search)
 routes.route('/profiles/search/:page/:limit').post(is(['VIEW_PROFILES']), validation(validationProfile.profileSearch), ProfileController.search)
 routes.route('/permission/search/:page/:limit').post(is(['VIEW_PERMISSION']), validation(validationPermission.permissionSearch), PermissionController.search)
@@ -50,9 +52,6 @@ routes.route('/clients/search/:page/:limit').post(is(['VIEW_CLIENTS']), validati
 routes.route('/accounts/search/:page/:limit').post(is(['VIEW_ACCOUNTS']), validation(validationAccount.accountSearch), AccountController.search)
 routes.route('/address/search/:page/:limit').post(is(['VIEW_ADDRESS']), validation(validationAddress.addressSearch), AddressController.search)
 routes.route('/wishs/search/:page/:limit').post(is(['VIEW_WISHS']), validation(validationWish.wishSearch), WishController.search)
-
-routes.route('/permission/search/forprofile').post(validation(validationPermission.permissionSearchForProfile), PermissionController.searchForProfile)
-routes.route('/permissions/search/:perfil').get(validation(validationPermissions.permissionsSearch), PermissionsController.search)
 
 routes.use(audit)
 

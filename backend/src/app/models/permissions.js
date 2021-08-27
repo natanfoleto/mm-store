@@ -4,7 +4,7 @@ class Permissions {
   async selectCountPermissions (params) {
     try {
       const query = `
-        SELECT COUNT(id_perfil) as count 
+        SELECT id_permissao_perfil as id 
         FROM permissoes_perfis 
         WHERE id_perfil = ? AND id_permissao = ?
       `

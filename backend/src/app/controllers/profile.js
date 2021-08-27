@@ -27,9 +27,9 @@ class ProfileController {
     try {
       const { nome } = req.body
 
-      const { count } = await Profile.selectCountProfile(nome)
+      const count = await Profile.selectCountProfile(nome)
 
-      if (Number(count) > 0) {
+      if (count) {
         //! Erro de cadastro duplicado
         return res.json({
           result: 'error',
@@ -68,9 +68,9 @@ class ProfileController {
     try {
       const { nome, id_perfil } = req.body
 
-      const { count } = await Profile.selectCountProfile(nome)
+      const count = await Profile.selectCountProfile(nome)
 
-      if (Number(count) > 0) {
+      if (count && count.id !== id_perfil) {
         //! Erro de cadastro duplicado
         return res.json({
           result: 'error',

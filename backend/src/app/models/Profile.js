@@ -4,7 +4,7 @@ class Profile {
   async selectCountProfile (params) {
     try {
       const query = `
-        SELECT COUNT(nome) as count FROM perfis WHERE nome = ?
+        SELECT id_perfil as id FROM perfis WHERE nome = ?
       `
 
       const result = await executeQuery(query, params)

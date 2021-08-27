@@ -29,9 +29,9 @@ class ClientController {
     try {
       const { nome, cpf, email, data_nasc, celular, password } = req.body
 
-      const { count } = await Client.selectCountClient([cpf, email])
+      const count = await Client.selectCountClient([cpf, email])
 
-      if (Number(count) > 0) {
+      if (count) {
         //! Erro de cadastro duplicado
         return res.json({
           result: 'error',
@@ -78,9 +78,9 @@ class ClientController {
     try {
       const { nome, cpf, email, data_nasc, celular, password, id_cliente } = req.body
 
-      const { count } = await Client.selectCountClient([cpf, email])
+      const count = await Client.selectCountClient([cpf, email])
 
-      if (Number(count) > 0) {
+      if (count && count.id !== id_cliente) {
         //! Erro de cadastro duplicado
         return res.json({
           result: 'error',

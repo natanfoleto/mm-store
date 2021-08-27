@@ -37,7 +37,7 @@ export default function Users() {
         setData(data.data);
         setTotalRecords(data.total);
         setTotalPages(
-          limit === 0 
+          Number(limit) === 0 
           ? Math.ceil(data.total / limit)
           : Math.ceil(data.total / data.total)
         );

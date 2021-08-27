@@ -37,9 +37,9 @@ export default function Permissions() {
         setData(data.data);
         setTotalRecords(data.total);
         setTotalPages(
-          limit === 0 
-          ? Math.ceil(data.total / limit)
-          : Math.ceil(data.total / data.total)
+          Number(limit) === 0 
+          ? Math.ceil(data.total / data.total)
+          : Math.ceil(data.total / limit)
         );
       } catch (err) {
         const { data, status } = err.response

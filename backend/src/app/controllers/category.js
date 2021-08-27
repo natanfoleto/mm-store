@@ -27,9 +27,9 @@ class CategoryController {
     try {
       const { nome } = req.body
 
-      const { count } = await Category.selectCountCategory(nome)
+      const count = await Category.selectCountCategory(nome)
 
-      if (Number(count) > 0) {
+      if (count) {
         //! Erro de cadastro duplicado
         return res.json({
           result: 'error',
@@ -66,9 +66,9 @@ class CategoryController {
     try {
       const { nome, id_categoria } = req.body
 
-      const { count } = await Category.selectCountCategory(nome)
+      const count = await Category.selectCountCategory(nome)
 
-      if (Number(count) > 0) {
+      if (count && count.id !== id_categoria) {
         //! Erro de cadastro duplicado
         return res.json({
           result: 'error',

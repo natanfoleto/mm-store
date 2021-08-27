@@ -29,9 +29,9 @@ class ProductController {
         preco_venda, preco_promocional, estoque, tamanho
       } = req.body
 
-      const { count } = await Product.selectCountProduct(nome)
+      const count = await Product.selectCountProduct(nome)
 
-      if (Number(count) > 0) {
+      if (count) {
         //! Erro de cadastro duplicado
         return res.json({
           result: 'error',
@@ -76,9 +76,9 @@ class ProductController {
         preco_promocional, estoque, tamanho, id_produto
       } = req.body
 
-      const { count } = await Product.selectCountProduct(nome)
+      const count = await Product.selectCountProduct(nome)
 
-      if (Number(count) > 0) {
+      if (count && count.id !== id_produto) {
         //! Erro de cadastro duplicado
         return res.json({
           result: 'error',

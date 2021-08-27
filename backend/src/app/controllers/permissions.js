@@ -25,9 +25,9 @@ class PermissionsController {
 
       const permissions = [id_perfil, id_permissao]
 
-      const { count } = await Permissions.selectCountPermissions(permissions)
+      const count = await Permissions.selectCountPermissions(permissions)
 
-      if (Number(count) > 0) {
+      if (count) {
         //! Erro de cadastro duplicado
         return res.json({
           result: 'error',

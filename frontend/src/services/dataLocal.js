@@ -12,22 +12,40 @@ const typesPermission = [
   { id: 'Escrita', title: 'Escrita' }
 ]
 
-const contextsPermisssion = [
-  { id: 'Users', title: 'Users' },
-  { id: 'Profiles', title: 'Profiles' },
-  { id: 'Permissions', title: 'Permissions' },
-]
-
 const typesProfile = [
   { id: '', title: 'Todos'},
   { id: 'Leitura', title: 'Leitura'},
   { id: 'Escrita', title: 'Escrita'}
 ]
 
+const contextsPermisssion = [
+  { id: 'Users', title: 'Users'},
+  { id: 'Profiles', title: 'Profiles'},
+  { id: 'Clients', title: 'Clients'},
+  { id: 'Accounts', title: 'Accounts'},
+  { id: 'Products', title: 'Products'},
+  { id: 'Categories', title: 'Categories'},
+  { id: 'Photos', title: 'Photos'},
+  { id: 'Providers', title: 'Providers'},
+  { id: 'Address', title: 'Address'},
+  { id: 'Wishs', title: 'Wishs'},
+  { id: 'Permission', title: 'Permission'},
+  { id: 'Permissions', title: 'Permissions'}
+]
+
 const contextsProfile = [
   { id: '', title: 'Todos'},
   { id: 'Users', title: 'Users'},
   { id: 'Profiles', title: 'Profiles'},
+  { id: 'Clients', title: 'Clients'},
+  { id: 'Accounts', title: 'Accounts'},
+  { id: 'Products', title: 'Products'},
+  { id: 'Categories', title: 'Categories'},
+  { id: 'Photos', title: 'Photos'},
+  { id: 'Providers', title: 'Providers'},
+  { id: 'Address', title: 'Address'},
+  { id: 'Wishs', title: 'Wishs'},
+  { id: 'Permission', title: 'Permission'},
   { id: 'Permissions', title: 'Permissions'}
 ]
 

@@ -4,7 +4,7 @@ class Product {
   async selectCountProduct (params) {
     try {
       const query = `
-        SELECT COUNT(nome) as count FROM produtos WHERE nome = ?
+        SELECT id_produto as id FROM produtos WHERE nome = ?
       `
 
       const result = await executeQuery(query, params)
