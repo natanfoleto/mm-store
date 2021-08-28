@@ -9,6 +9,9 @@ export const useProduct = () => {
 
   async function createProduct(data) {   
     try {
+      if (data.id_fornecedor === 'Nenhum')
+        data.id_fornecedor = null
+  
       const res = await api.post('/products', data)
 
       const { result, message } = res.data;
@@ -35,6 +38,9 @@ export const useProduct = () => {
 
   async function updateProduct(data) {
     try {
+      if (data.id_fornecedor === 'Nenhum')
+        data.id_fornecedor = null
+
       const res = await api.put('/products', data);
 
       const { result, message } = res.data;

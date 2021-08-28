@@ -2,19 +2,16 @@ import PropTypes from 'prop-types';
 
 import Header from '../../../components/Header';
 
-import { Wrapper, Content } from './styles';
+import { Wrapper, Body } from './styles';
 
 export default function FormLayout({ children }) {
   return (
     <Wrapper>
       <Header />
 
-      <Content>
-        <Content.Header>
-        </Content.Header>
-
+      <Body>
         {children}
-      </Content>
+      </Body>
     </Wrapper>
   );
 }

@@ -1,5 +1,4 @@
 import { useEffect, useState, useCallback } from 'react'; 
-import { Form, Input, Select } from '@rocketseat/unform';
 import api from '../../../services/api';
 import Toast from '../../../utils/toastify';
 
@@ -11,7 +10,11 @@ import Layout from '../../_layouts/form';
 
 import useProduct from '../../../hooks/useProduct';
 
-import { Body, Container, Grouping, IGroup, BGroup } from './styles';
+import Form from '../../../components/Form';
+import Input from '../../../components/Input';
+import Select from '../../../components/Select';
+
+import { Container, Grouping, IGroup, BGroup } from '../styles';
 
 export default function FormProduct() {
   const history = useHistory();
@@ -60,7 +63,7 @@ export default function FormProduct() {
       try {
         const { data } = await api.post('/providers/search/1/0');
   
-        let newData = [];
+        let newData = [{ title: 'Nenhum'}];
     
         data.data.forEach((item) => {
           const element = { id: item.id_fornecedor, title: item.nome };
@@ -129,142 +132,154 @@ export default function FormProduct() {
     setButtonAvailable(false);
   }, []);
 
+  const toCurrencyBRL = useCallback((e) => {
+    let value = e.currentTarget.value;
+    value = value.replace(/\D/g, '')
+    value = value.replace(/(\d)(\d{2})$/, '$1,$2')
+    value = value.replace(/(?=(\d{3})+(\D))\B/g, '.')
+
+    e.currentTarget.value = value
+
+    setButtonAvailable(false) 
+  }, []);
+
   return (
     <Layout>  
-      <Body>
-        <Container>
-          <Container.Title>
-            <h1> { operation === 'ADD' ? 'Novo produto!' : 'Editar produto!' }</h1>
-            <p>Crie e personalize seus produtos!</p>
-          </Container.Title>
+      <Container>
+        <Container.Title>
+          <h1> { operation === 'ADD' ? 'Novo produto!' : 'Editar produto!' }</h1>
+          <p>Crie e personalize seus produtos!</p>
+        </Container.Title>
 
-          <Form initialData={product} onSubmit={handleSubmit} autoComplete="off">
+        <Form initialData={product} onSubmit={handleSubmit} autoComplete="off">
+          <Input 
+            type="text" 
+            name="id_produto"
+            hidden={true}
+          />
+          
+          <IGroup>
+            <IGroup.Label>Nome</IGroup.Label>
+
             <Input 
               type="text" 
-              name="id_produto"
-              hidden={true}
+              name="nome"
+              maxLength={100}
+              onChange={() => { setButtonAvailable(false) }}
+              required
             />
-            
-            <IGroup>
-              <IGroup.Label>Nome</IGroup.Label>
+          </IGroup>
 
-              <Input 
-                type="text" 
-                name="nome"
-                maxLength={100}
-                onChange={() => { setButtonAvailable(false) }}
+          <Grouping>
+            <IGroup>
+              <IGroup.Label>Escolha a categoria</IGroup.Label>
+
+              <Select 
+                name="id_categoria" 
+                value={currentCategory}
+                onChange={handleSelectCategory}
+                options={categories} 
                 required
               />
             </IGroup>
 
-            <Grouping>
-              <IGroup>
-                <IGroup.Label>Escolha a categoria</IGroup.Label>
+            <IGroup>
+              <IGroup.Label>Fornecedor do produto</IGroup.Label>
 
-                <Select 
-                  name="id_categoria" 
-                  value={currentCategory}
-                  onChange={handleSelectCategory}
-                  options={categories} 
-                  required
-                />
-              </IGroup>
+              <Select 
+                name="id_fornecedor" 
+                value={currentProvider}
+                onChange={handleSelectProvider}
+                options={providers} 
+              />
+            </IGroup>
+          </Grouping>
 
-              <IGroup>
-                <IGroup.Label>Fornecedor do produto</IGroup.Label>
+          <Grouping>
+            <IGroup>
+              <IGroup.Label>Preço de custo</IGroup.Label>
 
-                <Select 
-                  name="id_fornecedor" 
-                  value={currentProvider}
-                  onChange={handleSelectProvider}
-                  options={providers} 
-                />
-              </IGroup>
-            </Grouping>
+              <Input 
+                type="text" 
+                name="preco_custo"
+                prefix="R$"
+                maxLength={50}
+                onChange={toCurrencyBRL}
+                required
+              />
+            </IGroup>
 
-            <Grouping>
-              <IGroup>
-                <IGroup.Label>Preço de custo</IGroup.Label>
+            <IGroup>
+              <IGroup.Label>Preço de venda</IGroup.Label>
 
-                <Input 
-                  type="text" 
-                  name="preco_custo"
-                  maxLength={50}
-                  onChange={() => { setButtonAvailable(false) }}
-                  required
-                />
-              </IGroup>
+              <Input 
+                type="text" 
+                name="preco_venda"
+                prefix="R$"
+                maxLength={50}
+                onChange={toCurrencyBRL}
+                required
+              />
+            </IGroup>
 
-              <IGroup>
-                <IGroup.Label>Preço de venda</IGroup.Label>
+            <IGroup>
+              <IGroup.Label>Preço de promocional</IGroup.Label>
 
-                <Input 
-                  type="text" 
-                  name="preco_venda"
-                  maxLength={50}
-                  onChange={() => { setButtonAvailable(false) }}
-                  required
-                />
-              </IGroup>
+              <Input 
+                type="text" 
+                name="preco_promocional"
+                prefix="R$"
+                maxLength={50}
+                onChange={toCurrencyBRL}
+              />
+            </IGroup>
+          </Grouping>
 
-              <IGroup>
-                <IGroup.Label>Preço de promocional</IGroup.Label>
+          <Grouping>
+            <IGroup>
+              <IGroup.Label>Tamanho</IGroup.Label>
 
-                <Input 
-                  type="text" 
-                  name="preco_promocional"
-                  maxLength={50}
-                  onChange={() => { setButtonAvailable(false) }}
-                />
-              </IGroup>
-            </Grouping>
+              <Select 
+                name="tamanho" 
+                value={currentSize}
+                onChange={handleSelectSize}
+                options={produtctSizes} 
+                required
+              />
+            </IGroup>
 
-            <Grouping>
-              <IGroup>
-                <IGroup.Label>Tamanho</IGroup.Label>
+            <IGroup>
+              <IGroup.Label>Qtd em estoque</IGroup.Label>
 
-                <Select 
-                  name="tamanho" 
-                  value={currentSize}
-                  onChange={handleSelectSize}
-                  options={produtctSizes} 
-                  required
-                />
-              </IGroup>
+              <Input 
+                type="text" 
+                name="estoque"
+                maxLength={50}
+                onChange={() => { setButtonAvailable(false) }}
+                required
+              />
+            </IGroup>
+          </Grouping>
 
-              <IGroup>
-                <IGroup.Label>Qtd em estoque</IGroup.Label>
+          <BGroup>
+            <BGroup.Button 
+              type="submit" 
+              color="#003464"
+              disabled={buttonAvailable}
+            >
+              Salvar
+            </BGroup.Button>
 
-                <Input 
-                  type="text" 
-                  name="estoque"
-                  maxLength={50}
-                  onChange={() => { setButtonAvailable(false) }}
-                  required
-                />
-              </IGroup>
-            </Grouping>
-
-            <BGroup>
-              <BGroup.Button 
-                type="submit" 
-                color="#003464"
-                disabled={buttonAvailable}
-              >
-                Salvar
-              </BGroup.Button>
-
-              <BGroup.Button 
-                type="button"
-                color="#e84545"
-                onClick={handleCancel}
-              >
-                Cancelar
-              </BGroup.Button>
-            </BGroup>
-          </Form>
-        </Container>
-      </Body>
+            <BGroup.Button 
+              type="button"
+              color="#e84545"
+              onClick={handleCancel}
+            >
+              Cancelar
+            </BGroup.Button>
+          </BGroup>
+        </Form>
+      </Container>
     </Layout>
   );
 }

@@ -1,5 +1,4 @@
 import { useEffect, useState, useCallback } from 'react'; 
-import { Form, Input, Select } from '@rocketseat/unform';
 
 import { useHistory } from 'react-router-dom';
 
@@ -9,7 +8,11 @@ import Layout from '../../_layouts/form';
 
 import usePermission from '../../../hooks/usePermission';
 
-import { Body, Container, IGroup, BGroup } from './styles';
+import Form from '../../../components/Form';
+import Input from '../../../components/Input';
+import Select from '../../../components/Select';
+
+import { Container, IGroup, BGroup } from '../styles';
 
 export default function FormPermission() {
   const history = useHistory();
@@ -63,88 +66,86 @@ export default function FormPermission() {
 
   return (
     <Layout>  
-      <Body>
-        <Container>
-          <Container.Title>
-            <h1> { operation === 'ADD' ? 'Nova permissão!' : 'Editar permissão!' }</h1>
-            <p>Use permissões, para controlar tarefas dentro do sistema!</p>
-          </Container.Title>
+      <Container>
+        <Container.Title>
+          <h1> { operation === 'ADD' ? 'Nova permissão!' : 'Editar permissão!' }</h1>
+          <p>Use permissões, para controlar tarefas dentro do sistema!</p>
+        </Container.Title>
 
-          <Form initialData={permission} onSubmit={handleSubmit} autoComplete="off">
+        <Form initialData={permission} onSubmit={handleSubmit} autoComplete="off">
+          <Input 
+            type="text" 
+            name="id_permissao"
+            hidden={true}
+          />
+          
+          <IGroup>
+            <IGroup.Label>Nome</IGroup.Label>
+
             <Input 
               type="text" 
-              name="id_permissao"
-              hidden={true}
+              name="nome"
+              maxLength={50}
+              onChange={() => { setButtonAvailable(false) }}
+              required
             />
-            
-            <IGroup>
-              <IGroup.Label>Nome</IGroup.Label>
+          </IGroup>
 
-              <Input 
-                type="text" 
-                name="nome"
-                maxLength={50}
-                onChange={() => { setButtonAvailable(false) }}
-                required
-              />
-            </IGroup>
+          <IGroup>
+            <IGroup.Label>Descrição</IGroup.Label>
 
-            <IGroup>
-              <IGroup.Label>Descrição</IGroup.Label>
+            <Input 
+              type="text" 
+              name="descricao"
+              maxLength={100}
+              onChange={() => { setButtonAvailable(false) }}
+              required
+            />
+          </IGroup>
 
-              <Input 
-                type="text" 
-                name="descricao"
-                maxLength={100}
-                onChange={() => { setButtonAvailable(false) }}
-                required
-              />
-            </IGroup>
+          <IGroup>
+            <IGroup.Label>Escolha o tipo</IGroup.Label>
 
-            <IGroup>
-              <IGroup.Label>Escolha o tipo</IGroup.Label>
+            <Select 
+              name="tipo" 
+              value={currentType}
+              options={typesPermission} 
+              onChange={handleSelectType}
+              required
+            />
+          </IGroup>
 
-              <Select 
-                name="tipo" 
-                value={currentType}
-                options={typesPermission} 
-                onChange={handleSelectType}
-                required
-              />
-            </IGroup>
+          <IGroup>
+            <IGroup.Label>Escolha o contexto</IGroup.Label>
 
-            <IGroup>
-              <IGroup.Label>Escolha o contexto</IGroup.Label>
+            <Select 
+              name="contexto" 
+              value={currentContext}
+              options={contextsPermisssion} 
+              onChange={handleSelectContext}
+              required
+            />
+          </IGroup>
 
-              <Select 
-                name="contexto" 
-                value={currentContext}
-                options={contextsPermisssion} 
-                onChange={handleSelectContext}
-                required
-              />
-            </IGroup>
+          <BGroup>
+            <BGroup.Button 
+              type="submit" 
+              color="#003464"
+              disabled={buttonAvailable}
+            >
+              Salvar
+            </BGroup.Button>
 
-            <BGroup>
-              <BGroup.Button 
-                type="submit" 
-                color="#003464"
-                disabled={buttonAvailable}
-              >
-                Salvar
-              </BGroup.Button>
-
-              <BGroup.Button 
-                type="button"
-                color="#e84545"
-                onClick={handleCancel}
-              >
-                Cancelar
-              </BGroup.Button>
-            </BGroup>
-          </Form>
-        </Container>
-      </Body>
+            <BGroup.Button 
+              type="button"
+              color="#e84545"
+              onClick={handleCancel}
+            >
+              Cancelar
+            </BGroup.Button>
+          </BGroup>
+        </Form>
+      </Container>
     </Layout>
   );
 }

@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback } from 'react'; 
-import { Form, Input, Select } from '@rocketseat/unform';
+
 import api from '../../../services/api';
 import Toast from '../../../utils/toastify';
 
@@ -9,7 +9,11 @@ import Layout from '../../_layouts/form';
 
 import useUser from '../../../hooks/useUser';
 
-import { Body, Container, IGroup, BGroup } from './styles';
+import Form from '../../../components/Form';
+import Input from '../../../components/Input';
+import Select from '../../../components/Select';
+
+import { Container, IGroup, BGroup } from '../styles';
 
 export default function FormUser() {
   const history = useHistory();
@@ -87,90 +91,88 @@ export default function FormUser() {
 
   return (
     <Layout>  
-      <Body>
-        <Container>
-          <Container.Title>
-            <h1> { operation === 'ADD' ? 'Novo usuário!' : 'Editar usuário!' }</h1>
-            <p>Use os usuários, para criar acessos no sistema!</p>
-          </Container.Title>
+      <Container>
+        <Container.Title>
+          <h1> { operation === 'ADD' ? 'Novo usuário!' : 'Editar usuário!' }</h1>
+          <p>Use os usuários, para criar acessos no sistema!</p>
+        </Container.Title>
 
-          <Form initialData={user} onSubmit={handleSubmit} autoComplete="off">
+        <Form initialData={user} onSubmit={handleSubmit} autoComplete="off">
+          <Input 
+            type="text" 
+            name="id_usuario"
+            hidden={true}
+          />
+
+          <IGroup>
+            <IGroup.Label>Escolha o perfil</IGroup.Label>
+
+            <Select 
+              name="id_perfil" 
+              value={currentProfile}
+              onChange={handleSelect}
+              options={profiles} 
+              required
+            />
+          </IGroup>
+          
+          <IGroup>
+            <IGroup.Label>Nome</IGroup.Label>
+
             <Input 
               type="text" 
-              name="id_usuario"
-              hidden={true}
+              name="nome"
+              maxLength={100}
+              onChange={() => { setButtonAvailable(false) }}
+              required
             />
+          </IGroup>
 
-            <IGroup>
-              <IGroup.Label>Escolha o perfil</IGroup.Label>
+          <IGroup>
+            <IGroup.Label>Login</IGroup.Label>
 
-              <Select 
-                name="id_perfil" 
-                value={currentProfile}
-                onChange={handleSelect}
-                options={profiles} 
-                required
-              />
-            </IGroup>
+            <Input 
+              type="text" 
+              name="login"
+              maxLength={50}
+              onChange={() => { setButtonAvailable(false) }}
+              required
+            />
+          </IGroup>
+
+          <IGroup
+            style={ operation === 'EDIT' ? { display: 'none' } : { display: '' } }
+          >
+            <IGroup.Label>Sua senha secreta</IGroup.Label>
             
-            <IGroup>
-              <IGroup.Label>Nome</IGroup.Label>
+            <Input 
+              type="password" 
+              name="password"
+              maxLength={32}
+              onChange={() => { setButtonAvailable(false) }}
+              required={operation === 'EDIT' ? false : true}
+            />
+          </IGroup>
 
-              <Input 
-                type="text" 
-                name="nome"
-                maxLength={100}
-                onChange={() => { setButtonAvailable(false) }}
-                required
-              />
-            </IGroup>
-
-            <IGroup>
-              <IGroup.Label>Login</IGroup.Label>
-
-              <Input 
-                type="text" 
-                name="login"
-                maxLength={50}
-                onChange={() => { setButtonAvailable(false) }}
-                required
-              />
-            </IGroup>
-
-            <IGroup
-              style={ operation === 'EDIT' ? { display: 'none' } : { display: '' } }
+          <BGroup>
+            <BGroup.Button 
+              type="submit" 
+              color="#003464"
+              disabled={buttonAvailable}
             >
-              <IGroup.Label>Sua senha secreta</IGroup.Label>
-              
-              <Input 
-                type="password" 
-                name="password"
-                maxLength={32}
-                onChange={() => { setButtonAvailable(false) }}
-                required={operation === 'EDIT' ? false : true}
-              />
-            </IGroup>
+              Salvar
+            </BGroup.Button>
 
-            <BGroup>
-              <BGroup.Button 
-                type="submit" 
-                color="#003464"
-                disabled={buttonAvailable}
-              >
-                Salvar
-              </BGroup.Button>
-
-              <BGroup.Button 
-                type="button"
-                color="#e84545"
-                onClick={handleCancel}
-              >
-                Cancelar
-              </BGroup.Button>
-            </BGroup>
-          </Form>
-        </Container>
-      </Body>
+            <BGroup.Button 
+              type="button"
+              color="#e84545"
+              onClick={handleCancel}
+            >
+              Cancelar
+            </BGroup.Button>
+          </BGroup>
+        </Form>
+      </Container>
     </Layout>
   );
 }
