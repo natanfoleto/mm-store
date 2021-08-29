@@ -15,6 +15,7 @@ import { IoIosRemove } from 'react-icons/io';
 
 import Form from '../../../components/Form';
 import Input from '../../../components/Input';
+import Button from '../../../components/Button'
 import Select from '../../../components/Select';
 
 import { Permissions } from './styles';
@@ -271,21 +272,23 @@ export default function FormProfile() {
           }
 
           <BGroup>
-            <BGroup.Button 
-              type="submit" 
-              color="#003464"
+            <Button
+              type="submit"
+              background="#003464"
+              color="#FFF"
               disabled={buttonAvailable}
             >
               Salvar
-            </BGroup.Button>
+            </Button>
 
-            <BGroup.Button 
+            <Button
               type="button"
-              color="#e84545"
+              background="#e84545"
+              color="#FFF"
               onClick={handleCancel}
             >
               Cancelar
-            </BGroup.Button>
+            </Button>
           </BGroup>
         </Form>
       </Container>

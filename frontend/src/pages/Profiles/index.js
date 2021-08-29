@@ -11,8 +11,6 @@ import Search from '../../components/Search'
 import Table from '../../components/Table'
 import Navigation from '../../components/Navigation'
 
-import { Body } from '../../styles/crud';
-
 export default function Profiles() {
   const history = useHistory();
 
@@ -72,34 +70,32 @@ export default function Profiles() {
 
   return (
     <Layout>      
-      <Body>
-        <Title 
-          title="Perfis"
-          subTitle="Cargos destinados aos usuários"
-        />
+      <Title 
+        title="Perfis"
+        subTitle="Cargos destinados aos usuários"
+      />
 
-        <Search 
-          placeholder="Pesquise pelo nome"
-          search={search}
-          setSearch={setSearch}
-          viewPermission={viewPermission}
-          limit={limit}
-          handleLimit={handleLimit}
-          handleCreate={handleCreate}
-        />
+      <Search 
+        placeholder="Pesquise pelo nome"
+        search={search}
+        setSearch={setSearch}
+        viewPermission={viewPermission}
+        limit={limit}
+        handleLimit={handleLimit}
+        handleCreate={handleCreate}
+      />
 
-        <Table 
-          data={data}
-          Card={Card}
-        />
-        
-        <Navigation 
-          currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
-          totalPages={totalPages}
-          totalRecords={totalRecords}
-        />
-      </Body>
+      <Table 
+        data={data}
+        Card={Card}
+      />
+      
+      <Navigation 
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+        totalPages={totalPages}
+        totalRecords={totalRecords}
+      />
     </Layout>
   );
 }

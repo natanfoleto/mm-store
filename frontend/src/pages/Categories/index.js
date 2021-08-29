@@ -11,8 +11,6 @@ import Search from '../../components/Search'
 import Table from '../../components/Table'
 import Navigation from '../../components/Navigation'
 
-import { Body } from '../../styles/crud';
-
 export default function Categories() {
   const history = useHistory();
 
@@ -72,34 +70,32 @@ export default function Categories() {
 
   return (
     <Layout>      
-      <Body>
-        <Title 
-          title="Categorias"
-          subTitle="Categorias de produtos"
-        />
+      <Title 
+        title="Categorias"
+        subTitle="Categorias de produtos"
+      />
 
-        <Search 
-          placeholder="Pesquise pela categoria"
-          search={search}
-          setSearch={setSearch}
-          viewPermission={viewPermission}
-          limit={limit}
-          handleLimit={handleLimit}
-          handleCreate={handleCreate}
-        />
+      <Search 
+        placeholder="Pesquise pela categoria"
+        search={search}
+        setSearch={setSearch}
+        viewPermission={viewPermission}
+        limit={limit}
+        handleLimit={handleLimit}
+        handleCreate={handleCreate}
+      />
 
-        <Table 
-          data={data}
-          Card={Card}
-        />
-        
-        <Navigation 
-          currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
-          totalPages={totalPages}
-          totalRecords={totalRecords}
-        />
-      </Body>
+      <Table 
+        data={data}
+        Card={Card}
+      />
+      
+      <Navigation 
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+        totalPages={totalPages}
+        totalRecords={totalRecords}
+      />
     </Layout>
   );
 }

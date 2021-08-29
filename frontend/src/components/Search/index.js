@@ -1,6 +1,7 @@
-import { Container, Input, Filter, Button } from './styles'
+import { Container, Input, Filter } from './styles'
 
 import Select from '../Select'
+import Button from '../Button'
 
 import { rows } from '../../services/dataLocal'
 
@@ -26,7 +27,11 @@ export default function ComponentSearch({ placeholder, search, setSearch, viewPe
 
       </Filter>
 
-      <Button onClick={handleCreate}>
+      <Button 
+        onClick={handleCreate}
+        background="#003464"
+        color="#FFF"
+      >
         Criar
       </Button>
     </Container>

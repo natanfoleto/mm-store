@@ -11,8 +11,6 @@ import Search from '../../components/Search'
 import Table from '../../components/Table'
 import Navigation from '../../components/Navigation'
 
-import { Body } from '../../styles/crud';
-
 export default function Permissions() {
   const history = useHistory();
 
@@ -71,34 +69,32 @@ export default function Permissions() {
 
   return (
     <Layout>      
-      <Body>
-        <Title 
-          title="Permissões"
-          subTitle="Configuração que permite os usuários realizar feitos"
-        />
+      <Title 
+        title="Permissões"
+        subTitle="Configuração que permite os usuários realizar feitos"
+      />
 
-        <Search 
-          placeholder="Pesquise pela permissão"
-          search={search}
-          setSearch={setSearch}
-          viewPermission={viewPermission}
-          limit={limit}
-          handleLimit={handleLimit}
-          handleCreate={handleCreate}
-        />
+      <Search 
+        placeholder="Pesquise pela permissão"
+        search={search}
+        setSearch={setSearch}
+        viewPermission={viewPermission}
+        limit={limit}
+        handleLimit={handleLimit}
+        handleCreate={handleCreate}
+      />
 
-        <Table 
-          data={data}
-          Card={Card}
-        />
-        
-        <Navigation 
-          currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
-          totalPages={totalPages}
-          totalRecords={totalRecords}
-        />
-      </Body>
+      <Table 
+        data={data}
+        Card={Card}
+      />
+      
+      <Navigation 
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+        totalPages={totalPages}
+        totalRecords={totalRecords}
+      />
     </Layout>
   );
 }

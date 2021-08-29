@@ -11,8 +11,6 @@ import Search from '../../components/Search'
 import Table from '../../components/Table'
 import Navigation from '../../components/Navigation'
 
-import { Body } from '../../styles/crud';
-
 export default function Products() {
   const history = useHistory();
 
@@ -71,35 +69,33 @@ export default function Products() {
   }, [])
 
   return (
-    <Layout>      
-      <Body>
-        <Title 
-          title="Produtos"
-          subTitle="Seus prdutos... roupas, sapatos, acessórios e etc!"
-        />
+    <Layout>
+      <Title 
+        title="Produtos"
+        subTitle="Seus prdutos... roupas, sapatos, acessórios e etc!"
+      />
 
-        <Search 
-          placeholder="Pesquise por um produto"
-          search={search}
-          setSearch={setSearch}
-          viewPermission={viewPermission}
-          limit={limit}
-          handleLimit={handleLimit}
-          handleCreate={handleCreate}
-        />
+      <Search 
+        placeholder="Pesquise por um produto"
+        search={search}
+        setSearch={setSearch}
+        viewPermission={viewPermission}
+        limit={limit}
+        handleLimit={handleLimit}
+        handleCreate={handleCreate}
+      />
 
-        <Table 
-          data={data}
-          Card={Card}
-        />
-        
-        <Navigation 
-          currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
-          totalPages={totalPages}
-          totalRecords={totalRecords}
-        />
-      </Body>
+      <Table 
+        data={data}
+        Card={Card}
+      />
+      
+      <Navigation 
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+        totalPages={totalPages}
+        totalRecords={totalRecords}
+      />
     </Layout>
   );
 }

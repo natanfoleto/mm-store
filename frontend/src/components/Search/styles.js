@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { lighten, darken } from 'polished';
+import { darken } from 'polished';
 
 export const Container = styled.div`
   display: flex;
@@ -46,18 +46,5 @@ export const Filter = styled.div`
       color: #000;
       background: ${darken(0.03, '#FFF')};
     }
-  }
-`;
-
-export const Button = styled.button`
-  background: #003464;
-  color: #FFF;
-  padding: 0 2rem;
-  border-radius: 0.25rem;
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.15);
-
-  &:hover {
-    background: ${lighten(0.07, '#003464')};
-    transition: 0.25s;
   }
 `;

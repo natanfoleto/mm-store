@@ -11,8 +11,6 @@ import Search from '../../components/Search'
 import Table from '../../components/Table'
 import Navigation from '../../components/Navigation'
 
-import { Body } from '../../styles/crud';
-
 export default function Users() {
   const history = useHistory();
 
@@ -72,34 +70,32 @@ export default function Users() {
 
   return (
     <Layout>      
-      <Body>
-        <Title 
-          title="Usuários"
-          subTitle="Somente os usuários tem acesso ao sistema"
-        />
+      <Title 
+        title="Usuários"
+        subTitle="Somente os usuários tem acesso ao sistema"
+      />
 
-        <Search 
-          placeholder="Pesquise por um usuário"
-          search={search}
-          setSearch={setSearch}
-          viewPermission={viewPermission}
-          limit={limit}
-          handleLimit={handleLimit}
-          handleCreate={handleCreate}
-        />
+      <Search 
+        placeholder="Pesquise por um usuário"
+        search={search}
+        setSearch={setSearch}
+        viewPermission={viewPermission}
+        limit={limit}
+        handleLimit={handleLimit}
+        handleCreate={handleCreate}
+      />
 
-        <Table 
-          data={data}
-          Card={Card}
-        />
-        
-        <Navigation 
-          currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
-          totalPages={totalPages}
-          totalRecords={totalRecords}
-        />
-      </Body>
+      <Table 
+        data={data}
+        Card={Card}
+      />
+      
+      <Navigation 
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+        totalPages={totalPages}
+        totalRecords={totalRecords}
+      />
     </Layout>
   );
 }

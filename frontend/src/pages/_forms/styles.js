@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { lighten } from 'polished';
 
 export const Container = styled.div`
   padding: 3rem 1.5rem;
@@ -40,14 +39,3 @@ export const BGroup = styled.div`
   justify-content: space-between;
   margin-top: 1rem;
 `;
-
-BGroup.Button = styled.button`
-  background: ${props => (props.color)};
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.15);
-
-  &:hover {
-    background: ${props => (lighten(0.04, props.color))};
-    transition: 0.15s;
-  }
-`;
-
