@@ -1,17 +1,15 @@
 import { useEffect, useState, useCallback } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Select } from '@rocketseat/unform';
 import api from '../../services/api';
-import { rows } from '../../services/dataLocal'
 import Toast from '../../utils/toastify';
 
 import Layout from '../_layouts/default';
 
-import ComponentCard from '../../components/DataCard/index';
 import Card from './components/Card';
-
-import { CgPlayTrackPrev, CgPlayTrackNext } from 'react-icons/cg';
-import { BiLoader } from 'react-icons/bi';
+import Title from '../../components/Title'
+import Search from '../../components/Search'
+import Table from '../../components/Table'
+import Navigation from '../../components/Navigation'
 
 import { Body } from '../../styles/crud';
 
@@ -74,82 +72,32 @@ export default function Permissions() {
   return (
     <Layout>      
       <Body>
-        <Body.Title>
-          <h1> Permissões </h1>
-          <p> Configuração que permite os usuários realizar feitos </p>
-        </Body.Title>
+        <Title 
+          title="Permissões"
+          subTitle="Configuração que permite os usuários realizar feitos"
+        />
 
-        {/* Cabeçalho do body */}
-        <Body.Header>
-          <Body.Filter>
-            <Body.Input 
-              placeholder="Pesquise por permissão"
-              value={search}
-              maxLength={50}
-              disabled={viewPermission}
-              onChange={e => setSearch(e.target.value)}
-            />
+        <Search 
+          placeholder="Pesquise pela permissão"
+          search={search}
+          setSearch={setSearch}
+          viewPermission={viewPermission}
+          limit={limit}
+          handleLimit={handleLimit}
+          handleCreate={handleCreate}
+        />
 
-            <Select 
-              name="rows"
-              options={rows}
-              onChange={handleLimit}
-              disabled={viewPermission}
-              placeholder={`${limit} rows`}
-            />
-
-          </Body.Filter>
-
-          <Body.Button onClick={handleCreate}>
-            Criar
-          </Body.Button>
-        </Body.Header>
-
-        {/* Dados do banco renderizados */}
-        <Body.Data>
-          { 
-            data ? 
-              data.map((item, index) => (
-                <ComponentCard 
-                  key={index} 
-                >
-                  <Card item={item} />
-                </ComponentCard>
-              ))
-            :
-              <Body.LoadData> 
-                <BiLoader size={22} />
-              </Body.LoadData>
-          }
-        </Body.Data>
+        <Table 
+          data={data}
+          Card={Card}
+        />
         
-        {/* Navegação dos dados renderizados */}
-        <Body.Navigation>
-          <Body.ButtonNavigation
-            disabled={currentPage <= 1}
-            onClick={() => {
-              setCurrentPage(currentPage - 1)
-            }} 
-          > 
-            <CgPlayTrackPrev size={22} /> 
-          </Body.ButtonNavigation>
-            
-          <Body.SpanNavigation>
-            Page <strong>{currentPage}</strong> of <strong>{totalPages ? totalPages : 1}</strong>
-            <br />
-            <strong>{totalRecords}</strong> registro(s) encontrado(s)
-          </Body.SpanNavigation>
- 
-          <Body.ButtonNavigation
-            disabled={currentPage >= totalPages}
-            onClick={() => {
-              setCurrentPage(currentPage + 1)
-            }} 
-          > 
-            <CgPlayTrackNext size={22} /> 
-          </Body.ButtonNavigation>
-             
-        </Body.Navigation>
+        <Navigation 
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+          totalPages={totalPages}
+          totalRecords={totalRecords}
+        />
       </Body>
     </Layout>
   );
