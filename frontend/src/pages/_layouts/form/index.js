@@ -10,11 +10,11 @@ export default function FormLayout({ children, title }) {
     <Wrapper>
       <Header />
 
-      <Breadcrumb title={title} />
-
       <Body>
         {children}
       </Body>
+
+      <Breadcrumb title={title} />
     </Wrapper>
   );
 }

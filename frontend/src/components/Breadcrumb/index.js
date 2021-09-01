@@ -8,11 +8,11 @@ export default function ComponentBreadcrumb({ title }) {
   const locationName = location.pathname.replace(/[0-9]/g, "");
   const locationNameFormatted = locationName.replace(/[^\w\s]/gi, " ");
 
-  console.log(locationName)
+  const firstName = locationNameFormatted.split(' ')
 
   return (
     <Content>
-      {locationNameFormatted} &rarr; <b>&nbsp;{title}</b>
+      {firstName[1]} &rarr; <b>&nbsp;{title}</b>
     </Content>
   );
 }

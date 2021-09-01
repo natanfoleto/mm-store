@@ -69,7 +69,7 @@ export default function Users() {
   }, [])
 
   return (
-    <Layout>      
+    <Layout title="Gestão de Usuários">      
       <Title 
         title="Usuários"
         subTitle="Somente os usuários tem acesso ao sistema"

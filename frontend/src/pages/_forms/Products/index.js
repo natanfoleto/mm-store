@@ -141,7 +141,7 @@ export default function FormProduct() {
   }, []);
 
   return (
-    <Layout>  
+    <Layout title={operation === 'ADD' ? 'Novo produto' : `Editando: ${product && product.nome}`}>  
       <Container>
         <Title>
           <h1> { operation === 'ADD' ? 'Novo produto!' : 'Editar produto!' }</h1>

@@ -91,7 +91,7 @@ export default function FormUser() {
   }, [])
 
   return (
-    <Layout>  
+    <Layout title={operation === 'ADD' ? 'Novo usuário' : `Editando: ${user && user.nome}`}>  
       <Container>
         <Title>
           <h1> { operation === 'ADD' ? 'Novo usuário!' : 'Editar usuário!' }</h1>

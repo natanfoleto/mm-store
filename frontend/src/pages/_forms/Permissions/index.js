@@ -66,7 +66,7 @@ export default function FormPermission() {
   }, [])
 
   return (
-    <Layout>  
+    <Layout title={operation === 'ADD' ? 'Nova permissão' : `Editando: ${permission && permission.nome}`}>  
       <Container>
         <Title>
           <h1> { operation === 'ADD' ? 'Nova permissão!' : 'Editar permissão!' }</h1>

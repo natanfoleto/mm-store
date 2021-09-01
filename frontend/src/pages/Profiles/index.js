@@ -69,7 +69,7 @@ export default function Profiles() {
   }, [])
 
   return (
-    <Layout>      
+    <Layout title="Gestão de Perfis">      
       <Title 
         title="Perfis"
         subTitle="Cargos destinados aos usuários"

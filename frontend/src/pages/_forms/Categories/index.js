@@ -47,7 +47,7 @@ export default function FormCategory() {
   }
 
   return (
-    <Layout title={operation === 'ADD' ? 'Nova categoria' : 'Editar categoria'}>  
+    <Layout title={operation === 'ADD' ? 'Nova categoria' : `Editando: ${category && category.nome}`}>
       <Container>
         <Title>
           <h1> { operation === 'ADD' ? 'Nova categoria!' : 'Editar categoria!' }</h1>

@@ -10,11 +10,11 @@ export default function DefaultLayout({ children, title }) {
     <Wrapper>
       <Header />
 
-      <Breadcrumb title={title} />
-
       <Content>
         {children}
       </Content>
+
+      <Breadcrumb title={title} />
     </Wrapper>
   );
 }

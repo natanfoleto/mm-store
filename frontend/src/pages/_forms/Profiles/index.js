@@ -159,7 +159,7 @@ export default function FormProfile() {
   }
 
   return (
-    <Layout>  
+    <Layout title={operation === 'ADD' ? 'Novo perfil' : `Editando: ${profile && profile.nome}`}>  
       <Container>
         <Title>
           <h1> { operation === 'ADD' ? 'Novo perfil!' : 'Editar perfil!' }</h1>

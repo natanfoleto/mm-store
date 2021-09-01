@@ -76,7 +76,7 @@ export default function Products() {
   }, [])
 
   return (
-    <Layout>
+    <Layout title="Gestão de Produtos">
       <Title 
         title="Produtos"
         subTitle="Seus prdutos... roupas, sapatos, acessórios e etc!"

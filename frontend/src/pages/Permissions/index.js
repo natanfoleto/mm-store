@@ -68,7 +68,7 @@ export default function Permissions() {
   }, [])
 
   return (
-    <Layout>      
+    <Layout title="Gestão de Permissões">      
       <Title 
         title="Permissões"
         subTitle="Configuração que permite os usuários realizar feitos"
