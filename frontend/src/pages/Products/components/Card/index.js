@@ -47,7 +47,7 @@ function ComponentProduct({ item }) {
         <Data.DivColumn> 
           <h1>Preço</h1>
           <p>
-            {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(item.preco_venda)}
+            {`R$ ${item.preco_venda}`}
           </p>
         </Data.DivColumn>
         

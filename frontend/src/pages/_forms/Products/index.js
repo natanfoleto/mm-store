@@ -1,6 +1,7 @@
 import { useEffect, useState, useCallback } from 'react'; 
 import api from '../../../services/api';
 import Toast from '../../../utils/toastify';
+import { replaceForCurrency, replaceForNumber } from '../../../utils/replaceValue';
 
 import { useHistory } from 'react-router-dom';
 
@@ -15,7 +16,7 @@ import Input from '../../../components/Input';
 import Button from '../../../components/Button'
 import Select from '../../../components/Select';
 
-import { Container, Grouping, IGroup, BGroup } from '../styles';
+import { Container, Title, Grouping, InputGroup, ButtonGroup, Label } from '../styles';
 
 export default function FormProduct() {
   const history = useHistory();
@@ -98,13 +99,19 @@ export default function FormProduct() {
     }
     else {
       setOperation('EDIT');
-      setCurrentCategory(history.location.state.id_produto);
-      setCurrentProvider(history.location.state.id_fornecedor);
+      setCurrentCategory(history.location.state.id_categoria);
+      setCurrentProvider(history.location.state.id_fornecedor === null && 'Nenhum');
       setCurrentSize(history.location.state.tamanho);
     }
   }, [history])
 
   async function handleSubmit(data) {
+    if (replaceForNumber(data.preco_venda) <= replaceForNumber(data.preco_custo)) {
+      console.log('O preço de custo precisa ser o mais baixo')
+
+      return
+    }
+
     if (operation === 'ADD') {
       delete data.id_produto
       
@@ -133,24 +140,13 @@ export default function FormProduct() {
     setButtonAvailable(false);
   }, []);
 
-  const toCurrencyBRL = useCallback((e) => {
-    let value = e.currentTarget.value;
-    value = value.replace(/\D/g, '')
-    value = value.replace(/(\d)(\d{2})$/, '$1,$2')
-    value = value.replace(/(?=(\d{3})+(\D))\B/g, '.')
-
-    e.currentTarget.value = value
-
-    setButtonAvailable(false) 
-  }, []);
-
   return (
     <Layout>  
       <Container>
-        <Container.Title>
+        <Title>
           <h1> { operation === 'ADD' ? 'Novo produto!' : 'Editar produto!' }</h1>
           <p>Crie e personalize seus produtos!</p>
-        </Container.Title>
+        </Title>
 
         <Form initialData={product} onSubmit={handleSubmit} autoComplete="off">
           <Input 
@@ -159,8 +155,8 @@ export default function FormProduct() {
             hidden={true}
           />
           
-          <IGroup>
-            <IGroup.Label>Nome</IGroup.Label>
+          <InputGroup>
+            <Label>Nome</Label>
 
             <Input 
               type="text" 
@@ -169,11 +165,11 @@ export default function FormProduct() {
               onChange={() => { setButtonAvailable(false) }}
               required
             />
-          </IGroup>
+          </InputGroup>
 
           <Grouping>
-            <IGroup>
-              <IGroup.Label>Escolha a categoria</IGroup.Label>
+            <InputGroup>
+              <Label>Escolha a categoria</Label>
 
               <Select 
                 name="id_categoria" 
@@ -182,63 +178,56 @@ export default function FormProduct() {
                 options={categories} 
                 required
               />
-            </IGroup>
+            </InputGroup>
 
-            <IGroup>
-              <IGroup.Label>Fornecedor do produto</IGroup.Label>
+            <InputGroup>
+              <Label>Fornecedor do produto</Label>
 
               <Select 
                 name="id_fornecedor" 
                 value={currentProvider}
                 onChange={handleSelectProvider}
                 options={providers} 
+                required
               />
-            </IGroup>
+            </InputGroup>
           </Grouping>
 
           <Grouping>
-            <IGroup>
-              <IGroup.Label>Preço de custo</IGroup.Label>
+            <InputGroup>
+              <Label>Preço de custo</Label>
 
               <Input 
                 type="text" 
                 name="preco_custo"
                 prefix="R$"
-                maxLength={50}
-                onChange={toCurrencyBRL}
+                maxLength={12}
+                onChange={(e) => { 
+                  replaceForCurrency(e) 
+                  setButtonAvailable(false)
+                }}
                 required
               />
-            </IGroup>
+            </InputGroup>
 
-            <IGroup>
-              <IGroup.Label>Preço de venda</IGroup.Label>
+            <InputGroup>
+              <Label>Preço de venda</Label>
 
               <Input 
                 type="text" 
                 name="preco_venda"
                 prefix="R$"
-                maxLength={50}
-                onChange={toCurrencyBRL}
+                maxLength={12}
+                onChange={(e) => { 
+                  replaceForCurrency(e) 
+                  setButtonAvailable(false)
+                }}
                 required
               />
-            </IGroup>
+            </InputGroup>
 
-            <IGroup>
-              <IGroup.Label>Preço de promocional</IGroup.Label>
-
-              <Input 
-                type="text" 
-                name="preco_promocional"
-                prefix="R$"
-                maxLength={50}
-                onChange={toCurrencyBRL}
-              />
-            </IGroup>
-          </Grouping>
-
-          <Grouping>
-            <IGroup>
-              <IGroup.Label>Tamanho</IGroup.Label>
+            <InputGroup>
+              <Label>Tamanho</Label>
 
               <Select 
                 name="tamanho" 
@@ -247,10 +236,10 @@ export default function FormProduct() {
                 options={produtctSizes} 
                 required
               />
-            </IGroup>
+            </InputGroup>
 
-            <IGroup>
-              <IGroup.Label>Qtd em estoque</IGroup.Label>
+            <InputGroup>
+              <Label>Qtd em estoque</Label>
 
               <Input 
                 type="text" 
@@ -259,10 +248,10 @@ export default function FormProduct() {
                 onChange={() => { setButtonAvailable(false) }}
                 required
               />
-            </IGroup>
+            </InputGroup>
           </Grouping>
 
-          <BGroup>
+          <ButtonGroup>
             <Button
               type="submit"
               background="#003464"
@@ -280,7 +269,7 @@ export default function FormProduct() {
             >
               Cancelar
             </Button>
-          </BGroup>
+          </ButtonGroup>
         </Form>
       </Container>
     </Layout>

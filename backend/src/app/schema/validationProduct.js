@@ -63,15 +63,6 @@ const validationSchemas = {
         'number.empty': 'preco_venda não pode estar vazio',
         'number.min': 'preco_venda deve maior que 0'
       }),
-    preco_promocional: Joi
-      .number()
-      .allow(null)
-      .min(0)
-      .messages({
-        'number.base': 'preco_promocional deve ser do tipo number',
-        'number.empty': 'preco_promocional não pode estar vazio',
-        'number.min': 'preco_promocional deve maior que 0'
-      }),
     estoque: Joi
       .number()
       .required()
@@ -150,15 +141,6 @@ const validationSchemas = {
         'number.base': 'preco_venda deve ser do tipo number',
         'number.empty': 'preco_venda não pode estar vazio',
         'number.min': 'preco_venda deve maior que 0'
-      }),
-    preco_promocional: Joi
-      .number()
-      .allow(null)
-      .min(0)
-      .messages({
-        'number.base': 'preco_promocional deve ser do tipo number',
-        'number.empty': 'preco_promocional não pode estar vazio',
-        'number.min': 'preco_promocional deve maior que 0'
       }),
     estoque: Joi
       .number()

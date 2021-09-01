@@ -26,7 +26,7 @@ class ProductController {
     try {
       const {
         id_categoria, id_fornecedor, nome, preco_custo,
-        preco_venda, preco_promocional, estoque, tamanho
+        preco_venda, estoque, tamanho
       } = req.body
 
       const count = await Product.selectCountProduct(nome)
@@ -41,7 +41,7 @@ class ProductController {
 
       const product = [
         id_categoria, id_fornecedor || null, nome, preco_custo,
-        preco_venda, preco_promocional || null, estoque, tamanho || null
+        preco_venda, estoque, tamanho || null
       ]
 
       const response = await Product.insertProduct(product)
@@ -73,7 +73,7 @@ class ProductController {
     try {
       const {
         id_categoria, id_fornecedor, nome, preco_custo, preco_venda,
-        preco_promocional, estoque, tamanho, id_produto
+        estoque, tamanho, id_produto
       } = req.body
 
       const count = await Product.selectCountProduct(nome)
@@ -88,7 +88,7 @@ class ProductController {
 
       const product = [
         id_categoria, id_fornecedor, nome, preco_custo, preco_venda,
-        preco_promocional, estoque, tamanho, new Date(), id_produto
+        estoque, tamanho, new Date(), id_produto
       ]
 
       const response = await Product.updateProduct(product)

@@ -10,7 +10,7 @@ export default async function page (response, params) {
   let pages = []
   let indice = 0
 
-  response.map((item, key) => {
+  response.forEach((item, key) => {
     pages.push(item)
     if (Math.trunc((key + 1) / limit) !== indice) {
       data.push(pages)

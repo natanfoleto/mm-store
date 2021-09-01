@@ -2,6 +2,7 @@ import { useHistory } from 'react-router-dom';
 import { useEffect, useState, useCallback } from 'react';
 import api from '../../services/api';
 import Toast from '../../utils/toastify';
+import { replaceForDecimal } from '../../utils/replaceValue';
 
 import Layout from '../_layouts/default';
 
@@ -30,6 +31,11 @@ export default function Products() {
           key: search 
         });
 
+        data.data.forEach((item, index) => {
+          data.data[index].preco_custo = replaceForDecimal((item.preco_custo).toString())
+          data.data[index].preco_venda = replaceForDecimal((item.preco_venda).toString())
+        })
+
         setData(data.data);
         setTotalRecords(data.total);
         setTotalPages(
@@ -39,6 +45,7 @@ export default function Products() {
         );
 
       } catch (err) {
+        console.log(err)
         const { data, status } = err.response
 
         if (status === 403 || status === 422) {

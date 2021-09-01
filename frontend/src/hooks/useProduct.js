@@ -1,6 +1,7 @@
 import { useHistory } from 'react-router-dom';
 
 import Toast from '../utils/toastify';
+import { replaceForNumber } from '../utils/replaceValue';
 
 import api from '../services/api';
 
@@ -9,10 +10,17 @@ export const useProduct = () => {
 
   async function createProduct(data) {   
     try {
-      if (data.id_fornecedor === 'Nenhum')
-        data.id_fornecedor = null
+      const convertedData = {
+        id_categoria: data.id_categoria,
+        id_fornecedor: data.id_fornecedor === 'Nenhum' ? null : data.id_fornecedor,
+        nome: data.nome,
+        preco_custo: replaceForNumber(data.preco_custo),
+        preco_venda: replaceForNumber(data.preco_venda),
+        tamanho: data.tamanho,
+        estoque: data.estoque,
+      }
   
-      const res = await api.post('/products', data)
+      const res = await api.post('/products', convertedData)
 
       const { result, message } = res.data;
       
@@ -38,10 +46,18 @@ export const useProduct = () => {
 
   async function updateProduct(data) {
     try {
-      if (data.id_fornecedor === 'Nenhum')
-        data.id_fornecedor = null
+      const convertedData = {
+        id_produto: data.id_produto,
+        id_categoria: data.id_categoria,
+        id_fornecedor: data.id_fornecedor === 'Nenhum' ? null : data.id_fornecedor,
+        nome: data.nome,
+        preco_custo: replaceForNumber(data.preco_custo),
+        preco_venda: replaceForNumber(data.preco_venda),
+        tamanho: data.tamanho,
+        estoque: data.estoque,
+      }
 
-      const res = await api.put('/products', data);
+      const res = await api.put('/products', convertedData);
 
       const { result, message } = res.data;
       

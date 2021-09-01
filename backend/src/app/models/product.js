@@ -52,8 +52,8 @@ class Product {
     try {
       const query = `
         INSERT INTO produtos 
-        (id_categoria, id_fornecedor, nome, preco_custo, preco_venda, preco_promocional, estoque, tamanho) 
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+        (id_categoria, id_fornecedor, nome, preco_custo, preco_venda, estoque, tamanho) 
+        VALUES (?, ?, ?, ?, ?, ?, ?)
         RETURNING *
       `
 
@@ -69,7 +69,7 @@ class Product {
     try {
       const query = `
         UPDATE produtos 
-        SET id_categoria = ?, id_fornecedor = ?, nome = ?, preco_custo = ?, preco_venda = ?, preco_promocional = ?, estoque = ?, tamanho = ?, updated_at = ?
+        SET id_categoria = ?, id_fornecedor = ?, nome = ?, preco_custo = ?, preco_venda = ?, estoque = ?, tamanho = ?, updated_at = ?
         WHERE id_produto = ?
       `
 
@@ -79,9 +79,6 @@ class Product {
 
       return result
     } catch (err) {
-      console.log('Exception from product.js/updateProduct:')
-      console.log(err)
-
       return err
     }
   }

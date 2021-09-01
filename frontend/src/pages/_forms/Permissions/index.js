@@ -13,7 +13,7 @@ import Input from '../../../components/Input';
 import Button from '../../../components/Button'
 import Select from '../../../components/Select';
 
-import { Container, IGroup, BGroup } from '../styles';
+import { Container, Title, InputGroup, ButtonGroup, Label } from '../styles';
 
 export default function FormPermission() {
   const history = useHistory();
@@ -68,10 +68,10 @@ export default function FormPermission() {
   return (
     <Layout>  
       <Container>
-        <Container.Title>
+        <Title>
           <h1> { operation === 'ADD' ? 'Nova permissão!' : 'Editar permissão!' }</h1>
           <p>Use permissões, para controlar tarefas dentro do sistema!</p>
-        </Container.Title>
+        </Title>
 
         <Form initialData={permission} onSubmit={handleSubmit} autoComplete="off">
           <Input 
@@ -80,8 +80,8 @@ export default function FormPermission() {
             hidden={true}
           />
           
-          <IGroup>
-            <IGroup.Label>Nome</IGroup.Label>
+          <InputGroup>
+            <Label>Nome</Label>
 
             <Input 
               type="text" 
@@ -90,10 +90,10 @@ export default function FormPermission() {
               onChange={() => { setButtonAvailable(false) }}
               required
             />
-          </IGroup>
+          </InputGroup>
 
-          <IGroup>
-            <IGroup.Label>Descrição</IGroup.Label>
+          <InputGroup>
+            <Label>Descrição</Label>
 
             <Input 
               type="text" 
@@ -102,10 +102,10 @@ export default function FormPermission() {
               onChange={() => { setButtonAvailable(false) }}
               required
             />
-          </IGroup>
+          </InputGroup>
 
-          <IGroup>
-            <IGroup.Label>Escolha o tipo</IGroup.Label>
+          <InputGroup>
+            <Label>Escolha o tipo</Label>
 
             <Select 
               name="tipo" 
@@ -114,10 +114,10 @@ export default function FormPermission() {
               onChange={handleSelectType}
               required
             />
-          </IGroup>
+          </InputGroup>
 
-          <IGroup>
-            <IGroup.Label>Escolha o contexto</IGroup.Label>
+          <InputGroup>
+            <Label>Escolha o contexto</Label>
 
             <Select 
               name="contexto" 
@@ -126,9 +126,9 @@ export default function FormPermission() {
               onChange={handleSelectContext}
               required
             />
-          </IGroup>
+          </InputGroup>
 
-          <BGroup>
+          <ButtonGroup>
             <Button
               type="submit"
               background="#003464"
@@ -146,7 +146,7 @@ export default function FormPermission() {
             >
               Cancelar
             </Button>
-          </BGroup>
+          </ButtonGroup>
         </Form>
       </Container>
     </Layout>

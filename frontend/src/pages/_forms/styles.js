@@ -8,7 +8,7 @@ export const Container = styled.div`
   }
 `;
 
-Container.Title = styled.div`
+export const Title = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-end;
@@ -22,20 +22,20 @@ export const Grouping = styled.div`
   margin-top: 1rem;
 `;
 
-export const IGroup = styled.div`
+export const InputGroup = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
   margin-top: 1rem;
 `;
 
-IGroup.Label = styled.label`
-  color: #444;
-  margin-bottom: 4px;
-`;
-
-export const BGroup = styled.div`
+export const ButtonGroup = styled.div`
   display: flex;
   justify-content: space-between;
-  margin-top: 1rem;
+  margin-top: 2rem;
+`;
+
+export const Label = styled.label`
+  color: #444;
+  margin-bottom: 4px;
 `;

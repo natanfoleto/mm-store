@@ -19,7 +19,7 @@ import Button from '../../../components/Button'
 import Select from '../../../components/Select';
 
 import { Permissions } from './styles';
-import { Container, IGroup, BGroup } from '../styles';
+import { Container, Title, InputGroup, ButtonGroup, Label } from '../styles';
 
 export default function FormProfile() {
   const history = useHistory();
@@ -161,10 +161,10 @@ export default function FormProfile() {
   return (
     <Layout>  
       <Container>
-        <Container.Title>
+        <Title>
           <h1> { operation === 'ADD' ? 'Novo perfil!' : 'Editar perfil!' }</h1>
           <p>Utilize os perfis, para delegar permissões aos usuários!</p>
-        </Container.Title>
+        </Title>
 
         <Form initialData={profile} onSubmit={handleSubmit} autoComplete="off">
           <Input 
@@ -173,8 +173,8 @@ export default function FormProfile() {
             hidden={true}
           />
 
-          <IGroup>
-            <IGroup.Label>Nome</IGroup.Label>
+          <InputGroup>
+            <Label>Nome</Label>
 
             <Input 
               type="text" 
@@ -183,7 +183,7 @@ export default function FormProfile() {
               maxLength={50}
               required
             />
-          </IGroup>
+          </InputGroup>
 
           { operation === 'ADD' &&
             <Alert 
@@ -271,7 +271,7 @@ export default function FormProfile() {
             </Permissions>
           }
 
-          <BGroup>
+          <ButtonGroup>
             <Button
               type="submit"
               background="#003464"
@@ -289,7 +289,7 @@ export default function FormProfile() {
             >
               Cancelar
             </Button>
-          </BGroup>
+          </ButtonGroup>
         </Form>
       </Container>
     </Layout>

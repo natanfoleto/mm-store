@@ -14,7 +14,7 @@ import Input from '../../../components/Input';
 import Button from '../../../components/Button'
 import Select from '../../../components/Select';
 
-import { Container, IGroup, BGroup } from '../styles';
+import { Container, Title, InputGroup, ButtonGroup, Label } from '../styles';
 
 export default function FormUser() {
   const history = useHistory();
@@ -93,10 +93,10 @@ export default function FormUser() {
   return (
     <Layout>  
       <Container>
-        <Container.Title>
+        <Title>
           <h1> { operation === 'ADD' ? 'Novo usuário!' : 'Editar usuário!' }</h1>
           <p>Use os usuários, para criar acessos no sistema!</p>
-        </Container.Title>
+        </Title>
 
         <Form initialData={user} onSubmit={handleSubmit} autoComplete="off">
           <Input 
@@ -105,8 +105,8 @@ export default function FormUser() {
             hidden={true}
           />
 
-          <IGroup>
-            <IGroup.Label>Escolha o perfil</IGroup.Label>
+          <InputGroup>
+            <Label>Escolha o perfil</Label>
 
             <Select 
               name="id_perfil" 
@@ -115,10 +115,10 @@ export default function FormUser() {
               options={profiles} 
               required
             />
-          </IGroup>
+          </InputGroup>
           
-          <IGroup>
-            <IGroup.Label>Nome</IGroup.Label>
+          <InputGroup>
+            <Label>Nome</Label>
 
             <Input 
               type="text" 
@@ -127,10 +127,10 @@ export default function FormUser() {
               onChange={() => { setButtonAvailable(false) }}
               required
             />
-          </IGroup>
+          </InputGroup>
 
-          <IGroup>
-            <IGroup.Label>Login</IGroup.Label>
+          <InputGroup>
+            <Label>Login</Label>
 
             <Input 
               type="text" 
@@ -139,12 +139,12 @@ export default function FormUser() {
               onChange={() => { setButtonAvailable(false) }}
               required
             />
-          </IGroup>
+          </InputGroup>
 
-          <IGroup
+          <InputGroup
             style={ operation === 'EDIT' ? { display: 'none' } : { display: '' } }
           >
-            <IGroup.Label>Sua senha secreta</IGroup.Label>
+            <Label>Sua senha secreta</Label>
             
             <Input 
               type="password" 
@@ -153,9 +153,9 @@ export default function FormUser() {
               onChange={() => { setButtonAvailable(false) }}
               required={operation === 'EDIT' ? false : true}
             />
-          </IGroup>
+          </InputGroup>
 
-          <BGroup>
+          <ButtonGroup>
             <Button
               type="submit"
               background="#003464"
@@ -173,7 +173,7 @@ export default function FormUser() {
             >
               Cancelar
             </Button>
-          </BGroup>
+          </ButtonGroup>
         </Form>
       </Container>
     </Layout>

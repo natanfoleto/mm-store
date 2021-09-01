@@ -10,7 +10,7 @@ import Form from '../../../components/Form';
 import Input from '../../../components/Input';
 import Button from '../../../components/Button'
 
-import { Container, IGroup, BGroup } from '../styles';
+import { Container, Title, InputGroup, ButtonGroup, Label } from '../styles';
 
 export default function FormCategory() {
   const history = useHistory();
@@ -49,10 +49,10 @@ export default function FormCategory() {
   return (
     <Layout>  
       <Container>
-        <Container.Title>
+        <Title>
           <h1> { operation === 'ADD' ? 'Nova categoria!' : 'Editar categoria!' }</h1>
           <p>Use as categorias, para classificar seus produtos!</p>
-        </Container.Title>
+        </Title>
 
         <Form initialData={category} onSubmit={handleSubmit} autoComplete="off">
           <Input 
@@ -61,8 +61,8 @@ export default function FormCategory() {
             hidden={true}
           />
           
-          <IGroup>
-            <IGroup.Label>Nome</IGroup.Label>
+          <InputGroup>
+            <Label>Nome</Label>
 
             <Input 
               type="text" 
@@ -71,9 +71,9 @@ export default function FormCategory() {
               onChange={() => { setButtonAvailable(false) }}
               required
             />
-          </IGroup>
+          </InputGroup>
 
-          <BGroup>
+          <ButtonGroup>
             <Button
               type="submit"
               background="#003464"
@@ -91,7 +91,7 @@ export default function FormCategory() {
             >
               Cancelar
             </Button>
-          </BGroup>
+          </ButtonGroup>
         </Form>
       </Container>
     </Layout>
