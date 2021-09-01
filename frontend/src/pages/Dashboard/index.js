@@ -4,7 +4,7 @@ import { Container } from './styles';
 
 export default function Dashboard() {
   return (
-    <Layout>
+    <Layout title="Dashboard">
       <Container>
         <br></br>
         Dashboard

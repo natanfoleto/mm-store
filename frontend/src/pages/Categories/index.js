@@ -69,7 +69,7 @@ export default function Categories() {
   }, [])
 
   return (
-    <Layout>      
+    <Layout title="Categorias">      
       <Title 
         title="Categorias"
         subTitle="Categorias de produtos"

@@ -51,11 +51,15 @@ export const AuthProvider = ({ children }) => {
     
         api.defaults.headers.Authorization = `Bearer ${token}`;
         
+        history.push('/dash');
+        
         setUser(usuario);
         setLoggingIn(false);
 
         localStorage.setItem('@Auth:user', JSON.stringify(usuario));
         localStorage.setItem('@Auth:token', token);
+
+        
       }
     } catch (err) {
       const { data, status } = err.response

@@ -19,7 +19,7 @@ export default function Routes() {
   return (
     <BrowserRouter>
       <Switch>
-        <Route exact path="/" component={Dashboard} />
+        <Route exact path="/dash" component={Dashboard} />
 
         <Route exact path="/perfis" component={Profiles} />
         <Route exact path="/perfis/add" component={FormProfiles} />
