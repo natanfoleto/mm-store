@@ -21,7 +21,8 @@ function Header() {
       <Content>
         <nav>
           <img src={Logo} alt="MMStore" />
-          <Link to="/dash"> Dashboard </Link>
+
+          <Link to="/dash"> Dashboard </Link> 
           <Link to="/dash"> Vendas </Link>
           <Link to="/dash"> Clientes </Link>
           <Link to="/produtos"> Produtos </Link>

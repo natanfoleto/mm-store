@@ -79,7 +79,7 @@ export default function Products() {
     <Layout title="Gestão de Produtos">
       <Title 
         title="Produtos"
-        subTitle="Seus prdutos... roupas, sapatos, acessórios e etc!"
+        subTitle="Seus produtos... roupas, sapatos, acessórios e etc!"
       />
 
       <Search 

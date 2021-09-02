@@ -10,7 +10,7 @@ export const Container = styled.div`
 export const Input = styled.input`
   font-size: 0.875rem;
   width: 25rem;
-  padding: 0.3rem 0.65rem;
+  padding: 0.4rem 0.65rem;
   border: 0;
   border-radius: 0.25rem;
   border: 1px solid #eee;

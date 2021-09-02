@@ -8,7 +8,7 @@ export const Container = styled.div`
   select {
     width: 100%;
     font-size: 0.875rem;
-    height: 2.15rem;
+    height: 1.9rem;
     padding: 0 0.25rem;
     border-radius: 0.25px;
     border: 1px solid #eee;
