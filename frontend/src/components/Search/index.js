@@ -3,7 +3,7 @@ import { Container, Input, Filter } from './styles'
 import Select from '../Select'
 import Button from '../Button'
 
-import { rows } from '../../services/dataLocal'
+import { comboboxRows } from '../../constants/array'
 
 export default function ComponentSearch({ placeholder, search, setSearch, viewPermission, limit, handleLimit, handleCreate }) {  
   return (
@@ -19,7 +19,7 @@ export default function ComponentSearch({ placeholder, search, setSearch, viewPe
 
         <Select 
           name="rows"
-          options={rows}
+          options={comboboxRows}
           onChange={handleLimit}
           disabled={viewPermission}
           placeholder={`${limit} rows`}

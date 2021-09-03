@@ -1,4 +1,17 @@
-const rows = [
+export const headers = [
+  { path: '/dash', children: 'Dashboard' },
+  { path: '/dash', children: 'Vendas' },
+  { path: '/dash', children: 'Clientes' },
+  { path: '/produtos', children: 'Produtos' },
+  { path: '/categorias', children: 'Categorias' },
+  { path: '/dash', children: 'Fornecedores' },
+  { path: '/dash', children: 'Pedidos' },
+  { path: '/usuarios', children: 'Usuários' },
+  { path: '/perfis', children: 'Perfis' },
+  { path: '/permissoes', children: 'Permissões' },
+];
+
+export const comboboxRows = [
   { id: '10', title: '10 linhas' },
   { id: '20', title: '20 linhas' },
   { id: '30', title: '30 linhas' },
@@ -7,18 +20,18 @@ const rows = [
   { id: '0', title: 'Todas linhas' },
 ]
 
-const typesPermission = [
+export const comboboxTypePermission = [
   { id: 'Leitura', title: 'Leitura' },
   { id: 'Escrita', title: 'Escrita' }
 ]
 
-const typesProfile = [
+export const comboboxTypeProfile = [
   { id: '', title: 'Todos'},
   { id: 'Leitura', title: 'Leitura'},
   { id: 'Escrita', title: 'Escrita'}
 ]
 
-const contextsPermisssion = [
+export const comboboxContextPermission = [
   { id: 'Users', title: 'Users'},
   { id: 'Profiles', title: 'Profiles'},
   { id: 'Clients', title: 'Clients'},
@@ -33,7 +46,7 @@ const contextsPermisssion = [
   { id: 'Permissions', title: 'Permissions'}
 ]
 
-const contextsProfile = [
+export const comboboxContextProfile = [
   { id: '', title: 'Todos'},
   { id: 'Users', title: 'Users'},
   { id: 'Profiles', title: 'Profiles'},
@@ -49,17 +62,10 @@ const contextsProfile = [
   { id: 'Permissions', title: 'Permissions'}
 ]
 
-const produtctSizes = [
+export const comboboxSizeProduct = [
   { id: 'P', title: 'P' },
   { id: 'PP', title: 'PP' },
   { id: 'M', title: 'M' },
   { id: 'G', title: 'G' },
   { id: 'GG', title: 'GG' }
 ]
-
-export { 
-  rows, 
-  typesPermission, contextsPermisssion, 
-  typesProfile, contextsProfile,
-  produtctSizes
-}

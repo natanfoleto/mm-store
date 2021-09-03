@@ -4,14 +4,14 @@ import { Data } from './styles';
 
 import Toast from '../../../../utils/toastify';
 
-import useUser from '../../../../hooks/useUser';
+import userService from '../../../../services/api/user';
 import { useAuth } from '../../../../contexts/auth'; 
 
 function ComponentUser({ item }) {
   const history = useHistory();
 
   const { user } = useAuth();
-  const { deleteUser } = useUser();
+  const { deleteUser } = userService();
 
   function handleEdit(item) {
     history.push('/usuarios/edit', item);

@@ -2,11 +2,11 @@ import { useEffect, useState, useCallback } from 'react';
 
 import { useHistory } from 'react-router-dom';
 
-import { typesPermission, contextsPermisssion } from '../../../services/dataLocal'
+import { comboboxTypePermission, comboboxContextPermission } from '../../../constants/array'
 
 import Layout from '../../_layouts/form';
 
-import usePermission from '../../../hooks/usePermission';
+import permissionService from '../../../services/api/permission';
 
 import Form from '../../../components/Form';
 import Input from '../../../components/Input';
@@ -18,7 +18,7 @@ import { Container, Title, InputGroup, ButtonGroup, Label } from '../styles';
 export default function FormPermission() {
   const history = useHistory();
 
-  const { createPermission, updatePermission } = usePermission();
+  const { createPermission, updatePermission } = permissionService();
 
   const [permission, setPermission] = useState();
   const [buttonAvailable, setButtonAvailable] = useState(true);
@@ -110,7 +110,7 @@ export default function FormPermission() {
             <Select 
               name="tipo" 
               value={currentType}
-              options={typesPermission} 
+              options={comboboxTypePermission} 
               onChange={handleSelectType}
               required
             />
@@ -122,7 +122,7 @@ export default function FormPermission() {
             <Select 
               name="contexto" 
               value={currentContext}
-              options={contextsPermisssion} 
+              options={comboboxContextPermission} 
               onChange={handleSelectContext}
               required
             />

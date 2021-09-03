@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 
 import Toast from '../utils/toastify';
 
-import api from '../services/api';
+import api from '../services/api/api'
 
 const AuthContext = createContext(null);
 

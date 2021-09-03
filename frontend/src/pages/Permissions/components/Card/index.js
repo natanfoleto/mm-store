@@ -2,12 +2,12 @@ import { useHistory } from 'react-router-dom';
 
 import { Data } from './styles';
 
-import usePermission from '../../../../hooks/usePermission';
+import permissionService from '../../../../services/api/permission';
 
 function ComponentPermission({ item }) {
   const history = useHistory();
 
-  const { deletePermission } = usePermission();
+  const { deletePermission } = permissionService();
 
   function handleEdit(item) {
     history.push('/permissoes/edit', item);

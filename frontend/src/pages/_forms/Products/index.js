@@ -1,15 +1,15 @@
 import { useEffect, useState, useCallback } from 'react'; 
-import api from '../../../services/api';
+import api from '../../../services/api/api';
 import Toast from '../../../utils/toastify';
 import { replaceForCurrency, replaceForNumber } from '../../../utils/replaceValue';
 
 import { useHistory } from 'react-router-dom';
 
-import { produtctSizes } from '../../../services/dataLocal'
+import { comboboxSizeProduct } from '../../../constants/array'
 
 import Layout from '../../_layouts/form';
 
-import useProduct from '../../../hooks/useProduct';
+import productService from '../../../services/api/product';
 
 import Form from '../../../components/Form';
 import Input from '../../../components/Input';
@@ -21,7 +21,7 @@ import { Container, Title, Grouping, InputGroup, ButtonGroup, Label } from '../s
 export default function FormProduct() {
   const history = useHistory();
 
-  const { createProduct, updateProduct } = useProduct();
+  const { createProduct, updateProduct } = productService();
 
   const [product, setProduct] = useState();
   const [currentCategory, setCurrentCategory] = useState();
@@ -233,7 +233,7 @@ export default function FormProduct() {
                 name="tamanho" 
                 value={currentSize}
                 onChange={handleSelectSize}
-                options={produtctSizes} 
+                options={comboboxSizeProduct} 
                 required
               />
             </InputGroup>

@@ -1,6 +1,6 @@
 import { useHistory } from 'react-router-dom';
 import { useEffect, useState, useCallback } from 'react';
-import api from '../../services/api';
+import api from '../../services/api/api';
 import Toast from '../../utils/toastify';
 import { replaceForDecimal } from '../../utils/replaceValue';
 
@@ -31,7 +31,7 @@ export default function Products() {
           key: search 
         });
 
-        data.data.forEach((item, index) => {
+        data.data && data.data.forEach((item, index) => {
           data.data[index].preco_custo = replaceForDecimal((item.preco_custo).toString())
           data.data[index].preco_venda = replaceForDecimal((item.preco_venda).toString())
         })

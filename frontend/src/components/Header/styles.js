@@ -42,6 +42,10 @@ export const Content = styled.div`
         transform: 2s;
       }
     }
+
+    .selected {
+      background: #E8F1FF;
+    }
   }
 
   aside {

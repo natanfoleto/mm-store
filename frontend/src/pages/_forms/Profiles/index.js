@@ -1,15 +1,16 @@
 import { useEffect, useState, useCallback } from 'react'; 
-import api from '../../../services/api';
-import { typesProfile, contextsProfile } from '../../../services/dataLocal'
+import api from '../../../services/api/api';
 import Toast from '../../../utils/toastify';
+
+import { comboboxTypeProfile, comboboxContextProfile } from '../../../constants/array'
 
 import { useHistory } from 'react-router-dom';
 
 import Layout from '../../_layouts/form';
 import Alert from '../../../components/Alert';
 
-import useProfile from '../../../hooks/useProfile';
-import usePermissions from '../../../hooks/usePermissions';
+import profileService from '../../../services/api/profile';
+import permissionsService from '../../../services/api/permissions';
 
 import { IoIosRemove } from 'react-icons/io';
 
@@ -24,8 +25,8 @@ import { Container, Title, InputGroup, ButtonGroup, Label } from '../styles';
 export default function FormProfile() {
   const history = useHistory();
 
-  const { createProfile, updateProfile } = useProfile();
-  const { createPermissions, deletePermissions } = usePermissions();
+  const { createProfile, updateProfile } = profileService();
+  const { createPermissions, deletePermissions } = permissionsService();
 
   const [profile, setProfile] = useState();
   const [operation, setOperation] = useState();
@@ -239,14 +240,14 @@ export default function FormProfile() {
 
                   <Select 
                     name="types" 
-                    options={typesProfile}
+                    options={comboboxTypeProfile}
                     onChange={handleType} 
                     className="pd-type"
                   />
 
                   <Select 
                     name="contexts" 
-                    options={contextsProfile}
+                    options={comboboxContextProfile}
                     onChange={handleContext} 
                     className="pd-context"
                   />

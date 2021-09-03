@@ -2,12 +2,12 @@ import { useHistory } from 'react-router-dom';
 
 import { Data } from './styles';
 
-import useProduct from '../../../../hooks/useProduct';
+import productService from '../../../../services/api/product';
 
 function ComponentProduct({ item }) {
   const history = useHistory();
 
-  const { deleteProduct } = useProduct();
+  const { deleteProduct } = productService();
 
   function handleEdit(item) {
     history.push('/produtos/edit', item);

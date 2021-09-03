@@ -2,12 +2,12 @@ import { useHistory } from 'react-router-dom';
 
 import { Data } from './styles';
 
-import useProfile from '../../../../hooks/useProfile';
+import profileService from '../../../../services/api/profile';
 
 function ComponentProfile({ item }) {
   const history = useHistory();
 
-  const { deleteProfile } = useProfile();
+  const { deleteProfile } = profileService();
 
   function handleEdit(item) {
     history.push('/perfis/edit', item);

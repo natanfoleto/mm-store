@@ -1,15 +1,15 @@
 import { useHistory } from 'react-router-dom';
 
-import Toast from '../utils/toastify';
+import Toast from '../../utils/toastify';
 
-import api from '../services/api';
+import api from './api';
 
-export const useUser = () => {
+export const useCategory = () => {
   const history = useHistory();
 
-  async function createUser(data) {   
+  async function createCategory(data) {   
     try {
-      const res = await api.post('/users', data);
+      const res = await api.post('/categories', data)
 
       const { result, message } = res.data;
       
@@ -33,9 +33,9 @@ export const useUser = () => {
     }
   }
 
-  async function updateUser(data) {
+  async function updateCategory(data) {
     try {
-      const res = await api.put('/users', data);
+      const res = await api.put('/categories', data);
 
       const { result, message } = res.data;
       
@@ -59,9 +59,9 @@ export const useUser = () => {
     }
   }
 
-  async function deleteUser(data) {
+  async function deleteCategory(data) {
     try {
-      const res = await api.delete('/users', data);
+      const res = await api.delete('/categories', data);
 
       const { result, message } = res.data;
       
@@ -85,7 +85,7 @@ export const useUser = () => {
     }
   }
 
-  return { createUser, updateUser, deleteUser }
+  return { createCategory, updateCategory, deleteCategory }
 }
 
-export default useUser;
+export default useCategory;

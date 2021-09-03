@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 
 import Layout from '../../_layouts/form';
 
-import useCategory from '../../../hooks/useCategory';
+import categoryService from '../../../services/api/category'
 
 import Form from '../../../components/Form';
 import Input from '../../../components/Input';
@@ -15,7 +15,7 @@ import { Container, Title, InputGroup, ButtonGroup, Label } from '../styles';
 export default function FormCategory() {
   const history = useHistory();
 
-  const { createCategory, updateCategory } = useCategory();
+  const { createCategory, updateCategory } = categoryService();
 
   const [category, setCategory] = useState();
   const [buttonAvailable, setButtonAvailable] = useState(true);

@@ -1,6 +1,7 @@
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 
 import { useAuth } from '../../contexts/auth';
+import { headers } from '../../constants/array'
 
 import Logo from '../../assets/LogoMini.png';
 
@@ -22,16 +23,17 @@ function Header() {
         <nav>
           <img src={Logo} alt="MMStore" />
 
-          <Link to="/dash"> Dashboard </Link> 
-          <Link to="/dash"> Vendas </Link>
-          <Link to="/dash"> Clientes </Link>
-          <Link to="/produtos"> Produtos </Link>
-          <Link to="/categorias"> Categorias </Link>
-          <Link to="/dash"> Fornecedores </Link>
-          <Link to="/dash"> Pedidos </Link>
-          <Link to="/usuarios"> Usuários </Link>
-          <Link to="/perfis"> Perfis </Link>
-          <Link to="/permissoes"> Permissões </Link>
+          {
+            headers.map((item) => (
+              <NavLink
+                to={item.path}
+                activeClassName="selected"
+              >
+                {item.children}
+              </NavLink>
+            ))
+          }
+
         </nav>
 
         <aside>

@@ -2,12 +2,12 @@ import { useHistory } from 'react-router-dom';
 
 import { Data } from './styles';
 
-import useCategory from '../../../../hooks/useCategory';
+import categoryService from '../../../../services/api/category';
 
 function ComponentCategory({ item }) {
   const history = useHistory();
 
-  const { deleteCategory } = useCategory();
+  const { deleteCategory } = categoryService();
 
   function handleEdit(item) {
     history.push('/categorias/edit', item);

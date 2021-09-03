@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';
 import Header from '../../../components/Header';
 import Breadcrumb from '../../../components/Breadcrumb'
 
-// import Navbar from '../../../components/Navbar';
-
 import { Wrapper, Content } from './styles';
 
 export default function DefaultLayout({ children, title }) {

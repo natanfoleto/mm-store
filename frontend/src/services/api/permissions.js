@@ -1,6 +1,6 @@
-import Toast from '../utils/toastify';
+import Toast from '../../utils/toastify';
 
-import api from '../services/api';
+import api from './api';
 
 export const usePermissions = () => {
   async function createPermissions(data) {   

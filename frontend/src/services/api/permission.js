@@ -1,15 +1,41 @@
 import { useHistory } from 'react-router-dom';
 
-import Toast from '../utils/toastify';
+import Toast from '../../utils/toastify';
 
-import api from '../services/api';
+import api from './api';
 
-export const useProfile = () => {
+export const usePermission = () => {
   const history = useHistory();
 
-  async function createProfile(data) {   
+  async function createPermission(data) {   
     try {
-      const res = await api.post('/profiles', data);
+      const res = await api.post('/permission', data);
+
+      const { result, message } = res.data;
+      
+      Toast(result, message);
+
+      if (result === 'success')
+        history.goBack()
+     
+    } catch (err) {
+        const { data, status } = err.response
+
+        if (status === 403 || status === 422) {
+          Toast(data.result, data.message);
+  
+          return;
+        }
+        
+        Toast('error', err.toString());
+  
+        return;
+      }
+  }
+
+  async function updatePermission(data) {
+    try {
+      const res = await api.put('/permission', data);
 
       const { result, message } = res.data;
       
@@ -33,35 +59,9 @@ export const useProfile = () => {
     }
   }
 
-  async function updateProfile(data) {
+  async function deletePermission(data) {
     try {
-      const res = await api.put('/profiles', data);
-
-      const { result, message } = res.data;
-      
-      Toast(result, message);
-
-      if (result === 'success')
-        history.goBack()
-     
-    } catch (err) {
-      const { data, status } = err.response
-
-      if (status === 403 || status === 422) {
-        Toast(data.result, data.message);
-
-        return;
-      }
-      
-      Toast('error', err.toString());
-
-      return;
-    }
-  }
-
-  async function deleteProfile(data) {
-    try {
-      const res = await api.delete('/profiles', data);
+      const res = await api.delete('/permission', data);
 
       const { result, message } = res.data;
       
@@ -85,7 +85,7 @@ export const useProfile = () => {
     }
   }
 
-  return { createProfile, updateProfile, deleteProfile }
+  return { createPermission, updatePermission, deletePermission }
 }
 
-export default useProfile;
+export default usePermission;

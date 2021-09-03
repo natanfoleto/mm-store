@@ -1,9 +1,9 @@
 import { useHistory } from 'react-router-dom';
 
-import Toast from '../utils/toastify';
-import { replaceForNumber } from '../utils/replaceValue';
+import Toast from '../../utils/toastify';
+import { replaceForNumber } from '../../utils/replaceValue';
 
-import api from '../services/api';
+import api from './api';
 
 export const useProduct = () => {
   const history = useHistory();

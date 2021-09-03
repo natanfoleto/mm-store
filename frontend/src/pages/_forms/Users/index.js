@@ -1,13 +1,13 @@
 import { useEffect, useState, useCallback } from 'react'; 
 
-import api from '../../../services/api';
+import api from '../../../services/api/api';
 import Toast from '../../../utils/toastify';
 
 import { useHistory } from 'react-router-dom';
 
 import Layout from '../../_layouts/form';
 
-import useUser from '../../../hooks/useUser';
+import userService from '../../../services/api/user';
 
 import Form from '../../../components/Form';
 import Input from '../../../components/Input';
@@ -19,7 +19,7 @@ import { Container, Title, InputGroup, ButtonGroup, Label } from '../styles';
 export default function FormUser() {
   const history = useHistory();
 
-  const { createUser, updateUser } = useUser();
+  const { createUser, updateUser } = userService();
 
   const [user, setUser] = useState();
   const [currentProfile, setCurrentProfile] = useState();
