@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 
 import { comboboxTypePermission, comboboxContextPermission } from '../../../constants/array'
 
-import Layout from '../../_layouts/form';
+import Layout from '../../_layouts/default';
 
 import permissionService from '../../../services/api/permission';
 
@@ -68,12 +68,12 @@ export default function FormPermission() {
   return (
     <Layout title={operation === 'ADD' ? 'Nova permissão' : `Editando: ${permission && permission.nome}`}>  
       <Container>
-        <Title>
-          <h1> { operation === 'ADD' ? 'Nova permissão!' : 'Editar permissão!' }</h1>
-          <p>Use permissões, para controlar tarefas dentro do sistema!</p>
-        </Title>
-
         <Form initialData={permission} onSubmit={handleSubmit} autoComplete="off">
+          <Title>
+            <h1> { operation === 'ADD' ? 'Nova permissão!' : 'Editar permissão!' }</h1>
+            <p>Use permissões, para controlar tarefas dentro do sistema!</p>
+          </Title>
+          
           <Input 
             type="text" 
             name="id_permissao"

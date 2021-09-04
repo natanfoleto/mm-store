@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { darken } from 'polished';
 
 export const Container = styled.div`
-  height: 36rem;
+  height: 40rem;
   overflow-y: scroll;
   margin-bottom: 1rem;
   border-top: 1px solid #eee;
@@ -12,7 +12,7 @@ export const Container = styled.div`
   ::-webkit-scrollbar { width: 0; }
 
   @media (max-height: 900px) {
-    height: 28rem;
+    height: 35rem;
   }
 `;
 

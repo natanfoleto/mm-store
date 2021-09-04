@@ -14,37 +14,13 @@ export const Content = styled.div`
   justify-content: space-between;
   align-items: center;
 
-  nav {
-    display: flex;
-    align-items: center;
+  img {
+    height: 1.5rem;
+    width: 3.5rem;
+    margin-right: 1rem;
 
-    img {
-      height: 1.5rem;
-      width: 3.5rem;
-      margin-right: 1rem;
-      padding-right: 1.25rem;
-      border-right: 1px solid #ddd;
-
-      &:hover {
-        cursor: pointer;
-      }
-    }
-
-    a {
-      margin: 0 0.25rem;
-      padding: 0.5rem;
-      border-radius: 2px;
-      color: #003464;
-
-      &:hover {
-        color: #0052CC;
-        background: #E8F1FF;
-        transform: 2s;
-      }
-    }
-
-    .selected {
-      background: #E8F1FF;
+    &:hover {
+      cursor: pointer;
     }
   }
 

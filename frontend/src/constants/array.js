@@ -1,14 +1,20 @@
+import { GoGraph } from 'react-icons/go'
+import { BiBookHeart } from 'react-icons/bi'
+import { ImProfile } from 'react-icons/im'
+import { RiShieldKeyholeFill } from 'react-icons/ri'
+import { FaCashRegister, FaUsers, FaBox, FaListAlt, FaTruck, FaUsersCog } from 'react-icons/fa'
+
 export const headers = [
-  { path: '/dash', children: 'Dashboard' },
-  { path: '/dash', children: 'Vendas' },
-  { path: '/dash', children: 'Clientes' },
-  { path: '/produtos', children: 'Produtos' },
-  { path: '/categorias', children: 'Categorias' },
-  { path: '/dash', children: 'Fornecedores' },
-  { path: '/dash', children: 'Pedidos' },
-  { path: '/usuarios', children: 'Usuários' },
-  { path: '/perfis', children: 'Perfis' },
-  { path: '/permissoes', children: 'Permissões' },
+  { path: '/dash', children: 'Dashboard', icon: <GoGraph /> },
+  { path: '/vendas', children: 'Vendas', icon: <FaCashRegister /> },
+  { path: '/clientes', children: 'Clientes', icon: <FaUsers /> },
+  { path: '/produtos', children: 'Produtos', icon: <FaBox /> },
+  { path: '/categorias', children: 'Categorias', icon: <FaListAlt /> },
+  { path: '/fornecedores', children: 'Fornecedores', icon: <FaTruck /> },
+  { path: '/pedidos', children: 'Pedidos', icon: <BiBookHeart /> },
+  { path: '/usuarios', children: 'Usuários', icon: <FaUsersCog /> },
+  { path: '/perfis', children: 'Perfis', icon: <ImProfile /> },
+  { path: '/permissoes', children: 'Permissões', icon: <RiShieldKeyholeFill /> },
 ];
 
 export const comboboxRows = [

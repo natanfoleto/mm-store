@@ -4,7 +4,7 @@ export const Container = styled.div`
   margin-bottom: 1.25rem;
   
   h1 {
-    font-size: 1.6rem;
+    font-size: 1.5rem;
     color: #333;
   }
 

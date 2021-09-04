@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 import { useHistory } from 'react-router-dom';
 
-import Layout from '../../_layouts/form';
+import Layout from '../../_layouts/default';
 
 import categoryService from '../../../services/api/category'
 
@@ -49,12 +49,14 @@ export default function FormCategory() {
   return (
     <Layout title={operation === 'ADD' ? 'Nova categoria' : `Editando: ${category && category.nome}`}>
       <Container>
-        <Title>
-          <h1> { operation === 'ADD' ? 'Nova categoria!' : 'Editar categoria!' }</h1>
-          <p>Use as categorias, para classificar seus produtos!</p>
-        </Title>
+        
 
         <Form initialData={category} onSubmit={handleSubmit} autoComplete="off">
+          <Title>
+            <h1> { operation === 'ADD' ? 'Nova categoria!' : 'Editar categoria!' }</h1>
+            <p>Use as categorias, para classificar seus produtos!</p>
+          </Title>
+          
           <Input 
             type="text" 
             name="id_categoria"

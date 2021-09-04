@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
+  display: flex;
+  justify-content: center;
   padding: 3rem 1.5rem;
 
   h1 {

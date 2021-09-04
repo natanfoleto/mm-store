@@ -16,8 +16,13 @@ export const Wrapper = styled.div`
   }
 `;
 
+export const Container = styled.div`
+  display: flex;
+`;
+
 export const Content = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 1rem 1.5rem;
+  width: 85vw;
+  padding: 1rem 2rem;
 `;

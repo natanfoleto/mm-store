@@ -32,7 +32,7 @@ Data.Hr = styled.hr`
 `;
 
 Data.Id = styled.p`
-  font-size: 2rem;
+  font-size: 1.75rem;
   margin: 0 1.25rem 0 0.875rem;
   padding-right: 1.25rem;
   border-right: 1px solid #ddd;

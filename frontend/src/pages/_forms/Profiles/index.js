@@ -6,7 +6,7 @@ import { comboboxTypeProfile, comboboxContextProfile } from '../../../constants/
 
 import { useHistory } from 'react-router-dom';
 
-import Layout from '../../_layouts/form';
+import Layout from '../../_layouts/default';
 import Alert from '../../../components/Alert';
 
 import profileService from '../../../services/api/profile';
@@ -162,12 +162,12 @@ export default function FormProfile() {
   return (
     <Layout title={operation === 'ADD' ? 'Novo perfil' : `Editando: ${profile && profile.nome}`}>  
       <Container>
-        <Title>
-          <h1> { operation === 'ADD' ? 'Novo perfil!' : 'Editar perfil!' }</h1>
-          <p>Utilize os perfis, para delegar permissões aos usuários!</p>
-        </Title>
-
         <Form initialData={profile} onSubmit={handleSubmit} autoComplete="off">
+          <Title>
+            <h1> { operation === 'ADD' ? 'Novo perfil!' : 'Editar perfil!' }</h1>
+            <p>Utilize os perfis, para delegar permissões aos usuários!</p>
+          </Title>
+          
           <Input 
             type="text" 
             name="id_perfil"

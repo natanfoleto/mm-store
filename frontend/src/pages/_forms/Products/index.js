@@ -7,7 +7,7 @@ import { useHistory } from 'react-router-dom';
 
 import { comboboxSizeProduct } from '../../../constants/array'
 
-import Layout from '../../_layouts/form';
+import Layout from '../../_layouts/default';
 
 import productService from '../../../services/api/product';
 
@@ -143,12 +143,12 @@ export default function FormProduct() {
   return (
     <Layout title={operation === 'ADD' ? 'Novo produto' : `Editando: ${product && product.nome}`}>  
       <Container>
-        <Title>
-          <h1> { operation === 'ADD' ? 'Novo produto!' : 'Editar produto!' }</h1>
-          <p>Crie e personalize seus produtos!</p>
-        </Title>
-
         <Form initialData={product} onSubmit={handleSubmit} autoComplete="off">
+          <Title>
+            <h1> { operation === 'ADD' ? 'Novo produto!' : 'Editar produto!' }</h1>
+            <p>Crie e personalize seus produtos!</p>
+          </Title>
+          
           <Input 
             type="text" 
             name="id_produto"

@@ -1,20 +1,22 @@
 import PropTypes from 'prop-types';
 
 import Header from '../../../components/Header';
-import Breadcrumb from '../../../components/Breadcrumb'
+import Sidebar from '../../../components/Sidebar'
 
-import { Wrapper, Content } from './styles';
+import { Wrapper, Container, Content } from './styles';
 
 export default function DefaultLayout({ children, title }) {
   return (
     <Wrapper>
-      <Header />
+      <Header title={title} />
 
-      <Content>
-        {children}
-      </Content>
+      <Container>
+        <Sidebar />
 
-      <Breadcrumb title={title} />
+        <Content>
+          {children}
+        </Content>
+      </Container>
     </Wrapper>
   );
 }

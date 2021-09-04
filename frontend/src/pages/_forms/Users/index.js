@@ -5,7 +5,7 @@ import Toast from '../../../utils/toastify';
 
 import { useHistory } from 'react-router-dom';
 
-import Layout from '../../_layouts/form';
+import Layout from '../../_layouts/default';
 
 import userService from '../../../services/api/user';
 
@@ -93,12 +93,12 @@ export default function FormUser() {
   return (
     <Layout title={operation === 'ADD' ? 'Novo usuário' : `Editando: ${user && user.nome}`}>  
       <Container>
-        <Title>
-          <h1> { operation === 'ADD' ? 'Novo usuário!' : 'Editar usuário!' }</h1>
-          <p>Use os usuários, para criar acessos no sistema!</p>
-        </Title>
-
         <Form initialData={user} onSubmit={handleSubmit} autoComplete="off">
+          <Title>
+            <h1> { operation === 'ADD' ? 'Novo usuário!' : 'Editar usuário!' }</h1>
+            <p>Use os usuários, para criar acessos no sistema!</p>
+          </Title>
+          
           <Input 
             type="text" 
             name="id_usuario"

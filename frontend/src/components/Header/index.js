@@ -1,7 +1,8 @@
-import { Link, NavLink } from 'react-router-dom';
+import { Link, /* NavLink */ } from 'react-router-dom';
 
 import { useAuth } from '../../contexts/auth';
-import { headers } from '../../constants/array'
+
+import Breadcrumb from '../../components/Breadcrumb';
 
 import Logo from '../../assets/LogoMini.png';
 
@@ -10,7 +11,7 @@ import { RiLogoutCircleLine } from 'react-icons/ri';
 
 import { Container, Content, Profile } from './styles';
 
-function Header() {
+function Header({ title }) {
   const { user, signOut } = useAuth();
   
   function handleLogOut() {
@@ -20,21 +21,10 @@ function Header() {
   return (
     <Container>
       <Content>
-        <nav>
-          <img src={Logo} alt="MMStore" />
+        <img src={Logo} alt="MMStore" />
 
-          {
-            headers.map((item) => (
-              <NavLink
-                to={item.path}
-                activeClassName="selected"
-              >
-                {item.children}
-              </NavLink>
-            ))
-          }
+        <Breadcrumb title={title} />
 
-        </nav>
 
         <aside>
           <Tooltip title="Logout" enterDelay={500} leaveDelay={200}>
