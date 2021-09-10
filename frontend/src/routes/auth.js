@@ -7,11 +7,11 @@ import Categories from "../pages/Categories";
 import Products from "../pages/Products";
 import Permissions from "../pages/Permissions";
 
-import FormProfiles from "../pages/_forms/Profiles";
-import FormUsers from "../pages/_forms/Users";
-import FormCategories from "../pages/_forms/Categories";
-import FormProduct from "../pages/_forms/Products";
-import FormPermissions from "../pages/_forms/Permissions";
+import FormProfiles from "../pages/Forms/Profiles";
+import FormUsers from "../pages/Forms/Users";
+import FormCategories from "../pages/Forms/Categories";
+import FormProduct from "../pages/Forms/Products";
+import FormPermissions from "../pages/Forms/Permissions";
 
 import NotFound from "../pages/NotFound";
 

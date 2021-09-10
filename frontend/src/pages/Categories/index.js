@@ -3,12 +3,10 @@ import { useEffect, useState, useCallback } from 'react';
 import api from '../../services/api/api';
 import Toast from '../../utils/toastify';
 
-import Layout from '../_layouts/default';
+import Layout from '../Layouts/default';
 
-import Card from './components/Card';
-import Title from '../../components/Title'
-import Search from '../../components/Search'
-import Table from '../../components/Table'
+import HeaderPage from '../../components/HeaderPage'
+import Table from '../../components/Table/Categories'
 import Navigation from '../../components/Navigation'
 
 export default function Categories() {
@@ -21,13 +19,11 @@ export default function Categories() {
   const [currentPage, setCurrentPage] = useState(1);
   const [viewPermission, setViewPermission] = useState(false);
 
-  const [search, setSearch] = useState('');
-
   useEffect(() => {
     async function searchProfile() {
       try {
         const { data } = await api.post(`/categories/search/${currentPage}/${limit}`, { 
-          key: search 
+          key: ''
         });
 
         setData(data.data);
@@ -57,7 +53,7 @@ export default function Categories() {
     }
 
     searchProfile();
-  }, [limit, currentPage, search])
+  }, [limit, currentPage])
 
   function handleCreate() {
     history.push('/categorias/add');
@@ -70,24 +66,15 @@ export default function Categories() {
 
   return (
     <Layout title="Gestão de Categorias">
-      <Title 
-        title="Categorias"
-        subTitle="Categorias de produtos"
-      />
-
-      <Search 
-        placeholder="Pesquise pela categoria"
-        search={search}
-        setSearch={setSearch}
-        viewPermission={viewPermission}
-        limit={limit}
-        handleLimit={handleLimit}
+      <HeaderPage
         handleCreate={handleCreate}
-      />
+        buttonText="Nova categoria"
+      > 
+        Gestão de Categorias 
+      </HeaderPage>
 
       <Table 
         data={data}
-        Card={Card}
       />
       
       <Navigation 
@@ -95,6 +82,9 @@ export default function Categories() {
         setCurrentPage={setCurrentPage}
         totalPages={totalPages}
         totalRecords={totalRecords}
+        viewPermission={viewPermission}
+        limit={limit}
+        handleLimit={handleLimit}
       />
     </Layout>
   );

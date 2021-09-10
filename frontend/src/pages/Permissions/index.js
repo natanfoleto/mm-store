@@ -3,12 +3,10 @@ import { useHistory } from 'react-router-dom';
 import api from '../../services/api/api';
 import Toast from '../../utils/toastify';
 
-import Layout from '../_layouts/default';
+import Layout from '../Layouts/default';
 
-import Card from './components/Card';
-import Title from '../../components/Title'
-import Search from '../../components/Search'
-import Table from '../../components/Table'
+import HeaderPage from '../../components/HeaderPage'
+import Table from '../../components/Table/Permissions'
 import Navigation from '../../components/Navigation'
 
 export default function Permissions() {
@@ -21,13 +19,12 @@ export default function Permissions() {
   const [currentPage, setCurrentPage] = useState(1);
   const [viewPermission, setViewPermission] = useState(false);
 
-  const [search, setSearch] = useState('');
 
   useEffect(() => {
     async function searchPermissions() {
       try {
         const { data } = await api.post(`/permission/search/${currentPage}/${limit}`, {
-          key: search
+          key: ''
         });
 
         setData(data.data);
@@ -56,7 +53,7 @@ export default function Permissions() {
     }
 
     searchPermissions();
-  }, [limit, currentPage, search])
+  }, [limit, currentPage])
 
   function handleCreate() {
     history.push('/permissoes/add');
@@ -69,24 +66,15 @@ export default function Permissions() {
 
   return (
     <Layout title="Gestão de Permissões">      
-      <Title 
-        title="Permissões"
-        subTitle="Configuração que permite os usuários realizar feitos"
-      />
-
-      <Search 
-        placeholder="Pesquise pela permissão"
-        search={search}
-        setSearch={setSearch}
-        viewPermission={viewPermission}
-        limit={limit}
-        handleLimit={handleLimit}
+      <HeaderPage
         handleCreate={handleCreate}
-      />
+        buttonText="Nova permissão"
+      >
+        Gestão de permissões 
+      </HeaderPage>
 
       <Table 
         data={data}
-        Card={Card}
       />
       
       <Navigation 
@@ -94,6 +82,9 @@ export default function Permissions() {
         setCurrentPage={setCurrentPage}
         totalPages={totalPages}
         totalRecords={totalRecords}
+        viewPermission={viewPermission}
+        limit={limit}
+        handleLimit={handleLimit}
       />
     </Layout>
   );

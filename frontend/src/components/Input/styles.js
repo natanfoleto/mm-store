@@ -7,8 +7,9 @@ export const Container = styled.div`
 
   input {
     width: 100%;
+    height: 1.3rem;
+    background-color: #F4F5F7;
     font-size: 0.875rem;
-    height: 1.5rem;
     padding: 0.25rem 0.5rem;
     border: 0;
     border: 1px solid #eee;
@@ -16,7 +17,12 @@ export const Container = styled.div`
 
     &:hover {
       transition: 0.25s;
-      background: ${darken(0.03, '#FFF')};
+      background: ${darken(0.01, '#F4F5F7')};
+    }
+
+    &:focus {
+      background: #FFF;
+      border: 1px solid #0052CC;
     }
   }
 
@@ -26,7 +32,7 @@ export const Container = styled.div`
     background: #eee;
     color: #444;
     font-size: 0.875rem;
-    height: 1.5rem;
+    height: 1.3rem;
     padding: 0.25rem 0.4rem;
     border: 0;
     border: 1px solid #eee;

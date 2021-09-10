@@ -1,46 +1,55 @@
 import styled from 'styled-components';
-import { darken } from 'polished';
 
 export const Container = styled.div`
-  height: 40rem;
   overflow-y: scroll;
-  margin-bottom: 1rem;
-  border-top: 1px solid #eee;
-  border-bottom: 1px solid #eee;
-  border-radius: 0.25rem;
+  margin-bottom: 2rem;
 
   ::-webkit-scrollbar { width: 0; }
 
-  @media (max-height: 900px) {
-    height: 35rem;
+  h6 {
+    color: #333;
   }
-`;
 
-export const Content = styled.div`
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 0.625rem;
-  height: auto;
-  padding: 0.75rem;
-  background: #FFF;
-  border: 1px solid #eee;
-  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.15);
-  border-radius: 0.25rem;
-  cursor: pointer;
+  div {
+    padding: 0;
 
-  &:last-child {
-    margin-bottom: 0;
-  }  
+    input {
+      width: 15vw;
+    }
 
-  &:hover {
-    transition: 0.25s;
-    background: ${darken(0.025, '#FFF')};
+    button {
+      padding: 0;
+
+      &:hover {
+        background: none;
+      }
+    }
   }
-`;
 
-export const LoadData = styled.div`
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  td>div {
+    justify-content: space-between;
+    padding: 0 1rem;
+  }
+
+  thead>tr>th {
+    background: #DDD;
+    padding: 2.5px 7px;
+    font-weight: 600;
+  }
+
+  tbody>tr>td {
+    padding: 5px 7px;
+  }
+
+  tbody>tr:nth-child( 2n + 2 ) {
+	  background: #F7F7F7;
+  }
+
+  tbody>tr {
+    &:hover {
+      cursor: pointer;
+      background: rgba(0, 82, 204, 0.2);
+      // background: rgba(255, 249, 82, 0.8);
+    }
+  }
 `;

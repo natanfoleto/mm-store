@@ -1,4 +1,4 @@
-import Layout from '../_layouts/default';
+import Layout from '../Layouts/default';
 
 import { Container } from './styles';
 

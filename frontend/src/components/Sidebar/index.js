@@ -50,8 +50,9 @@ function Sidebar() {
 
         <nav>
           {
-            headers.map((item) => (
+            headers.map((item, index) => (
               <NavLink
+                key={index}
                 to={item.path}
                 activeClassName="selected"
               >
@@ -64,7 +65,7 @@ function Sidebar() {
       </div>
 
       <div>
-        <footer>Provided by, dev Natan Foleto</footer>
+        <footer>© Provided by, dev Natan Foleto</footer>
       </div>
     </Container>
   );

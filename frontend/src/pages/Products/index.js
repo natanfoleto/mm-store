@@ -4,12 +4,10 @@ import api from '../../services/api/api';
 import Toast from '../../utils/toastify';
 import { replaceForDecimal } from '../../utils/replaceValue';
 
-import Layout from '../_layouts/default';
+import Layout from '../Layouts/default';
 
-import Card from './components/Card';
-import Title from '../../components/Title'
-import Search from '../../components/Search'
-import Table from '../../components/Table'
+import HeaderPage from '../../components/HeaderPage'
+import Table from '../../components/Table/Products'
 import Navigation from '../../components/Navigation'
 
 export default function Products() {
@@ -22,13 +20,12 @@ export default function Products() {
   const [currentPage, setCurrentPage] = useState(1);
   const [viewPermission, setViewPermission] = useState(false);
 
-  const [search, setSearch] = useState('');
 
   useEffect(() => {
     async function searchUser() {
       try {
         const { data } = await api.post(`/products/search/${currentPage}/${limit}`, { 
-          key: search 
+          key: '' 
         });
 
         data.data && data.data.forEach((item, index) => {
@@ -64,7 +61,7 @@ export default function Products() {
     }
 
     searchUser();
-  }, [limit, currentPage, search])
+  }, [limit, currentPage])
 
   function handleCreate() {
     history.push('/produtos/add');
@@ -77,24 +74,15 @@ export default function Products() {
 
   return (
     <Layout title="Gestão de Produtos">
-      <Title 
-        title="Produtos"
-        subTitle="Seus produtos... roupas, sapatos, acessórios e etc!"
-      />
-
-      <Search 
-        placeholder="Pesquise por um produto"
-        search={search}
-        setSearch={setSearch}
-        viewPermission={viewPermission}
-        limit={limit}
-        handleLimit={handleLimit}
+      <HeaderPage
         handleCreate={handleCreate}
-      />
+        buttonText="Novo produto"
+      >
+        Gestão de Produtos 
+      </HeaderPage>
 
       <Table 
         data={data}
-        Card={Card}
       />
       
       <Navigation 
@@ -102,6 +90,9 @@ export default function Products() {
         setCurrentPage={setCurrentPage}
         totalPages={totalPages}
         totalRecords={totalRecords}
+        viewPermission={viewPermission}
+        limit={limit}
+        handleLimit={handleLimit}
       />
     </Layout>
   );

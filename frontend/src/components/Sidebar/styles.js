@@ -12,6 +12,7 @@ export const Container = styled.div`
 
   @media (max-height: 1200px) {
     width: ${props => props.sidebar ? '0vw' : '12.5vw'};
+    height: calc(100vh - 4.5rem);
   }
 
   @media (max-height: 900px) {
@@ -30,14 +31,13 @@ export const Container = styled.div`
       margin: 0 0.25rem;
       padding: 0.6rem;
       border-radius: 2px;
-      color: #003464;
+      color: #41526E;
 
       svg {
         margin-right: 10px;
       }
 
       &:hover {
-        color: #0052CC;
         background: #EBECF0;
         transform: 2s;
       }
@@ -52,6 +52,7 @@ export const Container = styled.div`
   footer {
     text-align: center;
     margin-bottom: 1rem;
+    display: ${props => props.sidebar ? 'none' : ''};
   }
 
   &:hover {

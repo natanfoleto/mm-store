@@ -7,7 +7,7 @@ export const Container = styled.div`
 `;
 
 export const Content = styled.div`
-  height: 4rem;
+  height: 7.5vh;
   max-width: 100vw;
   margin: 0 auto;
   display: flex;
@@ -20,6 +20,8 @@ export const Content = styled.div`
     margin-right: 1rem;
 
     &:hover {
+      transition: 0.5s;
+      transform: rotate(360deg);
       cursor: pointer;
     }
   }

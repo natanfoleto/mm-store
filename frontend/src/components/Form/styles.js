@@ -3,12 +3,13 @@ import styled from 'styled-components';
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
+  align-items: center;
+  margin-top: 1.5rem;
 
   form {
-    width: 38rem;
-    margin: 1.5rem 0;
+    height: 100%;
+    width: 40vw;
     display: flex;
     flex-direction: column;
 

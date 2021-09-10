@@ -3,12 +3,10 @@ import { useEffect, useState, useCallback } from 'react';
 import api from '../../services/api/api';
 import Toast from '../../utils/toastify';
 
-import Layout from '../_layouts/default';
+import Layout from '../Layouts/default';
 
-import Card from './components/Card';
-import Title from '../../components/Title'
-import Search from '../../components/Search'
-import Table from '../../components/Table'
+import HeaderPage from '../../components/HeaderPage'
+import Table from '../../components/Table/Profiles'
 import Navigation from '../../components/Navigation'
 
 export default function Profiles() {
@@ -21,13 +19,12 @@ export default function Profiles() {
   const [currentPage, setCurrentPage] = useState(1);
   const [viewPermission, setViewPermission] = useState(false);
 
-  const [search, setSearch] = useState('');
 
   useEffect(() => {
     async function searchProfile() {
       try {
         const { data } = await api.post(`/profiles/search/${currentPage}/${limit}`, { 
-          key: search 
+          key: '' 
         });
 
         setData(data.data);
@@ -57,7 +54,7 @@ export default function Profiles() {
     }
 
     searchProfile();
-  }, [limit, currentPage, search])
+  }, [limit, currentPage])
 
   function handleCreate() {
     history.push('/perfis/add');
@@ -70,24 +67,15 @@ export default function Profiles() {
 
   return (
     <Layout title="Gestão de Perfis">      
-      <Title 
-        title="Perfis"
-        subTitle="Cargos destinados aos usuários"
-      />
-
-      <Search 
-        placeholder="Pesquise pelo nome"
-        search={search}
-        setSearch={setSearch}
-        viewPermission={viewPermission}
-        limit={limit}
-        handleLimit={handleLimit}
+      <HeaderPage
         handleCreate={handleCreate}
-      />
+        buttonText="Novo perfil"
+      >
+        Perfis 
+      </HeaderPage>
 
       <Table 
         data={data}
-        Card={Card}
       />
       
       <Navigation 
@@ -95,6 +83,9 @@ export default function Profiles() {
         setCurrentPage={setCurrentPage}
         totalPages={totalPages}
         totalRecords={totalRecords}
+        viewPermission={viewPermission}
+        limit={limit}
+        handleLimit={handleLimit}
       />
     </Layout>
   );

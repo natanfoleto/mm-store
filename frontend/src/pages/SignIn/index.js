@@ -1,4 +1,4 @@
-import Layout from '../_layouts/auth';
+import Layout from '../Layouts/auth';
 import Logo from '../../assets/Logo.png';
 
 import { Form, Input } from '@rocketseat/unform';
