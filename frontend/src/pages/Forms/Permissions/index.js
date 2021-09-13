@@ -27,15 +27,17 @@ export default function FormPermission() {
   const [currentContext, setCurrentContext] = useState()
   
   useEffect(() => {
-    setPermission(history.location.state);
+    const state = history.location.state;
+
+    setPermission(state);
 
     if (history.location.pathname === '/permissoes/add') {
       setOperation('ADD');
     }
     else {
       setOperation('EDIT');
-      setCurrentType(history.location.state.tipo)
-      setCurrentContext(history.location.state.contexto)
+      setCurrentType(state.tipo);
+      setCurrentContext(state.contexto);
     }
   }, [history])
 
@@ -52,7 +54,7 @@ export default function FormPermission() {
   }
 
   function handleCancel() {
-    history.goBack()
+    history.goBack();
   }
 
   const handleSelectType = useCallback((e) => {

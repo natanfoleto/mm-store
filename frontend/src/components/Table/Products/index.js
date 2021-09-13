@@ -3,7 +3,9 @@ import { useHistory } from 'react-router-dom';
 
 import productService from '../../../services/api/product';
 
-import { Container } from '../styles'
+import { ptBR } from '../locale'
+import { PhotoContainer } from './styles'
+import { Container, styleIcon } from '../styles'
 
 export default function ComponentTable({ data }) { 
   const history = useHistory();
@@ -11,7 +13,7 @@ export default function ComponentTable({ data }) {
   const { deleteProduct } = productService();
 
   async function handleEdit(rowData) {
-    history.push('/produtos/edit', rowData);
+    history.push('/produtos/edit', JSON.stringify(rowData));
   }
 
   async function handleDelete(item) {
@@ -25,33 +27,48 @@ export default function ComponentTable({ data }) {
   return (
     <Container>
       <MaterialTable
+        localization={ptBR}
         columns={[
-          { title: 'ID', field: 'id_produto' },
+          { title: 'ID', field: 'id_produto', width: '10%' },
           { title: 'Nome', field: 'nome' },
-          { title: 'R$', field: 'preco_venda', type: 'numeric', align: 'center' },
+          { title: 'Preço', field: 'preco_venda' },
           { title: 'Estoque', field: 'estoque' },
           { title: 'Tamanho', field: 'tamanho' },
         ]}
-        data={data}        
+        data={data} 
         options={{
           search: true,
           searchFieldAlignment: 'left',
           paging: false,
           showTitle: false,
-          actionsColumnIndex: -1,
+          actionsColumnIndex: -1
         }}
         actions={[
           {
             icon: 'edit',
-            iconProps: { style: { fontSize: '14px' } },
+            iconProps: { style: styleIcon },
             onClick: (event, rowData) => { handleEdit(rowData) }
           },
           {
             icon: 'delete',
-            iconProps: { style: { fontSize: '14px' } },
+            iconProps: { style: styleIcon },
             onClick: (event, rowData) => { handleDelete(rowData) }
           }
         ]}
+        detailPanel={rowData => {
+          return (
+            <PhotoContainer>
+              { rowData.fotos.map((item) => (
+                <img 
+                  key={item.id_foto} 
+                  alt={item.nome} 
+                  src={item.url} 
+                />
+              )) }
+            </PhotoContainer>
+          )
+        }}
+        onRowClick={(event, rowData, togglePanel) => togglePanel()}
       />
     </Container>
   );

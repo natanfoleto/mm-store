@@ -31,6 +31,7 @@ export const Content = styled.div`
     align-items: center;
 
     button {
+      border: 0;
       background-color: transparent;
       color: #333;
       

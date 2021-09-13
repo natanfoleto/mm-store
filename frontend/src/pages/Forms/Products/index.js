@@ -11,11 +11,15 @@ import Layout from '../../Layouts/default';
 
 import productService from '../../../services/api/product';
 
+import Alert from '../../../components/Alert';
 import Form from '../../../components/Form';
 import Input from '../../../components/Input';
 import Button from '../../../components/Button'
 import Select from '../../../components/Select';
 
+import { MdAddAPhoto } from 'react-icons/md'
+
+import { ImageGroup, ImageHeader, Images } from './styles'
 import { Container, Title, Grouping, InputGroup, ButtonGroup, Label } from '../styles';
 
 export default function FormProduct() {
@@ -31,6 +35,7 @@ export default function FormProduct() {
   const [categories, setCategories] = useState([]);
   const [providers, setProviders] = useState([]);
   const [operation, setOperation] = useState();
+  const [images, setImages] = useState([]);
   
   useEffect(() => {
     async function searchAllCategories() {
@@ -65,7 +70,7 @@ export default function FormProduct() {
       try {
         const { data } = await api.post('/providers/search/1/0');
   
-        let newData = [{ title: 'Nenhum'}];
+        let newData = [{ id: 'Nenhum', title: 'Nenhum'}];
     
         data.data.forEach((item) => {
           const element = { id: item.id_fornecedor, title: item.nome };
@@ -92,16 +97,21 @@ export default function FormProduct() {
     searchAllCategories();
     searchAllProviders();
 
-    setProduct(history.location.state);
-
     if (history.location.pathname === '/produtos/add') {
       setOperation('ADD');
     }
     else {
+      const state = JSON.parse(history.location.state)
+
+      setProduct(state);
       setOperation('EDIT');
-      setCurrentCategory(history.location.state.id_categoria);
-      setCurrentProvider(history.location.state.id_fornecedor === null && 'Nenhum');
-      setCurrentSize(history.location.state.tamanho);
+      setCurrentCategory(state.id_categoria);
+      setCurrentProvider(
+        state.id_fornecedor === null ? 
+        'Nenhum' : 
+        state.id_fornecedor
+      );
+      setCurrentSize(state.tamanho);
     }
   }, [history])
 
@@ -123,6 +133,68 @@ export default function FormProduct() {
 
   function handleCancel() {
     history.goBack()
+  }
+
+  function handleAddImage(e) {
+    let file
+
+    file = e.target.files[0];
+
+    for (const item of images) {
+      if (item.path === file.name) {
+        const index = images.indexOf(item)
+        
+        if (index !== -1) {
+          Toast('info', 'Esta foto ja foi adicionada!');
+          return
+        }
+      }
+    }
+
+    getBase64(file)
+      .then(result => {
+        file["base64"] = result
+
+        const image = { path: e.target.files[0].name, base64: result }
+
+        console.log(image)
+    
+        setImages([...images, image])
+
+        e.target.value = null;
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  }
+
+  function handleRemoveImage(e) {
+    const path = e.target.alt
+
+    for (const item of images) {
+      if (item.path === path) {
+        const index = images.indexOf(item)
+        
+        if (index !== -1) {
+          images.splice(index, 1)
+          setImages([...images, images])
+        }
+      }
+    }
+  }
+
+  function getBase64 (file) {
+    return new Promise(resolve => {
+      let baseURL = ""
+      let reader = new FileReader()
+
+      reader.readAsDataURL(file)
+
+      reader.onload = () => {
+        baseURL = reader.result
+        resolve(baseURL)
+      };
+    })
   }
 
   const handleSelectCategory = useCallback((e) => {
@@ -241,7 +313,7 @@ export default function FormProduct() {
               <Label>Qtd em estoque</Label>
 
               <Input 
-                type="text" 
+                type="number" 
                 name="estoque"
                 maxLength={50}
                 onChange={() => { setButtonAvailable(false) }}
@@ -249,6 +321,38 @@ export default function FormProduct() {
               />
             </InputGroup>
           </Grouping>
+
+          <ImageGroup>
+            <ImageHeader>
+              <p>Adicionar fotos</p>
+              <label htmlFor="add"> <MdAddAPhoto size={24} /> </label>
+              <input 
+                id="add" 
+                type="file" 
+                onChange={(e) => handleAddImage(e)}
+              />
+            </ImageHeader>
+
+            <Images> 
+              { images && images.map((item, index) => (
+                  <img 
+                    key={index}
+                    alt={item.path}
+                    src={item.base64}
+                    style={ item.path ? { display: '' } : { display: 'none' } }
+                    onDoubleClick={(e) => handleRemoveImage(e)}
+                  />
+                )) }
+            </Images>
+
+            <Alert 
+              color="#856404"
+              background="#FFF3CD"
+              borderColor="#FFEEBA"
+            > 
+              Para excluir uma foto, clique duas vezes sobre ela. 
+            </Alert>
+          </ImageGroup>
 
           <ButtonGroup>
             <Button

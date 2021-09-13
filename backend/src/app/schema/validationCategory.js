@@ -9,8 +9,8 @@ const validationSchemas = {
       .string()
       .allow('')
       .messages({
-        'any.required': 'parâmetro key é necessário',
-        'string.base': 'key deve ser do tipo string'
+        'any.required': 'Parâmetro key é necessário',
+        'string.base': 'Key deve ser do tipo string'
       })
   }),
   categoryCreate: Joi.object().keys({
@@ -19,10 +19,10 @@ const validationSchemas = {
       .required()
       .min(4)
       .messages({
-        'any.required': 'nome é necessário',
-        'string.base': 'nome deve ser do tipo string',
-        'string.empty': 'nome não pode estar vazio',
-        'string.min': 'nome deve ter mais de 4 caracteres'
+        'any.required': 'O campo nome é necessário',
+        'string.base': 'O campo nome deve ser do tipo string',
+        'string.empty': 'O campo nome não pode estar vazio',
+        'string.min': 'O campo nome deve ter mais de 4 caracteres'
       })
   }),
   categoryUpdate: Joi.object().keys({
@@ -31,20 +31,20 @@ const validationSchemas = {
       .required()
       .min(1)
       .messages({
-        'any.required': 'id_categoria é necessário',
-        'number.base': 'id_categoria deve ser um número',
-        'number.empty': 'id_categoria não pode estar vazio',
-        'number.min': 'id_categoria deve ser maior que 0'
+        'any.required': 'O campo id_categoria é necessário',
+        'number.base': 'O campo id_categoria deve ser um número',
+        'number.empty': 'O campo id_categoria não pode estar vazio',
+        'number.min': 'O campo id_categoria deve ser maior que 0'
       }),
     nome: Joi
       .string()
       .required()
       .min(4)
       .messages({
-        'any.required': 'nome é necessário',
-        'string.base': 'nome deve ser do tipo string',
-        'string.empty': 'nome não pode estar vazio',
-        'string.min': 'nome deve ter mais de 4 caracteres'
+        'any.required': 'O campo nome é necessário',
+        'string.base': 'O campo nome deve ser do tipo string',
+        'string.empty': 'O campo nome não pode estar vazio',
+        'string.min': 'O campo nome deve ter mais de 4 caracteres'
       })
   }),
   categoryDelete: Joi.object().keys({
@@ -53,10 +53,10 @@ const validationSchemas = {
       .required()
       .min(1)
       .messages({
-        'any.required': 'id_categoria é necessário',
-        'number.base': 'id_categoria deve ser um número',
-        'number.empty': 'id_categoria não pode estar vazio',
-        'number.min': 'id_categoria deve ser maior que 0'
+        'any.required': 'O campo id_categoria é necessário',
+        'number.base': 'O campo id_categoria deve ser um número',
+        'number.empty': 'O campo id_categoria não pode estar vazio',
+        'number.min': 'O campo id_categoria deve ser maior que 0'
       })
   })
 }

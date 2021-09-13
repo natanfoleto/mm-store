@@ -9,8 +9,8 @@ const validationSchemas = {
       .string()
       .allow('')
       .messages({
-        'any.required': 'parâmetro key é necessário',
-        'string.base': 'key deve ser do tipo string'
+        'any.required': 'Parâmetro key é necessário',
+        'string.base': 'Key deve ser do tipo string'
       })
   }),
   permissionSearchForProfile: Joi.object().keys({
@@ -19,26 +19,26 @@ const validationSchemas = {
       .required()
       .min(1)
       .messages({
-        'any.required': 'id_perfil é necessário',
-        'number.base': 'id_perfil deve ser um número',
-        'number.empty': 'id_perfil não pode estar vazio',
-        'number.min': 'id_perfil deve ser maior que 0'
+        'any.required': 'O campo id_perfil é necessário',
+        'number.base': 'O campo id_perfil deve ser um número',
+        'number.empty': 'O campo id_perfil não pode estar vazio',
+        'number.min': 'O campo id_perfil deve ser maior que 0'
       }),
     tipo: Joi
       .string()
       .allow('')
       .required()
       .messages({
-        'any.required': 'parâmetro tipo é necessário',
-        'string.base': 'key deve tipo do tipo string'
+        'any.required': 'O campo parâmetro tipo é necessário',
+        'string.base': 'O campo key deve tipo do tipo string'
       }),
     contexto: Joi
       .string()
       .allow('')
       .required()
       .messages({
-        'any.required': 'parâmetro contexto é necessário',
-        'string.base': 'contexto deve ser do tipo string'
+        'any.required': 'O campo parâmetro contexto é necessário',
+        'string.base': 'O campo contexto deve ser do tipo string'
       })
   }),
   permissionCreate: Joi.object().keys({
@@ -48,11 +48,11 @@ const validationSchemas = {
       .max(50)
       .min(4)
       .messages({
-        'any.required': 'nome é necessário',
-        'string.base': 'nome deve ser do tipo string',
-        'string.empty': 'nome não pode estar vazio',
-        'string.max': 'nome deve ter no máximo 1 caracter',
-        'string.min': 'nome deve ter mais de 4 caracteres'
+        'any.required': 'O campo nome é necessário',
+        'string.base': 'O campo nome deve ser do tipo string',
+        'string.empty': 'O campo nome não pode estar vazio',
+        'string.max': 'O campo nome deve ter no máximo 1 caracter',
+        'string.min': 'O campo nome deve ter mais de 4 caracteres'
 
       }),
     tipo: Joi
@@ -60,26 +60,26 @@ const validationSchemas = {
       .required()
       .max(25)
       .messages({
-        'any.required': 'tipo é necessário',
-        'string.base': 'tipo deve ser do tipo string',
-        'string.empty': 'tipo não pode estar vazio',
-        'string.max': 'tipo deve ter no máximo 1 caracter'
+        'any.required': 'O campo tipo é necessário',
+        'string.base': 'O campo tipo deve ser do tipo string',
+        'string.empty': 'O campo tipo não pode estar vazio',
+        'string.max': 'O campo tipo deve ter no máximo 1 caracter'
       }),
     descricao: Joi
       .string()
       .required()
       .min(4)
       .messages({
-        'any.required': 'descricao é necessário',
-        'string.base': 'descricao deve ser do tipo string',
-        'string.empty': 'descricao não pode estar vazio',
-        'string.min': 'descricao deve ter mais de 4 caracteres'
+        'any.required': 'O campo descricao é necessário',
+        'string.base': 'O campo descricao deve ser do tipo string',
+        'string.empty': 'O campo descricao não pode estar vazio',
+        'string.min': 'O campo descricao deve ter mais de 4 caracteres'
       }),
     contexto: Joi
       .string()
       .messages({
-        'string.base': 'contexto deve ser do tipo string',
-        'string.empty': 'contexto não pode estar vazio'
+        'string.base': 'O campo contexto deve ser do tipo string',
+        'string.empty': 'O campo contexto não pode estar vazio'
       })
   }),
   permissionUpdate: Joi.object().keys({
@@ -88,46 +88,46 @@ const validationSchemas = {
       .required()
       .min(1)
       .messages({
-        'any.required': 'id_permissao é necessário',
-        'number.base': 'id_permissao deve ser um número',
-        'number.empty': 'id_permissao não pode estar vazio',
-        'number.min': 'id_permissao deve ser maior que 0'
+        'any.required': 'O campo id_permissao é necessário',
+        'number.base': 'O campo id_permissao deve ser um número',
+        'number.empty': 'O campo id_permissao não pode estar vazio',
+        'number.min': 'O campo id_permissao deve ser maior que 0'
       }),
     nome: Joi
       .string()
       .required()
       .max(50)
       .messages({
-        'any.required': 'nome é necessário',
-        'string.base': 'nome deve ser do tipo string',
-        'string.empty': 'nome não pode estar vazio',
-        'string.max': 'nome deve ter no máximo 1 caracter'
+        'any.required': 'O campo nome é necessário',
+        'string.base': 'O campo nome deve ser do tipo string',
+        'string.empty': 'O campo nome não pode estar vazio',
+        'string.max': 'O campo nome deve ter no máximo 1 caracter'
       }),
     tipo: Joi
       .string()
       .required()
       .max(25)
       .messages({
-        'any.required': 'tipo é necessário',
-        'string.base': 'tipo deve ser do tipo string',
-        'string.empty': 'tipo não pode estar vazio',
-        'string.max': 'tipo deve ter no máximo 1 caracter'
+        'any.required': 'O campo tipo é necessário',
+        'string.base': 'O campo tipo deve ser do tipo string',
+        'string.empty': 'O campo tipo não pode estar vazio',
+        'string.max': 'O campo tipo deve ter no máximo 1 caracter'
       }),
     descricao: Joi
       .string()
       .required()
       .min(4)
       .messages({
-        'any.required': 'descricao é necessário',
-        'string.base': 'descricao deve ser do tipo string',
-        'string.empty': 'descricao não pode estar vazio',
-        'string.min': 'descricao deve ter mais de 4 caracteres'
+        'any.required': 'O campo descricao é necessário',
+        'string.base': 'O campo descricao deve ser do tipo string',
+        'string.empty': 'O campo descricao não pode estar vazio',
+        'string.min': 'O campo descricao deve ter mais de 4 caracteres'
       }),
     contexto: Joi
       .string()
       .messages({
-        'string.base': 'contexto deve ser do tipo string',
-        'string.empty': 'contexto não pode estar vazio'
+        'string.base': 'O campo contexto deve ser do tipo string',
+        'string.empty': 'O campo contexto não pode estar vazio'
       })
   }),
   permissionDelete: Joi.object().keys({
@@ -136,10 +136,10 @@ const validationSchemas = {
       .required()
       .min(1)
       .messages({
-        'any.required': 'id_permissao é necessário',
-        'number.base': 'id_permissao deve ser um número',
-        'number.empty': 'id_permissao não pode estar vazio',
-        'number.min': 'id_permissao deve ser maior que 0'
+        'any.required': 'O campo id_permissao é necessário',
+        'number.base': 'O campo id_permissao deve ser um número',
+        'number.empty': 'O campo id_permissao não pode estar vazio',
+        'number.min': 'O campo id_permissao deve ser maior que 0'
       })
   })
 }

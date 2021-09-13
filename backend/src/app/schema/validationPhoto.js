@@ -9,8 +9,8 @@ const validationSchemas = {
       .string()
       .allow('')
       .messages({
-        'any.required': 'parâmetro key é necessário',
-        'string.base': 'key deve ser do tipo string'
+        'any.required': 'Parâmetro key é necessário',
+        'string.base': 'Key deve ser do tipo string'
       })
   }),
   photoCreate: Joi.object().keys({
@@ -19,35 +19,35 @@ const validationSchemas = {
       .required()
       .min(1)
       .messages({
-        'any.required': 'id_produto é necessário',
-        'number.base': 'id_produto deve ser um número',
-        'number.empty': 'id_produto não pode estar vazio',
-        'number.min': 'id_produto deve ser maior que 0'
+        'any.required': 'O campo id_produto é necessário',
+        'number.base': 'O campo id_produto deve ser um número',
+        'number.empty': 'O campo id_produto não pode estar vazio',
+        'number.min': 'O campo id_produto deve ser maior que 0'
       }),
     nome: Joi
       .string()
       .allow(null)
       .min(4)
       .messages({
-        'string.base': 'nome deve ser do tipo string',
-        'string.empty': 'nome não pode estar vazio',
-        'string.min': 'nome deve ter mais de 4 caracteres'
+        'string.base': 'O campo nome deve ser do tipo string',
+        'string.empty': 'O campo nome não pode estar vazio',
+        'string.min': 'O campo nome deve ter mais de 4 caracteres'
       }),
     path: Joi
       .string()
       .required()
       .messages({
-        'any.required': 'path é necessário',
-        'string.base': 'path deve ser do tipo string',
-        'string.empty': 'path não pode estar vazio'
+        'any.required': 'O campo path é necessário',
+        'string.base': 'O campo path deve ser do tipo string',
+        'string.empty': 'O campo path não pode estar vazio'
       }),
     url: Joi
       .string()
       .required()
       .messages({
-        'any.required': 'url é necessário',
-        'string.base': 'url deve ser do tipo string',
-        'string.empty': 'url não pode estar vazio'
+        'any.required': 'O campo url é necessário',
+        'string.base': 'O campo url deve ser do tipo string',
+        'string.empty': 'O campo url não pode estar vazio'
       })
   }),
   photoDelete: Joi.object().keys({
@@ -56,10 +56,10 @@ const validationSchemas = {
       .required()
       .min(1)
       .messages({
-        'any.required': 'id_foto é necessário',
-        'number.base': 'id_foto deve ser um número',
-        'number.empty': 'id_foto não pode estar vazio',
-        'number.min': 'id_foto deve ser maior que 0'
+        'any.required': 'O campo id_foto é necessário',
+        'number.base': 'O campo id_foto deve ser um número',
+        'number.empty': 'O campo id_foto não pode estar vazio',
+        'number.min': 'O campo id_foto deve ser maior que 0'
       })
   })
 }

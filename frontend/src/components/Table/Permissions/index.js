@@ -3,7 +3,8 @@ import { useHistory } from 'react-router-dom';
 
 import permissionService from '../../../services/api/permission';
 
-import { Container } from '../styles'
+import { ptBR } from '../locale'
+import { Container , styleIcon} from '../styles'
 
 export default function ComponentTable({ data }) {  
   const history = useHistory();
@@ -25,6 +26,7 @@ export default function ComponentTable({ data }) {
   return (
     <Container>
       <MaterialTable
+        localization={ptBR}
         columns={[
           { title: 'ID', field: 'id_permissao' },
           { title: 'Nome', field: 'nome' },
@@ -40,15 +42,16 @@ export default function ComponentTable({ data }) {
         actions={[
           {
             icon: 'edit',
-            iconProps: { style: { fontSize: '14px' } },
+            iconProps: { style: styleIcon },
             onClick: (event, rowData) => { handleEdit(rowData) }
           },
           {
             icon: 'delete',
-            iconProps: { style: { fontSize: '14px' } },
+            iconProps: { style: styleIcon },
             onClick: (event, rowData) => { handleDelete(rowData) }
           }
         ]}
+        onRowClick={(event, rowData) => handleEdit(rowData)}
       />
     </Container>
   );

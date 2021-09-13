@@ -9,8 +9,8 @@ const validationSchemas = {
       .string()
       .allow('')
       .messages({
-        'any.required': 'parâmetro key é necessário',
-        'string.base': 'key deve ser do tipo string'
+        'any.required': 'Parâmetro key é necessário',
+        'string.base': 'Key deve ser do tipo string'
       })
   }),
   permissionsCreate: Joi.object().keys({
@@ -19,20 +19,20 @@ const validationSchemas = {
       .required()
       .min(1)
       .messages({
-        'any.required': 'id_perfil é necessário',
-        'number.base': 'id_perfil deve ser um número',
-        'number.empty': 'id_perfil não pode estar vazio',
-        'number.min': 'id_perfil deve ser maior que 0'
+        'any.required': 'O campo id_perfil é necessário',
+        'number.base': 'O campo id_perfil deve ser um número',
+        'number.empty': 'O campo id_perfil não pode estar vazio',
+        'number.min': 'O campo id_perfil deve ser maior que 0'
       }),
     id_permissao: Joi
       .number()
       .required()
       .min(1)
       .messages({
-        'any.required': 'id_permissao é necessário',
-        'number.base': 'id_permissao deve ser um número',
-        'number.empty': 'id_permissao não pode estar vazio',
-        'number.min': 'id_permissao deve ser maior que 0'
+        'any.required': 'O campo id_permissao é necessário',
+        'number.base': 'O campo id_permissao deve ser um número',
+        'number.empty': 'O campo id_permissao não pode estar vazio',
+        'number.min': 'O campo id_permissao deve ser maior que 0'
       })
   }),
   permissionsDelete: Joi.object().keys({
@@ -41,10 +41,10 @@ const validationSchemas = {
       .required()
       .min(1)
       .messages({
-        'any.required': 'id_permissao_perfil é necessário',
-        'number.base': 'id_permissao_perfil deve ser um número',
-        'number.empty': 'id_permissao_perfil não pode estar vazio',
-        'number.min': 'id_permissao_perfil deve ser maior que 0'
+        'any.required': 'O campo id_permissao_perfil é necessário',
+        'number.base': 'O campo id_permissao_perfil deve ser um número',
+        'number.empty': 'O campo id_permissao_perfil não pode estar vazio',
+        'number.min': 'O campo id_permissao_perfil deve ser maior que 0'
       })
   })
 }

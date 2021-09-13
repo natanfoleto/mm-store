@@ -9,8 +9,8 @@ const validationSchemas = {
       .string()
       .allow('')
       .messages({
-        'any.required': 'parâmetro key é necessário',
-        'string.base': 'key deve ser do tipo string'
+        'any.required': 'Parâmetro key é necessário',
+        'string.base': 'Key deve ser do tipo string'
       })
   }),
   addressUpdate: Joi.object().keys({
@@ -19,57 +19,57 @@ const validationSchemas = {
       .required()
       .min(1)
       .messages({
-        'any.required': 'id_endereco é necessário',
-        'number.base': 'id_endereco deve ser um número',
-        'number.empty': 'id_endereco não pode estar vazio',
-        'number.min': 'id_endereco deve ser maior que 0'
+        'any.required': 'O campo id_endereco é necessário',
+        'number.base': 'O campo id_endereco deve ser um número',
+        'number.empty': 'O campo id_endereco não pode estar vazio',
+        'number.min': 'O campo id_endereco deve ser maior que 0'
       }),
     logradouro: Joi
       .string()
       .required()
       .min(4)
       .messages({
-        'any.required': 'logradouro é necessário',
-        'string.base': 'logradouro deve ser do tipo string',
-        'string.empty': 'logradouro não pode estar vazio',
-        'string.min': 'logradouro deve ter mais de 4 caracteres'
+        'any.required': 'O campo logradouro é necessário',
+        'string.base': 'O campo logradouro deve ser do tipo string',
+        'string.empty': 'O campo logradouro não pode estar vazio',
+        'string.min': 'O campo logradouro deve ter mais de 4 caracteres'
       }),
     numero: Joi
       .string()
       .required()
       .min(1)
       .messages({
-        'any.required': 'numero é necessário',
-        'string.base': 'numero deve ser do tipo string',
-        'string.empty': 'numero não pode estar vazio',
-        'string.min': 'numero deve maior que 1'
+        'any.required': 'O campo numero é necessário',
+        'string.base': 'O campo numero deve ser do tipo string',
+        'string.empty': 'O campo numero não pode estar vazio',
+        'string.min': 'O campo numero deve maior que 1'
       }),
     cep: Joi
       .string()
       .allow(null)
       .min(8)
       .messages({
-        'string.base': 'cep deve ser do tipo string',
-        'string.empty': 'cep não pode estar vazio',
-        'string.min': 'cep deve maior que 0'
+        'string.base': 'O campo cep deve ser do tipo string',
+        'string.empty': 'O campo cep não pode estar vazio',
+        'string.min': 'O campo cep deve maior que 0'
       }),
     bairro: Joi
       .string()
       .allow(null)
       .min(4)
       .messages({
-        'string.base': 'bairro deve ser do tipo string',
-        'string.empty': 'bairro não pode estar vazio',
-        'string.min': 'bairro deve maior que 4'
+        'string.base': 'O campo bairro deve ser do tipo string',
+        'string.empty': 'O campo bairro não pode estar vazio',
+        'string.min': 'O campo bairro deve maior que 4'
       }),
     cidade: Joi
       .string()
       .allow(null)
       .min(4)
       .messages({
-        'string.base': 'cidade deve ser do tipo string',
-        'string.empty': 'cidade não pode estar vazio',
-        'string.min': 'cidade deve maior que 4'
+        'string.base': 'O campo cidade deve ser do tipo string',
+        'string.empty': 'O campo cidade não pode estar vazio',
+        'string.min': 'O campo cidade deve maior que 4'
       }),
     uf: Joi
       .string()
@@ -77,24 +77,24 @@ const validationSchemas = {
       .min(2)
       .max(2)
       .messages({
-        'string.base': 'uf deve ser do tipo string',
-        'string.empty': 'uf não pode estar vazio',
-        'string.min': 'uf deve ter apenas duas letras',
-        'string.max': 'uf deve ter apenas duas letras'
+        'string.base': 'O campo uf deve ser do tipo string',
+        'string.empty': 'O campo uf não pode estar vazio',
+        'string.min': 'O campo uf deve ter apenas duas letras',
+        'string.max': 'O campo uf deve ter apenas duas letras'
       }),
     latitude: Joi
       .number()
       .allow(null)
       .messages({
-        'number.base': 'latitude deve ser do tipo number',
-        'number.empty': 'latitude não pode estar vazio'
+        'number.base': 'O campo latitude deve ser do tipo number',
+        'number.empty': 'O campo latitude não pode estar vazio'
       }),
     longitude: Joi
       .number()
       .allow(null)
       .messages({
-        'number.base': 'latitude deve ser do tipo number',
-        'number.empty': 'latitude não pode estar vazio'
+        'number.base': 'O campo latitude deve ser do tipo number',
+        'number.empty': 'O campo latitude não pode estar vazio'
       })
   }),
   addressDelete: Joi.object().keys({
@@ -103,10 +103,10 @@ const validationSchemas = {
       .required()
       .min(1)
       .messages({
-        'any.required': 'id_endereco é necessário',
-        'number.base': 'id_endereco deve ser um número',
-        'number.empty': 'id_endereco não pode estar vazio',
-        'number.min': 'id_endereco deve ser maior que 0'
+        'any.required': 'O campo id_endereco é necessário',
+        'number.base': 'O campo id_endereco deve ser um número',
+        'number.empty': 'O campo id_endereco não pode estar vazio',
+        'number.min': 'O campo id_endereco deve ser maior que 0'
       })
   })
 }

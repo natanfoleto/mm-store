@@ -2,8 +2,6 @@ import { decode } from 'jsonwebtoken'
 
 import Permissions from '../models/permissions.js'
 
-import SQL from '../../lib/SQL.js'
-
 async function decoder (req) {
   const authHeader = req.headers.authorization
 
@@ -13,11 +11,7 @@ async function decoder (req) {
 
   const response = await Permissions.userFindPermissions(id_usuario)
 
-  const sqlTreated = await SQL(response)
-
-  const { sql } = sqlTreated
-
-  const permissions = sql.map((item) => {
+  const permissions = response.map((item) => {
     return item.nome
   })
 

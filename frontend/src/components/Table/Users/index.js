@@ -1,12 +1,15 @@
 import MaterialTable from 'material-table';
 import { useHistory } from 'react-router-dom';
+import { useAuth } from '../../../contexts/auth';
 
 import userService from '../../../services/api/user';
 
-import { Container } from '../styles'
+import { ptBR } from '../locale'
+import { Container, styleIcon } from '../styles'
 
 export default function ComponentTable({ data }) {  
   const history = useHistory();
+  const { user } = useAuth();
 
   const { deleteUser } = userService();
 
@@ -15,7 +18,13 @@ export default function ComponentTable({ data }) {
   }
 
   async function handleDelete(item) {
-    if(window.confirm(`Deseja mesmo excluir o usuário ${item.nome}?`)) {
+    if (user.id_usuario === item.id_usuario) {
+      alert('Você não pode excluir o usuário que está logado!')
+
+      return
+    }
+
+    if (window.confirm(`Deseja mesmo excluir o usuário ${item.nome}?`)) {
       await deleteUser({ data: { id_usuario: item.id_usuario }});
     } else {
       return;
@@ -25,9 +34,12 @@ export default function ComponentTable({ data }) {
   return (
     <Container>
       <MaterialTable
+        localization={ptBR}
         columns={[
           { title: 'ID', field: 'id_usuario' },
           { title: 'Nome', field: 'nome' },
+          { title: 'Login', field: 'login' },
+          { title: 'Perfil', field: 'perfil' },
         ]}
         data={data}        
         options={{
@@ -40,15 +52,16 @@ export default function ComponentTable({ data }) {
         actions={[
           {
             icon: 'edit',
-            iconProps: { style: { fontSize: '14px' } },
+            iconProps: { style: styleIcon },
             onClick: (event, rowData) => { handleEdit(rowData) }
           },
           {
             icon: 'delete',
-            iconProps: { style: { fontSize: '14px' } },
+            iconProps: { style: styleIcon },
             onClick: (event, rowData) => { handleDelete(rowData) }
           }
         ]}
+        onRowClick={(event, rowData) => handleEdit(rowData)}
       />
     </Container>
   );

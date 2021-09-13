@@ -11,7 +11,6 @@ export const Wrapper = styled.div`
   ::-webkit-scrollbar { width: 0; }
   
   button {
-    border: 0;
     outline: 0;
   }
 `;

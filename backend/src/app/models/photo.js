@@ -58,6 +58,21 @@ class Photo {
       return err
     }
   }
+
+  async searchPhotoByProduct (params) {
+    try {
+      const query = `
+        SELECT id_foto, nome, path, url FROM fotos_produtos
+        WHERE id_produto = ?
+      `
+
+      const result = await executeQuery(query, params)
+
+      return result
+    } catch (err) {
+      return err
+    }
+  }
 }
 
 export default new Photo()

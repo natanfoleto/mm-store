@@ -58,14 +58,16 @@ export default function FormUser() {
 
     searchAllProfiles();
 
-    setUser(history.location.state);
+    const state = history.location.state;
+
+    setUser(state);
 
     if (history.location.pathname === '/usuarios/add') {
       setOperation('ADD');
     }
     else {
       setOperation('EDIT');
-      setCurrentProfile(history.location.state.id_perfil);
+      setCurrentProfile(state.id_perfil);
     }
   }, [history])
 

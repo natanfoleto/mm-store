@@ -23,12 +23,16 @@ export const Container = styled.div`
       &:hover {
         background: none;
       }
+
+      span {
+        font-size: 18px;
+      }
     }
   }
 
   td>div {
     justify-content: space-between;
-    padding: 0 1rem;
+    padding: 0 1.5rem;
   }
 
   thead>tr>th {
@@ -40,16 +44,12 @@ export const Container = styled.div`
   tbody>tr>td {
     padding: 5px 7px;
   }
-
-  tbody>tr:nth-child( 2n + 2 ) {
-	  background: #F7F7F7;
-  }
-
-  tbody>tr {
-    &:hover {
-      cursor: pointer;
-      background: rgba(0, 82, 204, 0.2);
-      // background: rgba(255, 249, 82, 0.8);
-    }
-  }
 `;
+
+export const styleIcon = { 
+  fontSize: '14px', 
+  border: '1px solid #ddd',
+  borderRadius: '0.25rem',
+  padding: '0.25rem', 
+  margin: '0 0.15rem'
+}

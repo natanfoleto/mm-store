@@ -22,6 +22,7 @@ Container.ButtonNavigation = styled.button`
   align-items: center;
   padding: 0.25rem 1rem;
   background: #FFFFFF;
+  border: 0;
   border-radius: 0.25rem;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
 `;

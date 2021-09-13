@@ -9,8 +9,8 @@ const validationSchemas = {
       .string()
       .allow('')
       .messages({
-        'any.required': 'parâmetro key é necessário',
-        'string.base': 'key deve ser do tipo string'
+        'any.required': 'Parâmetro key é necessário',
+        'string.base': 'Key deve ser do tipo string'
       })
   }),
   productCreate: Joi.object().keys({
@@ -19,67 +19,67 @@ const validationSchemas = {
       .required()
       .min(1)
       .messages({
-        'any.required': 'id_categoria é necessário',
-        'number.base': 'id_categoria deve ser do tipo number',
-        'number.empty': 'id_categoria não pode estar vazio',
-        'number.min': 'id_categoria deve ser maior que 0'
+        'any.required': 'O campo id_categoria é necessário',
+        'number.base': 'O campo id_categoria deve ser do tipo number',
+        'number.empty': 'O campo id_categoria não pode estar vazio',
+        'number.min': 'O campo id_categoria deve ser maior que 0'
       }),
     id_fornecedor: Joi
       .number()
       .allow(null)
       .min(1)
       .messages({
-        'number.base': 'id_fornecedor deve ser do tipo number',
-        'number.empty': 'id_fornecedor não pode estar vazio',
-        'number.min': 'id_fornecedor deve ser maior que 0'
+        'number.base': 'O campo id_fornecedor deve ser do tipo number',
+        'number.empty': 'O campo id_fornecedor não pode estar vazio',
+        'number.min': 'O campo id_fornecedor deve ser maior que 0'
       }),
     nome: Joi
       .string()
       .required()
       .min(4)
       .messages({
-        'any.required': 'nome é necessário',
-        'string.base': 'nome deve ser do tipo string',
-        'string.empty': 'nome não pode estar vazio',
-        'string.min': 'nome deve ter mais de 4 caracteres'
+        'any.required': 'O campo nome é necessário',
+        'string.base': 'O campo nome deve ser do tipo string',
+        'string.empty': 'O campo nome não pode estar vazio',
+        'string.min': 'O campo nome deve ter mais de 4 caracteres'
       }),
     preco_custo: Joi
       .number()
       .required()
       .min(0)
       .messages({
-        'any.required': 'preco_custo é necessário',
-        'number.base': 'preco_custo deve ser do tipo number',
-        'number.empty': 'preco_custo não pode estar vazio',
-        'number.min': 'preco_custo deve maior que 0'
+        'any.required': 'O campo preco_custo é necessário',
+        'number.base': 'O campo preco_custo deve ser do tipo number',
+        'number.empty': 'O campo preco_custo não pode estar vazio',
+        'number.min': 'O campo preco_custo deve ser maior que 0'
       }),
     preco_venda: Joi
       .number()
       .required()
       .min(0)
       .messages({
-        'any.required': 'preco_venda é necessário',
-        'number.base': 'preco_venda deve ser do tipo number',
-        'number.empty': 'preco_venda não pode estar vazio',
-        'number.min': 'preco_venda deve maior que 0'
+        'any.required': 'O campo preco_venda é necessário',
+        'number.base': 'O campo preco_venda deve ser do tipo number',
+        'number.empty': 'O campo preco_venda não pode estar vazio',
+        'number.min': 'O campo preco_venda deve ser maior que 0'
       }),
     estoque: Joi
       .number()
       .required()
       .min(0)
       .messages({
-        'any.required': 'estoque é necessário',
-        'number.base': 'estoque deve ser do tipo number',
-        'number.empty': 'estoque não pode estar vazio',
-        'number.min': 'estoque deve maior que 0'
+        'any.required': 'O campo estoque é necessário',
+        'number.base': 'O campo estoque deve ser do tipo number',
+        'number.empty': 'O campo estoque não pode estar vazio',
+        'number.min': 'O campo estoque deve ser maior que 0'
       }),
     tamanho: Joi
       .string()
       .allow(null)
       .messages({
-        'string.base': 'tamanho deve ser do tipo string',
-        'string.empty': 'tamanho não pode estar vazio',
-        'string.min': 'tamanho deve maior que 0'
+        'string.base': 'O campo tamanho deve ser do tipo string',
+        'string.empty': 'O campo tamanho não pode estar vazio',
+        'string.min': 'O campo tamanho deve ser maior que 0'
       })
   }),
   productUpdate: Joi.object().keys({
@@ -88,77 +88,77 @@ const validationSchemas = {
       .required()
       .min(1)
       .messages({
-        'any.required': 'id_produto é necessário',
-        'number.base': 'id_produto deve ser do tipo number',
-        'number.empty': 'id_produto não pode estar vazio',
-        'number.min': 'id_produto deve ser maior que 0'
+        'any.required': 'O campo id_produto é necessário',
+        'number.base': 'O campo id_produto deve ser do tipo number',
+        'number.empty': 'O campo id_produto não pode estar vazio',
+        'number.min': 'O campo id_produto deve ser maior que 0'
       }),
     id_categoria: Joi
       .number()
       .required()
       .min(1)
       .messages({
-        'any.required': 'id_categoria é necessário',
-        'number.base': 'id_categoria deve ser do tipo number',
-        'number.empty': 'id_categoria não pode estar vazio',
-        'number.min': 'id_categoria deve ser maior que 0'
+        'any.required': 'O campo id_categoria é necessário',
+        'number.base': 'O campo id_categoria deve ser do tipo number',
+        'number.empty': 'O campo id_categoria não pode estar vazio',
+        'number.min': 'O campo id_categoria deve ser maior que 0'
       }),
     id_fornecedor: Joi
       .number()
       .allow(null)
       .min(1)
       .messages({
-        'number.base': 'id_fornecedor deve ser do tipo number',
-        'number.empty': 'id_fornecedor não pode estar vazio',
-        'number.min': 'id_fornecedor deve ser maior que 0'
+        'number.base': 'O campo id_fornecedor deve ser do tipo number',
+        'number.empty': 'O campo id_fornecedor não pode estar vazio',
+        'number.min': 'O campo id_fornecedor deve ser maior que 0'
       }),
     nome: Joi
       .string()
       .required()
       .min(4)
       .messages({
-        'any.required': 'nome é necessário',
-        'string.base': 'nome deve ser do tipo string',
-        'string.empty': 'nome não pode estar vazio',
-        'string.min': 'nome deve ter mais de 4 caracteres'
+        'any.required': 'O campo nome é necessário',
+        'string.base': 'O campo nome deve ser do tipo string',
+        'string.empty': 'O campo nome não pode estar vazio',
+        'string.min': 'O campo nome deve ter mais de 4 caracteres'
       }),
     preco_custo: Joi
       .number()
       .required()
       .min(0)
       .messages({
-        'any.required': 'preco_custo é necessário',
-        'number.base': 'preco_custo deve ser do tipo number',
-        'number.empty': 'preco_custo não pode estar vazio',
-        'number.min': 'preco_custo deve maior que 0'
+        'any.required': 'O campo preco_custo é necessário',
+        'number.base': 'O campo preco_custo deve ser do tipo number',
+        'number.empty': 'O campo preco_custo não pode estar vazio',
+        'number.min': 'O campo preco_custo deve ser maior que 0'
       }),
     preco_venda: Joi
       .number()
       .required()
       .min(0)
       .messages({
-        'any.required': 'preco_venda é necessário',
-        'number.base': 'preco_venda deve ser do tipo number',
-        'number.empty': 'preco_venda não pode estar vazio',
-        'number.min': 'preco_venda deve maior que 0'
+        'any.required': 'O campo preco_venda é necessário',
+        'number.base': 'O campo preco_venda deve ser do tipo number',
+        'number.empty': 'O campo preco_venda não pode estar vazio',
+        'number.min': 'O campo preco_venda deve ser maior que 0'
       }),
     estoque: Joi
       .number()
       .required()
       .min(0)
       .messages({
-        'any.required': 'estoque é necessário',
-        'number.base': 'estoque deve ser do tipo number',
-        'number.empty': 'estoque não pode estar vazio',
-        'number.min': 'estoque deve maior que 0'
+        'any.required': 'O campo estoque é necessário',
+        'number.base': 'O campo estoque deve ser do tipo number',
+        'number.empty': 'O campo estoque não pode estar vazio',
+        'number.min': 'O campo estoque deve ser maior que 0'
       }),
     tamanho: Joi
       .string()
       .allow(null)
       .messages({
-        'string.base': 'tamanho deve ser do tipo string',
-        'string.empty': 'tamanho não pode estar vazio',
-        'string.min': 'tamanho deve maior que 0'
+        'string.base': 'O campo tamanho deve ser do tipo string',
+        'string.empty': 'O campo tamanho não pode estar vazio',
+        'string.min': 'O campo tamanho deve ser maior que 0'
       })
   }),
   productDelete: Joi.object().keys({
@@ -167,10 +167,10 @@ const validationSchemas = {
       .required()
       .min(1)
       .messages({
-        'any.required': 'id_produto é necessário',
-        'number.base': 'id_produto deve ser do tipo number',
-        'number.empty': 'id_produto não pode estar vazio',
-        'number.min': 'id_produto deve ser maior que 0'
+        'any.required': 'O campo id_produto é necessário',
+        'number.base': 'O campo id_produto deve ser do tipo number',
+        'number.empty': 'O campo id_produto não pode estar vazio',
+        'number.min': 'O campo id_produto deve ser maior que 0'
       })
   })
 }
