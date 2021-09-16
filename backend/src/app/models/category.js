@@ -15,16 +15,19 @@ class Category {
     }
   }
 
-  async searchCategory (key) {
+  async searchCategory (key, limit, offset) {
     try {
       const query = `
         SELECT * FROM categorias
         WHERE nome LIKE "%${key}%"
+        LIMIT ${limit}
+        OFFSET ${offset}
       `
 
-      const result = await executeQuery(query)
+      const data = await executeQuery(query)
+      const total = data.length
 
-      return result
+      return { data, total }
     } catch (err) {
       return err
     }

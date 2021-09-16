@@ -16,33 +16,42 @@ class Provider {
     }
   }
 
-  async searchProvider (key) {
+  async searchProvider (key, limit, offset) {
     try {
       const query = `
       (
         SELECT * FROM fornecedores
         WHERE nome LIKE "%${key}%"
+        LIMIT ${limit}
+        OFFSET ${offset}
       )
       UNION
       (
         SELECT * FROM fornecedores
         WHERE cpf_cnpj LIKE "%${key}%"
+        LIMIT ${limit}
+        OFFSET ${offset}
       )
       UNION
       (
         SELECT * FROM fornecedores
         WHERE email LIKE "%${key}%"
+        LIMIT ${limit}
+        OFFSET ${offset}
       )
       UNION
       (
         SELECT * FROM fornecedores
         WHERE celular LIKE "%${key}%"
+        LIMIT ${limit}
+        OFFSET ${offset}
       )
     `
 
-      const result = await executeQuery(query)
+      const data = await executeQuery(query)
+      const total = data.length
 
-      return result
+      return { data, total }
     } catch (err) {
       return err
     }

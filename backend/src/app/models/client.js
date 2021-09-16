@@ -16,33 +16,42 @@ class Client {
     }
   }
 
-  async searchClient (key) {
+  async searchClient (key, limit, offset) {
     try {
       const query = `
         (
           SELECT * FROM clientes
           WHERE nome LIKE "%${key}%"
+          LIMIT ${limit}
+          OFFSET ${offset}
         )
         UNION
         (
           SELECT * FROM clientes
           WHERE cpf LIKE "%${key}%"
+          LIMIT ${limit}
+          OFFSET ${offset}
         )
         UNION
         (
           SELECT * FROM clientes
           WHERE email LIKE "%${key}%"
+          LIMIT ${limit}
+          OFFSET ${offset}
         )
         UNION
         (
           SELECT * FROM clientes
           WHERE celular LIKE "%${key}%"
+          LIMIT ${limit}
+          OFFSET ${offset}
         )
       `
 
-      const result = await executeQuery(query)
+      const data = await executeQuery(query)
+      const total = data.length
 
-      return result
+      return { data, total }
     } catch (err) {
       return err
     }

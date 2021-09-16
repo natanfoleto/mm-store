@@ -15,7 +15,7 @@ class Product {
     }
   }
 
-  async searchProduct (key) {
+  async searchProduct (key, limit, offset) {
     try {
       const query = `
         (
@@ -23,6 +23,8 @@ class Product {
           FROM produtos pd
           INNER JOIN categorias ct ON pd.id_categoria = ct.id_categoria
           WHERE pd.nome LIKE "%${key}%"
+          LIMIT ${limit}
+          OFFSET ${offset}
         )
         UNION
         (
@@ -30,6 +32,8 @@ class Product {
           FROM produtos pd
           INNER JOIN categorias ct ON pd.id_categoria = ct.id_categoria
           WHERE pd.preco_custo LIKE "%${key}%"
+          LIMIT ${limit}
+          OFFSET ${offset}
         )
         UNION
         (
@@ -37,12 +41,15 @@ class Product {
           FROM produtos pd
           INNER JOIN categorias ct ON pd.id_categoria = ct.id_categoria
           WHERE ct.nome LIKE "%${key}%"
+          LIMIT ${limit}
+          OFFSET ${offset}
         )
       `
 
-      const result = await executeQuery(query)
+      const data = await executeQuery(query)
+      const total = data.length
 
-      return result
+      return { data, total }
     } catch (err) {
       return err
     }

@@ -1,30 +1,18 @@
 import Product from '../models/product.js'
-import Photo from '../models/photo.js'
-import pagingData from '../utils/pagingData.js'
+import calcOffset from '../utils/offset.js'
 import message from '../messages/product.js'
 
 class ProductController {
   async search (req, res) {
     try {
       const { key } = req.body
+      const { page, limit } = req.params
 
-      const response = await Product.searchProduct(key || '')
+      const offset = await calcOffset(page, limit)
 
-      for (const [index, value] of response.entries()) {
-        const photos = await Photo.searchPhotoByProduct(value.id_produto)
+      const response = await Product.searchProduct(key, limit, offset)
 
-        const array = []
-
-        for (const item of photos) {
-          array.push(item)
-        }
-
-        response[index].fotos = array
-      }
-
-      const pagedData = await pagingData(response, req.params)
-
-      return res.json(pagedData)
+      return res.json(response)
     } catch (err) {
       //! Erro Internal Server
       return res.json({

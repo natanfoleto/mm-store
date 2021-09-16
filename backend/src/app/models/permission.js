@@ -15,16 +15,19 @@ class Permission {
     }
   }
 
-  async searchPermission (key) {
+  async searchPermission (key, limit, offset) {
     try {
       const query = `
         SELECT * FROM permissoes
         WHERE descricao LIKE "%${key}%"
+        LIMIT ${limit}
+        OFFSET ${offset}
       `
 
-      const result = await executeQuery(query)
+      const data = await executeQuery(query)
+      const total = data.length
 
-      return result
+      return { data, total }
     } catch (err) {
       return err
     }

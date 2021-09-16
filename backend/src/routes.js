@@ -9,7 +9,6 @@ import validationSession from './app/schema/validationSession.js'
 import validationUser from './app/schema/validationUser.js'
 import validationProfile from './app/schema/validationProfile.js'
 import validationProduct from './app/schema/validationProduct.js'
-import validationPhoto from './app/schema/validationPhoto.js'
 import validationCategory from './app/schema/validationCategory.js'
 import validationProvider from './app/schema/validationProvider.js'
 import validationClient from './app/schema/validationClient.js'
@@ -23,7 +22,6 @@ import SessionController from './app/controllers/session.js'
 import UserController from './app/controllers/user.js'
 import ProfileController from './app/controllers/profile.js'
 import ProductController from './app/controllers/product.js'
-import PhotoController from './app/controllers/photo.js'
 import CategoryController from './app/controllers/category.js'
 import ProviderController from './app/controllers/provider.js'
 import ClientController from './app/controllers/client.js'
@@ -46,7 +44,6 @@ routes.route('/profiles/search/:page/:limit').post(is(['VIEW_PROFILES']), valida
 routes.route('/permission/search/:page/:limit').post(is(['VIEW_PERMISSION']), validation(validationPermission.permissionSearch), PermissionController.search)
 routes.route('/categories/search/:page/:limit').post(is(['VIEW_CATEGORIES']), validation(validationCategory.categorySearch), CategoryController.search)
 routes.route('/products/search/:page/:limit').post(is(['VIEW_PRODUCTS']), validation(validationProduct.productSearch), ProductController.search)
-routes.route('/photos/search/:page/:limit').post(is(['VIEW_PHOTOS']), validation(validationPhoto.photoSearch), PhotoController.search)
 routes.route('/providers/search/:page/:limit').post(is(['VIEW_PROVIDERS']), validation(validationProvider.providerSearch), ProviderController.search)
 routes.route('/clients/search/:page/:limit').post(is(['VIEW_CLIENTS']), validation(validationClient.clientSearch), ClientController.search)
 routes.route('/accounts/search/:page/:limit').post(is(['VIEW_ACCOUNTS']), validation(validationAccount.accountSearch), AccountController.search)
@@ -66,9 +63,6 @@ routes.route('/profiles').delete(is(['DELETE_PROFILES']), validation(validationP
 routes.route('/products').post(is(['CREATE_PRODUCTS']), validation(validationProduct.productCreate), ProductController.create)
 routes.route('/products').put(is(['EDIT_PRODUCTS']), validation(validationProduct.productUpdate), ProductController.update)
 routes.route('/products').delete(is(['DELETE_PRODUCTS']), validation(validationProduct.productDelete), ProductController.remove)
-
-routes.route('/photos').post(is(['CREATE_PHOTOS']), validation(validationPhoto.photoCreate), PhotoController.create)
-routes.route('/photos').delete(is(['DELETE_PHOTOS']), validation(validationPhoto.photoDelete), PhotoController.remove)
 
 routes.route('/categories').post(is(['CREATE_CATEGORIES']), validation(validationCategory.categoryCreate), CategoryController.create)
 routes.route('/categories').put(is(['EDIT_CATEGORIES']), validation(validationCategory.categoryUpdate), CategoryController.update)

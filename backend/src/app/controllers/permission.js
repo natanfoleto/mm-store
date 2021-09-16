@@ -1,5 +1,5 @@
 import Permission from '../models/permission.js'
-import pagingData from '../utils/pagingData.js'
+import calcOffset from '../utils/offset.js'
 import message from '../messages/permission.js'
 
 function isEmpty (str) {
@@ -10,12 +10,13 @@ class PermissionController {
   async search (req, res) {
     try {
       const { key } = req.body
+      const { page, limit } = req.params
 
-      const response = await Permission.searchPermission(key || '')
+      const offset = await calcOffset(page, limit)
 
-      const pagedData = await pagingData(response, req.params)
+      const response = await Permission.searchPermission(key, limit, offset)
 
-      return res.json(pagedData)
+      return res.json(response)
     } catch (err) {
       //! Erro Internal Server
       return res.status(400).json({

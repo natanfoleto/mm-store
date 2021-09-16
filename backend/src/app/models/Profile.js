@@ -15,21 +15,21 @@ class Profile {
     }
   }
 
-  async searchProfile (key) {
+  async searchProfile (key, limit, offset) {
     try {
-      let query
+      const query = `
+        SELECT *
+        FROM perfis
+        WHERE nome LIKE "%${key}%" 
+        LIMIT ${limit}
+        OFFSET ${offset}
+      `
 
-      if (key !== '') { query = 'SELECT * FROM perfis WHERE nome LIKE CONCAT("%", ?, "%")' } else { query = 'SELECT * FROM perfis' }
+      const data = await executeQuery(query)
+      const total = data.length
 
-      const binds = key
-
-      const result = await executeQuery(query, binds)
-
-      return result
+      return { data, total }
     } catch (err) {
-      console.log('Exception from profile.js/search:')
-      console.log(err)
-
       return err
     }
   }

@@ -15,7 +15,7 @@ class User {
     }
   }
 
-  async searchUser (key) {
+  async searchUser (key, limit, offset) {
     try {
       const query = `
         (
@@ -24,6 +24,8 @@ class User {
           INNER JOIN perfis AS pf 
           ON us.id_perfil = pf.id_perfil
           WHERE us.nome LIKE "%${key}%"
+          LIMIT ${limit}
+          OFFSET ${offset}
         )
         UNION
         (
@@ -32,6 +34,8 @@ class User {
           INNER JOIN perfis AS pf 
           ON us.id_perfil = pf.id_perfil
           WHERE us.login LIKE "%${key}%"
+          LIMIT ${limit}
+          OFFSET ${offset}
         )
         UNION
         (
@@ -40,12 +44,15 @@ class User {
           INNER JOIN perfis AS pf 
           ON us.id_perfil = pf.id_perfil
           WHERE us.id_perfil LIKE "%${key}%"
+          LIMIT ${limit}
+          OFFSET ${offset}
         )
       `
 
-      const result = await executeQuery(query)
+      const data = await executeQuery(query)
+      const total = data.length
 
-      return result
+      return { data, total }
     } catch (err) {
       return err
     }

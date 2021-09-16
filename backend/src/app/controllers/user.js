@@ -1,5 +1,5 @@
 import User from '../models/user.js'
-import pagingData from '../utils/pagingData.js'
+import calcOffset from '../utils/offset.js'
 import { encryptPassword } from '../utils/bcrypt.js'
 import message from '../messages/user.js'
 
@@ -7,12 +7,13 @@ class UserController {
   async search (req, res) {
     try {
       const { key } = req.body
+      const { page, limit } = req.params
 
-      const response = await User.searchUser(key || '')
+      const offset = await calcOffset(page, limit)
 
-      const pagedData = await pagingData(response, req.params)
+      const response = await User.searchUser(key, limit, offset)
 
-      return res.json(pagedData)
+      return res.json(response)
     } catch (err) {
       //! Erro Internal Server
       return res.json({

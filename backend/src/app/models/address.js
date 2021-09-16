@@ -1,15 +1,18 @@
 import { executeQuery } from '../../database/pool.js'
 
 class Address {
-  async searchAddress () {
+  async searchAddress (key, limit, offset) {
     try {
       const query = `
         SELECT * from enderecos
+        LIMIT ${limit}
+        OFFSET ${offset}
       `
 
-      const result = await executeQuery(query)
+      const data = await executeQuery(query)
+      const total = data.length
 
-      return result
+      return { data, total }
     } catch (err) {
       return err
     }

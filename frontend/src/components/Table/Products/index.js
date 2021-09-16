@@ -4,7 +4,6 @@ import { useHistory } from 'react-router-dom';
 import productService from '../../../services/api/product';
 
 import { ptBR } from '../locale'
-import { PhotoContainer } from './styles'
 import { Container, styleIcon } from '../styles'
 
 export default function ComponentTable({ data }) { 
@@ -55,20 +54,7 @@ export default function ComponentTable({ data }) {
             onClick: (event, rowData) => { handleDelete(rowData) }
           }
         ]}
-        detailPanel={rowData => {
-          return (
-            <PhotoContainer>
-              { rowData.fotos.map((item) => (
-                <img 
-                  key={item.id_foto} 
-                  alt={item.nome} 
-                  src={item.url} 
-                />
-              )) }
-            </PhotoContainer>
-          )
-        }}
-        onRowClick={(event, rowData, togglePanel) => togglePanel()}
+        onRowClick={(event, rowData) => handleEdit(rowData)}
       />
     </Container>
   );

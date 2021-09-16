@@ -1,24 +1,29 @@
 import { executeQuery } from '../../database/pool.js'
 
 class Wish {
-  async searchWish (key) {
+  async searchWish (key, limit, offset) {
     try {
       const query = `
         (
           SELECT * FROM pedidos
           WHERE descricao LIKE "%${key}%"
+          LIMIT ${limit}
+          OFFSET ${offset}
         )
         UNION
         (
           SELECT pd.* FROM pedidos pd
           INNER JOIN clientes cl ON cl.id_cliente = pd.id_cliente
           WHERE cl.nome LIKE "%${key}%"
+          LIMIT ${limit}
+          OFFSET ${offset}
         )
       `
 
-      const result = await executeQuery(query)
+      const data = await executeQuery(query)
+      const total = data.length
 
-      return result
+      return { data, total }
     } catch (err) {
       return err
     }
