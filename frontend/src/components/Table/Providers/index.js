@@ -1,23 +1,23 @@
 import MaterialTable from 'material-table';
 import { useHistory } from 'react-router-dom';
 
-import profileService from '../../../services/api/profile';
+import providerService from '../../../services/api/provider';
 
 import { ptBR } from '../locale'
 import { Container, styleIcon } from '../styles'
 
-export default function ComponentTable({ data, onSearchChange }) {  
+export default function ComponentTable({ data, onSearchChange }) { 
   const history = useHistory();
 
-  const { deleteProfile } = profileService();
+  const { deleteProvider } = providerService();
 
   async function handleEdit(rowData) {
-    history.push('/perfis/edit', rowData);
+    history.push('/fornecedores/edit', JSON.stringify(rowData));
   }
 
   async function handleDelete(item) {
-    if(window.confirm(`Deseja mesmo excluir o perfil ${item.nome}?`)) {
-      await deleteProfile({ data: { id_perfil: item.id_perfil }});
+    if(window.confirm(`Deseja mesmo excluir o fornecedor ${item.nome}?`)) {
+      await deleteProvider({ data: { id_fornecedor: item.id_fornecedor }});
     } else {
       return;
     }
@@ -28,17 +28,20 @@ export default function ComponentTable({ data, onSearchChange }) {
       <MaterialTable
         localization={ptBR}
         columns={[
-          { title: 'ID', field: 'id_perfil' },
+          { title: 'ID', field: 'id_fornecedor', width: '10%' },
           { title: 'Nome', field: 'nome' },
+          { title: 'CPF / CNJP', field: 'cpf_cnpj' },
+          { title: 'E-mail', field: 'email' },
+          { title: 'Celular', field: 'celular' }
         ]}
-        data={data}        
+        data={data} 
         options={{
           search: true,
           searchAutoFocus: true,
           searchFieldAlignment: 'left',
           paging: false,
           showTitle: false,
-          actionsColumnIndex: -1,
+          actionsColumnIndex: -1
         }}
         actions={[
           {

@@ -12,8 +12,9 @@ import Navigation from '../../components/Navigation'
 export default function Profiles() {
   const history = useHistory();
 
+  const [key, setKey] = useState('');
   const [data, setData] = useState();
-  const [limit, setLimit] = useState(10);
+  const [limit, setLimit] = useState(15);
   const [totalRecords, setTotalRecords] = useState(0);
   const [totalPages, setTotalPages] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
@@ -24,7 +25,7 @@ export default function Profiles() {
     async function searchProfile() {
       try {
         const { data } = await api.post(`/profiles/search/${currentPage}/${limit}`, { 
-          key: '' 
+          key: key
         });
 
         setData(data.data);
@@ -54,7 +55,7 @@ export default function Profiles() {
     }
 
     searchProfile();
-  }, [limit, currentPage])
+  }, [limit, currentPage, key])
 
   function handleCreate() {
     history.push('/perfis/add');
@@ -71,11 +72,12 @@ export default function Profiles() {
         handleCreate={handleCreate}
         buttonText="Novo perfil"
       >
-        Perfis 
+        Gestão de Perfis 
       </HeaderPage>
 
       <Table 
         data={data}
+        onSearchChange={setKey}
       />
       
       <Navigation 

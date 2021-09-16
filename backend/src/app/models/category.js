@@ -24,8 +24,15 @@ class Category {
         OFFSET ${offset}
       `
 
+      const queryCount = `
+        SELECT COUNT(id_categoria) AS count FROM categorias
+      `
+
+      let total
       const data = await executeQuery(query)
-      const total = data.length
+      const [{ count }] = await executeQuery(queryCount)
+
+      if (key === '') { total = count } else { total = data.length }
 
       return { data, total }
     } catch (err) {

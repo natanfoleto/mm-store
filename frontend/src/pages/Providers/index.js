@@ -2,12 +2,11 @@ import { useHistory } from 'react-router-dom';
 import { useEffect, useState, useCallback } from 'react';
 import api from '../../services/api/api';
 import Toast from '../../utils/toastify';
-import { replaceForDecimal } from '../../utils/replaceValue';
 
 import Layout from '../Layouts/default';
 
 import HeaderPage from '../../components/HeaderPage'
-import Table from '../../components/Table/Products'
+import Table from '../../components/Table/Providers'
 import Navigation from '../../components/Navigation'
 
 export default function Products() {
@@ -25,14 +24,9 @@ export default function Products() {
   useEffect(() => {
     async function searchUser() {
       try {
-        const { data } = await api.post(`/products/search/${currentPage}/${limit}`, { 
+        const { data } = await api.post(`/providers/search/${currentPage}/${limit}`, { 
           key: key
         });
-
-        data.data && data.data.forEach((item, index) => {
-          data.data[index].preco_custo = replaceForDecimal((item.preco_custo).toString())
-          data.data[index].preco_venda = replaceForDecimal((item.preco_venda).toString())
-        })
 
         setData(data.data);
         setTotalRecords(data.total);
@@ -43,7 +37,6 @@ export default function Products() {
         );
 
       } catch (err) {
-        console.log(err)
         const { data, status } = err.response
 
         if (status === 403 || status === 422) {
@@ -65,7 +58,7 @@ export default function Products() {
   }, [limit, currentPage, key])
 
   function handleCreate() {
-    history.push('/produtos/add');
+    history.push('/fornecedores/add');
   }
 
   const handleLimit = useCallback((e) => {
@@ -74,12 +67,12 @@ export default function Products() {
   }, [])
 
   return (
-    <Layout title="Gestão de Produtos">
+    <Layout title="Gestão de Fornecedores">
       <HeaderPage
         handleCreate={handleCreate}
-        buttonText="Novo produto"
+        buttonText="Novo fornecedor"
       >
-        Gestão de Produtos 
+        Gestão de Fornecedores 
       </HeaderPage>
 
       <Table 

@@ -12,8 +12,9 @@ import Navigation from '../../components/Navigation'
 export default function Categories() {
   const history = useHistory();
 
+  const [key, setKey] = useState('');
   const [data, setData] = useState();
-  const [limit, setLimit] = useState(10);
+  const [limit, setLimit] = useState(15);
   const [totalRecords, setTotalRecords] = useState(0);
   const [totalPages, setTotalPages] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
@@ -23,7 +24,7 @@ export default function Categories() {
     async function searchProfile() {
       try {
         const { data } = await api.post(`/categories/search/${currentPage}/${limit}`, { 
-          key: ''
+          key: key
         });
 
         setData(data.data);
@@ -53,7 +54,7 @@ export default function Categories() {
     }
 
     searchProfile();
-  }, [limit, currentPage])
+  }, [limit, currentPage, key])
 
   function handleCreate() {
     history.push('/categorias/add');
@@ -75,6 +76,7 @@ export default function Categories() {
 
       <Table 
         data={data}
+        onSearchChange={setKey}
       />
       
       <Navigation 

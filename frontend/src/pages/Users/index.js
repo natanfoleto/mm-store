@@ -12,8 +12,9 @@ import Navigation from '../../components/Navigation'
 export default function Users() {
   const history = useHistory();
 
+  const [key, setKey] = useState('');
   const [data, setData] = useState();
-  const [limit, setLimit] = useState(10);
+  const [limit, setLimit] = useState(15);
   const [totalRecords, setTotalRecords] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
@@ -23,7 +24,7 @@ export default function Users() {
     async function searchUser() {
       try {
         const { data } = await api.post(`/users/search/${currentPage}/${limit}`, { 
-          key: '' 
+          key: key
         });
 
         setData(data.data);
@@ -53,7 +54,7 @@ export default function Users() {
     }
 
     searchUser();
-  }, [limit, currentPage])
+  }, [limit, currentPage, key])
 
   function handleCreate() {
     history.push('/usuarios/add');
@@ -70,11 +71,12 @@ export default function Users() {
         handleCreate={handleCreate}
         buttonText="Novo usuário"
       > 
-        Usuários 
+        Gestão de Usuários 
       </HeaderPage>
 
       <Table 
         data={data}
+        onSearchChange={setKey}
       />
       
       <Navigation 

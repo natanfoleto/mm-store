@@ -48,8 +48,15 @@ class Client {
         )
       `
 
+      const queryCount = `
+        SELECT COUNT(id_cliente) AS count FROM clientes
+      `
+
+      let total
+      const [{ count }] = await executeQuery(queryCount)
       const data = await executeQuery(query)
-      const total = data.length
+
+      if (key === '') { total = count } else { total = data.length }
 
       return { data, total }
     } catch (err) {

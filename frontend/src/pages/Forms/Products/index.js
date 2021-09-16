@@ -35,7 +35,7 @@ export default function FormProduct() {
   useEffect(() => {
     async function searchAllCategories() {
       try {
-        const { data } = await api.post('/categories/search/1/0');
+        const { data } = await api.post('/categories/search/1/1000', { key: '' });
   
         let newData = [];
     
@@ -63,7 +63,7 @@ export default function FormProduct() {
 
     async function searchAllProviders() {
       try {
-        const { data } = await api.post('/providers/search/1/0');
+        const { data } = await api.post('/providers/search/1/1000', { key: '' });
   
         let newData = [{ id: 'Nenhum', title: 'Nenhum'}];
     

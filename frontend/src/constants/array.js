@@ -18,8 +18,7 @@ export const headers = [
 ];
 
 export const comboboxRows = [
-  { id: '10', title: '10 linhas' },
-  { id: '20', title: '20 linhas' },
+  { id: '15', title: '15 linhas' },
   { id: '30', title: '30 linhas' },
   { id: '50', title: '50 linhas' },
   { id: '100', title: '100 linhas' },

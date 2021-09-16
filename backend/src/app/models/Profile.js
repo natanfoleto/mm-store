@@ -25,8 +25,15 @@ class Profile {
         OFFSET ${offset}
       `
 
+      const queryCount = `
+        SELECT COUNT(id_perfil) AS count FROM perfis
+      `
+
+      let total
+      const [{ count }] = await executeQuery(queryCount)
       const data = await executeQuery(query)
-      const total = data.length
+
+      if (key === '') { total = count } else { total = data.length }
 
       return { data, total }
     } catch (err) {

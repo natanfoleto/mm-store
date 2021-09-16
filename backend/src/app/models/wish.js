@@ -20,8 +20,15 @@ class Wish {
         )
       `
 
+      const queryCount = `
+        SELECT COUNT(id_pedido) AS count FROM pedidos
+      `
+
+      let total
+      const [{ count }] = await executeQuery(queryCount)
       const data = await executeQuery(query)
-      const total = data.length
+
+      if (key === '') { total = count } else { total = data.length }
 
       return { data, total }
     } catch (err) {

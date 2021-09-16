@@ -18,14 +18,30 @@ class Permission {
   async searchPermission (key, limit, offset) {
     try {
       const query = `
-        SELECT * FROM permissoes
-        WHERE descricao LIKE "%${key}%"
-        LIMIT ${limit}
-        OFFSET ${offset}
+        (
+          SELECT * FROM permissoes
+          WHERE nome LIKE "%${key}%"
+          LIMIT ${limit}
+          OFFSET ${offset}
+        )
+        UNION
+        (
+          SELECT * FROM permissoes
+          WHERE descricao LIKE "%${key}%"
+          LIMIT ${limit}
+          OFFSET ${offset}
+        )
       `
 
+      const queryCount = `
+        SELECT COUNT(id_permissao) AS count FROM permissoes
+      `
+
+      let total
       const data = await executeQuery(query)
-      const total = data.length
+      const [{ count }] = await executeQuery(queryCount)
+
+      if (key === '') { total = count } else { total = data.length }
 
       return { data, total }
     } catch (err) {

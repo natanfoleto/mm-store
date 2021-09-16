@@ -12,8 +12,9 @@ import Navigation from '../../components/Navigation'
 export default function Permissions() {
   const history = useHistory();
 
+  const [key, setKey] = useState('');
   const [data, setData] = useState();
-  const [limit, setLimit] = useState(10);
+  const [limit, setLimit] = useState(15);
   const [totalRecords, setTotalRecords] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
@@ -24,7 +25,7 @@ export default function Permissions() {
     async function searchPermissions() {
       try {
         const { data } = await api.post(`/permission/search/${currentPage}/${limit}`, {
-          key: ''
+          key: key
         });
 
         setData(data.data);
@@ -53,7 +54,7 @@ export default function Permissions() {
     }
 
     searchPermissions();
-  }, [limit, currentPage])
+  }, [limit, currentPage, key])
 
   function handleCreate() {
     history.push('/permissoes/add');
@@ -70,11 +71,12 @@ export default function Permissions() {
         handleCreate={handleCreate}
         buttonText="Nova permissão"
       >
-        Gestão de permissões 
+        Gestão de Permissões 
       </HeaderPage>
 
       <Table 
         data={data}
+        onSearchChange={setKey}
       />
       
       <Navigation 

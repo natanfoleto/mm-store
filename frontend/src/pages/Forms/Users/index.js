@@ -30,7 +30,7 @@ export default function FormUser() {
   useEffect(() => {
     async function searchAllProfiles() {
       try {
-        const { data } = await api.post('/profiles/search/1/0');
+        const { data } = await api.post('/profiles/search/1/1000', { key: '' });
   
         let newData = [];
     

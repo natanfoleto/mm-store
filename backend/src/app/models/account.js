@@ -11,8 +11,15 @@ class Account {
         OFFSET ${offset}
       `
 
+      const queryCount = `
+        SELECT COUNT(id_conta) AS count FROM contas
+      `
+
+      let total
+      const [{ count }] = await executeQuery(queryCount)
       const data = await executeQuery(query)
-      const total = data.length
+
+      if (key === '') { total = count } else { total = data.length }
 
       return { data, total }
     } catch (err) {

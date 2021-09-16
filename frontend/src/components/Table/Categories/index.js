@@ -6,7 +6,7 @@ import categoryService from '../../../services/api/category';
 import { ptBR } from '../locale'
 import { Container, styleIcon } from '../styles'
 
-export default function ComponentTable({ data }) { 
+export default function ComponentTable({ data, onSearchChange }) { 
   const history = useHistory();
 
   const { deleteCategory } = categoryService();
@@ -35,6 +35,7 @@ export default function ComponentTable({ data }) {
         data={data}
         options={{
           search: true,
+          searchAutoFocus: true,
           searchFieldAlignment: 'left',
           paging: false,
           showTitle: false,
@@ -52,8 +53,10 @@ export default function ComponentTable({ data }) {
             onClick: (event, rowData) => { handleDelete(rowData) }
           }
         ]}
+        onSearchChange={(value) => { onSearchChange(value) }}
         onRowClick={(event, rowData) => handleEdit(rowData)}
       />
     </Container>
   );
 }
+
