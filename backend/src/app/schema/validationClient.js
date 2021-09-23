@@ -28,13 +28,13 @@ const validationSchemas = {
       .string()
       .required()
       .min(11)
-      .max(11)
+      .max(14)
       .messages({
         'any.required': 'O campo cpf é necessário',
         'string.base': 'O campo cpf deve ser do tipo string',
         'string.empty': 'O campo cpf não pode estar vazio',
         'string.min': 'O campo cpf deve conter 11 numeros',
-        'string.max': 'O campo cpf deve conter apenas numeros'
+        'string.max': 'O campo cpf não deve conter mais que 14 caracteres'
       }),
     email: Joi
       .string()
@@ -98,13 +98,13 @@ const validationSchemas = {
       .string()
       .required()
       .min(11)
-      .max(11)
+      .max(14)
       .messages({
         'any.required': 'O campo cpf é necessário',
         'string.base': 'O campo cpf deve ser do tipo string',
         'string.empty': 'O campo cpf não pode estar vazio',
         'string.min': 'O campo cpf deve conter 11 numeros',
-        'string.max': 'O campo cpf deve conter apenas numeros'
+        'string.max': 'O campo cpf não deve conter mais que 14 caracteres'
       }),
     email: Joi
       .string()
@@ -132,15 +132,6 @@ const validationSchemas = {
         'string.base': 'O campo celular deve ser do tipo string',
         'string.empty': 'O campo celular não pode estar vazio',
         'string.min': 'O campo celular deve maior que 11'
-      }),
-    password: Joi
-      .string()
-      .allow(null)
-      .min(0)
-      .messages({
-        'string.base': 'O campo celular deve ser do tipo string',
-        'string.empty': 'O campo celular não pode estar vazio',
-        'string.min': 'O campo celular deve maior que 0'
       })
   }),
   clientDelete: Joi.object().keys({

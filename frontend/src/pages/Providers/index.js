@@ -57,6 +57,11 @@ export default function Products() {
     searchUser();
   }, [limit, currentPage, key])
 
+  function onSearchChange(value) {
+    setKey(value)
+    setCurrentPage(1)
+  }
+
   function handleCreate() {
     history.push('/fornecedores/add');
   }
@@ -77,7 +82,7 @@ export default function Products() {
 
       <Table 
         data={data}
-        onSearchChange={setKey}
+        onSearchChange={onSearchChange}
       />
       
       <Navigation 

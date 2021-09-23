@@ -6,6 +6,7 @@ import Users from "../pages/Users";
 import Categories from "../pages/Categories";
 import Products from "../pages/Products";
 import Providers from "../pages/Providers";
+import Clients from "../pages/Clients";
 import Permissions from "../pages/Permissions";
 
 import FormProfiles from "../pages/Forms/Profiles";
@@ -13,6 +14,7 @@ import FormUsers from "../pages/Forms/Users";
 import FormCategories from "../pages/Forms/Categories";
 import FormProduct from "../pages/Forms/Products";
 import FormProviders from "../pages/Forms/Providers";
+import FormClients from "../pages/Forms/Clients";
 import FormPermissions from "../pages/Forms/Permissions";
 
 import NotFound from "../pages/NotFound";
@@ -42,6 +44,10 @@ export default function Routes() {
         <Route exact path="/fornecedores" component={Providers} />
         <Route exact path="/fornecedores/add" component={FormProviders} />
         <Route exact path="/fornecedores/edit" component={FormProviders} />
+
+        <Route exact path="/clientes" component={Clients} />
+        <Route exact path="/clientes/add" component={FormClients} />
+        <Route exact path="/clientes/edit" component={FormClients} />
 
         <Route exact path="/permissoes" component={Permissions} />
         <Route exact path="/permissoes/add" component={FormPermissions} />

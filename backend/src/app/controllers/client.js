@@ -77,7 +77,7 @@ class ClientController {
 
   async update (req, res) {
     try {
-      const { nome, cpf, email, data_nasc, celular, password, id_cliente } = req.body
+      const { nome, cpf, email, data_nasc, celular, id_cliente } = req.body
 
       const count = await Client.selectCountClient([cpf, email])
 
@@ -89,9 +89,7 @@ class ClientController {
         })
       }
 
-      const password_hash = await encryptPassword(password)
-
-      const client = [nome, cpf, email, data_nasc, celular, password_hash, new Date(), id_cliente]
+      const client = [nome, cpf, email, data_nasc, celular, new Date(), id_cliente]
 
       const response = await Client.updateClient(client)
 
@@ -157,6 +155,7 @@ class ClientController {
         })
       }
     } catch (err) {
+      console.log(err)
       //! Internal Server Error
       return res.json({
         result: 'error',

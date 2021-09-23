@@ -56,6 +56,11 @@ export default function Users() {
     searchUser();
   }, [limit, currentPage, key])
 
+  function onSearchChange(value) {
+    setKey(value)
+    setCurrentPage(1)
+  }
+
   function handleCreate() {
     history.push('/usuarios/add');
   }
@@ -76,7 +81,7 @@ export default function Users() {
 
       <Table 
         data={data}
-        onSearchChange={setKey}
+        onSearchChange={onSearchChange}
       />
       
       <Navigation 

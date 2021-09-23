@@ -6,36 +6,35 @@ import Toast from '../../utils/toastify';
 import Layout from '../Layouts/default';
 
 import HeaderPage from '../../components/HeaderPage'
-import Table from '../../components/Table/Profiles'
+import Table from '../../components/Table/Clients'
 import Navigation from '../../components/Navigation'
 
-export default function Profiles() {
+export default function Users() {
   const history = useHistory();
 
   const [key, setKey] = useState('');
   const [data, setData] = useState();
   const [limit, setLimit] = useState(15);
   const [totalRecords, setTotalRecords] = useState(0);
-  const [totalPages, setTotalPages] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const [viewPermission, setViewPermission] = useState(false);
 
-
   useEffect(() => {
-    async function searchProfile() {
+    async function searchUser() {
       try {
-        const { data } = await api.post(`/profiles/search/${currentPage}/${limit}`, { 
+        const { data } = await api.post(`/clients/search/${currentPage}/${limit}`, { 
           key: key
         });
 
         setData(data.data);
         setTotalRecords(data.total);
-
         setTotalPages(
           Number(limit) === 0 
           ? Math.ceil(data.total / data.total)
           : Math.ceil(data.total / limit)
         );
+
       } catch (err) {
         const { data, status } = err.response
 
@@ -54,7 +53,7 @@ export default function Profiles() {
       }
     }
 
-    searchProfile();
+    searchUser();
   }, [limit, currentPage, key])
 
   function onSearchChange(value) {
@@ -63,7 +62,7 @@ export default function Profiles() {
   }
 
   function handleCreate() {
-    history.push('/perfis/add');
+    history.push('/clientes/add');
   }
 
   const handleLimit = useCallback((e) => {
@@ -72,12 +71,12 @@ export default function Profiles() {
   }, [])
 
   return (
-    <Layout title="Gestão de Perfis">      
+    <Layout title="Gestão de Clientes">      
       <HeaderPage
         handleCreate={handleCreate}
-        buttonText="Novo perfil"
-      >
-        Gestão de Perfis 
+        buttonText="Novo cliente"
+      > 
+        Gestão de Clientes 
       </HeaderPage>
 
       <Table 

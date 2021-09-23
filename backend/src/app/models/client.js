@@ -20,28 +20,32 @@ class Client {
     try {
       const query = `
         (
-          SELECT * FROM clientes
+          SELECT cl.*, ed.logradouro, ed.numero, ed.cep, ed.bairro, ed.cidade, ed.uf, ed.latitude, ed.longitude FROM clientes cl
+          INNER JOIN enderecos ed ON ed.id_endereco = cl.id_endereco
           WHERE nome LIKE "%${key}%"
           LIMIT ${limit}
           OFFSET ${offset}
         )
         UNION
         (
-          SELECT * FROM clientes
+          SELECT cl.*, ed.logradouro, ed.numero, ed.cep, ed.bairro, ed.cidade, ed.uf, ed.latitude, ed.longitude FROM clientes cl
+          INNER JOIN enderecos ed ON ed.id_endereco = cl.id_endereco
           WHERE cpf LIKE "%${key}%"
           LIMIT ${limit}
           OFFSET ${offset}
         )
         UNION
         (
-          SELECT * FROM clientes
+          SELECT cl.*, ed.logradouro, ed.numero, ed.cep, ed.bairro, ed.cidade, ed.uf, ed.latitude, ed.longitude FROM clientes cl
+          INNER JOIN enderecos ed ON ed.id_endereco = cl.id_endereco
           WHERE email LIKE "%${key}%"
           LIMIT ${limit}
           OFFSET ${offset}
         )
         UNION
         (
-          SELECT * FROM clientes
+          SELECT cl.*, ed.logradouro, ed.numero, ed.cep, ed.bairro, ed.cidade, ed.uf, ed.latitude, ed.longitude FROM clientes cl
+          INNER JOIN enderecos ed ON ed.id_endereco = cl.id_endereco
           WHERE celular LIKE "%${key}%"
           LIMIT ${limit}
           OFFSET ${offset}
@@ -85,7 +89,7 @@ class Client {
     try {
       const query = `
         UPDATE clientes 
-        SET nome = ?, cpf = ?, email = ?, data_nasc = ?, celular = ?, password_hash = ?, updated_at = ?
+        SET nome = ?, cpf = ?, email = ?, data_nasc = ?, celular = ?, updated_at = ?
         WHERE id_cliente = ?
       `
 

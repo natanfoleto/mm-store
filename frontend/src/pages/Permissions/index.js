@@ -20,7 +20,6 @@ export default function Permissions() {
   const [currentPage, setCurrentPage] = useState(1);
   const [viewPermission, setViewPermission] = useState(false);
 
-
   useEffect(() => {
     async function searchPermissions() {
       try {
@@ -56,6 +55,11 @@ export default function Permissions() {
     searchPermissions();
   }, [limit, currentPage, key])
 
+  function onSearchChange(value) {
+    setKey(value)
+    setCurrentPage(1)
+  }
+
   function handleCreate() {
     history.push('/permissoes/add');
   }
@@ -76,7 +80,7 @@ export default function Permissions() {
 
       <Table 
         data={data}
-        onSearchChange={setKey}
+        onSearchChange={onSearchChange}
       />
       
       <Navigation 

@@ -56,6 +56,21 @@ class Address {
       return err
     }
   }
+
+  async deleteAddress (params) {
+    try {
+      const query = `
+        DELETE FROM enderecos 
+        WHERE id_endereco = ?
+      `
+
+      const result = await executeQuery(query, params)
+
+      return result
+    } catch (err) {
+      return err
+    }
+  }
 }
 
 export default new Address()

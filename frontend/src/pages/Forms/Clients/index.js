@@ -4,47 +4,56 @@ import InputMask from 'react-input-mask';
 
 import Layout from '../../Layouts/default';
 
-import providerService from '../../../services/api/provider';
+import clientService from '../../../services/api/client';
 
 import Form from '../../../components/Form';
 import Input from '../../../components/Input';
-import Button from '../../../components/Button'
+import Button from '../../../components/Button';
 
-import { Container, Title, Grouping, InputGroup, ButtonGroup, Label } from '../styles';
+import { Container, Title, InputGroup, Grouping, ButtonGroup, Label } from '../styles';
 
-export default function FormProduct() {
+export default function FormUser() {
   const history = useHistory();
 
-  const { createProvider, updateProvider } = providerService();
+  const { createClient, updateClient } = clientService();
 
-  const [provider, setProvider] = useState();
-  const [cpfCnpj, setCpfCnpj] = useState('');
+  const [client, setClient] = useState();
+  const [date, setDate] = useState('');
+  const [cpf, setCpf] = useState('');
   const [celular, setCelular] = useState('');
   const [buttonAvailable, setButtonAvailable] = useState(true);
   const [operation, setOperation] = useState();
   
   useEffect(() => {
-    if (history.location.pathname === '/fornecedores/add') {
+    if (history.location.pathname === '/clientes/add') {
       setOperation('ADD');
     }
     else {
       setOperation('EDIT');
 
-      const state = JSON.parse(history.location.state)
+      const state = history.location.state;
 
-      setProvider(state);
-      setCpfCnpj(state.cpf_cnpj)
-      setCelular(state.celular)
+      setClient(state);
+      
+      const date = new Date(state.data_nasc);
+      date.setDate(date.getDate() + 3);
+      const dateInput = date.toISOString().substr(0,10);
+
+      setDate(dateInput);
+      setCpf(state.cpf);
+      setCelular(state.celular);
     }
   }, [history])
 
   async function handleSubmit(data) {
     if (operation === 'ADD') {
-      delete data.id_fornecedor
-      
-      await createProvider(data)
+      delete data.id_cliente;
+
+      await createClient(data)
     } else {
-      await updateProvider(data);
+      delete data.password
+
+      await updateClient(data);
     }
   }
 
@@ -53,16 +62,16 @@ export default function FormProduct() {
   }
 
   return (
-    <Layout title={operation === 'ADD' ? 'Novo fornecedor' : `Editando: ${provider && provider.nome}`}>  
+    <Layout title={operation === 'ADD' ? 'Novo cliente' : `Editando: ${client && client.nome}`}>
       <Container>
-        <Form initialData={provider} onSubmit={handleSubmit} autoComplete="off">
+        <Form initialData={client} onSubmit={handleSubmit} autoComplete="off">
           <Title>
-            <h1> { operation === 'ADD' ? 'Novo fornecedor' : 'Editar fornecedor' }</h1>
+            <h1> { operation === 'ADD' ? 'Novo cliente' : 'Editar cliente' }</h1>
           </Title>
           
           <Input 
             type="text" 
-            name="id_fornecedor"
+            name="id_cliente"
             hidden={true}
           />
           
@@ -80,17 +89,17 @@ export default function FormProduct() {
 
           <Grouping>
             <InputGroup>
-              <Label>CPF / CNPJ</Label>
+              <Label>CPF</Label>
 
               <InputMask 
                 type="text" 
-                name="cpf_cnpj"
-                value={cpfCnpj}
+                name="cpf"
+                value={cpf}
                 mask="999.999.999-99"
                 maskChar={null}
                 onChange={(e) => { 
                   setButtonAvailable(false) 
-                  setCpfCnpj(e.target.value)
+                  setCpf(e.target.value)
                 }}
                 required
               >
@@ -106,7 +115,6 @@ export default function FormProduct() {
                 name="email"
                 maxLength={50}
                 onChange={() => { setButtonAvailable(false) }}
-                required
               />
             </InputGroup>
           </Grouping>
@@ -131,17 +139,34 @@ export default function FormProduct() {
             </InputGroup>
 
             <InputGroup>
-              <Label>Observações</Label>
+              <Label>Data de nascimento</Label>
 
               <Input 
-                type="text" 
-                name="obs"
-                maxLength={200}
-                onChange={() => { setButtonAvailable(false) }}
+                type="date" 
+                name="data_nasc"
+                value={date}
+                onChange={(e) => { 
+                  setButtonAvailable(false) 
+                  setDate(e.target.value)
+                }}
                 required
               />
             </InputGroup>
           </Grouping>
+
+          <InputGroup
+            style={ operation === 'EDIT' ? { display: 'none' } : { display: '' } }
+          >
+              <Label>Senha do cliente</Label>
+
+              <Input 
+                type="password" 
+                name="password"
+                maxLength={50}
+                onChange={() => { setButtonAvailable(false) }}
+                required={operation === 'EDIT' ? false : true}
+              />
+            </InputGroup>
 
           <ButtonGroup>
             <Button

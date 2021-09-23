@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
+import { Tooltip } from '@material-ui/core'
 
 import { useAuth } from '../../contexts/auth';
 
@@ -43,9 +44,11 @@ function Sidebar() {
             <p>tenha um ótimo trabalho!</p>
           </div>
 
-          <button onClick={showSidebar}>
-            { sidebar ? <BiChevronRight size={20} /> : <BiChevronLeft size={20} /> }
-          </button>
+          <Tooltip title={sidebar ? 'Expandir' : 'Recolher'} enterDelay={500} leaveDelay={200} placement='right'>
+            <button onClick={showSidebar}>
+              { sidebar ? <BiChevronRight size={20} /> : <BiChevronLeft size={20} /> }
+            </button>
+          </Tooltip>
         </Header>
 
         <nav>

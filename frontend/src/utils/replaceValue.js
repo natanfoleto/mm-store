@@ -29,4 +29,8 @@ function replaceForNumber(value) {
   return Number(valueFormatted);
 }
 
-export { replaceForCurrency, replaceForNumber, replaceForDecimal };
+export { 
+  replaceForCurrency, 
+  replaceForNumber, 
+  replaceForDecimal
+}
