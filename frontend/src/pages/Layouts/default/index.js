@@ -5,7 +5,7 @@ import Sidebar from '../../../components/Sidebar'
 
 import { Wrapper, Container, Content } from './styles';
 
-export default function DefaultLayout({ children, title }) {
+export default function DefaultLayout({ children, title, background = '#FFF' }) {
   return (
     <Wrapper>
       <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
@@ -15,7 +15,7 @@ export default function DefaultLayout({ children, title }) {
       <Container>
         <Sidebar />
 
-        <Content>
+        <Content background={background}>
           {children}
         </Content>
       </Container>

@@ -23,6 +23,23 @@ class AddressController {
     }
   }
 
+  async searchOne (req, res) {
+    try {
+      const { id_endereco } = req.body
+
+      const response = await Address.searchOneAddres(id_endereco)
+
+      return res.json(response)
+    } catch (err) {
+      //! Erro Internal Server
+      return res.json({
+        result: 'error',
+        message: message.error.code1.subcode99.message,
+        error: err.toString()
+      })
+    }
+  }
+
   async update (req, res) {
     try {
       const { logradouro, numero, cep, bairro, cidade, uf, latitude, longitude, id_endereco } = req.body

@@ -11,6 +11,7 @@ export default function ComponentHeaderPage({ children, handleCreate, buttonText
         onClick={handleCreate}
         background="#0052CC"
         color="#FFF"
+        fontSize="14px"
       >
         {buttonText}
       </Button>

@@ -17,24 +17,26 @@ class Category {
 
   async searchCategory (key, limit, offset) {
     try {
-      const query = `
-        SELECT * FROM categorias
+      const cWhere = `
         WHERE nome LIKE "%${key}%"
-        LIMIT ${limit}
-        OFFSET ${offset}
       `
 
       const queryCount = `
         SELECT COUNT(id_categoria) AS count FROM categorias
+        ${cWhere}
       `
 
-      let total
-      const data = await executeQuery(query)
+      const query = `
+        SELECT * FROM categorias
+        ${cWhere}
+        LIMIT ${limit}
+        OFFSET ${offset}
+      `
+
       const [{ count }] = await executeQuery(queryCount)
+      const data = await executeQuery(query)
 
-      if (key === '') { total = count } else { total = data.length }
-
-      return { data, total }
+      return { data, total: count }
     } catch (err) {
       return err
     }

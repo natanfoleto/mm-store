@@ -3,23 +3,37 @@ import { executeQuery } from '../../database/pool.js'
 class Address {
   async searchAddress (key, limit, offset) {
     try {
+      const queryCount = `
+        SELECT COUNT(id_endereco) AS count FROM enderecos
+      `
+
       const query = `
         SELECT * from enderecos
         LIMIT ${limit}
         OFFSET ${offset}
       `
 
-      const queryCount = `
-        SELECT COUNT(id_endereco) AS count FROM enderecos
-      `
-
-      let total
       const [{ count }] = await executeQuery(queryCount)
       const data = await executeQuery(query)
 
-      if (key === '') { total = count } else { total = data.length }
+      return { data, total: count }
+    } catch (err) {
+      return err
+    }
+  }
 
-      return { data, total }
+  async searchOneAddres (params) {
+    try {
+      const query = `
+        SELECT *
+        FROM enderecos
+        WHERE id_endereco = ?
+        LIMIT 1
+      `
+
+      const data = await executeQuery(query, params)
+
+      return { data }
     } catch (err) {
       return err
     }

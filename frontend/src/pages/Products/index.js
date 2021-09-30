@@ -10,6 +10,8 @@ import HeaderPage from '../../components/HeaderPage'
 import Table from '../../components/Table/Products'
 import Navigation from '../../components/Navigation'
 
+import { Container } from '../styles'
+
 export default function Products() {
   const history = useHistory();
 
@@ -43,21 +45,24 @@ export default function Products() {
         );
 
       } catch (err) {
-        console.log(err)
-        const { data, status } = err.response
+        if (!err.response) {
+          Toast('error', 'Network Error');
+        } else {
+          const { data, status } = err.response
 
-        if (status === 403 || status === 422) {
-          Toast(data.result, data.message);
+          if (status === 403 || status === 422) {
+            Toast(data.result, data.message);
 
-          if (status === 403)
-            setViewPermission(true)
-  
+            if (status === 403)
+              setViewPermission(true)
+    
+            return;
+          }
+          
+          Toast('error', err.toString());
+    
           return;
         }
-        
-        Toast('error', err.toString());
-  
-        return;
       }
     }
 
@@ -80,27 +85,29 @@ export default function Products() {
 
   return (
     <Layout title="Gestão de Produtos">
-      <HeaderPage
-        handleCreate={handleCreate}
-        buttonText="Novo produto"
-      >
-        Gestão de Produtos 
-      </HeaderPage>
+      <Container>
+        <HeaderPage
+          handleCreate={handleCreate}
+          buttonText="Novo produto"
+        >
+          Gestão de Produtos 
+        </HeaderPage>
 
-      <Table 
-        data={data}
-        onSearchChange={onSearchChange}
-      />
-      
-      <Navigation 
-        currentPage={currentPage}
-        setCurrentPage={setCurrentPage}
-        totalPages={totalPages}
-        totalRecords={totalRecords}
-        viewPermission={viewPermission}
-        limit={limit}
-        handleLimit={handleLimit}
-      />
+        <Table 
+          data={data}
+          onSearchChange={onSearchChange}
+        />
+        
+        <Navigation 
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+          totalPages={totalPages}
+          totalRecords={totalRecords}
+          viewPermission={viewPermission}
+          limit={limit}
+          handleLimit={handleLimit}
+        />
+      </Container>
     </Layout>
   );
 }

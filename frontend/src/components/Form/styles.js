@@ -3,15 +3,17 @@ import styled from 'styled-components';
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-  margin-top: 1.5rem;
+  background: #FFF;
+  padding: 1rem 1.75rem;
 
   form {
-    height: 100%;
-    width: 40vw;
+    width: 50vw;
     display: flex;
     flex-direction: column;
+    background: #FFF;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 0.75rem;
 
     button {
       color: #FFF;
@@ -21,8 +23,3 @@ export const Container = styled.div`
     }
   }
 `;
-
-Container.Header = styled.div`
-  height: 3.25rem;
-`;
-

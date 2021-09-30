@@ -13,6 +13,16 @@ const validationSchemas = {
         'string.base': 'Key deve ser do tipo string'
       })
   }),
+  addressSearchOne: Joi.object().keys({
+    id_endereco: Joi
+      .number()
+      .required()
+      .allow('')
+      .messages({
+        'any.required': 'Parâmetro id_endereco é necessário',
+        'number.base': 'Parâmetro id_endereco deve ser do tipo number'
+      })
+  }),
   addressUpdate: Joi.object().keys({
     id_endereco: Joi
       .number()
@@ -26,6 +36,7 @@ const validationSchemas = {
       }),
     logradouro: Joi
       .string()
+      .allow(null)
       .required()
       .min(4)
       .messages({
@@ -36,6 +47,7 @@ const validationSchemas = {
       }),
     numero: Joi
       .string()
+      .allow(null)
       .required()
       .min(1)
       .messages({
@@ -47,6 +59,7 @@ const validationSchemas = {
     cep: Joi
       .string()
       .allow(null)
+      .required()
       .min(8)
       .messages({
         'string.base': 'O campo cep deve ser do tipo string',
@@ -56,6 +69,7 @@ const validationSchemas = {
     bairro: Joi
       .string()
       .allow(null)
+      .required()
       .min(4)
       .messages({
         'string.base': 'O campo bairro deve ser do tipo string',
@@ -65,6 +79,7 @@ const validationSchemas = {
     cidade: Joi
       .string()
       .allow(null)
+      .required()
       .min(4)
       .messages({
         'string.base': 'O campo cidade deve ser do tipo string',
@@ -74,6 +89,7 @@ const validationSchemas = {
     uf: Joi
       .string()
       .allow(null)
+      .required()
       .min(2)
       .max(2)
       .messages({
@@ -84,6 +100,7 @@ const validationSchemas = {
       }),
     latitude: Joi
       .number()
+      .required()
       .allow(null)
       .messages({
         'number.base': 'O campo latitude deve ser do tipo number',
@@ -91,6 +108,7 @@ const validationSchemas = {
       }),
     longitude: Joi
       .number()
+      .required()
       .allow(null)
       .messages({
         'number.base': 'O campo latitude deve ser do tipo number',

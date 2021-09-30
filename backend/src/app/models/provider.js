@@ -18,47 +18,26 @@ class Provider {
 
   async searchProvider (key, limit, offset) {
     try {
-      const query = `
-      (
-        SELECT * FROM fornecedores
-        WHERE nome LIKE "%${key}%"
-        LIMIT ${limit}
-        OFFSET ${offset}
-      )
-      UNION
-      (
-        SELECT * FROM fornecedores
-        WHERE cpf_cnpj LIKE "%${key}%"
-        LIMIT ${limit}
-        OFFSET ${offset}
-      )
-      UNION
-      (
-        SELECT * FROM fornecedores
-        WHERE email LIKE "%${key}%"
-        LIMIT ${limit}
-        OFFSET ${offset}
-      )
-      UNION
-      (
-        SELECT * FROM fornecedores
-        WHERE celular LIKE "%${key}%"
-        LIMIT ${limit}
-        OFFSET ${offset}
-      )
-    `
+      const cWhere = `
+        WHERE nome LIKE "%${key}%" OR cpf_cnpj LIKE "%${key}%"
+      `
 
       const queryCount = `
         SELECT COUNT(id_fornecedor) AS count FROM fornecedores
+        ${cWhere}
       `
 
-      let total
+      const query = `
+        SELECT * FROM fornecedores
+        ${cWhere}
+        LIMIT ${limit}
+        OFFSET ${offset}
+      `
+
       const [{ count }] = await executeQuery(queryCount)
       const data = await executeQuery(query)
 
-      if (key === '') { total = count } else { total = data.length }
-
-      return { data, total }
+      return { data, total: count }
     } catch (err) {
       return err
     }

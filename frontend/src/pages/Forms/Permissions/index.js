@@ -13,7 +13,7 @@ import Input from '../../../components/Input';
 import Button from '../../../components/Button'
 import Select from '../../../components/Select';
 
-import { Container, Title, InputGroup, ButtonGroup, Label } from '../styles';
+import { Container, Footer, Title, InputGroup, ButtonGroup, Label } from '../styles';
 
 export default function FormPermission() {
   const history = useHistory();
@@ -27,15 +27,18 @@ export default function FormPermission() {
   const [currentContext, setCurrentContext] = useState()
   
   useEffect(() => {
-    const state = history.location.state;
-
-    setPermission(state);
-
     if (history.location.pathname === '/permissoes/add') {
       setOperation('ADD');
     }
     else {
       setOperation('EDIT');
+
+      const state = history.location.state;
+
+      if (!state) history.goBack()
+
+      setPermission(state);
+
       setCurrentType(state.tipo);
       setCurrentContext(state.contexto);
     }
@@ -68,7 +71,10 @@ export default function FormPermission() {
   }, [])
 
   return (
-    <Layout title={operation === 'ADD' ? 'Nova permissão' : `Editando: ${permission && permission.nome}`}>  
+    <Layout 
+      background= "#F1F1F1"
+      title={operation === 'ADD' ? 'Nova permissão' : `Editando: ${permission && permission.nome}`}
+    >
       <Container>
         <Form initialData={permission} onSubmit={handleSubmit} autoComplete="off">
           <Title>
@@ -136,20 +142,23 @@ export default function FormPermission() {
               color="#FFF"
               disabled={buttonAvailable}
             >
-              Salvar
-            </Button>
-
-            <Button
-              type="button"
-              background="#FFF"
-              color="#777"
-              border="1px solid #ccc"
-              onClick={handleCancel}
-            >
-              Cancelar
+              { operation === 'ADD' ? 'SALVAR' : 'ATUALIZAR' }
             </Button>
           </ButtonGroup>
         </Form>
+
+        <Footer>
+          <Button
+            type="button"
+            background="#FFCC01"
+            color="#FFF"
+            fontWeight="bold"
+            border="1px solid #FFCC01"
+            onClick={handleCancel}
+          >
+            VOLTAR
+          </Button>
+        </Footer>
       </Container>
     </Layout>
   );

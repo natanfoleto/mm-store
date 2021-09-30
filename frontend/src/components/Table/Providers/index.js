@@ -12,7 +12,7 @@ export default function ComponentTable({ data, onSearchChange }) {
   const { deleteProvider } = providerService();
 
   async function handleEdit(rowData) {
-    history.push('/fornecedores/edit', JSON.stringify(rowData));
+    history.push('/fornecedores/edit', rowData);
   }
 
   async function handleDelete(item) {

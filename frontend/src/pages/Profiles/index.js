@@ -9,6 +9,8 @@ import HeaderPage from '../../components/HeaderPage'
 import Table from '../../components/Table/Profiles'
 import Navigation from '../../components/Navigation'
 
+import { Container } from '../styles'
+
 export default function Profiles() {
   const history = useHistory();
 
@@ -37,20 +39,24 @@ export default function Profiles() {
           : Math.ceil(data.total / limit)
         );
       } catch (err) {
-        const { data, status } = err.response
+        if (!err.response) {
+          Toast('error', 'Network Error');
+        } else {
+          const { data, status } = err.response
 
-        if (status === 403 || status === 422) {
-          Toast(data.result, data.message);
+          if (status === 403 || status === 422) {
+            Toast(data.result, data.message);
 
-          if (status === 403)
-            setViewPermission(true)
-  
+            if (status === 403)
+              setViewPermission(true)
+    
+            return;
+          }
+          
+          Toast('error', err.toString());
+    
           return;
         }
-        
-        Toast('error', err.toString());
-  
-        return;
       }
     }
 
@@ -73,27 +79,29 @@ export default function Profiles() {
 
   return (
     <Layout title="Gestão de Perfis">      
-      <HeaderPage
-        handleCreate={handleCreate}
-        buttonText="Novo perfil"
-      >
-        Gestão de Perfis 
-      </HeaderPage>
+      <Container>
+        <HeaderPage
+          handleCreate={handleCreate}
+          buttonText="Novo perfil"
+        >
+          Gestão de Perfis 
+        </HeaderPage>
 
-      <Table 
-        data={data}
-        onSearchChange={onSearchChange}
-      />
-      
-      <Navigation 
-        currentPage={currentPage}
-        setCurrentPage={setCurrentPage}
-        totalPages={totalPages}
-        totalRecords={totalRecords}
-        viewPermission={viewPermission}
-        limit={limit}
-        handleLimit={handleLimit}
-      />
+        <Table 
+          data={data}
+          onSearchChange={onSearchChange}
+        />
+        
+        <Navigation 
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+          totalPages={totalPages}
+          totalRecords={totalRecords}
+          viewPermission={viewPermission}
+          limit={limit}
+          handleLimit={handleLimit}
+        />
+      </Container>
     </Layout>
   );
 }

@@ -20,7 +20,7 @@ import Button from '../../../components/Button'
 import Select from '../../../components/Select';
 
 import { Permissions } from './styles';
-import { Container, Title, InputGroup, ButtonGroup, Label } from '../styles';
+import { Container, Footer, Title, InputGroup, ButtonGroup, Label } from '../styles';
 
 export default function FormProfile() {
   const history = useHistory();
@@ -46,17 +46,21 @@ export default function FormProfile() {
 
         setCurrentPermissions(data);
       } catch (err) {
-        const { data, status } = err.response
+        if (!err.response) {
+          Toast('error', 'Network Error');
+        } else {
+          const { data, status } = err.response
 
-        if (status === 403 || status === 422) {
-          Toast(data.result, data.message);
-  
+          if (status === 403 || status === 422) {
+            Toast(data.result, data.message);
+    
+            return;
+          }
+          
+          Toast('error', err.toString());
+    
           return;
         }
-        
-        Toast('error', err.toString());
-  
-        return;
       }
     }
 
@@ -78,31 +82,39 @@ export default function FormProfile() {
   
         setAllPermissions(newData);
       } catch (err) {
-        const { data, status } = err.response
+        if (!err.response) {
+          Toast('error', 'Network Error');
+        } else {
+          const { data, status } = err.response
 
-        if (status === 403 || status === 422) {
-          Toast(data.result, data.message);
-  
+          if (status === 403 || status === 422) {
+            Toast(data.result, data.message);
+    
+            return;
+          }
+          
+          Toast('error', err.toString());
+    
           return;
         }
-        
-        Toast('error', err.toString());
-  
-        return;
       }
     }
 
-    if (history.location.pathname === '/perfis/edit') {
+    if (history.location.pathname === '/perfis/add') {
+      setOperation('ADD');
+    }
+    else {
+      setOperation('EDIT');
+
+      const state = history.location.state;
+
+      if (!state) history.goBack()
+
+      setProfile(state);
+
       searchPermissions();
       searchPermissionsProfiles();
     }
-
-    setProfile(history.location.state);
-
-    if (history.location.pathname === '/perfis/add')
-      setOperation('ADD');
-    else
-      setOperation('EDIT');
   }, [history, type, context, refresh])
   
   async function handleSubmit(data) {
@@ -160,7 +172,10 @@ export default function FormProfile() {
   }
 
   return (
-    <Layout title={operation === 'ADD' ? 'Novo perfil' : `Editando: ${profile && profile.nome}`}>  
+    <Layout 
+      background="#F1F1F1"
+      title={operation === 'ADD' ? 'Novo perfil' : `Editando: ${profile && profile.nome}`}
+    >
       <Container>
         <Form initialData={profile} onSubmit={handleSubmit} autoComplete="off">
           <Title>
@@ -278,20 +293,23 @@ export default function FormProfile() {
               color="#FFF"
               disabled={buttonAvailable}
             >
-              Salvar
-            </Button>
-
-            <Button
-              type="button"
-              background="#FFF"
-              color="#777"
-              border="1px solid #ccc"
-              onClick={handleCancel}
-            >
-              Cancelar
+              { operation === 'ADD' ? 'SALVAR' : 'ATUALIZAR' }
             </Button>
           </ButtonGroup>
         </Form>
+
+        <Footer>
+          <Button
+            type="button"
+            background="#FFCC01"
+            color="#FFF"
+            fontWeight="bold"
+            border="1px solid #FFCC01"
+            onClick={handleCancel}
+          >
+            VOLTAR
+          </Button>
+        </Footer>
       </Container>
     </Layout>
   );

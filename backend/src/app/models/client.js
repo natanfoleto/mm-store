@@ -18,51 +18,27 @@ class Client {
 
   async searchClient (key, limit, offset) {
     try {
-      const query = `
-        (
-          SELECT cl.*, ed.logradouro, ed.numero, ed.cep, ed.bairro, ed.cidade, ed.uf, ed.latitude, ed.longitude FROM clientes cl
-          INNER JOIN enderecos ed ON ed.id_endereco = cl.id_endereco
-          WHERE nome LIKE "%${key}%"
-          LIMIT ${limit}
-          OFFSET ${offset}
-        )
-        UNION
-        (
-          SELECT cl.*, ed.logradouro, ed.numero, ed.cep, ed.bairro, ed.cidade, ed.uf, ed.latitude, ed.longitude FROM clientes cl
-          INNER JOIN enderecos ed ON ed.id_endereco = cl.id_endereco
-          WHERE cpf LIKE "%${key}%"
-          LIMIT ${limit}
-          OFFSET ${offset}
-        )
-        UNION
-        (
-          SELECT cl.*, ed.logradouro, ed.numero, ed.cep, ed.bairro, ed.cidade, ed.uf, ed.latitude, ed.longitude FROM clientes cl
-          INNER JOIN enderecos ed ON ed.id_endereco = cl.id_endereco
-          WHERE email LIKE "%${key}%"
-          LIMIT ${limit}
-          OFFSET ${offset}
-        )
-        UNION
-        (
-          SELECT cl.*, ed.logradouro, ed.numero, ed.cep, ed.bairro, ed.cidade, ed.uf, ed.latitude, ed.longitude FROM clientes cl
-          INNER JOIN enderecos ed ON ed.id_endereco = cl.id_endereco
-          WHERE celular LIKE "%${key}%"
-          LIMIT ${limit}
-          OFFSET ${offset}
-        )
+      const cWhere = `
+        INNER JOIN enderecos ed ON ed.id_endereco = cl.id_endereco
+        WHERE nome LIKE "%${key}%" OR cpf LIKE "%${key}%"
       `
 
       const queryCount = `
-        SELECT COUNT(id_cliente) AS count FROM clientes
+        SELECT COUNT(id_cliente) AS count FROM clientes cl
+        ${cWhere}
       `
 
-      let total
+      const query = `
+        SELECT cl.*, ed.logradouro, ed.numero, ed.cep, ed.bairro, ed.cidade, ed.uf, ed.latitude, ed.longitude FROM clientes cl
+        ${cWhere}
+        LIMIT ${limit}
+        OFFSET ${offset}
+      `
+
       const [{ count }] = await executeQuery(queryCount)
       const data = await executeQuery(query)
 
-      if (key === '') { total = count } else { total = data.length }
-
-      return { data, total }
+      return { data, total: count }
     } catch (err) {
       return err
     }

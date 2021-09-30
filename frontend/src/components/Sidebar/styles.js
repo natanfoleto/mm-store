@@ -4,20 +4,11 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: calc(100vh - 4rem);
-  width: ${props => props.sidebar ? '0vw' : '15vw'};
+  height: calc(100vh - 7.5vh);
+  width: ${props => props.sidebar ? '0vw' : '20vw'};
   padding: ${props => props.sidebar ? '0 0.75rem 0 2rem' : '0'};
   background: #FAFBFC;
   border-right: 1px solid #ddd;
-
-  @media (max-height: 1200px) {
-    width: ${props => props.sidebar ? '0vw' : '12.5vw'};
-    height: calc(100vh - 4.5rem);
-  }
-
-  @media (max-height: 900px) {
-    width: ${props => props.sidebar ? '0vw' : '17.5vw'};
-  }
 
   nav {
     display: ${props => props.sidebar ? 'none' : 'flex'};

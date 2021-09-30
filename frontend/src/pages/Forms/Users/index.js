@@ -14,7 +14,7 @@ import Input from '../../../components/Input';
 import Button from '../../../components/Button'
 import Select from '../../../components/Select';
 
-import { Container, Title, InputGroup, ButtonGroup, Label } from '../styles';
+import { Container, Footer, Title, InputGroup, ButtonGroup, Label } from '../styles';
 
 export default function FormUser() {
   const history = useHistory();
@@ -42,31 +42,38 @@ export default function FormUser() {
   
         setProfiles(newData);
       } catch (err) {
-        const { data, status } = err.response
+        if (!err.response) {
+          Toast('error', 'Network Error');
+        } else {
+          const { data, status } = err.response
 
-        if (status === 403 || status === 422) {
-          Toast(data.result, data.message);
-  
+          if (status === 403 || status === 422) {
+            Toast(data.result, data.message);
+    
+            return;
+          }
+          
+          Toast('error', err.toString());
+    
           return;
         }
-        
-        Toast('error', err.toString());
-  
-        return;
       }
     }
 
     searchAllProfiles();
-
-    const state = history.location.state;
-
-    setUser(state);
 
     if (history.location.pathname === '/usuarios/add') {
       setOperation('ADD');
     }
     else {
       setOperation('EDIT');
+
+      const state = history.location.state;
+
+      if (!state) history.goBack()
+
+      setUser(state);
+
       setCurrentProfile(state.id_perfil);
     }
   }, [history])
@@ -93,7 +100,10 @@ export default function FormUser() {
   }, [])
 
   return (
-    <Layout title={operation === 'ADD' ? 'Novo usuário' : `Editando: ${user && user.nome}`}>  
+    <Layout 
+      background="#F1F1F1"
+      title={operation === 'ADD' ? 'Novo usuário' : `Editando: ${user && user.nome}`}
+    >
       <Container>
         <Form initialData={user} onSubmit={handleSubmit} autoComplete="off">
           <Title>
@@ -163,20 +173,23 @@ export default function FormUser() {
               color="#FFF"
               disabled={buttonAvailable}
             >
-              Salvar
-            </Button>
-
-            <Button
-              type="button"
-              background="#FFF"
-              color="#777"
-              border="1px solid #ccc"
-              onClick={handleCancel}
-            >
-              Cancelar
+              { operation === 'ADD' ? 'SALVAR' : 'ATUALIZAR' }
             </Button>
           </ButtonGroup>
         </Form>
+
+        <Footer>
+          <Button
+            type="button"
+            background="#FFCC01"
+            color="#FFF"
+            fontWeight="bold"
+            border="1px solid #FFCC01"
+            onClick={handleCancel}
+          >
+            VOLTAR
+          </Button>
+        </Footer>
       </Container>
     </Layout>
   );

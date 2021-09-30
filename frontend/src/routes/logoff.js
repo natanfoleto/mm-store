@@ -9,7 +9,7 @@ export default function Routes() {
       <Switch>
         <Route exact path="/" component={SignIn} />
 
-        <Route component={NotFound} isNotFound />
+        <Route component={NotFound} />
       </Switch>
     </BrowserRouter>
   );

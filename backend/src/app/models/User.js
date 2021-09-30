@@ -17,49 +17,28 @@ class User {
 
   async searchUser (key, limit, offset) {
     try {
-      const query = `
-        (
-          SELECT us.*, pf.nome AS perfil 
-          FROM usuarios AS us 
-          INNER JOIN perfis AS pf 
-          ON us.id_perfil = pf.id_perfil
-          WHERE us.nome LIKE "%${key}%"
-          LIMIT ${limit}
-          OFFSET ${offset}
-        )
-        UNION
-        (
-          SELECT us.*, pf.nome AS perfil 
-          FROM usuarios AS us 
-          INNER JOIN perfis AS pf 
-          ON us.id_perfil = pf.id_perfil
-          WHERE us.login LIKE "%${key}%"
-          LIMIT ${limit}
-          OFFSET ${offset}
-        )
-        UNION
-        (
-          SELECT us.*, pf.nome AS perfil 
-          FROM usuarios AS us 
-          INNER JOIN perfis AS pf 
-          ON us.id_perfil = pf.id_perfil
-          WHERE us.id_perfil LIKE "%${key}%"
-          LIMIT ${limit}
-          OFFSET ${offset}
-        )
+      const cWhere = `
+        INNER JOIN perfis AS pf ON us.id_perfil = pf.id_perfil
+        WHERE us.nome LIKE "%${key}%" OR us.login LIKE "%${key}%"
       `
 
       const queryCount = `
-        SELECT COUNT(id_usuario) AS count FROM usuarios
+        SELECT COUNT(id_usuario) AS count FROM usuarios us
+        ${cWhere}
       `
 
-      let total
+      const query = `
+        SELECT us.*, pf.nome AS perfil 
+        FROM usuarios AS us 
+        ${cWhere}
+        LIMIT ${limit}
+        OFFSET ${offset}
+      `
+
       const [{ count }] = await executeQuery(queryCount)
       const data = await executeQuery(query)
 
-      if (key === '') { total = count } else { total = data.length }
-
-      return { data, total }
+      return { data, total: count }
     } catch (err) {
       return err
     }

@@ -10,7 +10,7 @@ import Form from '../../../components/Form';
 import Input from '../../../components/Input';
 import Button from '../../../components/Button'
 
-import { Container, Title, InputGroup, ButtonGroup, Label } from '../styles';
+import { Container, Footer, Title, InputGroup, ButtonGroup, Label } from '../styles';
 
 export default function FormCategory() {
   const history = useHistory();
@@ -22,13 +22,17 @@ export default function FormCategory() {
   const [operation, setOperation] = useState();
   
   useEffect(() => {
-    setCategory(history.location.state);
-
     if (history.location.pathname === '/categorias/add') {
       setOperation('ADD');
     }
     else {
       setOperation('EDIT');
+
+      const state = history.location.state;
+
+      if (!state) history.goBack()
+
+      setCategory(state);
     }
   }, [history])
 
@@ -47,7 +51,10 @@ export default function FormCategory() {
   }
 
   return (
-    <Layout title={operation === 'ADD' ? 'Nova categoria' : `Editando: ${category && category.nome}`}>
+    <Layout 
+      background= "#F1F1F1"
+      title={operation === 'ADD' ? 'Nova categoria' : `Editando: ${category && category.nome}`}
+    >
       <Container>
         <Form initialData={category} onSubmit={handleSubmit} autoComplete="off">
           <Title>
@@ -79,20 +86,23 @@ export default function FormCategory() {
               color="#FFF"
               disabled={buttonAvailable}
             >
-              Salvar
-            </Button>
-
-            <Button
-              type="button"
-              background="#FFF"
-              color="#777"
-              border="1px solid #ccc"
-              onClick={handleCancel}
-            >
-              Cancelar
+              { operation === 'ADD' ? 'SALVAR' : 'ATUALIZAR' }
             </Button>
           </ButtonGroup>
         </Form>
+
+        <Footer>
+          <Button
+            type="button"
+            background="#FFCC01"
+            color="#FFF"
+            fontWeight="bold"
+            border="1px solid #FFCC01"
+            onClick={handleCancel}
+          >
+            VOLTAR
+          </Button>
+        </Footer>
       </Container>
     </Layout>
   );

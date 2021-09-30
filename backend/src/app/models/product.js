@@ -17,46 +17,28 @@ class Product {
 
   async searchProduct (key, limit, offset) {
     try {
-      const query = `
-        (
-          SELECT pd.*, ct.nome AS categoria
-          FROM produtos pd
-          INNER JOIN categorias ct ON pd.id_categoria = ct.id_categoria
-          WHERE pd.nome LIKE "%${key}%"
-          LIMIT ${limit}
-          OFFSET ${offset}
-        )
-        UNION
-        (
-          SELECT pd.*, ct.nome AS categoria
-          FROM produtos pd
-          INNER JOIN categorias ct ON pd.id_categoria = ct.id_categoria
-          WHERE pd.preco_custo LIKE "%${key}%"
-          LIMIT ${limit}
-          OFFSET ${offset}
-        )
-        UNION
-        (
-          SELECT pd.*, ct.nome AS categoria
-          FROM produtos pd
-          INNER JOIN categorias ct ON pd.id_categoria = ct.id_categoria
-          WHERE ct.nome LIKE "%${key}%"
-          LIMIT ${limit}
-          OFFSET ${offset}
-        )
+      const cWhere = `
+        INNER JOIN categorias ct ON pd.id_categoria = ct.id_categoria
+        WHERE pd.nome LIKE "%${key}%" OR ct.nome LIKE "%${key}%"
       `
 
       const queryCount = `
-        SELECT COUNT(id_produto) AS count FROM produtos
+        SELECT COUNT(id_produto) AS count FROM produtos pd
+        ${cWhere}
       `
 
-      let total
+      const query = `
+        SELECT pd.*, ct.nome AS categoria
+        FROM produtos pd
+        ${cWhere}
+        LIMIT ${limit}
+        OFFSET ${offset}
+      `
+
       const [{ count }] = await executeQuery(queryCount)
       const data = await executeQuery(query)
 
-      if (key === '') { total = count } else { total = data.length }
-
-      return { data, total }
+      return { data, total: count }
     } catch (err) {
       return err
     }

@@ -24,5 +24,8 @@ export const Content = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  padding: 1.25rem;
+  overflow-y: scroll;
+  background: ${props => (props.background)};
+
+  ::-webkit-scrollbar { width: 0; }
 `;

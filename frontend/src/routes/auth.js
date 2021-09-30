@@ -53,7 +53,7 @@ export default function Routes() {
         <Route exact path="/permissoes/add" component={FormPermissions} />
         <Route exact path="/permissoes/edit" component={FormPermissions} />
 
-        <Route component={NotFound} isNotFound />
+        <Route component={NotFound} />
       </Switch>
     </BrowserRouter>
   );

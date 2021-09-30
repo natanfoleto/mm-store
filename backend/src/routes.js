@@ -76,7 +76,10 @@ routes.route('/clients').post(is(['CREATE_CLIENTS']), validation(validationClien
 routes.route('/clients').put(is(['CREATE_CLIENTS']), validation(validationClient.clientUpdate), ClientController.update)
 routes.route('/clients').delete(is(['CREATE_CLIENTS']), validation(validationClient.clientDelete), ClientController.remove)
 
+routes.route('/accounts/searchOne').post(is(['VIEW_ACCOUNTS']), validation(validationAccount.accountSearchOne), AccountController.searchOne)
+
 routes.route('/address').put(is(['EDIT_ADDRESS']), validation(validationAddress.addressUpdate), AddressController.update)
+routes.route('/address/searchOne').post(is(['VIEW_ADDRESS']), validation(validationAddress.addressSearchOne), AddressController.searchOne)
 
 routes.route('/wishs').post(is(['CREATE_WISHS']), validation(validationWish.wishCreate), WishController.create)
 routes.route('/wishs').put(is(['EDIT_WISHS']), validation(validationWish.wishUpdate), WishController.update)

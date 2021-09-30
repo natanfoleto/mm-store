@@ -22,6 +22,23 @@ class AccountController {
       })
     }
   }
+
+  async searchOne (req, res) {
+    try {
+      const { id_cliente } = req.body
+
+      const response = await Account.searchOneAccount(id_cliente)
+
+      return res.json(response)
+    } catch (err) {
+      //! Erro Internal Server
+      return res.json({
+        result: 'error',
+        message: message.error.code1.subcode99.message,
+        error: err.toString()
+      })
+    }
+  }
 }
 
 export default new AccountController()

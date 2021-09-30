@@ -19,17 +19,21 @@ export const usePermission = () => {
         history.goBack()
      
     } catch (err) {
-        const { data, status } = err.response
+        if (!err.response) {
+          Toast('error', 'Network Error');
+        } else {
+          const { data, status } = err.response
 
-        if (status === 403 || status === 422) {
-          Toast(data.result, data.message);
-  
+          if (status === 403 || status === 422) {
+            Toast(data.result, data.message);
+    
+            return;
+          }
+          
+          Toast('error', err.toString());
+    
           return;
         }
-        
-        Toast('error', err.toString());
-  
-        return;
       }
   }
 

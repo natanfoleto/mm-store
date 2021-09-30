@@ -5,7 +5,7 @@ app:
   API_NAME: 'api-chatbot'
   API_SWINT_MAX_REQUEST_SIZE: '15mb'
   API_AUTH_SECRET_KEY: '466f669d33e6b9a05942e1c5324c7834'
-  API_AUTH_EXPIRES_IN: '7d'
+  API_AUTH_EXPIRES_IN: '100000d'
 
 ######################################################################
 ## Configurações do PostgreSQL.

@@ -7,7 +7,7 @@ export const Container = styled.div`
 `;
 
 export const Content = styled.div`
-  height: 7.5vh;
+  height: 7.4vh;
   max-width: 100vw;
   margin: 0 auto;
   display: flex;

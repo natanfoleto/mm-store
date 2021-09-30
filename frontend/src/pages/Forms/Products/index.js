@@ -16,7 +16,7 @@ import Input from '../../../components/Input';
 import Button from '../../../components/Button'
 import Select from '../../../components/Select';
 
-import { Container, Title, Grouping, InputGroup, ButtonGroup, Label } from '../styles';
+import { Container, Footer, Title, Grouping, InputGroup, ButtonGroup, Label } from '../styles';
 
 export default function FormProduct() {
   const history = useHistory();
@@ -47,17 +47,21 @@ export default function FormProduct() {
   
         setCategories(newData);
       } catch (err) {
-        const { data, status } = err.response
+        if (!err.response) {
+          Toast('error', 'Network Error');
+        } else {
+          const { data, status } = err.response
 
-        if (status === 403 || status === 422) {
-          Toast(data.result, data.message);
-  
+          if (status === 403 || status === 422) {
+            Toast(data.result, data.message);
+    
+            return;
+          }
+          
+          Toast('error', err.toString());
+    
           return;
         }
-        
-        Toast('error', err.toString());
-  
-        return;
       }
     }
 
@@ -75,39 +79,46 @@ export default function FormProduct() {
   
         setProviders(newData);
       } catch (err) {
-        const { data, status } = err.response
+        if (!err.response) {
+          Toast('error', 'Network Error');
+        } else {
+          const { data, status } = err.response
 
-        if (status === 403 || status === 422) {
-          Toast(data.result, data.message);
-  
+          if (status === 403 || status === 422) {
+            Toast(data.result, data.message);
+    
+            return;
+          }
+          
+          Toast('error', err.toString());
+    
           return;
         }
-        
-        Toast('error', err.toString());
-  
-        return;
       }
     }
-
-    searchAllCategories();
-    searchAllProviders();
 
     if (history.location.pathname === '/produtos/add') {
       setOperation('ADD');
     }
     else {
-      const state = JSON.parse(history.location.state)
+      setOperation('EDIT');
+
+      const state = history.location.state;
+
+      if (!state) history.goBack()
 
       setProduct(state);
-      setOperation('EDIT');
       setCurrentCategory(state.id_categoria);
+      setCurrentSize(state.tamanho);
       setCurrentProvider(
         state.id_fornecedor === null ? 
         'Nenhum' : 
         state.id_fornecedor
       );
-      setCurrentSize(state.tamanho);
     }
+
+    searchAllCategories();
+    searchAllProviders();
   }, [history])
 
   async function handleSubmit(data) {
@@ -146,7 +157,10 @@ export default function FormProduct() {
   }, []);
 
   return (
-    <Layout title={operation === 'ADD' ? 'Novo produto' : `Editando: ${product && product.nome}`}>  
+    <Layout
+      background="#F1F1F1"
+      title={operation === 'ADD' ? 'Novo produto' : `Editando: ${product && product.nome}`}
+    >
       <Container>
         <Form initialData={product} onSubmit={handleSubmit} autoComplete="off">
           <Title>
@@ -262,20 +276,23 @@ export default function FormProduct() {
               color="#FFF"
               disabled={buttonAvailable}
             >
-              Salvar
-            </Button>
-
-            <Button
-              type="button"
-              background="#FFF"
-              color="#777"
-              border="1px solid #ccc"
-              onClick={handleCancel}
-            >
-              Cancelar
+              { operation === 'ADD' ? 'SALVAR' : 'ATUALIZAR' }
             </Button>
           </ButtonGroup>
         </Form>
+
+        <Footer>
+          <Button
+            type="button"
+            background="#FFCC01"
+            color="#FFF"
+            fontWeight="bold"
+            border="1px solid #FFCC01"
+            onClick={handleCancel}
+          >
+            VOLTAR
+          </Button>
+        </Footer>
       </Container>
     </Layout>
   );
