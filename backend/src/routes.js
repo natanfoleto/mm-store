@@ -5,6 +5,8 @@ import audit from './app/middlewares/audit.js'
 import { is } from './app/middlewares/permission.js'
 import validation from './app/middlewares/validation.js'
 
+import viacep from './app/utils/viacep.js'
+
 import validationSession from './app/schema/validationSession.js'
 import validationUser from './app/schema/validationUser.js'
 import validationProfile from './app/schema/validationProfile.js'
@@ -91,5 +93,7 @@ routes.route('/permission').delete(is(['DELETE_PERMISSION']), validation(validat
 
 routes.route('/permissions').post(is(['CREATE_PERMISSIONS']), validation(validationPermissions.permissionsCreate), PermissionsController.create)
 routes.route('/permissions').delete(is(['DELETE_PERMISSIONS']), validation(validationPermissions.permissionsDelete), PermissionsController.remove)
+
+routes.route('/cep/:cep').get(viacep)
 
 export default routes

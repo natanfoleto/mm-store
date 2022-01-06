@@ -29,8 +29,8 @@ export default function ComponentTable({ data, onSearchChange }) {
         localization={ptBR}
         columns={[
           { title: 'ID', field: 'id_permissao' },
-          { title: 'Nome', field: 'nome' },
           { title: 'Descrição', field: 'descricao' },
+          { title: 'Nome', field: 'nome' },
         ]}
         data={data}        
         options={{

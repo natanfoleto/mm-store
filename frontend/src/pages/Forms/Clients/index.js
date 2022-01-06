@@ -30,6 +30,7 @@ export default function FormUser() {
   const [account, setAccount] = useState(Object);
   const [date, setDate] = useState('');
   const [cpf, setCpf] = useState('');
+  const [cep, setCep] = useState('');
   const [celular, setCelular] = useState('');
   const [buttonAvailable, setButtonAvailable] = useState(true);
   const [operation, setOperation] = useState();
@@ -40,6 +41,10 @@ export default function FormUser() {
         const { data } = await api.post('/address/searchOne', { 
           id_endereco: history.location.state.id_endereco 
         });
+
+        const cep = data.data[0].cep
+
+        if (cep) setCep(cep)
 
         setAddress(data.data[0]);
       } catch (err) {
@@ -126,6 +131,46 @@ export default function FormUser() {
 
   async function handleSubmitAddress(data) {
     await updateAddress(data);
+  }
+
+  async function getViacep(e) {
+    try {
+      const cep = e.target.value
+
+      if (cep !== '') {
+        const { data } = await api.get(`/cep/${cep}`);
+
+        if (data.result === 'success') {
+          const { bairro, cep, localidade, logradouro, uf } = data.data
+  
+          setAddress({
+            id_endereco: address.id_endereco,
+            bairro: bairro === '' ? address.bairro : bairro,
+            cep: cep === '' ? address.cep : cep,
+            cidade: localidade === '' ? address.cidade : localidade,
+            logradouro: logradouro === '' ? address.logradouro : logradouro,
+            uf: uf === '' ? address.uf : uf
+          })
+        }
+      }
+    } catch (err) {
+      console.log(err)
+      if (!err.response) {
+        Toast('error', 'Network Error');
+      } else {
+        const { data, status } = err.response
+
+        if (status === 403 || status === 422) {
+          Toast(data.result, data.message);
+  
+          return;
+        }
+        
+        Toast('error', err.toString());
+  
+        return;
+      }
+    }
   }
 
   function handleCancel() {
@@ -269,6 +314,38 @@ export default function FormUser() {
 
             <Grouping>
               <InputGroup>
+                <Label>CEP</Label>
+
+                <InputMask 
+                  type="text" 
+                  name="cep"
+                  value={cep}
+                  mask="99999-999"
+                  maskChar={null}
+                  onChange={(e) => { 
+                    setButtonAvailable(false) 
+                    setCep(e.target.value)
+                  }}
+                  onBlur={(e) => { getViacep(e) }}
+                >
+                  {(inputProps) => ( <Input {...inputProps} /> )}
+                </InputMask>
+              </InputGroup>
+
+              <InputGroup>
+                <Label>Cidade</Label>
+
+                <Input 
+                  type="text" 
+                  name="cidade"
+                  maxLength={100}
+                  onChange={() => { setButtonAvailable(false) }}
+                />
+              </InputGroup>
+            </Grouping>
+
+            <Grouping>
+              <InputGroup>
                 <Label>Rua</Label>
 
                 <Input 
@@ -285,30 +362,6 @@ export default function FormUser() {
                 <Input 
                   type="text" 
                   name="numero"
-                  maxLength={100}
-                  onChange={() => { setButtonAvailable(false) }}
-                />
-              </InputGroup>
-            </Grouping>
-
-            <Grouping>
-              <InputGroup>
-                <Label>CEP</Label>
-
-                <Input 
-                  type="text" 
-                  name="cep"
-                  maxLength={100}
-                  onChange={() => { setButtonAvailable(false) }}
-                />
-              </InputGroup>
-
-              <InputGroup>
-                <Label>Cidade</Label>
-
-                <Input 
-                  type="text" 
-                  name="cidade"
                   maxLength={100}
                   onChange={() => { setButtonAvailable(false) }}
                 />
