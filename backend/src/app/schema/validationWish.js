@@ -82,6 +82,18 @@ const validationSchemas = {
         'number.empty': 'id_pedido não pode estar vazio',
         'number.min': 'id_pedido deve ser maior que 0'
       })
+  }),
+  wishSearchByClient: Joi.object().keys({
+    id_cliente: Joi
+      .number()
+      .required()
+      .min(1)
+      .messages({
+        'any.required': 'id_cliente é necessário',
+        'number.base': 'id_cliente deve ser um número',
+        'number.empty': 'id_cliente não pode estar vazio',
+        'number.min': 'id_cliente deve ser maior que 0'
+      })
   })
 }
 

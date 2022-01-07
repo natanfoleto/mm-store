@@ -23,6 +23,23 @@ class WishController {
     }
   }
 
+  async searchByClient (req, res) {
+    try {
+      const { id_cliente } = req.body
+
+      const response = await Wish.searchWishByClient(id_cliente)
+
+      return res.json(response)
+    } catch (err) {
+      //! Erro Internal Server
+      return res.json({
+        result: 'error',
+        message: message.error.code1.subcode99.message,
+        error: err.toString()
+      })
+    }
+  }
+
   async create (req, res) {
     try {
       const { id_cliente, descricao, url_foto } = req.body

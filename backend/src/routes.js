@@ -51,6 +51,7 @@ routes.route('/clients/search/:page/:limit').post(is(['VIEW_CLIENTS']), validati
 routes.route('/accounts/search/:page/:limit').post(is(['VIEW_ACCOUNTS']), validation(validationAccount.accountSearch), AccountController.search)
 routes.route('/address/search/:page/:limit').post(is(['VIEW_ADDRESS']), validation(validationAddress.addressSearch), AddressController.search)
 routes.route('/wishs/search/:page/:limit').post(is(['VIEW_WISHS']), validation(validationWish.wishSearch), WishController.search)
+routes.route('/wishs/search/byclient').post(is(['VIEW_WISHS']), validation(validationWish.wishSearchByClient), WishController.searchByClient)
 
 routes.use(audit)
 

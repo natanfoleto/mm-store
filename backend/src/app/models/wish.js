@@ -14,10 +14,36 @@ class Wish {
       `
 
       const query = `
-        SELECT pd.* FROM pedidos pd
+        SELECT pd.*, cl.nome AS cliente FROM pedidos pd
         ${cWhere}
         LIMIT ${limit}
         OFFSET ${offset}
+      `
+
+      const [{ count }] = await executeQuery(queryCount)
+      const data = await executeQuery(query)
+
+      return { data, total: count }
+    } catch (err) {
+      return err
+    }
+  }
+
+  async searchWishByClient (id_cliente) {
+    try {
+      const cWhere = `
+        INNER JOIN clientes cl ON cl.id_cliente = pd.id_cliente
+        WHERE pd.id_cliente = ${id_cliente}
+      `
+
+      const queryCount = `
+        SELECT COUNT(id_pedido) AS count FROM pedidos pd
+        ${cWhere}
+      `
+
+      const query = `
+        SELECT pd.*, cl.nome AS cliente FROM pedidos pd
+        ${cWhere}
       `
 
       const [{ count }] = await executeQuery(queryCount)
