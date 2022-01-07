@@ -28,6 +28,7 @@ export default function FormUser() {
   const [client, setClient] = useState(Object);
   const [address, setAddress] = useState(Object);
   const [account, setAccount] = useState(Object);
+  const [wishs, setWishs] = useState(Array);
   const [date, setDate] = useState('');
   const [cpf, setCpf] = useState('');
   const [cep, setCep] = useState('');
@@ -92,6 +93,33 @@ export default function FormUser() {
       }
     }
 
+    async function searchWishs() {
+      try {
+        const { data } = await api.post('/wishs/search/byclient', { 
+          id_cliente: history.location.state.id_cliente 
+        });
+
+        console.log(data.data);
+        setWishs(data.data);
+      } catch (err) {
+        if (!err.response) {
+          Toast('error', 'Network Error');
+        } else {
+          const { data, status } = err.response
+
+          if (status === 403 || status === 422) {
+            Toast(data.result, data.message);
+    
+            return;
+          }
+          
+          Toast('error', err.toString());
+    
+          return;
+        }
+      }
+    }
+
     if (history.location.pathname === '/clientes/add') {
       setOperation('ADD');
     }
@@ -114,6 +142,7 @@ export default function FormUser() {
 
       searchAddress()
       searchAccount()
+      searchWishs()
     }
   }, [history, client])
 
@@ -451,7 +480,7 @@ export default function FormUser() {
 
         {
           operation === 'EDIT' &&
-          <Form initialData={client} onSubmit={() => { }} autoComplete="off">
+          <Form initialData={wishs} onSubmit={() => { }} autoComplete="off">
             <Title>
               <h1> Pedidos </h1>
             </Title>
