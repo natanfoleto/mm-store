@@ -33,3 +33,43 @@ export const Card = styled.div`
     margin-right: 30px;
   }
 `;
+
+export const Wishs = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-top: 1rem;
+  width: 100%;
+`;
+
+export const WishTitle = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+
+  p {
+    margin-left: 5px;
+  }
+
+  button {
+    color: #333 !important;
+    background: transparent;
+  }
+`;
+
+export const Wish = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 5px;
+
+  p {
+    margin-left: 5px;
+  }
+
+  button {
+    padding: 0 !important;
+    color: #333 !important;
+    background: transparent;
+  }
+`;

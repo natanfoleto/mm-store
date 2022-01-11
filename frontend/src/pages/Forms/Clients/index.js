@@ -16,7 +16,7 @@ import Button from '../../../components/Button';
 import { RiMoneyDollarCircleFill } from 'react-icons/ri'
 import { AiFillLike, AiFillDislike } from 'react-icons/ai'
 
-import { CardContainer, Card } from './styles';
+import { CardContainer, Card, Wishs, WishTitle, Wish } from './styles';
 import { Container, Footer, Title, InputGroup, Grouping, ButtonGroup, Label } from '../styles';
 
 export default function FormUser() {
@@ -99,7 +99,8 @@ export default function FormUser() {
           id_cliente: history.location.state.id_cliente 
         });
 
-        console.log(data.data);
+        
+
         setWishs(data.data);
       } catch (err) {
         if (!err.response) {
@@ -448,7 +449,7 @@ export default function FormUser() {
 
         {
           operation === 'EDIT' &&
-          <Form initialData={account} onSubmit={() => { }} autoComplete="off">
+          <Form>
             <Title>
               <h1> Conta </h1>
             </Title>
@@ -480,21 +481,33 @@ export default function FormUser() {
 
         {
           operation === 'EDIT' &&
-          <Form initialData={wishs} onSubmit={() => { }} autoComplete="off">
+          <Form>
             <Title>
               <h1> Pedidos </h1>
             </Title>
 
-            <ButtonGroup>
-              <Button
-                type="submit"
-                background="#0052CC"
-                color="#FFF"
-                disabled={buttonAvailable}
-              >
-                ATUALIZAR
-              </Button>
-            </ButtonGroup>
+            <Wishs>
+              <WishTitle>
+                <p> Descrição </p>
+                <p> Data do pedido </p>
+                <p> Foto </p>
+              </WishTitle>
+
+              { wishs && wishs.map((item) => (
+                <Wish key={item.id_pedido}>
+                  <p> {item.descricao} </p>
+                  <p> 
+                    {new Date(item.created_at).toLocaleDateString('pt-BR')} | {new Date(item.created_at).toLocaleTimeString('pt-BR')} 
+                  </p>
+
+                  <button 
+                    type="button"
+                  >
+                    Ver foto
+                  </button>
+                </Wish>
+              )) }
+            </Wishs>
           </Form>
         }
         
