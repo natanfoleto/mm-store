@@ -13,7 +13,7 @@ export default function NotFound() {
 
   return (
     <Container>
-      <p>The page you are looking for, not be found</p>
+      <p>Página não encontrada, tente outra por favor!</p>
       <img src={Logo} alt="404 not found" />
       <Link to="/dash">Voltar ao início</Link>
     </Container>

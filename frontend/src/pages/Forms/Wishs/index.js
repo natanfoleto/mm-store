@@ -120,7 +120,7 @@ export default function FormWish() {
           <InputGroup
             style={ operation === 'EDIT' ? { display: 'none' } : { display: '' } }
           >
-            <Label>Escolha o cliente</Label>
+            <Label>Selecione o cliente</Label>
 
             <Select 
               name="id_cliente" 
@@ -132,7 +132,7 @@ export default function FormWish() {
           </InputGroup>
           
           <InputGroup>
-            <Label>Descrição</Label>
+            <Label>Descrição do pedido</Label>
 
             <Input 
               type="text" 
@@ -144,7 +144,7 @@ export default function FormWish() {
           </InputGroup>
 
           <InputGroup>
-            <Label>URL da foto (opicional)</Label>
+            <Label>URL da foto ilustrativa do pedido (opicional)</Label>
 
             <Input 
               type="text" 

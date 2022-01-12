@@ -39,17 +39,17 @@ export const Wishs = styled.div`
   flex-direction: column;
   margin-top: 1rem;
   width: 100%;
+  background: #f9f9f9;
+
+  .description { width: 50%; }
+  .date { width: 40%; }
+  .photo { width: 0%; }
 `;
 
 export const WishTitle = styled.div`
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  margin-bottom: 1rem;
-
-  p {
-    margin-left: 5px;
-  }
+  margin: 0.5rem 0 1rem 10px;
 
   button {
     color: #333 !important;
@@ -59,15 +59,12 @@ export const WishTitle = styled.div`
 
 export const Wish = styled.div`
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  margin-bottom: 5px;
-
-  p {
-    margin-left: 5px;
-  }
+  margin: 0 0 7px 10px;
 
   button {
+    display: flex;
+    align-items: center;
     padding: 0 !important;
     color: #333 !important;
     background: transparent;

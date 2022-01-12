@@ -4,6 +4,8 @@ import api from '../../../services/api/api';
 import Toast from '../../../utils/toastify';
 import InputMask from 'react-input-mask';
 
+import { GiPlayButton } from 'react-icons/gi'
+
 import Layout from '../../Layouts/default';
 
 import clientService from '../../../services/api/client';
@@ -98,8 +100,6 @@ export default function FormUser() {
         const { data } = await api.post('/wishs/search/byclient', { 
           id_cliente: history.location.state.id_cliente 
         });
-
-        
 
         setWishs(data.data);
       } catch (err) {
@@ -205,6 +205,10 @@ export default function FormUser() {
 
   function handleCancel() {
     history.goBack()
+  }
+
+  function viewPhoto(url) {
+    window.open(url, '_blank');
   }
 
   return (
@@ -488,25 +492,38 @@ export default function FormUser() {
 
             <Wishs>
               <WishTitle>
-                <p> Descrição </p>
-                <p> Data do pedido </p>
-                <p> Foto </p>
+                <p className='description'> 
+                  <strong>Descrição</strong> 
+                </p>
+                <p className='date'> 
+                  <strong>Data do pedido</strong> 
+                </p>
+                <p className='photo'> 
+                  <strong>Foto</strong> 
+                </p>
               </WishTitle>
 
-              { wishs && wishs.map((item) => (
-                <Wish key={item.id_pedido}>
-                  <p> {item.descricao} </p>
-                  <p> 
-                    {new Date(item.created_at).toLocaleDateString('pt-BR')} | {new Date(item.created_at).toLocaleTimeString('pt-BR')} 
-                  </p>
+              { 
+                wishs[0] ? 
+                wishs.map((item) => (
+                  <Wish key={item.id_pedido}>
+                    <p className='description'> {item.descricao} </p>
+                    <p className='date'> 
+                      {new Date(item.created_at).toLocaleDateString('pt-BR')} às {new Date(item.created_at).toLocaleTimeString('pt-BR')}
+                    </p>
 
-                  <button 
-                    type="button"
-                  >
-                    Ver foto
-                  </button>
-                </Wish>
-              )) }
+                    <button 
+                      type="button"
+                      onClick={() => { viewPhoto(item.url_foto) }}
+                    >
+                      <GiPlayButton /> &nbsp;Ver foto 
+                    </button>
+                  </Wish>
+                )) : 
+                  <Wish>
+                    <p> Nenhum pedido encontrado. </p>
+                  </Wish>
+              }
             </Wishs>
           </Form>
         }
