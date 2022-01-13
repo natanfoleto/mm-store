@@ -25,7 +25,6 @@ function Header({ title }) {
 
         <Breadcrumb title={title} />
 
-
         <aside>
           <Tooltip title="Logout" enterDelay={500} leaveDelay={200}>
             <button onClick={handleLogOut}>
@@ -36,7 +35,7 @@ function Header({ title }) {
           <Profile>
             <div>
               <strong>{user.nome}</strong>
-              <Link to="/profile">Meu perfil</Link>
+              <Link to="/perfil">Meu perfil</Link>
             </div>
           </Profile>    
         </aside>

@@ -1,6 +1,7 @@
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 
 import Dashboard from "../pages/Dashboard";
+import Profile from '../pages/Profile'
 import Profiles from "../pages/Profiles";
 import Users from "../pages/Users";
 import Categories from "../pages/Categories";
@@ -26,6 +27,7 @@ export default function Routes() {
     <BrowserRouter>
       <Switch>
         <Route exact path="/dash" component={Dashboard} />
+        <Route exact path="/perfil" component={Profile} />
 
         <Route exact path="/perfis" component={Profiles} />
         <Route exact path="/perfis/add" component={FormProfiles} />
